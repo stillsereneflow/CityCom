@@ -1,0 +1,83 @@
+"""Proxy world process: hidden 'reality'. Talks to the Twin ONLY via SensorMsg/ReplyMsg over ZeroMQ (REQ).
+
+Writes Proxy ground truth to <run>/proxy/ (never read by the Twin process).
+"""
+import argparse
+import json
+import time
+from pathlib import Path
+
+import pandas as pd
+import traci
+import zmq
+
+from citypulse.bus.messages import validate_reply, validate_sensor
+from citypulse.control.actions import ActionExecutor
+from citypulse.proxy.incident import Incident
+from citypulse.proxy.sensors import SensorEmulator
+from citypulse.proxy.truth_config import PROXY_ONLY
+from citypulse.scenario import CONTROL
+from citypulse.sim import ControlState, init_signals, detector_loops, is_sensor_step, proxy_cmd, read_detectors
+
+
+def run(endpoint, out: Path, seed, sensor_seed, t_end, incident_on, snapshot_times=(), routes=None):
+    out.mkdir(parents=True, exist_ok=True)
+    loops = detector_loops()
+    emu = SensorEmulator(loops.keys(), sensor_seed)
+    inc = Incident(**PROXY_ONLY["incident"]) if incident_on else None
+    cs = ControlState()
+    act = ActionExecutor(CONTROL, PROXY_ONLY["vms_true_compliance"], cs)
+    ctx = zmq.Context()
+    sock = ctx.socket(zmq.REQ)
+    sock.connect(endpoint)
+    traci.start(proxy_cmd(seed, routes), label="proxy")
+    tc = traci.getConnection("proxy")
+    init_signals(tc)
+    truth_rows, wall = [], time.time()
+    t = 0.0
+    while t < t_end:
+        tc.simulationStep()
+        t = tc.simulation.getTime()
+        if inc:
+            inc.step(tc, t)
+        act.step(tc)
+        if t in snapshot_times:
+            tc.simulation.saveState(str(out / f"proxy_state_{int(t)}.xml.gz"))
+        if is_sensor_step(t):
+            truth = read_detectors(tc, loops)
+            for d, v in truth.items():
+                truth_rows.append({"t": t, "detector": d, **v})
+            msg = validate_sensor(emu.emit(t, truth))
+            sock.send_json(msg)
+            reply = validate_reply(sock.recv_json())
+            for a in reply["actions"]:
+                act.apply(tc, a["action"], a["params"])
+    stats = {"t_end": t, "wall_s": time.time() - wall, "arrived": tc.simulation.getArrivedNumber(),
+             "running": tc.vehicle.getIDCount(), "pending": len(tc.simulation.getPendingVehicles()),
+             "teleports_total": None, "observed_detectors": emu.observed,
+             "incident": inc.to_dict() if inc else None, "n_diverted": act.n_diverted}
+    sock.send_json({"type": "sensor", "t": -1.0, "period": 0, "obs": []})  # end-of-run sentinel
+    sock.recv_json()
+    traci.switch("proxy")
+    traci.close()
+    pd.DataFrame(truth_rows).to_parquet(out / "proxy_truth.parquet")
+    json.dump(stats, open(out / "proxy_stats.json", "w"), indent=1)
+    return stats
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--endpoint", default="tcp://127.0.0.1:5557")
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--seed", type=int, default=1)
+    ap.add_argument("--sensor-seed", type=int, default=77)
+    ap.add_argument("--t-end", type=float, default=3000)
+    ap.add_argument("--no-incident", action="store_true")
+    ap.add_argument("--snapshot-times", type=float, nargs="*", default=[])
+    a = ap.parse_args()
+    s = run(a.endpoint, Path(a.out), a.seed, a.sensor_seed, a.t_end, not a.no_incident, set(a.snapshot_times))
+    print(json.dumps({k: v for k, v in s.items() if k != "observed_detectors"}))
+
+
+if __name__ == "__main__":
+    main()

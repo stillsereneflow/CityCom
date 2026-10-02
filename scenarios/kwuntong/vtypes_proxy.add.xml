@@ -1,0 +1,18 @@
+<additional>
+  <vTypeDistribution id="pdist">
+    <vType id="p_car0" vClass="passenger" carFollowModel="IDM" tau="1.20" minGap="2.15" accel="2.09" decel="3.47" delta="4" lcAssertive="1.5" lcSpeedGain="1.5" speedFactor="normc(1.05,0.1,0.8,1.3)" probability="0.0708"/>
+    <vType id="p_car1" vClass="passenger" carFollowModel="IDM" tau="1.06" minGap="1.50" accel="2.22" decel="4.80" delta="4" lcAssertive="1.5" lcSpeedGain="1.5" speedFactor="normc(1.05,0.1,0.8,1.3)" probability="0.0708"/>
+    <vType id="p_car2" vClass="passenger" carFollowModel="IDM" tau="1.05" minGap="1.69" accel="2.40" decel="4.21" delta="4" lcAssertive="1.5" lcSpeedGain="1.5" speedFactor="normc(1.05,0.1,0.8,1.3)" probability="0.0708"/>
+    <vType id="p_car3" vClass="passenger" carFollowModel="IDM" tau="1.23" minGap="1.53" accel="2.19" decel="4.42" delta="4" lcAssertive="1.5" lcSpeedGain="1.5" speedFactor="normc(1.05,0.1,0.8,1.3)" probability="0.0708"/>
+    <vType id="p_car4" vClass="passenger" carFollowModel="IDM" tau="0.80" minGap="1.77" accel="1.44" decel="3.23" delta="4" lcAssertive="1.5" lcSpeedGain="1.5" speedFactor="normc(1.05,0.1,0.8,1.3)" probability="0.0708"/>
+    <vType id="p_car5" vClass="passenger" carFollowModel="IDM" tau="0.65" minGap="1.88" accel="1.69" decel="4.16" delta="4" lcAssertive="1.5" lcSpeedGain="1.5" speedFactor="normc(1.05,0.1,0.8,1.3)" probability="0.0708"/>
+    <vType id="p_car6" vClass="passenger" carFollowModel="IDM" tau="1.25" minGap="1.91" accel="1.20" decel="3.68" delta="4" lcAssertive="1.5" lcSpeedGain="1.5" speedFactor="normc(1.05,0.1,0.8,1.3)" probability="0.0708"/>
+    <vType id="p_car7" vClass="passenger" carFollowModel="IDM" tau="1.19" minGap="2.06" accel="1.59" decel="3.71" delta="4" lcAssertive="1.5" lcSpeedGain="1.5" speedFactor="normc(1.05,0.1,0.8,1.3)" probability="0.0708"/>
+    <vType id="p_car8" vClass="passenger" carFollowModel="IDM" tau="0.91" minGap="1.60" accel="2.62" decel="3.52" delta="4" lcAssertive="1.5" lcSpeedGain="1.5" speedFactor="normc(1.05,0.1,0.8,1.3)" probability="0.0708"/>
+    <vType id="p_car9" vClass="passenger" carFollowModel="IDM" tau="1.19" minGap="2.44" accel="1.97" decel="3.93" delta="4" lcAssertive="1.5" lcSpeedGain="1.5" speedFactor="normc(1.05,0.1,0.8,1.3)" probability="0.0708"/>
+    <vType id="p_car10" vClass="passenger" carFollowModel="IDM" tau="1.23" minGap="2.03" accel="1.71" decel="4.05" delta="4" lcAssertive="1.5" lcSpeedGain="1.5" speedFactor="normc(1.05,0.1,0.8,1.3)" probability="0.0708"/>
+    <vType id="p_car11" vClass="passenger" carFollowModel="IDM" tau="1.61" minGap="1.23" accel="2.54" decel="4.07" delta="4" lcAssertive="1.5" lcSpeedGain="1.5" speedFactor="normc(1.05,0.1,0.8,1.3)" probability="0.0708"/>
+    <vType id="p_bus" vClass="bus" carFollowModel="IDM" tau="1.5" minGap="2.5" accel="1.2" decel="3.5" length="12" lcAssertive="1.0" speedFactor="normc(0.95,0.05,0.8,1.1)" probability="0.07"/>
+    <vType id="p_truck" vClass="truck" carFollowModel="IDM" tau="1.6" minGap="2.5" accel="1.0" decel="3.5" length="10" lcAssertive="1.0" speedFactor="normc(0.9,0.05,0.7,1.0)" probability="0.08"/>
+  </vTypeDistribution>
+</additional>
