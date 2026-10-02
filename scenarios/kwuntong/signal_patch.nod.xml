@@ -1,0 +1,10 @@
+<nodes>
+    <node id="474367490" type="traffic_light"/>
+    <node id="474660231" type="traffic_light"/>
+    <node id="991762682" type="traffic_light"/>
+    <node id="991762948" type="traffic_light"/>
+    <node id="993701207" type="traffic_light"/>
+    <node id="998478488" type="traffic_light"/>
+    <node id="cluster_478824434_478825535" type="traffic_light"/>
+    <node id="cluster_478824721_478825367" type="traffic_light"/>
+</nodes>

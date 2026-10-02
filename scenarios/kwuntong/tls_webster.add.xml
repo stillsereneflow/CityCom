@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-10-02 16:42:52.731426 by Eclipse SUMO tlsCycleAdaptation.py v1.27.1
+<configuration>
+    <net-file value="scenarios/kwuntong/net.net.xml"/>
+    <output-file value="scenarios/kwuntong/tls_webster.add.xml"/>
+    <route-files value="scenarios/kwuntong/proxy.rou.xml"/>
+    <begin value="0.0"/>
+    <min-cycle value="60"/>
+    <max-cycle value="140"/>
+    <program value="0"/>
+    <skip value="joinedS_1023012043_519548754_519548755_cluster_491586705_491586713,joinedS_3688277387_cluster_1691725984_993701523_cluster_519547925_993701172,joinedS_991762721_991762741_cluster_1691725536_474660228_474719598_474719606"/>
+    <verbose value="True"/>
+</configuration>
+-->
+
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <tlLogic id="474660231" type="static" programID="0" offset="0">
+        <phase duration="56" state="GG"/>
+    </tlLogic>
+    <tlLogic id="991762682" type="static" programID="0" offset="0">
+        <phase duration="4" state="Grr"/>
+        <phase duration="4" state="yrr"/>
+        <phase duration="52" state="rGG"/>
+        <phase duration="4" state="ryy"/>
+    </tlLogic>
+    <tlLogic id="991762948" type="static" programID="0" offset="0">
+        <phase duration="56" state="GG"/>
+    </tlLogic>
+    <tlLogic id="993701207" type="static" programID="0" offset="0">
+        <phase duration="4" state="Grrr"/>
+        <phase duration="4" state="yrrr"/>
+        <phase duration="6" state="rGGr"/>
+        <phase duration="4" state="ryyr"/>
+        <phase duration="39" state="rrrG"/>
+        <phase duration="4" state="rrry"/>
+    </tlLogic>
+    <tlLogic id="GS_474385689" type="static" programID="0" offset="0">
+        <phase duration="11" state="GGGGrrr"/>
+        <phase duration="4" state="yyyyrrr"/>
+        <phase duration="41" state="rrrrGGG"/>
+        <phase duration="4" state="rrrryyy"/>
+    </tlLogic>
+    <tlLogic id="GS_cluster_2296597387_2296597394_479758923" type="static" programID="0" offset="0">
+        <phase duration="47" state="GGGGrrrrrrGGGGGG"/>
+        <phase duration="4" state="yyyyrrrrrrGGyyyy"/>
+        <phase duration="5" state="rrrrGGGGGGGGrrrr"/>
+        <phase duration="4" state="rrrryyyyyyGGrrrr"/>
+    </tlLogic>
+    <tlLogic id="cluster_1023011761_491588483_991762813" type="static" programID="0" offset="0">
+        <phase duration="32" state="GGGGgrrGGGGG"/>
+        <phase duration="4" state="GGGGgrryyyyy"/>
+        <phase duration="8" state="GGGGGrrrrrrr"/>
+        <phase duration="8" state="GGGGGGGrrrrr"/>
+        <phase duration="4" state="GGGGyyyrrrrr"/>
+    </tlLogic>
+    <tlLogic id="cluster_478824434_478825535" type="static" programID="0" offset="0">
+        <phase duration="48" state="GGGGGgrr"/>
+        <phase duration="4" state="Gyyyyyrr"/>
+        <phase duration="4" state="GrrrrrGG"/>
+        <phase duration="4" state="Grrrrryy"/>
+    </tlLogic>
+    <tlLogic id="cluster_478824721_478825367" type="static" programID="0" offset="0">
+        <phase duration="49" state="GGGrrr"/>
+        <phase duration="4" state="yGGrrr"/>
+        <phase duration="14" state="rGGGGG"/>
+        <phase duration="4" state="rGGyyy"/>
+    </tlLogic>
+    <tlLogic id="joinedS_5436649954_5772236419_cluster_5772236424_5772236425_5772236426_5772236427" type="static" programID="0" offset="0">
+        <phase duration="4" state="Grrrrrrrrrrrrrrrrrr"/>
+        <phase duration="4" state="yrrrrrrrrrrrrrrrrrr"/>
+        <phase duration="25" state="rrGrrrrrrrrrrrrrrrr"/>
+        <phase duration="4" state="rryrrrrrrrrrrrrrrrr"/>
+        <phase duration="27" state="rrrGGGGGGrrrrrrrrrr"/>
+        <phase duration="4" state="rrrGGGyyyrrrrrrrrrr"/>
+        <phase duration="4" state="rGrGGGrrrGGGGGrrrrr"/>
+        <phase duration="4" state="rGrGGGrrryyyyyrrrrr"/>
+        <phase duration="4" state="rGrGGGrrrrrrrrGGGGG"/>
+        <phase duration="4" state="ryryyyrrrrrrrryyyyy"/>
+    </tlLogic>
+</additional>

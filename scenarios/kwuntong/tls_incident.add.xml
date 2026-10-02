@@ -1,22 +1,22 @@
 <additional>
   <tlLogic id="cluster_1023011761_491588483_991762813" programID="P_inc" offset="0" type="static">
-    <phase duration="52" state="GGGGgrrGGGGG"/>
-    <phase duration="8" state="GGGGgrryyyyy"/>
-    <phase duration="16" state="GGGGGrrrrrrr"/>
-    <phase duration="51" state="GGGGGGGrrrrr"/>
-    <phase duration="8" state="GGGGyyyrrrrr"/>
+    <phase duration="48" state="GGGGgrrGGGGG"/>
+    <phase duration="6" state="GGGGgrryyyyy"/>
+    <phase duration="12" state="GGGGGrrrrrrr"/>
+    <phase duration="12" state="GGGGGGGrrrrr"/>
+    <phase duration="6" state="GGGGyyyrrrrr"/>
   </tlLogic>
   <tlLogic id="GS_474385689" programID="P_inc" offset="0" type="static">
-    <phase duration="39" state="GGGGrrr"/>
-    <phase duration="6" state="yyyyrrr"/>
-    <phase duration="58" state="rrrrGGG"/>
-    <phase duration="6" state="rrrryyy"/>
+    <phase duration="11" state="GGGGrrr"/>
+    <phase duration="5" state="yyyyrrr"/>
+    <phase duration="62" state="rrrrGGG"/>
+    <phase duration="5" state="rrrryyy"/>
   </tlLogic>
   <tlLogic id="GS_cluster_2296597387_2296597394_479758923" programID="P_inc" offset="0" type="static">
-    <phase duration="58" state="GGGGrrrrrrGGGGGG"/>
-    <phase duration="6" state="yyyyrrrrrrGGyyyy"/>
-    <phase duration="39" state="rrrrGGGGGGGGrrrr"/>
-    <phase duration="6" state="rrrryyyyyyGGrrrr"/>
+    <phase duration="70" state="GGGGrrrrrrGGGGGG"/>
+    <phase duration="5" state="yyyyrrrrrrGGyyyy"/>
+    <phase duration="5" state="rrrrGGGGGGGGrrrr"/>
+    <phase duration="5" state="rrrryyyyyyGGrrrr"/>
   </tlLogic>
   <tlLogic id="joinedS_3688277387_cluster_1691725984_993701523_cluster_519547925_993701172" programID="P_inc" offset="0" type="static">
     <phase duration="12" state="Grrrrrrrrrrrrrrrrrrrrrrrrrr"/>
