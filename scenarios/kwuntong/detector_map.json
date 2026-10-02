@@ -585,7 +585,7 @@
    "bound": "Eastbound",
    "edge": "39596703",
    "dist_m": 0.7,
-   "pos": 17.9,
+   "pos": 20.4,
    "n_lanes": 3
   },
   {
@@ -595,10 +595,10 @@
    "bearing": 110.0,
    "road": "Kwun Tong Road",
    "bound": "Eastbound",
-   "edge": "1128468458",
-   "dist_m": 0.3,
-   "pos": 14.6,
-   "n_lanes": 4
+   "edge": "1128468457",
+   "dist_m": 0.2,
+   "pos": 90.2,
+   "n_lanes": 3
   },
   {
    "id": "AID07225",

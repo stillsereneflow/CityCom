@@ -139,13 +139,12 @@
     <inductionLoop id="AID07222_0" lane="232029951#2_0" pos="13.6" period="30" file="NUL"/>
     <inductionLoop id="AID07222_1" lane="232029951#2_1" pos="13.6" period="30" file="NUL"/>
     <inductionLoop id="AID07222_2" lane="232029951#2_2" pos="13.6" period="30" file="NUL"/>
-    <inductionLoop id="AID07223_0" lane="39596703_0" pos="17.9" period="30" file="NUL"/>
-    <inductionLoop id="AID07223_1" lane="39596703_1" pos="17.9" period="30" file="NUL"/>
-    <inductionLoop id="AID07223_2" lane="39596703_2" pos="17.9" period="30" file="NUL"/>
-    <inductionLoop id="AID07224_0" lane="1128468458_0" pos="14.6" period="30" file="NUL"/>
-    <inductionLoop id="AID07224_1" lane="1128468458_1" pos="14.6" period="30" file="NUL"/>
-    <inductionLoop id="AID07224_2" lane="1128468458_2" pos="14.6" period="30" file="NUL"/>
-    <inductionLoop id="AID07224_3" lane="1128468458_3" pos="14.6" period="30" file="NUL"/>
+    <inductionLoop id="AID07223_0" lane="39596703_0" pos="20.4" period="30" file="NUL"/>
+    <inductionLoop id="AID07223_1" lane="39596703_1" pos="20.4" period="30" file="NUL"/>
+    <inductionLoop id="AID07223_2" lane="39596703_2" pos="20.4" period="30" file="NUL"/>
+    <inductionLoop id="AID07224_0" lane="1128468457_0" pos="90.2" period="30" file="NUL"/>
+    <inductionLoop id="AID07224_1" lane="1128468457_1" pos="90.2" period="30" file="NUL"/>
+    <inductionLoop id="AID07224_2" lane="1128468457_2" pos="90.2" period="30" file="NUL"/>
     <inductionLoop id="AID07225_0" lane="494502567_0" pos="5.1" period="30" file="NUL"/>
     <inductionLoop id="AID07225_1" lane="494502567_1" pos="5.1" period="30" file="NUL"/>
     <inductionLoop id="AID07225_2" lane="494502567_2" pos="5.1" period="30" file="NUL"/>

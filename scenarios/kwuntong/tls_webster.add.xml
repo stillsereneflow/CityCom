@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2026-10-02 16:42:52.731426 by Eclipse SUMO tlsCycleAdaptation.py v1.27.1
+<!-- generated on 2026-10-02 17:00:54.595145 by Eclipse SUMO tlsCycleAdaptation.py v1.27.1
 <configuration>
-    <net-file value="scenarios/kwuntong/net.net.xml"/>
-    <output-file value="scenarios/kwuntong/tls_webster.add.xml"/>
+    <net-file value="D:\CityCom\scenarios\kwuntong\net.net.xml"/>
+    <output-file value="D:\CityCom\scenarios\kwuntong\tls_webster.add.xml"/>
     <route-files value="scenarios/kwuntong/proxy.rou.xml"/>
     <begin value="0.0"/>
     <min-cycle value="60"/>
