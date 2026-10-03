@@ -1,0 +1,32 @@
+{
+ "run": "assim/na300_impl/replay4001_logged",
+ "t_snap": 1800.0,
+ "horizon": 300,
+ "wall_s": 0.9,
+ "meta_m": {
+  "tko_insert": 1.0776315789473685
+ },
+ "meta_twin_base_factor": 0.85,
+ "override_m": null,
+ "override_factor": null,
+ "n_online": 366,
+ "n_branch": 366,
+ "ids_equal": true,
+ "sets_equal": true,
+ "only_online": [],
+ "only_branch": [],
+ "branch_kpis": {
+  "delay_vh": 3.391322541632943,
+  "corridor_delay_vh": 2.8349657357167573,
+  "n_affected": 509,
+  "arrived": 348,
+  "backlog_end": 0,
+  "halt_inc": 0.0,
+  "running": 307
+ },
+ "branch_pending_after_first_step": 0,
+ "meta_pending_at_snap": 0,
+ "online_pending_at_window_end": 0,
+ "branch_backlog_end": 0,
+ "pending_match": true
+}

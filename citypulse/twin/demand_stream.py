@@ -1,8 +1,10 @@
 """Twin demand: Poisson-thinning candidate stream (report2 §G.1).
 
 Candidates come from twin_cand.rou.xml (sampled at TWIN_CAND_SCALE x counts, independent of the Proxy's
-latent demand). Each candidate n has a fixed uniform u_n (seeded); it is inserted iff u_n < m_s / scale.
-The stream is a pure function of (seed, m), so every branch replaying from a snapshot sees the same
+latent demand). Each candidate n has a fixed uniform u_n (seeded); it is inserted iff
+u_n < factor(entry) * m_s / scale, where ``factor`` is the Twin base factor of that entry (1.0 for
+every entry except the TKO entry, whose factor is set by --twin-base-factor). The stream is a pure
+function of (seed, factor, m path), so every branch replaying from a snapshot sees the same
 vehicles (common random numbers) and a rewind never duplicates or skips vehicles.
 """
 import xml.etree.ElementTree as ET
@@ -14,9 +16,12 @@ import numpy as np
 from citypulse.config import SCEN
 from citypulse.demand.make_demand import TWIN_CAND_SCALE
 
+BASE_FACTOR_ENTRY = "tko_insert"   # the only entry --twin-base-factor scales
+
 
 class TwinDemandStream:
-    def __init__(self, seed=0, path=None, scale=TWIN_CAND_SCALE):
+    def __init__(self, seed=0, path=None, scale=TWIN_CAND_SCALE, base_factor=1.0,
+                 factor_entries=(BASE_FACTOR_ENTRY,)):
         if path is None:
             net = os.environ.get("CITYPULSE_NET", "").strip().lower()
             if net == "blite":
@@ -52,11 +57,21 @@ class TwinDemandStream:
         self.cands = cands
         self.u = np.random.default_rng(seed).random(len(cands))
         self.scale = scale
+        self.base_factor = float(base_factor)
+        self.factor_entries = tuple(factor_entries)
         self.m = {}   # entry edge -> multiplier (1.0 = base demand)
         self.ptr = 0
 
     def multiplier(self, entry):
         return self.m.get(entry, 1.0)
+
+    def factor(self, entry):
+        """Twin base factor of `entry`: 1.0 for every entry it is not configured for."""
+        return self.base_factor if entry in self.factor_entries else 1.0
+
+    def acceptance(self, entry):
+        """Thinning threshold: candidate n of `entry` is inserted iff u_n < this value."""
+        return self.factor(entry) * self.multiplier(entry) / self.scale
 
     def base_rate(self, entry, t, window=300.0):
         """base_s(t): candidate-pool insertion rate of `entry` in veh/h, over [t-window, t+window).
@@ -64,11 +79,20 @@ class TwinDemandStream:
         Reads only the candidate list (a pure function of the pool, so identical in every branch),
         divided by the pool scale: with m_s = 1.0 the expected insertion rate is exactly this value.
         Candidates are counted by their first edge, the same key ``due`` uses for the multiplier.
+        The window is clamped to the candidate pool's span and the count divided by that actual
+        in-pool length, so the rate is not scaled down where the window overruns the pool (F3).
         """
         lo = bisect.bisect_left(self.cands, (t - window,))
         hi = bisect.bisect_left(self.cands, (t + window,))
         n = sum(1 for i in range(lo, hi) if self.cands[i][2][0] == entry)
-        return n * 3600.0 / (2.0 * window) / self.scale
+        if not self.cands:
+            return 0.0
+        w_lo = max(t - window, self.cands[0][0])
+        w_hi = min(t + window, self.cands[-1][0])
+        span = w_hi - w_lo
+        if span <= 0:
+            return 0.0
+        return n * 3600.0 / span / self.scale
 
     def seek(self, t):
         """Position the pointer at the first candidate with depart > t (used after loadState)."""
@@ -87,7 +111,7 @@ class TwinDemandStream:
             dep, vid, edges = self.cands[self.ptr]
             u = self.u[self.ptr]
             self.ptr += 1
-            if u < self.multiplier(edges[0]) / self.scale:
+            if u < self.acceptance(edges[0]):
                 yield vid, edges
 
     def insert_due(self, tc, t, vtype="tdist"):

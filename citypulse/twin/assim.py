@@ -1,10 +1,10 @@
 """Normal-mode assimilation (report2 §G.3, docs/oct5-normal-assim-plan.md "NA, as specified").
 
-Pure and SUMO-free: the caller supplies, for the last two 30-s intervals, the boundary detector's
-observation and the Twin's own reading as ``(q, v, o, valid)``, plus ``base_s(t)`` (the entry's
-Twin base insertion rate in veh/h) and ``sigma_b^q`` (veh/h).
+Pure and SUMO-free: the caller supplies, for the last ``n_intervals`` 30-s intervals, the boundary
+detector's observation and the Twin's own reading as ``(q, v, o, valid)``, plus ``base_s(t)`` (the
+entry's Twin base insertion rate in veh/h) and ``sigma_b^q`` (veh/h).
 
-Every 60 s:
+Every 60 s (``n_intervals = 2``, the predeclared NA):
 
     if o_b < o_crit and b is valid in both intervals:
         e_s = (q_b - q̂_b) / base_s(t)                       # both q in veh/h
@@ -13,8 +13,13 @@ Every 60 s:
     else:
         m_s unchanged                                        # congested flow is not demand
 
+Every 300 s (``n_intervals = 10``, ``m_max = 1.5``: NA-300 of ``docs/na300-qualification-plan.md``)
+the identical rule runs over the preceding non-overlapping ten 30-s intervals, all of which must be
+valid; ``sigma_q`` is then ``sigma_300`` (1.4826 MAD of the 300-s mean residuals) and the m clip is
+the candidate-pool scale 1.5.
+
 Units: ``read_detectors``/``SensorMsg`` report counts per 30-s interval, so q is multiplied by 120
-to get veh/h; the two intervals are averaged. Missing or invalid data in either interval, a missing
+to get veh/h; the intervals are averaged. Missing or invalid data in any interval, a missing
 detector, a non-positive base rate or a missing/non-positive sigma all mean no update.
 """
 from __future__ import annotations
@@ -68,11 +73,13 @@ class NormalAssimilator:
     """report2 §G.3 entry-demand update for one boundary entry.
 
     Parameters (defaults fixed by the predeclared plan, no tuning): kappa=0.3, delta=1.0 sigma,
-    per-tick step clip ±0.05, m in [0.5, 1.8], o_crit=15%.
+    per-tick step clip ±0.05, m in [0.5, 1.8], o_crit=15%. ``n_intervals`` is the number of
+    consecutive 30-s intervals averaged per tick (2 = the 60-s NA; 10 = the 300-s NA-300, whose
+    m clip is the pool scale 1.5).
     """
 
     def __init__(self, kappa=0.3, delta=1.0, step_clip=0.05, m_min=0.5, m_max=1.8, o_crit=15.0,
-                 sigma_q=None):
+                 sigma_q=None, n_intervals=2):
         self.kappa = float(kappa)
         self.delta = float(delta)
         self.step_clip = float(step_clip)
@@ -80,12 +87,13 @@ class NormalAssimilator:
         self.m_max = float(m_max)
         self.o_crit = float(o_crit)
         self.sigma_q = None if sigma_q is None else float(sigma_q)
+        self.n_intervals = int(n_intervals)
 
     def update(self, t, obs, twin, base_vehph, m, sigma_q=None):
-        """One 60-s tick.
+        """One tick.
 
-        obs, twin: the last two 30-s intervals (oldest first) of the boundary detector, each a
-        mapping with q/v/o/valid (SensorMsg ObsItem or read_detectors row) or an Interval.
+        obs, twin: the last ``n_intervals`` 30-s intervals (oldest first) of the boundary detector,
+        each a mapping with q/v/o/valid (SensorMsg ObsItem or read_detectors row) or an Interval.
         base_vehph: base_s(t) in veh/h. m: current multiplier.
         Returns (m_new, row) with row = {t, e_s, r, delta, m, reason}, reason in
         {"updated", "deadband", "congested", "invalid"}.
@@ -95,7 +103,7 @@ class NormalAssimilator:
                "reason": "invalid"}
         if not isinstance(obs, (list, tuple)) or not isinstance(twin, (list, tuple)):
             return float(m), row
-        if len(obs) != 2 or len(twin) != 2:
+        if len(obs) != self.n_intervals or len(twin) != self.n_intervals:
             return float(m), row
         o2 = [Interval.of(x) for x in obs]
         w2 = [Interval.of(x) for x in twin]

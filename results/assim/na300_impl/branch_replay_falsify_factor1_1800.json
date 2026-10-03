@@ -1,0 +1,53 @@
+{
+ "run": "assim/na300_impl/replay4001_logged",
+ "t_snap": 1800.0,
+ "horizon": 300,
+ "wall_s": 0.9,
+ "meta_m": {
+  "tko_insert": 1.0776315789473685
+ },
+ "meta_twin_base_factor": 1.0,
+ "override_m": null,
+ "override_factor": 1.0,
+ "n_online": 366,
+ "n_branch": 392,
+ "ids_equal": false,
+ "sets_equal": false,
+ "only_online": [],
+ "only_branch": [
+  "t3415",
+  "t3417",
+  "t3427",
+  "t3437",
+  "t3469",
+  "t3494",
+  "t3535",
+  "t3536",
+  "t3549",
+  "t3562",
+  "t3565",
+  "t3566",
+  "t3617",
+  "t3618",
+  "t3674",
+  "t3692",
+  "t3713",
+  "t3735",
+  "t3761",
+  "t3826"
+ ],
+ "branch_kpis": {
+  "delay_vh": 3.7213202042594773,
+  "corridor_delay_vh": 3.1744057927222977,
+  "n_affected": 535,
+  "arrived": 349,
+  "backlog_end": 0,
+  "halt_inc": 0.0,
+  "running": 332
+ },
+ "branch_pending_after_first_step": 0,
+ "meta_pending_at_snap": 0,
+ "online_pending_at_window_end": 0,
+ "branch_backlog_end": 0,
+ "pending_match": true
+}

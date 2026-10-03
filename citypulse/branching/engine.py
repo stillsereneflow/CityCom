@@ -4,7 +4,8 @@ Same Twin snapshot -> one OS process per candidate action -> rollout -> KPIs at 
 Each branch: new SUMO process with --load-state (in-process loadState was rejected by the snapshot
 tests), then re-apply what the state file does not keep (snapshot tests): lane closures/speeds and the capacity
 hypothesis. Vehicles waiting for insertion ARE kept by the state (they reappear after the first step). Demand continues from the
-Twin's own candidate stream (same seed in every branch = common random numbers). The Proxy is never
+Twin's own candidate stream (same seed in every branch = common random numbers), with the assimilated
+multiplier `m` and the Twin base factor restored from the snapshot meta. The Proxy is never
 touched: this module must not import citypulse.proxy (tests/test_firewall.py).
 
 KPI definitions (all over [t_snap, t_snap + h]):
@@ -59,7 +60,8 @@ def _worker(job):
                            departSpeed="0")
             tc.vehicle.setStop(vid, hyp["edge"], pos=hyp["pos"], laneIndex=ln, duration=hyp.get("duration", 3600))
             tc.vehicle.setLaneChangeMode(vid, 0)
-    stream = TwinDemandStream(seed=meta["demand_seed"], path=meta.get("demand_path"))
+    stream = TwinDemandStream(seed=meta["demand_seed"], path=meta.get("demand_path"),
+                              base_factor=meta.get("twin_base_factor") or 1.0)
     stream.m = dict(meta.get("m") or {})   # assimilated multipliers travel with the snapshot
     stream.seek(t0)
     control = get_control()

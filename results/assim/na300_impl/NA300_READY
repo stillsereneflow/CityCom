@@ -1,0 +1,6 @@
+NA300_READY
+25b104cf25c0fdf5eb075df9f0a58317429d5aa37d8bd8f68d751e73b2b4661b  citypulse/twin/assim.py
+0e67b323fcb4cee62045f06537606ba22eaddd9d7cccf5b8f792cb075ad0ffac  citypulse/twin/service.py
+84ec65294fe28f202a04aa268b406134924ee5197705abfca4d15f39ab5b8802  citypulse/twin/demand_stream.py
+5a4c9e40442a79ae5a481dabfb132a8bfa770e4a43417fb35a2f8bf0237752aa  citypulse/branching/engine.py
+# sha256 of the four edited modules (NA-300 + Twin base factor); see results/assim/na300_impl/report.md
