@@ -1,5 +1,11 @@
 """Minimal snapshot branching engine (Twin side only).
 
+Scoring replays (event-aware assimilation, docs/oct6-event-pilot-plan.md "Scoring"): a second,
+independent entry point, ``score_replays``, replays one snapshot once per hypothesis and returns the
+Twin detector intervals over [t_on, t_end], the vehicle count and a vehicle-state digest. It follows
+the same conventions as ``_worker`` (state file, control state, stream pointer/m/base factor) but
+shares no code path with it: ``run_branches`` is unchanged.
+
 Same Twin snapshot -> one OS process per candidate action -> rollout -> KPIs at checkpoints.
 Each branch: new SUMO process with --load-state (in-process loadState was rejected by the snapshot
 tests), then re-apply what the state file does not keep (snapshot tests): lane closures/speeds and the capacity
@@ -130,3 +136,174 @@ def run_branches(state, meta, actions, horizons=(300, 600, 900), hypothesis=None
         with mp.get_context("spawn").Pool(workers or len(jobs)) as pool:
             res = pool.map(_worker, jobs)
     return res, time.time() - t
+
+
+# ------------------------------------------------------------------ scoring replays (event pilot)
+SCORE_VCLASSES = ("passenger", "bus", "truck", "trailer", "delivery")
+
+
+def _apply_spec_at(tc, cs, stream, spec):
+    """Apply one event-pilot hypothesis to a running replay (incident or demand family).
+
+    Incident: lanes 0..k-1 of the edge are disallowed and the remaining lanes' max speed is scaled by
+    ``speed_factor`` (the state file keeps neither, so both are recorded in the control state).
+    Demand: the entry's multiplier is set to the hypothesis level ``factor`` (an absolute demand level,
+    the spec's "write the MAP f into m"), not a factor on the Twin's current estimate.
+    """
+    if not spec:
+        return
+    kind = spec.get("kind", "none")
+    if kind == "incident":
+        edge = spec["edge"]
+        closed = list(spec.get("lanes_closed") or [])
+        for ln in closed:
+            lane = f"{edge}_{ln}"
+            tc.lane.setDisallowed(lane, list(SCORE_VCLASSES))
+            cs.lane_disallow[lane] = list(SCORE_VCLASSES)
+        s = float(spec.get("speed_factor", 1.0))
+        n = int(spec.get("n_lanes") or 0)
+        if s != 1.0 and n > 0:
+            for ln in range(n):
+                if ln in closed:
+                    continue
+                lane = f"{edge}_{ln}"
+                v0 = tc.lane.getMaxSpeed(lane)
+                tc.lane.setMaxSpeed(lane, v0 * s)
+                cs.lane_maxspeed[lane] = v0 * s
+    elif kind == "demand":
+        # the hypothesis is an absolute demand level f (the spec's "write the MAP f into m"), not a
+        # factor on the Twin's current estimate
+        stream.m[spec["entry"]] = float(spec["factor"])
+
+
+def _lift_spec_at(tc, cs, spec):
+    """Remove a previously applied incident restriction (clearance replay)."""
+    if not spec:
+        return
+    edge = spec.get("edge")
+    for ln in spec.get("lanes_closed") or []:
+        lane = f"{edge}_{ln}"
+        tc.lane.setDisallowed(lane, [])
+        cs.lane_disallow.pop(lane, None)
+    for lane, v0 in (spec.get("base_speed") or {}).items():
+        tc.lane.setMaxSpeed(lane, float(v0))
+        cs.lane_maxspeed.pop(lane, None)
+
+
+def restriction_present(tc, spec):
+    """True when every lane the incident spec closes is disallowed in the live/replayed Twin."""
+    if not spec or spec.get("kind") != "incident":
+        return False
+    for ln in spec.get("lanes_closed") or []:
+        if not tc.lane.getDisallowed(f"{spec['edge']}_{ln}"):
+            return False
+    return True
+
+
+def veh_digest(tc):
+    """sha256 of the vehicle state at the current time (check 7: live Twin == replay endpoint)."""
+    import hashlib
+    lines = [f"t={tc.simulation.getTime():.1f}"]
+    for v in tc.vehicle.getIDList():
+        lines.append(f"{v}|{tc.vehicle.getLaneID(v)}|{tc.vehicle.getLanePosition(v):.3f}|"
+                     f"{tc.vehicle.getSpeed(v):.3f}")
+    lines.sort()
+    return hashlib.sha256("\n".join(lines).encode("utf-8")).hexdigest(), len(tc.vehicle.getIDList())
+
+
+def _score_worker(job):
+    """One hypothesis in its own SUMO process: load the snapshot, restore, replay [t_on, t_end]."""
+    import libsumo as tc  # one libsumo instance per process
+    from citypulse.control.actions import ActionExecutor
+    from citypulse.sim import ControlState, twin_cmd, detector_loops, read_detectors
+    from citypulse.twin.demand_stream import TwinDemandStream
+
+    t_wall0 = time.time()
+    meta = json.load(open(job["meta"]))
+    tc.start(twin_cmd(job["seed"], ["--load-state", job["state"]]))
+    try:
+        t0 = tc.simulation.getTime()
+        cs = ControlState.from_dict(meta["control_state"])
+        cs.apply(tc)
+        stream = TwinDemandStream(seed=meta["demand_seed"], path=meta.get("demand_path"),
+                                  base_factor=meta.get("twin_base_factor") or 1.0)
+        stream.m = dict(meta.get("m") or {})
+        if meta.get("stream_ptr") is not None:
+            stream.ptr = int(meta["stream_ptr"])
+        else:
+            stream.seek(t0)
+        compliance = job.get("compliance")
+        if compliance is None:
+            compliance = get_twin_compliance()
+        act = ActionExecutor(get_control(), compliance, cs)
+        loops = detector_loops()
+        dets = list(job.get("detectors") or [])
+        t_on, t_end = float(job["t_on"]), float(job["t_end"])
+        t_lift = job.get("t_lift")
+        apply_spec, lift_spec = job.get("apply"), job.get("lift")
+        applied = lifted = False
+        if apply_spec is not None and t_on <= t0 + 1e-9:
+            _apply_spec_at(tc, cs, stream, apply_spec)
+            applied = True
+        if lift_spec is not None and t_lift is not None and t_lift <= t0 + 1e-9:
+            _lift_spec_at(tc, cs, lift_spec)
+            lifted = True
+        t_setup = time.time() - t_wall0
+        intervals = {d: {} for d in dets}
+        while tc.simulation.getTime() < t_end - 1e-9:
+            t_next = tc.simulation.getTime() + 1
+            if not applied and apply_spec is not None and t_next > t_on:
+                _apply_spec_at(tc, cs, stream, apply_spec)
+                applied = True
+            if not lifted and lift_spec is not None and t_lift is not None and t_next > t_lift:
+                _lift_spec_at(tc, cs, lift_spec)
+                lifted = True
+            stream.insert_due(tc, t_next)
+            tc.simulationStep()
+            act.step(tc)
+            t = tc.simulation.getTime()
+            if t > t_on + 1e-9 and abs(t - round(t / 30.0) * 30.0) < 1e-6:
+                own = read_detectors(tc, loops)
+                for d in dets:
+                    row = own.get(d)
+                    if row is not None:
+                        intervals[d][float(t)] = {"q": row["q"], "v": row["v"], "o": row["o"]}
+        digest, n_veh = veh_digest(tc)
+        return {"tag": job.get("tag"), "t_snap": float(t0), "t_on": t_on, "t_end": float(t_end),
+                "intervals": intervals, "n_vehicles": n_veh, "veh_digest": digest,
+                "restriction_present": restriction_present(tc, apply_spec),
+                "applied": applied, "lifted": lifted, "setup_s": t_setup,
+                "wall_s": time.time() - t_wall0}
+    finally:
+        try:
+            tc.close()
+        except Exception:
+            pass
+
+
+def score_replays(state, meta, jobs, workers=8, seed=2, compliance=None):
+    """Replay one snapshot once per job in parallel subprocesses (<= workers, default 8).
+
+    Every job is ``{tag, t_on, t_end, detectors, apply, lift, t_lift}``; ``apply`` is applied at
+    ``t_on`` and ``lift`` at ``t_lift`` (both optional). Returns ``(results, wall_s)`` with one result
+    per job, in job order.
+    """
+    full = []
+    for j in jobs:
+        job = dict(j)
+        job["state"] = str(state)
+        job["meta"] = str(meta)
+        job.setdefault("seed", seed)
+        if compliance is not None:
+            job["compliance"] = compliance
+        full.append(job)
+    if not full:
+        return [], 0.0
+    t0 = time.time()
+    n = max(1, min(int(workers or 1), len(full)))
+    if n == 1:
+        res = [_score_worker(j) for j in full]
+    else:
+        with mp.get_context("spawn").Pool(n) as pool:
+            res = pool.map(_score_worker, full)
+    return res, time.time() - t0

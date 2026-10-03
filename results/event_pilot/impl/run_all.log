@@ -1,0 +1,75 @@
+
+===== sigma: D:\CityCom\.venv\Scripts\python.exe results/event_pilot/impl/compute_sigma_event.py =====
+detector      n_q    sigma_q   sigma_v   sigma_o  fallback
+AID02105      609     5.9304    5.0076    3.4242  -
+AID02106      606     2.9652    5.2878    1.8754  -
+AID02108      597     7.4130    4.4759    2.3806  -
+AID02109      597     5.9304    7.2390    3.0467  -
+AID02111      593     2.9652    6.2588    1.7307  -
+AID02112      605     5.9304    5.4043    3.4850  -
+AID02114      607     7.4130    5.3274    3.4215  -
+AID02115      605     7.4130    4.8119    4.1976  -
+AID07106      606     5.9304    4.3494    2.3572  -
+AID07107      604     2.9652    6.0732    1.9962  -
+AID07109      597     2.9652    4.6248    1.8251  -
+AID07110      599     2.9652    6.2674    2.5982  -
+AID07112      599     2.9652    4.0908    1.4302  -
+AID07113      598     2.9652    4.6839    1.2735  -
+wrote D:\CityCom-astra\results\event_pilot\impl\sigma_event.json (14 detectors)
+
+----- sigma: rc=0 wall=1.6s -----
+
+===== tests: D:\CityCom\.venv\Scripts\python.exe -m pytest tests/test_event.py -q -p no:cacheprovider =====
+.........................                                                [100%]
+25 passed in 0.08s
+
+----- tests: rc=0 wall=0.6s -----
+
+===== smoke: D:\CityCom\.venv\Scripts\python.exe results/event_pilot/impl/run_event_smoke.py --run event_pilot/impl/smoke_inc =====
+{"t_end": 7200.0, "wall_s": 68.87666773796082, "arrived": 2, "running": 414, "pending": 0, "teleports_total": null, "incident": {"edge": "ktb_n1", "lanes": [0, 1], "pos": 900.0, "t_start": 4500.0, "duration": 900.0}, "n_diverted": 0}
+{"messages": 240, "wall_s": 70.94962573051453, "arrived": 3, "running": 349, "pending": 0, "assim": "normal300", "twin_base_factor": 0.85, "event": {"state": "NORMAL", "t_on": 4440.0, "t_alarm": 5040.0, "n_eval": 4, "wall_s": 27.479339122772217, "masked": false, "frozen": false, "active_hyp": null, "restriction": null, "downweight": {"AID02109": 5.0, "AID02111": 5.0}, "n_alarms": 6, "alarms": [4890.0, 4920.0, 4950.0, 4980.0, 5010.0, 5040.0], "false_alarms": [], "unexplained": [], "transitions": [{"t": 4890.0, "from": "NORMAL", "to": "SUSPECTED_EVENT", "reason": "trigger_alarm"}, {"t": 5010.0, "from": "SUSPECTED_EVENT", "to": "NORMAL", "reason": "detector_fault_AID02109_stuck"}, {"t": 5040.0, "from": "NORMAL", "to": "SUSPECTED_EVENT", "reason": "trigger_alarm"}, {"t": 5040.0, "from": "SUSPECTED_EVENT", "to": "NORMAL", "reason": "detector_fault_AID02111_stuck"}], "freeze_entries": ["tko_insert"], "lane_counts": {"ktb_n1": 3, "ktb_w3": 3, "ktb_n2": 2}, "midpoints": {"ktb_n1": 503.1, "ktb_w3": 145.95, "ktb_n2": 997.45}, "n_replacements": 0}, "event_info": {"lane_counts": {"ktb_n1": 3, "ktb_w3": 3, "ktb_n2": 2}, "midpoints": {"ktb_n1": 503.1, "ktb_w3": 145.95, "ktb_n2": 997.45}, "freeze_entries": ["tko_insert"]}}
+{"proxy_rc": 0, "twin_rc": 0, "wall_s": 73.5, "t_end": 7200, "proxy_seed": 4001, "twin_seed": 2, "demand_seed": 202, "incident": true, "assim": "normal300", "boundary_detector": "AID07106", "sigma_json": "results/assim/na300/sigma300_dev.json", "twin_base_factor": 0.85, "event": "on", "event_sigma": "results/event_pilot/impl/sigma_event.json", "event_workers": 8, "snapshot_times": [4200, 4800, 5400, 6000], "twin_argv": ["-m", "citypulse.twin.service", "--endpoint", "tcp://127.0.0.1:5581", "--out", "D:\\CityCom-astra\\results\\event_pilot\\impl\\smoke_inc\\twin", "--seed", "2", "--demand-seed", "202", "--demand-path", "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\twin_cand.rou.xml", "--assim", "normal300", "--boundary-detector", "AID07106", "--sigma-json", "D:\\CityCom-astra\\results\\assim\\na300\\sigma300_dev.json", "--twin-base-factor", "0.85", "--event", "on", "--event-sigma", "D:\\CityCom-astra\\results\\event_pilot\\impl\\sigma_event.json", "--event-workers", "8", "--snapshot-times", "4200", "4800", "5400", "6000"], "proxy_argv": ["-c", "from citypulse.proxy.service import main\nmain()\n", "--endpoint", "tcp://127.0.0.1:5581", "--out", "D:\\CityCom-astra\\results\\event_pilot\\impl\\smoke_inc\\proxy", "--t-end", "7200", "--seed", "4001", "--routes", "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy.rou.xml"]}
+
+----- smoke: rc=0 wall=73.6s -----
+
+===== checks: D:\CityCom\.venv\Scripts\python.exe results/event_pilot/impl/check_replay.py =====
+Traceback (most recent call last):
+  File "D:\CityCom-astra\results\event_pilot\impl\check_replay.py", line 141, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "D:\CityCom-astra\results\event_pilot\impl\check_replay.py", line 97, in main
+    evl = ev.evaluate([hyp], dets, times, obs_hist, {hyp.id: r["intervals"]}, sigma, a.t_on,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\event.py", line 385, in evaluate
+    gap = log_post[h_star] - max(log_post[d] for d in demand)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: max() iterable argument is empty
+
+----- checks: rc=1 wall=3.9s -----
+
+===== summary: D:\CityCom\.venv\Scripts\python.exe results/event_pilot/impl/summarise_smoke.py =====
+run wall 70.9s, twin messages 240
+state trace:
+  t=  4890.0  NORMAL             -> SUSPECTED_EVENT     trigger_alarm
+  t=  5010.0  SUSPECTED_EVENT    -> NORMAL              detector_fault_AID02109_stuck
+  t=  5040.0  NORMAL             -> SUSPECTED_EVENT     trigger_alarm
+  t=  5040.0  SUSPECTED_EVENT    -> NORMAL              detector_fault_AID02111_stuck
+evaluations: 4
+  t=  4890.0 state=SUSPECTED_EVENT    h*=dem_f1.3               gap=0.0 evr=0.0 adopted=False p_clear=None n_O=180 wall=6.4s excluded={'obs_invalid': 30}
+  t=  4950.0 state=SUSPECTED_EVENT    h*=dem_f1.3               gap=0.0 evr=0.0 adopted=False p_clear=None n_O=180 wall=6.6s excluded={'partial_block': 42, 'obs_invalid': 30}
+  t=  5010.0 state=SUSPECTED_EVENT    h*=flt_AID02109_stuck     gap=3.862 evr=0.247 adopted=False p_clear=None n_O=213 wall=7.4s excluded={'obs_invalid': 39}
+  t=  5040.0 state=SUSPECTED_EVENT    h*=flt_AID02111_stuck     gap=3.05 evr=0.356 adopted=False p_clear=None n_O=138 wall=7.1s excluded={'partial_block': 84, 'obs_invalid': 30}
+alarm ticks (B>=3): 11 first=930.0; max B=6.087 at t=4980.0 over 240 trigger ticks (0 masked)
+evaluation wall: n=4 total=27.5s max=7.4251549243927
+freeze check: {'n_ticks': 24, 'reasons': {'invalid': 7, 'updated': 9, 'deadband': 8}, 'frozen_m_values': [], 'm_constant_while_frozen': True}
+
+----- summary: rc=0 wall=1.5s -----
+
+===== ready: D:\CityCom\.venv\Scripts\python.exe results/event_pilot/impl/make_ready.py =====
+e0e196e9b5ee85a6d65bbf953f2212736d434e54275c6a33f5e5368b47635392  citypulse/twin/event.py
+d96d9d3aabcf65aceecceca6244656c84f541459fba2a67d87201702081a3e81  citypulse/twin/service.py
+827fcbd202257cda1787f13e82a885d4ac58052a6f622a0abead9a5c54ac426a  citypulse/branching/engine.py
+64c8d1e70044da6346a6b058e3af6e3c0bd417438c531faf6f414a29cc3251f0  results/event_pilot/impl/sigma_event.json
+wrote D:\CityCom-astra\results\event_pilot\impl\EVENT_READY
+
+----- ready: rc=0 wall=0.1s -----
