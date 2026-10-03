@@ -38,12 +38,22 @@ def test_shared_scenario_has_no_incident_truth():
     import citypulse.scenario as sc
     text = (ROOT / "citypulse" / "scenario.py").read_text(encoding="utf-8")
     assert "PROXY_ONLY" not in dir(sc) and "t_start" not in text and "lanes" not in text
+    import citypulse.scenario_blite as sc_b
+    text_b = (ROOT / "citypulse" / "scenario_blite.py").read_text(encoding="utf-8")
+    assert "PROXY_ONLY" not in dir(sc_b) and "t_start" not in text_b and "lanes" not in text_b
 
 
-def test_twin_process_does_not_load_proxy_modules():
+@pytest.mark.parametrize("net_setting", ["", "v4", "blite"])
+def test_twin_process_does_not_load_proxy_modules(net_setting):
+    import os
+    env = dict(os.environ)
+    if net_setting:
+        env["CITYPULSE_NET"] = net_setting
+    else:
+        env.pop("CITYPULSE_NET", None)
     code = ("import sys, citypulse.twin.service, citypulse.branching.engine;"
             "print([m for m in sys.modules if m.startswith('citypulse.proxy')])")
-    out = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, cwd=ROOT, check=True)
+    out = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, cwd=ROOT, env=env, check=True)
     assert out.stdout.strip() == "[]"
 
 
@@ -82,7 +92,15 @@ def test_reply_only_infrastructure_actions():
 
 def _twin_log_path():
     import os
-    if os.environ.get("CITYPULSE_NET", "").strip().lower() == "v4":
+    net = os.environ.get("CITYPULSE_NET", "").strip().lower()
+    if net == "blite":
+        p = ROOT / "results" / "twoworld_blite" / "incident" / "twin" / "twin_log.parquet"
+        if p.exists():
+            return p
+        p_grid = ROOT / "results" / "blite" / "grid" / "two_worlds" / "twin" / "twin_log.parquet"
+        if p_grid.exists():
+            return p_grid
+    elif net == "v4":
         p = ROOT / "results" / "twoworld_v4" / "incident" / "twin" / "twin_log.parquet"
         if p.exists():
             return p
@@ -104,6 +122,12 @@ def test_twin_sees_sparse_subset():
     import json
     import os
     seen = set(pd.read_parquet(f).detector)
-    scen_map = ROOT / "scenarios" / "kwuntong" / "v4" / "detector_map.json" if os.environ.get("CITYPULSE_NET", "").strip().lower() == "v4" else ROOT / "scenarios" / "kwuntong" / "detector_map.json"
+    net = os.environ.get("CITYPULSE_NET", "").strip().lower()
+    if net == "blite":
+        scen_map = ROOT / "scenarios" / "kwuntong" / "blite" / "detector_map.json"
+    elif net == "v4":
+        scen_map = ROOT / "scenarios" / "kwuntong" / "v4" / "detector_map.json"
+    else:
+        scen_map = ROOT / "scenarios" / "kwuntong" / "detector_map.json"
     all_dets = {d["id"] for d in json.load(open(scen_map, encoding="utf-8"))["mapped"]}
     assert seen < all_dets and len(seen) <= 0.7 * len(all_dets)

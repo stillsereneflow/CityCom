@@ -11,22 +11,39 @@ import pandas as pd
 import traci
 import zmq
 
+import os
 from citypulse.bus.messages import validate_reply, validate_sensor
 from citypulse.control.actions import ActionExecutor
 from citypulse.proxy.incident import Incident
 from citypulse.proxy.sensors import SensorEmulator
-from citypulse.proxy.truth_config import PROXY_ONLY
-from citypulse.scenario import CONTROL
 from citypulse.sim import ControlState, init_signals, detector_loops, is_sensor_step, proxy_cmd, read_detectors
+
+
+def get_truth():
+    if os.environ.get("CITYPULSE_NET", "").strip().lower() == "blite":
+        from citypulse.proxy.truth_blite import PROXY_ONLY
+        return PROXY_ONLY
+    from citypulse.proxy.truth_config import PROXY_ONLY
+    return PROXY_ONLY
+
+
+def get_control():
+    if os.environ.get("CITYPULSE_NET", "").strip().lower() == "blite":
+        from citypulse.scenario_blite import CONTROL
+        return CONTROL
+    from citypulse.scenario import CONTROL
+    return CONTROL
 
 
 def run(endpoint, out: Path, seed, sensor_seed, t_end, incident_on, snapshot_times=(), routes=None):
     out.mkdir(parents=True, exist_ok=True)
+    truth = get_truth()
+    control = get_control()
     loops = detector_loops()
     emu = SensorEmulator(loops.keys(), sensor_seed)
-    inc = Incident(**PROXY_ONLY["incident"]) if incident_on else None
+    inc = Incident(**truth["incident"]) if incident_on else None
     cs = ControlState()
-    act = ActionExecutor(CONTROL, PROXY_ONLY["vms_true_compliance"], cs)
+    act = ActionExecutor(control, truth["vms_true_compliance"], cs)
     ctx = zmq.Context()
     sock = ctx.socket(zmq.REQ)
     sock.connect(endpoint)

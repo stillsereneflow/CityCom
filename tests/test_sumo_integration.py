@@ -16,9 +16,11 @@ def test_sumo_and_traci_available():
 
 
 def test_init_signals_resets_last_loaded_program(tmp_path):
+    from citypulse.sim import get_control
+    control = get_control()
     traci.start(twin_cmd(1), label="t_init")
     tc = traci.getConnection("t_init")
-    tls = CONTROL["tls_plan"][0]
+    tls = control["tls_plan"][0]
     before = tc.trafficlight.getProgram(tls)
     init_signals(tc)
     after = tc.trafficlight.getProgram(tls)
@@ -29,6 +31,9 @@ def test_init_signals_resets_last_loaded_program(tmp_path):
 
 def test_new_process_load_keeps_vehicles_but_not_lane_closures(tmp_path):
     from citypulse.twin.demand_stream import TwinDemandStream
+    from citypulse.sim import get_control
+    control = get_control()
+    target_lane = f"{control.get('vms_target_edge', '312049503')}_0"
     traci.start(twin_cmd(1), label="t_snap")
     tc = traci.getConnection("t_snap")
     init_signals(tc)
@@ -36,14 +41,14 @@ def test_new_process_load_keeps_vehicles_but_not_lane_closures(tmp_path):
     for _ in range(200):
         s.insert_due(tc, tc.simulation.getTime() + 1)
         tc.simulationStep()
-    tc.lane.setDisallowed("312049503_0", ["passenger"])
+    tc.lane.setDisallowed(target_lane, ["passenger"])
     n = tc.vehicle.getIDCount()
     state = str(tmp_path / "s.xml.gz")
     tc.simulation.saveState(state)
     tc.close()
     libsumo.start(twin_cmd(1, ["--load-state", state]))
     n2 = libsumo.vehicle.getIDCount()
-    dis = libsumo.lane.getDisallowed("312049503_0")
+    dis = libsumo.lane.getDisallowed(target_lane)
     libsumo.close()
     assert n2 == n
     assert "passenger" not in dis   # lane closures must be re-applied after load (ControlState)

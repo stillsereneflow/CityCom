@@ -17,15 +17,36 @@ from citypulse.demand.make_demand import TWIN_CAND_SCALE
 class TwinDemandStream:
     def __init__(self, seed=0, path=None, scale=TWIN_CAND_SCALE):
         if path is None:
-            is_v4 = os.environ.get("CITYPULSE_NET", "").strip().lower() == "v4"
-            path = (SCEN / "v4" / "twin_cand.rou.xml") if is_v4 else (SCEN / "twin_cand.rou.xml")
+            net = os.environ.get("CITYPULSE_NET", "").strip().lower()
+            if net == "blite":
+                p = SCEN / "blite" / "demand" / "twin_cand.rou.xml"
+                path = p if p.exists() else (SCEN / "blite" / "twin_cand.rou.xml")
+            elif net == "v4":
+                path = SCEN / "v4" / "twin_cand.rou.xml"
+            else:
+                path = SCEN / "twin_cand.rou.xml"
         root = ET.parse(path).getroot()
         cands = []
+        is_blite = os.environ.get("CITYPULSE_NET", "").strip().lower() == "blite"
         for v in root.iter("vehicle"):
             r = v.find("route")
             if r is None:
                 continue
-            cands.append((float(v.get("depart")), v.get("id"), r.get("edges").split()))
+            edges = r.get("edges").split()
+            if is_blite:
+                adapted = []
+                for i, e in enumerate(edges):
+                    adapted.append(e)
+                    if i < len(edges) - 1:
+                        nxt = edges[i + 1]
+                        if (e in ('ktb_w1', 'on_ktb_w2')) and nxt == 'ktb_w2':
+                            adapted.append('ms_on_ktb_w2')
+                        elif (e in ('tko_a1', 'on_ktr_w1')) and nxt == 'ktr_w1':
+                            adapted.append('ms_on_ktr_w1')
+                        elif e == 'ktb_n1' and (nxt in ('ktb_n2', 'off_ktb_n1')):
+                            adapted.append('dv_off_ktb_n1')
+                edges = adapted
+            cands.append((float(v.get("depart")), v.get("id"), edges))
         cands.sort()
         self.cands = cands
         self.u = np.random.default_rng(seed).random(len(cands))

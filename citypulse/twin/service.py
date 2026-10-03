@@ -13,18 +13,25 @@ import traci
 import zmq
 
 from citypulse.bus.messages import validate_reply, validate_sensor
-from citypulse.scenario import CONTROL, TWIN_ASSUMED_COMPLIANCE
-from citypulse.sim import ControlState, init_signals, detector_loops, read_detectors, twin_cmd
+from citypulse.sim import (
+    ControlState,
+    init_signals,
+    detector_loops,
+    read_detectors,
+    twin_cmd,
+    get_control,
+    get_twin_compliance,
+)
 from citypulse.control.actions import ActionExecutor
 from citypulse.twin.demand_stream import TwinDemandStream
 
 
-def run(endpoint, out: Path, seed, demand_seed, snapshot_times=()):
+def run(endpoint, out: Path, seed, demand_seed, snapshot_times=(), demand_path=None):
     out.mkdir(parents=True, exist_ok=True)
     loops = detector_loops()
-    stream = TwinDemandStream(seed=demand_seed)
+    stream = TwinDemandStream(seed=demand_seed, path=demand_path)
     cs = ControlState()
-    act = ActionExecutor(CONTROL, TWIN_ASSUMED_COMPLIANCE, cs)
+    act = ActionExecutor(get_control(), get_twin_compliance(), cs)
     ctx = zmq.Context()
     sock = ctx.socket(zmq.REP)
     sock.bind(endpoint)
@@ -48,7 +55,7 @@ def run(endpoint, out: Path, seed, demand_seed, snapshot_times=()):
                 tc.simulation.saveState(str(out / f"twin_state_{int(t)}.xml.gz"))
                 json.dump({"t": t, "control_state": cs.to_dict(), "stream_ptr": stream.ptr,
                            "pending": list(tc.simulation.getPendingVehicles()), "demand_seed": demand_seed,
-                           "sumo_seed": seed},
+                           "sumo_seed": seed, "demand_path": str(demand_path) if demand_path else None},
                           open(out / f"twin_state_{int(t)}.json", "w"))
         own = read_detectors(tc, loops)
         for o in msg["obs"]:
@@ -73,8 +80,9 @@ def main():
     ap.add_argument("--seed", type=int, default=2)
     ap.add_argument("--demand-seed", type=int, default=202)
     ap.add_argument("--snapshot-times", type=float, nargs="*", default=[])
+    ap.add_argument("--demand-path", default=None, help="Twin candidate routes XML file")
     a = ap.parse_args()
-    print(json.dumps(run(a.endpoint, Path(a.out), a.seed, a.demand_seed, set(a.snapshot_times))))
+    print(json.dumps(run(a.endpoint, Path(a.out), a.seed, a.demand_seed, set(a.snapshot_times), demand_path=a.demand_path)))
 
 
 if __name__ == "__main__":

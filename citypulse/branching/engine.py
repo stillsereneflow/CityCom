@@ -27,7 +27,7 @@ import multiprocessing as mp
 import time
 from pathlib import Path
 
-from citypulse.scenario import CONTROL, TWIN_ASSUMED_COMPLIANCE
+from citypulse.sim import get_control, get_twin_compliance
 
 SAMPLE = 10
 
@@ -59,16 +59,19 @@ def _worker(job):
                            departSpeed="0")
             tc.vehicle.setStop(vid, hyp["edge"], pos=hyp["pos"], laneIndex=ln, duration=hyp.get("duration", 3600))
             tc.vehicle.setLaneChangeMode(vid, 0)
-    stream = TwinDemandStream(seed=meta["demand_seed"])
+    stream = TwinDemandStream(seed=meta["demand_seed"], path=meta.get("demand_path"))
     stream.seek(t0)
-    act = ActionExecutor(CONTROL, job.get("compliance", TWIN_ASSUMED_COMPLIANCE), cs)
+    control = get_control()
+    default_compliance = get_twin_compliance()
+    compliance = job.get("compliance") if job.get("compliance") is not None else default_compliance
+    act = ActionExecutor(control, compliance, cs)
     if job["action"] != "A0":
         act.apply(tc, job["action"])
     t_setup = time.time() - t_wall0
 
     tl0 = {v: tc.vehicle.getTimeLoss(v) for v in tc.vehicle.getIDList()}
     last_tl = dict(tl0)
-    corr = set(CONTROL["corridor_b"]) | {CONTROL["vms_target_edge"]}
+    corr = set(control["corridor_b"]) | {control["vms_target_edge"]}
     affected = {}   # vid -> bool, decided once from the route
 
     def is_affected(v):
@@ -82,7 +85,7 @@ def _worker(job):
     checkpoints = sorted(job["horizons"])
     kpis = {}
     horizon = checkpoints[-1]
-    inc_edge = hyp["edge"] if hyp else CONTROL["vms_target_edge"]
+    inc_edge = hyp["edge"] if hyp else control["vms_target_edge"]
     pending_after_first = None
     for k in range(1, horizon + 1):
         stream.insert_due(tc, t0 + k)
@@ -112,7 +115,9 @@ def _worker(job):
 
 
 def run_branches(state, meta, actions, horizons=(300, 600, 900), hypothesis=None, seed=2, workers=None,
-                 compliance=TWIN_ASSUMED_COMPLIANCE):
+                 compliance=None):
+    if compliance is None:
+        compliance = get_twin_compliance()
     jobs = [{"state": str(state), "meta": str(meta), "action": a, "horizons": list(horizons),
              "hypothesis": hypothesis, "seed": seed, "compliance": compliance} for a in actions]
     t = time.time()

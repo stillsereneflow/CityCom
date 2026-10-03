@@ -21,12 +21,16 @@ def main():
     ap.add_argument("--twin-snapshot", type=float, nargs="*", default=[])
     ap.add_argument("--proxy-snapshot", type=float, nargs="*", default=[])
     ap.add_argument("--routes", default=None, help="Proxy routes XML file")
+    ap.add_argument("--twin-routes", default=None, help="Twin candidate routes XML file")
     a = ap.parse_args()
     run = RESULTS / a.run
     ep = f"tcp://127.0.0.1:{a.port}"
     t0 = time.time()
-    twin = subprocess.Popen([sys.executable, "-m", "citypulse.twin.service", "--endpoint", ep,
-                             "--out", str(run / "twin"), "--snapshot-times", *map(str, a.twin_snapshot)])
+    targs = [sys.executable, "-m", "citypulse.twin.service", "--endpoint", ep,
+             "--out", str(run / "twin"), "--snapshot-times", *map(str, a.twin_snapshot)]
+    if a.twin_routes:
+        targs.extend(["--demand-path", str(a.twin_routes)])
+    twin = subprocess.Popen(targs)
     time.sleep(2)
     pargs = [sys.executable, "-m", "citypulse.proxy.service", "--endpoint", ep, "--out", str(run / "proxy"),
              "--t-end", str(a.t_end), "--snapshot-times", *map(str, a.proxy_snapshot)]

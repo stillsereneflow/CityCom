@@ -5,7 +5,7 @@ from collections import defaultdict
 import os
 from pathlib import Path
 
-from citypulse.config import NET_FILE, SCEN, SENSOR_PERIOD, sumo_bin
+from citypulse.config import NET_FILE, RESULTS, SCEN, SENSOR_PERIOD, sumo_bin
 
 
 def get_net_setting():
@@ -13,31 +13,53 @@ def get_net_setting():
 
 
 def get_scen_dir():
-    if get_net_setting() == "v4":
+    net = get_net_setting()
+    if net == "blite":
+        return SCEN / "blite"
+    if net == "v4":
         return SCEN / "v4"
     return SCEN
 
 
 def get_net_file():
-    if get_net_setting() == "v4":
+    net = get_net_setting()
+    if net == "blite":
+        return SCEN / "blite" / "net3.net.xml"
+    if net == "v4":
         return SCEN / "net_bounded_v4.net.xml"
     return NET_FILE
 
 
 def get_det_file():
-    if get_net_setting() == "v4":
+    net = get_net_setting()
+    if net == "blite":
+        return SCEN / "blite" / "detectors3.add.xml"
+    if net == "v4":
         return SCEN / "v4" / "detectors.add.xml"
     return SCEN / "detectors.add.xml"
 
 
 def get_tls_file():
-    if get_net_setting() == "v4":
+    net = get_net_setting()
+    if net == "blite":
+        grid_webster = RESULTS / "blite" / "grid" / "tls_webster3.add.xml"
+        inc = SCEN / "blite" / "tls_incident3.add.xml"
+        if grid_webster.exists() and inc.exists():
+            return f"{grid_webster},{inc}"
+        return inc
+    if net == "v4":
         return SCEN / "v4" / "tls_incident.add.xml"
     return SCEN / "tls_incident.add.xml"
 
 
 def get_detector_map():
-    if get_net_setting() == "v4":
+    net = get_net_setting()
+    if net == "blite":
+        m3 = SCEN / "blite" / "detector_map3.json"
+        if m3.exists():
+            return m3
+        return SCEN / "blite" / "detector_map.json"
+    if net == "v4":
         return SCEN / "v4" / "detector_map.json"
     return SCEN / "detector_map.json"
 
@@ -50,6 +72,29 @@ def get_vtypes_file(world):
     return SCEN / f"vtypes_{world}.add.xml"
 
 
+def get_control():
+    if get_net_setting() == "blite":
+        from citypulse.scenario_blite import CONTROL
+        c = dict(CONTROL)
+        cb = list(c["corridor_b"])
+        if "tko_a1" in cb and "ktr_w1" in cb:
+            idx = cb.index("tko_a1")
+            if cb[idx + 1] == "ktr_w1":
+                cb.insert(idx + 1, "ms_on_ktr_w1")
+        c["corridor_b"] = cb
+        return c
+    from citypulse.scenario import CONTROL
+    return CONTROL
+
+
+def get_twin_compliance():
+    if get_net_setting() == "blite":
+        from citypulse.scenario_blite import TWIN_ASSUMED_COMPLIANCE
+        return TWIN_ASSUMED_COMPLIANCE
+    from citypulse.scenario import TWIN_ASSUMED_COMPLIANCE
+    return TWIN_ASSUMED_COMPLIANCE
+
+
 def __getattr__(name):
     if name == "DET_FILE":
         return get_det_file()
@@ -57,6 +102,10 @@ def __getattr__(name):
         return get_tls_file()
     if name == "NET_FILE":
         return get_net_file()
+    if name == "CONTROL":
+        return get_control()
+    if name == "TWIN_ASSUMED_COMPLIANCE":
+        return get_twin_compliance()
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
@@ -66,7 +115,13 @@ def base_cmd(binary="sumo"):
 
 
 def proxy_cmd(seed, routes=None, extra=()):
-    default_routes = get_scen_dir() / "proxy.rou.xml" if (get_scen_dir() / "proxy.rou.xml").exists() else SCEN / "proxy.rou.xml"
+    scen_dir = get_scen_dir()
+    if (scen_dir / "proxy.rou.xml").exists():
+        default_routes = scen_dir / "proxy.rou.xml"
+    elif (scen_dir / "demand" / "proxy.rou.xml").exists():
+        default_routes = scen_dir / "demand" / "proxy.rou.xml"
+    else:
+        default_routes = SCEN / "proxy.rou.xml"
     c = base_cmd() + ["-a", f"{get_vtypes_file('proxy')},{get_det_file()},{get_tls_file()}",
                       "-r", str(routes or default_routes), "--seed", str(seed),
                       "--device.rerouting.probability", "0.3", "--device.rerouting.period", "60"]
@@ -133,10 +188,13 @@ class ControlState:
 
 def init_signals(tc):
     """SUMO activates the LAST loaded program of a signal, so loading tls_incident.add.xml would silently
-    make "P_inc" the default. Force the netconvert program "0" at start (never after a loadState)."""
+    make "P_inc" the default. Force Webster if present, else netconvert program "0" at start (never after a loadState)."""
     for tls in tc.trafficlight.getIDList():
         progs = [l.programID for l in tc.trafficlight.getAllProgramLogics(tls)]
-        if "0" in progs and tc.trafficlight.getProgram(tls) != "0":
+        if "webster" in progs:
+            if tc.trafficlight.getProgram(tls) != "webster":
+                tc.trafficlight.setProgram(tls, "webster")
+        elif "0" in progs and tc.trafficlight.getProgram(tls) != "0":
             tc.trafficlight.setProgram(tls, "0")
 
 
