@@ -42,6 +42,43 @@ Freeze the configuration before any comparative evaluation. **No further load se
 
 All claims are **conditional on exogenous synthetic boundaries**. This is a method benchmark on a Kwun Tong-shaped corridor, not a calibrated twin of Kwun Tong. The reconstructed TD observation profile stays in the report as context and for the congestion-pattern comparison, but it is not used as a fit target.
 
+## Amendment 2026-10-03c: net5
+
+Astra's ruling is quoted in full in `~/.claude/runs/D--CityCom/20261003-1823-codex-astra-entry/out.md`.
+
+On net4 the synthetic G1–G3 failed, with the whole backlog at the `tko_in` source and the interior free-flowing. Two construction defects were demonstrated (`results/blite/synth/diag_entry*/report.md`):
+- `tko_in` lane 0 could not reach the bypass;
+- at diverge D, the two arterial turns were minor links yielding to the bypass straight movements.
+
+net5 fixes both, and adds a 500 m, 3-lane insertion stub `tko_insert` (zipper merge to the 2-lane `tko_in`):
+- **Entry:** exactly `0→0`, `0→1`, `1→2`.
+- **Diverge D:** lane-preserving `tko_vms_0→tko_a1`, `1,2→ktb_w1`, with no crossing geometry.
+- **Unchanged:** the demand (2,800 veh/h, 75/25).
+- **New G3 series:** TKO pending plus stub occupancy.
+
+If net5 had failed, the outcome would have been recorded as a negative result, with no further widening and no demand cut.
+
+**Result** (`results/blite/synth5/g123_report.md`):
+- G1 and G2 pass on all 3 seeds.
+- Pending is 0%, all source backlogs are 0, and the TKO+stub slope stays within ±0.04.
+- `tko_in` delivers about 2,850 veh/h.
+- The 15-min running-count slope fails in seed 1002 (+0.054) and seed 1003 (+0.061).
+
+**The original-protocol G3 verdict is FAIL, and that record is preserved.**
+
+## Amendment 2026-10-03d: G3-v2 (post hoc, explicit)
+
+Astra's ruling is quoted in full in `~/.claude/runs/D--CityCom/20261003-1850-codex-astra-g3slope/out.md`.
+
+The running-count short-window slope does not isolate accumulation: all three seeds share one route file, and the positive windows coincide with rises in its scheduled departures. Astra judged the criterion defective as a test of sustained accumulation.
+
+G3-v2 replaces **only** that gate:
+- Per seed, fit an OLS slope of the running count over each closed interval [a, 7200], for a ∈ {900, 1800, …, 6300}.
+- Every slope must be ≤ +0.05 veh/s.
+- No smoothing, exclusions or pooling.
+
+All other G3 gates are retained unchanged. The existing histories are reanalysed with no rerun. This is a finite-horizon operational gate, not proof of stationarity. Both the original FAIL and the amended result are reported.
+
 ## Who builds what
 
 - **dsh:** demand and configuration, plus the G1–G3 records.
