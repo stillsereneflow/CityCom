@@ -1,0 +1,503 @@
+{
+  "ol": {
+    "1001": {
+      "flow_rmse": 609.7338772526247,
+      "speed_rmse": 6.176363213307774,
+      "boundary_rmse": 635.1769131373235,
+      "stability": null,
+      "n_q_valid": 2244,
+      "n_v_valid": 2157,
+      "n_b_valid": 173,
+      "forecast": {
+        "per_window": {
+          "3600": {
+            "rmse": 615.8025935513742,
+            "n_obs": 374
+          },
+          "4800": {
+            "rmse": 584.5308326152942,
+            "n_obs": 367
+          },
+          "6000": {
+            "rmse": 653.6544738032431,
+            "n_obs": 374
+          }
+        },
+        "pooled_rmse": 618.8500836300893,
+        "mean_rmse": 617.9959666566373
+      }
+    },
+    "1002": {
+      "flow_rmse": 608.7293241946942,
+      "speed_rmse": 6.168942889292545,
+      "boundary_rmse": 637.6162995521252,
+      "stability": null,
+      "n_q_valid": 2230,
+      "n_v_valid": 2135,
+      "n_b_valid": 176,
+      "forecast": {
+        "per_window": {
+          "3600": {
+            "rmse": 579.5548903837686,
+            "n_obs": 372
+          },
+          "4800": {
+            "rmse": 591.1631864751714,
+            "n_obs": 368
+          },
+          "6000": {
+            "rmse": 635.6828787783793,
+            "n_obs": 371
+          }
+        },
+        "pooled_rmse": 602.6297007745516,
+        "mean_rmse": 602.1336518791064
+      }
+    },
+    "1003": {
+      "flow_rmse": 604.5822348654146,
+      "speed_rmse": 6.09908520206396,
+      "boundary_rmse": 597.6369652192975,
+      "stability": null,
+      "n_q_valid": 2241,
+      "n_v_valid": 2153,
+      "n_b_valid": 173,
+      "forecast": {
+        "per_window": {
+          "3600": {
+            "rmse": 563.5353741891156,
+            "n_obs": 373
+          },
+          "4800": {
+            "rmse": 603.7403629674023,
+            "n_obs": 371
+          },
+          "6000": {
+            "rmse": 622.6163054641174,
+            "n_obs": 376
+          }
+        },
+        "pooled_rmse": 597.1970242007957,
+        "mean_rmse": 596.6306808735452
+      }
+    },
+    "3001": {
+      "flow_rmse": 590.5097252776876,
+      "speed_rmse": 6.242090634028232,
+      "boundary_rmse": 621.6446776601227,
+      "stability": null,
+      "n_q_valid": 2247,
+      "n_v_valid": 2161,
+      "n_b_valid": 171,
+      "forecast": {
+        "per_window": {
+          "3600": {
+            "rmse": 559.2373205509901,
+            "n_obs": 373
+          },
+          "4800": {
+            "rmse": 532.309684300408,
+            "n_obs": 375
+          },
+          "6000": {
+            "rmse": 629.5895319360101,
+            "n_obs": 376
+          }
+        },
+        "pooled_rmse": 575.254856099618,
+        "mean_rmse": 573.712178929136
+      }
+    },
+    "3002": {
+      "flow_rmse": 587.7899326437124,
+      "speed_rmse": 5.991484613501271,
+      "boundary_rmse": 625.9888728767606,
+      "stability": null,
+      "n_q_valid": 2237,
+      "n_v_valid": 2151,
+      "n_b_valid": 174,
+      "forecast": {
+        "per_window": {
+          "3600": {
+            "rmse": 552.8383762640491,
+            "n_obs": 370
+          },
+          "4800": {
+            "rmse": 562.7112069605727,
+            "n_obs": 369
+          },
+          "6000": {
+            "rmse": 527.5035042059931,
+            "n_obs": 377
+          }
+        },
+        "pooled_rmse": 547.7461149580278,
+        "mean_rmse": 547.6843624768716
+      }
+    },
+    "3003": {
+      "flow_rmse": 601.337198003592,
+      "speed_rmse": 6.3114917832814195,
+      "boundary_rmse": 645.8958084310791,
+      "stability": null,
+      "n_q_valid": 2241,
+      "n_v_valid": 2156,
+      "n_b_valid": 172,
+      "forecast": {
+        "per_window": {
+          "3600": {
+            "rmse": 561.3266139847349,
+            "n_obs": 370
+          },
+          "4800": {
+            "rmse": 597.672906551574,
+            "n_obs": 372
+          },
+          "6000": {
+            "rmse": 649.2216648060013,
+            "n_obs": 374
+          }
+        },
+        "pooled_rmse": 603.9760730146464,
+        "mean_rmse": 602.7403951141033
+      }
+    },
+    "3004": {
+      "flow_rmse": 600.0429130831811,
+      "speed_rmse": 6.260003689836022,
+      "boundary_rmse": 629.4487384098202,
+      "stability": null,
+      "n_q_valid": 2237,
+      "n_v_valid": 2146,
+      "n_b_valid": 175,
+      "forecast": {
+        "per_window": {
+          "3600": {
+            "rmse": 596.8627658769833,
+            "n_obs": 372
+          },
+          "4800": {
+            "rmse": 584.1917493426281,
+            "n_obs": 370
+          },
+          "6000": {
+            "rmse": 622.949827783632,
+            "n_obs": 373
+          }
+        },
+        "pooled_rmse": 601.6014502415494,
+        "mean_rmse": 601.3347810010811
+      }
+    }
+  },
+  "na": {
+    "1001": {
+      "flow_rmse": 624.9568969094208,
+      "speed_rmse": 6.130643356860711,
+      "boundary_rmse": 597.9850559735002,
+      "stability": {
+        "m_range": 0.2865247956898561,
+        "reversals": 8,
+        "reversals_per_hour": 5.333333333333333,
+        "median_m": 1.024043352337495,
+        "fraction_within_5pct": 0.5,
+        "pass_range": false,
+        "pass_reversals": true,
+        "pass_fraction": false,
+        "pass_all": false,
+        "total_ticks": 90,
+        "counts_by_reason": {
+          "updated": 18,
+          "deadband": 64,
+          "congested": 0,
+          "invalid": 8
+        }
+      },
+      "n_q_valid": 2244,
+      "n_v_valid": 2149,
+      "n_b_valid": 173,
+      "forecast": {
+        "per_window": {
+          "3600": {
+            "rmse": 643.0841463224987,
+            "n_obs": 374
+          },
+          "4800": {
+            "rmse": 632.9068787477448,
+            "n_obs": 367
+          },
+          "6000": {
+            "rmse": 713.2841870887103,
+            "n_obs": 374
+          }
+        },
+        "pooled_rmse": 664.2448087258812,
+        "mean_rmse": 663.091737386318
+      }
+    },
+    "1002": {
+      "flow_rmse": 623.3725717648312,
+      "speed_rmse": 6.148177191244884,
+      "boundary_rmse": 644.8255578061403,
+      "stability": {
+        "m_range": 0.2927140931322555,
+        "reversals": 11,
+        "reversals_per_hour": 7.333333333333333,
+        "median_m": 0.9900374375390624,
+        "fraction_within_5pct": 0.4888888888888889,
+        "pass_range": false,
+        "pass_reversals": false,
+        "pass_fraction": false,
+        "pass_all": false,
+        "total_ticks": 90,
+        "counts_by_reason": {
+          "updated": 24,
+          "deadband": 61,
+          "congested": 0,
+          "invalid": 5
+        }
+      },
+      "n_q_valid": 2230,
+      "n_v_valid": 2144,
+      "n_b_valid": 176,
+      "forecast": {
+        "per_window": {
+          "3600": {
+            "rmse": 652.7757111230917,
+            "n_obs": 372
+          },
+          "4800": {
+            "rmse": 624.4789132096281,
+            "n_obs": 368
+          },
+          "6000": {
+            "rmse": 678.27909719578,
+            "n_obs": 371
+          }
+        },
+        "pooled_rmse": 652.2886386001252,
+        "mean_rmse": 651.8445738428333
+      }
+    },
+    "1003": {
+      "flow_rmse": 620.5011577321899,
+      "speed_rmse": 6.201794927660831,
+      "boundary_rmse": 610.656805500476,
+      "stability": {
+        "m_range": 0.23180862781107303,
+        "reversals": 12,
+        "reversals_per_hour": 8.0,
+        "median_m": 0.9814024161095256,
+        "fraction_within_5pct": 0.7333333333333333,
+        "pass_range": false,
+        "pass_reversals": false,
+        "pass_fraction": false,
+        "pass_all": false,
+        "total_ticks": 90,
+        "counts_by_reason": {
+          "updated": 21,
+          "deadband": 61,
+          "congested": 0,
+          "invalid": 8
+        }
+      },
+      "n_q_valid": 2241,
+      "n_v_valid": 2159,
+      "n_b_valid": 173,
+      "forecast": {
+        "per_window": {
+          "3600": {
+            "rmse": 600.2251588253056,
+            "n_obs": 373
+          },
+          "4800": {
+            "rmse": 624.4402345052748,
+            "n_obs": 371
+          },
+          "6000": {
+            "rmse": 580.0403507607366,
+            "n_obs": 376
+          }
+        },
+        "pooled_rmse": 601.7438942654211,
+        "mean_rmse": 601.5685813637723
+      }
+    },
+    "3001": {
+      "flow_rmse": 630.5798717314435,
+      "speed_rmse": 6.4180489500647795,
+      "boundary_rmse": 580.0181485363876,
+      "stability": {
+        "m_range": 0.23936106565985826,
+        "reversals": 10,
+        "reversals_per_hour": 6.666666666666667,
+        "median_m": 1.024043352337495,
+        "fraction_within_5pct": 0.6444444444444445,
+        "pass_range": false,
+        "pass_reversals": false,
+        "pass_fraction": false,
+        "pass_all": false,
+        "total_ticks": 90,
+        "counts_by_reason": {
+          "updated": 18,
+          "deadband": 62,
+          "congested": 0,
+          "invalid": 10
+        }
+      },
+      "n_q_valid": 2247,
+      "n_v_valid": 2160,
+      "n_b_valid": 171,
+      "forecast": {
+        "per_window": {
+          "3600": {
+            "rmse": 647.8605748128086,
+            "n_obs": 373
+          },
+          "4800": {
+            "rmse": 683.585839525659,
+            "n_obs": 375
+          },
+          "6000": {
+            "rmse": 719.2549336462477,
+            "n_obs": 376
+          }
+        },
+        "pooled_rmse": 684.2831404982201,
+        "mean_rmse": 683.5671159949051
+      }
+    },
+    "3002": {
+      "flow_rmse": 628.7915480566396,
+      "speed_rmse": 6.1769126412477995,
+      "boundary_rmse": 628.3640499824484,
+      "stability": {
+        "m_range": 0.3781188388772915,
+        "reversals": 9,
+        "reversals_per_hour": 6.0,
+        "median_m": 1.0138412564771246,
+        "fraction_within_5pct": 0.4222222222222222,
+        "pass_range": false,
+        "pass_reversals": true,
+        "pass_fraction": false,
+        "pass_all": false,
+        "total_ticks": 90,
+        "counts_by_reason": {
+          "updated": 25,
+          "deadband": 58,
+          "congested": 0,
+          "invalid": 7
+        }
+      },
+      "n_q_valid": 2237,
+      "n_v_valid": 2148,
+      "n_b_valid": 174,
+      "forecast": {
+        "per_window": {
+          "3600": {
+            "rmse": 588.7044869652116,
+            "n_obs": 370
+          },
+          "4800": {
+            "rmse": 567.6824945637713,
+            "n_obs": 369
+          },
+          "6000": {
+            "rmse": 631.3002875418305,
+            "n_obs": 377
+          }
+        },
+        "pooled_rmse": 596.7330413012548,
+        "mean_rmse": 595.8957563569378
+      }
+    },
+    "3003": {
+      "flow_rmse": 588.3200505912669,
+      "speed_rmse": 6.334865852101206,
+      "boundary_rmse": 586.0946824056554,
+      "stability": {
+        "m_range": 0.3218095750541812,
+        "reversals": 9,
+        "reversals_per_hour": 6.0,
+        "median_m": 1.0214832439566512,
+        "fraction_within_5pct": 0.5666666666666667,
+        "pass_range": false,
+        "pass_reversals": true,
+        "pass_fraction": false,
+        "pass_all": false,
+        "total_ticks": 90,
+        "counts_by_reason": {
+          "updated": 22,
+          "deadband": 59,
+          "congested": 0,
+          "invalid": 9
+        }
+      },
+      "n_q_valid": 2241,
+      "n_v_valid": 2164,
+      "n_b_valid": 172,
+      "forecast": {
+        "per_window": {
+          "3600": {
+            "rmse": 590.980861262341,
+            "n_obs": 370
+          },
+          "4800": {
+            "rmse": 624.8715997139191,
+            "n_obs": 372
+          },
+          "6000": {
+            "rmse": 566.4978253235017,
+            "n_obs": 374
+          }
+        },
+        "pooled_rmse": 594.555947067682,
+        "mean_rmse": 594.1167620999206
+      }
+    },
+    "3004": {
+      "flow_rmse": 605.6701235938714,
+      "speed_rmse": 6.364190923931861,
+      "boundary_rmse": 640.2713710384282,
+      "stability": {
+        "m_range": 0.33874692110966464,
+        "reversals": 8,
+        "reversals_per_hour": 5.333333333333333,
+        "median_m": 0.9875623439452147,
+        "fraction_within_5pct": 0.5333333333333333,
+        "pass_range": false,
+        "pass_reversals": true,
+        "pass_fraction": false,
+        "pass_all": false,
+        "total_ticks": 90,
+        "counts_by_reason": {
+          "updated": 21,
+          "deadband": 63,
+          "congested": 0,
+          "invalid": 6
+        }
+      },
+      "n_q_valid": 2237,
+      "n_v_valid": 2166,
+      "n_b_valid": 175,
+      "forecast": {
+        "per_window": {
+          "3600": {
+            "rmse": 655.645458873876,
+            "n_obs": 372
+          },
+          "4800": {
+            "rmse": 573.6370450550238,
+            "n_obs": 370
+          },
+          "6000": {
+            "rmse": 719.8927534067187,
+            "n_obs": 373
+          }
+        },
+        "pooled_rmse": 652.6727388484021,
+        "mean_rmse": 649.7250857785394
+      }
+    }
+  }
+}
