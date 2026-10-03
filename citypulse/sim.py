@@ -135,6 +135,12 @@ def base_cmd(binary="sumo"):
             "--no-warnings", "true", "--time-to-teleport", "-1", "--collision.action", "warn"]
 
 
+def reroute_enabled():
+    """Autonomous rerouting is on by default; CITYPULSE_REROUTE=0 drops the device options
+    so diversion can only happen through the VMS action (synthetic benchmark, decision 2026-10-03b)."""
+    return os.environ.get("CITYPULSE_REROUTE", "1").strip() != "0"
+
+
 def proxy_cmd(seed, routes=None, extra=()):
     scen_dir = get_scen_dir()
     if (scen_dir / "proxy.rou.xml").exists():
@@ -144,8 +150,9 @@ def proxy_cmd(seed, routes=None, extra=()):
     else:
         default_routes = SCEN / "proxy.rou.xml"
     c = base_cmd() + ["-a", f"{get_vtypes_file('proxy')},{get_det_file()},{get_tls_file()}",
-                      "-r", str(routes or default_routes), "--seed", str(seed),
-                      "--device.rerouting.probability", "0.3", "--device.rerouting.period", "60"]
+                      "-r", str(routes or default_routes), "--seed", str(seed)]
+    if reroute_enabled():
+        c += ["--device.rerouting.probability", "0.3", "--device.rerouting.period", "60"]
     return c + list(extra)
 
 

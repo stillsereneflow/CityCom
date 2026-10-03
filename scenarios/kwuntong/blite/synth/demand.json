@@ -1,0 +1,3094 @@
+{
+  "meta": {
+    "model": "synthetic boundary demand, decision 2026-10-03b",
+    "tag": "synth",
+    "time_start": "00:00",
+    "time_end": "02:00",
+    "horizon_s": 7200.0,
+    "slices": 8,
+    "slice_duration_s": 900.0,
+    "proxy_seed": 1001,
+    "twin_seed": 2202,
+    "twin_cand_scale": 1.5,
+    "tko_in_vph": 2800.0,
+    "bypass_share": 0.75,
+    "arterial_share": 0.25,
+    "intermediate_ramps_vph": 0.0,
+    "cross_street_vph": 400.0,
+    "shock": null
+  },
+  "slices": [
+    {
+      "slice_index": 0,
+      "start_s": 0.0,
+      "end_s": 900.0,
+      "entry": {
+        "flow_vph": 2800.0,
+        "class": "measured_congested",
+        "lower_vph": 2800.0,
+        "upper_vph": 2800.0,
+        "basis": "direct detector on gate edge, congested; demand in [2800.0, 2800.0] veh/h",
+        "congested": true
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.75,
+        "alpha_arterial": 0.25,
+        "bypass_flow_vph": 2100.0,
+        "arterial_flow_vph": 700.0,
+        "method": "scenario-assumed fixed split",
+        "basis": "75% bypass / 25% arterial, all to out"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->out": 2100.0,
+        "tko_in_arterial->out": 700.0,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 4400.0,
+        "total_outflow_vph": 4400.0
+      },
+      "shock": false
+    },
+    {
+      "slice_index": 1,
+      "start_s": 900.0,
+      "end_s": 1800.0,
+      "entry": {
+        "flow_vph": 2800.0,
+        "class": "measured_congested",
+        "lower_vph": 2800.0,
+        "upper_vph": 2800.0,
+        "basis": "direct detector on gate edge, congested; demand in [2800.0, 2800.0] veh/h",
+        "congested": true
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.75,
+        "alpha_arterial": 0.25,
+        "bypass_flow_vph": 2100.0,
+        "arterial_flow_vph": 700.0,
+        "method": "scenario-assumed fixed split",
+        "basis": "75% bypass / 25% arterial, all to out"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->out": 2100.0,
+        "tko_in_arterial->out": 700.0,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 4400.0,
+        "total_outflow_vph": 4400.0
+      },
+      "shock": false
+    },
+    {
+      "slice_index": 2,
+      "start_s": 1800.0,
+      "end_s": 2700.0,
+      "entry": {
+        "flow_vph": 2800.0,
+        "class": "measured_congested",
+        "lower_vph": 2800.0,
+        "upper_vph": 2800.0,
+        "basis": "direct detector on gate edge, congested; demand in [2800.0, 2800.0] veh/h",
+        "congested": true
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.75,
+        "alpha_arterial": 0.25,
+        "bypass_flow_vph": 2100.0,
+        "arterial_flow_vph": 700.0,
+        "method": "scenario-assumed fixed split",
+        "basis": "75% bypass / 25% arterial, all to out"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->out": 2100.0,
+        "tko_in_arterial->out": 700.0,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 4400.0,
+        "total_outflow_vph": 4400.0
+      },
+      "shock": false
+    },
+    {
+      "slice_index": 3,
+      "start_s": 2700.0,
+      "end_s": 3600.0,
+      "entry": {
+        "flow_vph": 2800.0,
+        "class": "measured_congested",
+        "lower_vph": 2800.0,
+        "upper_vph": 2800.0,
+        "basis": "direct detector on gate edge, congested; demand in [2800.0, 2800.0] veh/h",
+        "congested": true
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.75,
+        "alpha_arterial": 0.25,
+        "bypass_flow_vph": 2100.0,
+        "arterial_flow_vph": 700.0,
+        "method": "scenario-assumed fixed split",
+        "basis": "75% bypass / 25% arterial, all to out"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->out": 2100.0,
+        "tko_in_arterial->out": 700.0,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 4400.0,
+        "total_outflow_vph": 4400.0
+      },
+      "shock": false
+    },
+    {
+      "slice_index": 4,
+      "start_s": 3600.0,
+      "end_s": 4500.0,
+      "entry": {
+        "flow_vph": 2800.0,
+        "class": "measured_congested",
+        "lower_vph": 2800.0,
+        "upper_vph": 2800.0,
+        "basis": "direct detector on gate edge, congested; demand in [2800.0, 2800.0] veh/h",
+        "congested": true
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.75,
+        "alpha_arterial": 0.25,
+        "bypass_flow_vph": 2100.0,
+        "arterial_flow_vph": 700.0,
+        "method": "scenario-assumed fixed split",
+        "basis": "75% bypass / 25% arterial, all to out"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->out": 2100.0,
+        "tko_in_arterial->out": 700.0,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 4400.0,
+        "total_outflow_vph": 4400.0
+      },
+      "shock": false
+    },
+    {
+      "slice_index": 5,
+      "start_s": 4500.0,
+      "end_s": 5400.0,
+      "entry": {
+        "flow_vph": 2800.0,
+        "class": "measured_congested",
+        "lower_vph": 2800.0,
+        "upper_vph": 2800.0,
+        "basis": "direct detector on gate edge, congested; demand in [2800.0, 2800.0] veh/h",
+        "congested": true
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.75,
+        "alpha_arterial": 0.25,
+        "bypass_flow_vph": 2100.0,
+        "arterial_flow_vph": 700.0,
+        "method": "scenario-assumed fixed split",
+        "basis": "75% bypass / 25% arterial, all to out"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->out": 2100.0,
+        "tko_in_arterial->out": 700.0,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 4400.0,
+        "total_outflow_vph": 4400.0
+      },
+      "shock": false
+    },
+    {
+      "slice_index": 6,
+      "start_s": 5400.0,
+      "end_s": 6300.0,
+      "entry": {
+        "flow_vph": 2800.0,
+        "class": "measured_congested",
+        "lower_vph": 2800.0,
+        "upper_vph": 2800.0,
+        "basis": "direct detector on gate edge, congested; demand in [2800.0, 2800.0] veh/h",
+        "congested": true
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.75,
+        "alpha_arterial": 0.25,
+        "bypass_flow_vph": 2100.0,
+        "arterial_flow_vph": 700.0,
+        "method": "scenario-assumed fixed split",
+        "basis": "75% bypass / 25% arterial, all to out"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->out": 2100.0,
+        "tko_in_arterial->out": 700.0,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 4400.0,
+        "total_outflow_vph": 4400.0
+      },
+      "shock": false
+    },
+    {
+      "slice_index": 7,
+      "start_s": 6300.0,
+      "end_s": 7200.0,
+      "entry": {
+        "flow_vph": 2800.0,
+        "class": "measured_congested",
+        "lower_vph": 2800.0,
+        "upper_vph": 2800.0,
+        "basis": "direct detector on gate edge, congested; demand in [2800.0, 2800.0] veh/h",
+        "congested": true
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.75,
+        "alpha_arterial": 0.25,
+        "bypass_flow_vph": 2100.0,
+        "arterial_flow_vph": 700.0,
+        "method": "scenario-assumed fixed split",
+        "basis": "75% bypass / 25% arterial, all to out"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "zero balance between bracketing detectors"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->out": 2100.0,
+        "tko_in_arterial->out": 700.0,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 4400.0,
+        "total_outflow_vph": 4400.0
+      },
+      "shock": false
+    }
+  ]
+}
