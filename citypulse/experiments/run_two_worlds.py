@@ -22,6 +22,7 @@ def main():
     ap.add_argument("--proxy-snapshot", type=float, nargs="*", default=[])
     ap.add_argument("--routes", default=None, help="Proxy routes XML file")
     ap.add_argument("--twin-routes", default=None, help="Twin candidate routes XML file")
+    ap.add_argument("--sensor-fault", default=None, help="Sensor fault specification, e.g. AID02109:stuck:4500:5400")
     a = ap.parse_args()
     run = RESULTS / a.run
     ep = f"tcp://127.0.0.1:{a.port}"
@@ -38,10 +39,12 @@ def main():
         pargs.append("--no-incident")
     if a.routes:
         pargs.extend(["--routes", str(a.routes)])
+    if a.sensor_fault:
+        pargs.extend(["--sensor-fault", str(a.sensor_fault)])
     proxy = subprocess.Popen(pargs)
     rc_p, rc_t = proxy.wait(), twin.wait()
     info = {"proxy_rc": rc_p, "twin_rc": rc_t, "wall_s": round(time.time() - t0, 1), "t_end": a.t_end,
-            "incident": not a.no_incident}
+            "incident": not a.no_incident, "sensor_fault": a.sensor_fault}
     json.dump(info, open(run / "run_info.json", "w"), indent=1)
     print(json.dumps(info))
     sys.exit(rc_p or rc_t)

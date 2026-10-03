@@ -1,0 +1,470 @@
+{
+ "conv_inc_4001": {
+  "info": {
+   "run_name": "conv_inc_4001",
+   "scenario": "INC",
+   "seed": 4001,
+   "arm": "conv",
+   "proxy_rc": 0,
+   "twin_rc": 0,
+   "wall_s": 58.9,
+   "t_end": 7200.0,
+   "twin_seed": 2,
+   "demand_seed": 202,
+   "twin_base_factor": 0.85,
+   "boundary_detector": "AID07106",
+   "routes": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy.rou.xml",
+   "sensor_fault": null,
+   "incident": true
+  },
+  "queue_forecasts": {
+   "mae": 18.25,
+   "rmse": 32.96589146375386,
+   "bias": -18.25,
+   "n": 8
+  },
+  "queue_forecasts_15min": {
+   "mae": 17.142857142857142,
+   "rmse": 34.34696909065319,
+   "bias": -17.142857142857142,
+   "n": 7
+  },
+  "alarms": {
+   "alarm_events": 2,
+   "alarm_intervals": 19,
+   "exposure_s": 570.0,
+   "exposure_min": 9.5,
+   "first_alarm_t": 4890.0,
+   "last_alarm_t": 5490.0
+  }
+ },
+ "conv_inc_4002": {
+  "info": {
+   "run_name": "conv_inc_4002",
+   "scenario": "INC",
+   "seed": 4002,
+   "arm": "conv",
+   "proxy_rc": 0,
+   "twin_rc": 0,
+   "wall_s": 59.4,
+   "t_end": 7200.0,
+   "twin_seed": 2,
+   "demand_seed": 202,
+   "twin_base_factor": 0.85,
+   "boundary_detector": "AID07106",
+   "routes": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy.rou.xml",
+   "sensor_fault": null,
+   "incident": true
+  },
+  "queue_forecasts": {
+   "mae": 28.0,
+   "rmse": 52.31156659860226,
+   "bias": -28.0,
+   "n": 8
+  },
+  "queue_forecasts_15min": {
+   "mae": 28.285714285714285,
+   "rmse": 55.39726656485086,
+   "bias": -28.285714285714285,
+   "n": 7
+  },
+  "alarms": {
+   "alarm_events": 5,
+   "alarm_intervals": 23,
+   "exposure_s": 690.0,
+   "exposure_min": 11.5,
+   "first_alarm_t": 4890.0,
+   "last_alarm_t": 6420.0
+  }
+ },
+ "conv_inc_4003": {
+  "info": {
+   "run_name": "conv_inc_4003",
+   "scenario": "INC",
+   "seed": 4003,
+   "arm": "conv",
+   "proxy_rc": 0,
+   "twin_rc": 0,
+   "wall_s": 59.6,
+   "t_end": 7200.0,
+   "twin_seed": 2,
+   "demand_seed": 202,
+   "twin_base_factor": 0.85,
+   "boundary_detector": "AID07106",
+   "routes": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy.rou.xml",
+   "sensor_fault": null,
+   "incident": true
+  },
+  "queue_forecasts": {
+   "mae": 20.625,
+   "rmse": 31.947222101459776,
+   "bias": -20.625,
+   "n": 8
+  },
+  "queue_forecasts_15min": {
+   "mae": 21.571428571428573,
+   "rmse": 33.880040478977335,
+   "bias": -21.571428571428573,
+   "n": 7
+  },
+  "alarms": {
+   "alarm_events": 5,
+   "alarm_intervals": 17,
+   "exposure_s": 510.0,
+   "exposure_min": 8.5,
+   "first_alarm_t": 4920.0,
+   "last_alarm_t": 6360.0
+  }
+ },
+ "conv_noi_4001": {
+  "info": {
+   "run_name": "conv_noi_4001",
+   "scenario": "NOI",
+   "seed": 4001,
+   "arm": "conv",
+   "proxy_rc": 0,
+   "twin_rc": 0,
+   "wall_s": 57.6,
+   "t_end": 7200.0,
+   "twin_seed": 2,
+   "demand_seed": 202,
+   "twin_base_factor": 0.85,
+   "boundary_detector": "AID07106",
+   "routes": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy.rou.xml",
+   "sensor_fault": null,
+   "incident": false
+  },
+  "queue_forecasts": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 8
+  },
+  "queue_forecasts_15min": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 7
+  },
+  "alarms": {
+   "alarm_events": 0,
+   "alarm_intervals": 0,
+   "exposure_s": 0.0,
+   "exposure_min": 0.0,
+   "first_alarm_t": null,
+   "last_alarm_t": null
+  }
+ },
+ "conv_noi_4002": {
+  "info": {
+   "run_name": "conv_noi_4002",
+   "scenario": "NOI",
+   "seed": 4002,
+   "arm": "conv",
+   "proxy_rc": 0,
+   "twin_rc": 0,
+   "wall_s": 57.1,
+   "t_end": 7200.0,
+   "twin_seed": 2,
+   "demand_seed": 202,
+   "twin_base_factor": 0.85,
+   "boundary_detector": "AID07106",
+   "routes": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy.rou.xml",
+   "sensor_fault": null,
+   "incident": false
+  },
+  "queue_forecasts": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 8
+  },
+  "queue_forecasts_15min": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 7
+  },
+  "alarms": {
+   "alarm_events": 0,
+   "alarm_intervals": 0,
+   "exposure_s": 0.0,
+   "exposure_min": 0.0,
+   "first_alarm_t": null,
+   "last_alarm_t": null
+  }
+ },
+ "conv_noi_4003": {
+  "info": {
+   "run_name": "conv_noi_4003",
+   "scenario": "NOI",
+   "seed": 4003,
+   "arm": "conv",
+   "proxy_rc": 0,
+   "twin_rc": 0,
+   "wall_s": 57.5,
+   "t_end": 7200.0,
+   "twin_seed": 2,
+   "demand_seed": 202,
+   "twin_base_factor": 0.85,
+   "boundary_detector": "AID07106",
+   "routes": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy.rou.xml",
+   "sensor_fault": null,
+   "incident": false
+  },
+  "queue_forecasts": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 8
+  },
+  "queue_forecasts_15min": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 7
+  },
+  "alarms": {
+   "alarm_events": 0,
+   "alarm_intervals": 0,
+   "exposure_s": 0.0,
+   "exposure_min": 0.0,
+   "first_alarm_t": null,
+   "last_alarm_t": null
+  }
+ },
+ "conv_shk_4001": {
+  "info": {
+   "run_name": "conv_shk_4001",
+   "scenario": "SHK",
+   "seed": 4001,
+   "arm": "conv",
+   "proxy_rc": 0,
+   "twin_rc": 0,
+   "wall_s": 52.7,
+   "t_end": 7200.0,
+   "twin_seed": 2,
+   "demand_seed": 202,
+   "twin_base_factor": 0.85,
+   "boundary_detector": "AID07106",
+   "routes": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy_shock.rou.xml",
+   "sensor_fault": null,
+   "incident": false
+  },
+  "queue_forecasts": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 8
+  },
+  "queue_forecasts_15min": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 7
+  },
+  "alarms": {
+   "alarm_events": 0,
+   "alarm_intervals": 0,
+   "exposure_s": 0.0,
+   "exposure_min": 0.0,
+   "first_alarm_t": null,
+   "last_alarm_t": null
+  }
+ },
+ "conv_shk_4002": {
+  "info": {
+   "run_name": "conv_shk_4002",
+   "scenario": "SHK",
+   "seed": 4002,
+   "arm": "conv",
+   "proxy_rc": 0,
+   "twin_rc": 0,
+   "wall_s": 52.5,
+   "t_end": 7200.0,
+   "twin_seed": 2,
+   "demand_seed": 202,
+   "twin_base_factor": 0.85,
+   "boundary_detector": "AID07106",
+   "routes": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy_shock.rou.xml",
+   "sensor_fault": null,
+   "incident": false
+  },
+  "queue_forecasts": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 8
+  },
+  "queue_forecasts_15min": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 7
+  },
+  "alarms": {
+   "alarm_events": 0,
+   "alarm_intervals": 0,
+   "exposure_s": 0.0,
+   "exposure_min": 0.0,
+   "first_alarm_t": null,
+   "last_alarm_t": null
+  }
+ },
+ "conv_shk_4003": {
+  "info": {
+   "run_name": "conv_shk_4003",
+   "scenario": "SHK",
+   "seed": 4003,
+   "arm": "conv",
+   "proxy_rc": 0,
+   "twin_rc": 0,
+   "wall_s": 52.8,
+   "t_end": 7200.0,
+   "twin_seed": 2,
+   "demand_seed": 202,
+   "twin_base_factor": 0.85,
+   "boundary_detector": "AID07106",
+   "routes": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy_shock.rou.xml",
+   "sensor_fault": null,
+   "incident": false
+  },
+  "queue_forecasts": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 8
+  },
+  "queue_forecasts_15min": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 7
+  },
+  "alarms": {
+   "alarm_events": 0,
+   "alarm_intervals": 0,
+   "exposure_s": 0.0,
+   "exposure_min": 0.0,
+   "first_alarm_t": null,
+   "last_alarm_t": null
+  }
+ },
+ "conv_det_4001": {
+  "info": {
+   "run_name": "conv_det_4001",
+   "scenario": "DET",
+   "seed": 4001,
+   "arm": "conv",
+   "proxy_rc": 0,
+   "twin_rc": 0,
+   "wall_s": 51.2,
+   "t_end": 7200.0,
+   "twin_seed": 2,
+   "demand_seed": 202,
+   "twin_base_factor": 0.85,
+   "boundary_detector": "AID07106",
+   "routes": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy.rou.xml",
+   "sensor_fault": "AID02109:stuck:4500:5400",
+   "incident": false
+  },
+  "queue_forecasts": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 8
+  },
+  "queue_forecasts_15min": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 7
+  },
+  "alarms": {
+   "alarm_events": 0,
+   "alarm_intervals": 0,
+   "exposure_s": 0.0,
+   "exposure_min": 0.0,
+   "first_alarm_t": null,
+   "last_alarm_t": null
+  }
+ },
+ "conv_det_4002": {
+  "info": {
+   "run_name": "conv_det_4002",
+   "scenario": "DET",
+   "seed": 4002,
+   "arm": "conv",
+   "proxy_rc": 0,
+   "twin_rc": 0,
+   "wall_s": 51.3,
+   "t_end": 7200.0,
+   "twin_seed": 2,
+   "demand_seed": 202,
+   "twin_base_factor": 0.85,
+   "boundary_detector": "AID07106",
+   "routes": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy.rou.xml",
+   "sensor_fault": "AID02109:stuck:4500:5400",
+   "incident": false
+  },
+  "queue_forecasts": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 8
+  },
+  "queue_forecasts_15min": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 7
+  },
+  "alarms": {
+   "alarm_events": 0,
+   "alarm_intervals": 0,
+   "exposure_s": 0.0,
+   "exposure_min": 0.0,
+   "first_alarm_t": null,
+   "last_alarm_t": null
+  }
+ },
+ "conv_det_4003": {
+  "info": {
+   "run_name": "conv_det_4003",
+   "scenario": "DET",
+   "seed": 4003,
+   "arm": "conv",
+   "proxy_rc": 0,
+   "twin_rc": 0,
+   "wall_s": 51.3,
+   "t_end": 7200.0,
+   "twin_seed": 2,
+   "demand_seed": 202,
+   "twin_base_factor": 0.85,
+   "boundary_detector": "AID07106",
+   "routes": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy.rou.xml",
+   "sensor_fault": "AID02109:stuck:4500:5400",
+   "incident": false
+  },
+  "queue_forecasts": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 8
+  },
+  "queue_forecasts_15min": {
+   "mae": 0.0,
+   "rmse": 0.0,
+   "bias": 0.0,
+   "n": 7
+  },
+  "alarms": {
+   "alarm_events": 0,
+   "alarm_intervals": 0,
+   "exposure_s": 0.0,
+   "exposure_min": 0.0,
+   "first_alarm_t": null,
+   "last_alarm_t": null
+  }
+ }
+}

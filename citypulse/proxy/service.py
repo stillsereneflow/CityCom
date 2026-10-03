@@ -35,12 +35,13 @@ def get_control():
     return CONTROL
 
 
-def run(endpoint, out: Path, seed, sensor_seed, t_end, incident_on, snapshot_times=(), routes=None):
+def run(endpoint, out: Path, seed, sensor_seed, t_end, incident_on, snapshot_times=(), routes=None,
+        sensor_fault=None):
     out.mkdir(parents=True, exist_ok=True)
     truth = get_truth()
     control = get_control()
     loops = detector_loops()
-    emu = SensorEmulator(loops.keys(), sensor_seed)
+    emu = SensorEmulator(loops.keys(), sensor_seed, sensor_fault=sensor_fault)
     inc = Incident(**truth["incident"]) if incident_on else None
     cs = ControlState()
     act = ActionExecutor(control, truth["vms_true_compliance"], cs)
@@ -50,7 +51,7 @@ def run(endpoint, out: Path, seed, sensor_seed, t_end, incident_on, snapshot_tim
     traci.start(proxy_cmd(seed, routes), label="proxy")
     tc = traci.getConnection("proxy")
     init_signals(tc)
-    truth_rows, wall = [], time.time()
+    truth_rows, halt_rows, wall = [], [], time.time()
     t = 0.0
     while t < t_end:
         tc.simulationStep()
@@ -64,6 +65,9 @@ def run(endpoint, out: Path, seed, sensor_seed, t_end, incident_on, snapshot_tim
             truth = read_detectors(tc, loops)
             for d, v in truth.items():
                 truth_rows.append({"t": t, "detector": d, **v})
+            h_w3 = tc.edge.getLastStepHaltingNumber("ktb_w3")
+            h_n1 = tc.edge.getLastStepHaltingNumber("ktb_n1")
+            halt_rows.append({"t": t, "ktb_w3": h_w3, "ktb_n1": h_n1, "halting_sum": h_w3 + h_n1})
             msg = validate_sensor(emu.emit(t, truth))
             sock.send_json(msg)
             reply = validate_reply(sock.recv_json())
@@ -78,6 +82,7 @@ def run(endpoint, out: Path, seed, sensor_seed, t_end, incident_on, snapshot_tim
     traci.switch("proxy")
     traci.close()
     pd.DataFrame(truth_rows).to_parquet(out / "proxy_truth.parquet")
+    pd.DataFrame(halt_rows).to_parquet(out / "proxy_halting.parquet")
     json.dump(stats, open(out / "proxy_stats.json", "w"), indent=1)
     return stats
 
@@ -92,8 +97,10 @@ def main():
     ap.add_argument("--no-incident", action="store_true")
     ap.add_argument("--snapshot-times", type=float, nargs="*", default=[])
     ap.add_argument("--routes", default=None, help="Proxy routes XML file")
+    ap.add_argument("--sensor-fault", default=None, help="Sensor fault specification, e.g. AID02109:stuck:4500:5400")
     a = ap.parse_args()
-    s = run(a.endpoint, Path(a.out), a.seed, a.sensor_seed, a.t_end, not a.no_incident, set(a.snapshot_times), routes=a.routes)
+    s = run(a.endpoint, Path(a.out), a.seed, a.sensor_seed, a.t_end, not a.no_incident, set(a.snapshot_times),
+            routes=a.routes, sensor_fault=a.sensor_fault)
     print(json.dumps({k: v for k, v in s.items() if k != "observed_detectors"}))
 
 
