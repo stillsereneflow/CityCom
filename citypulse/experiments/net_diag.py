@@ -126,6 +126,9 @@ def main():
             sim = sum(by_edge[e]) / len(by_edge[e])
             fit.append({"edge": e, "target_vph": target, "sim_vph": sim,
                         "geh": geh(sim, target)})
+    unscored = sorted(e for e in info["edge_counts_vph"] if e not in by_edge)
+    if unscored:
+        print(f"WARNING: {len(unscored)} count target(s) have no mapped detector and are NOT scored: {unscored}")
     geh_ok = sum(f["geh"] < 5 for f in fit) / max(len(fit), 1)
     last = [h for h in history if h["time"] >= a.t_end - 900]
     import numpy as np
@@ -134,7 +137,8 @@ def main():
            "sources": srcs, "jams": jams[:40], "fit": fit, "history": history,
            "running_last15_slope_vps": slope, "running_last15_delta": last[-1]["running"] - last[0]["running"],
            "detector_intervals": detector_intervals, "input_sha256": fingerprints,
-           "command": cmd, "count_method": "completed 30s E1 intervals", "mapped_detectors": len(m)}
+           "command": cmd, "count_method": "completed 30s E1 intervals", "mapped_detectors": len(m),
+           "targets_total": len(info["edge_counts_vph"]), "unscored_targets": unscored}
     json.dump(out, open(RESULTS / f"net_diag_{a.tag}.json", "w"), indent=1)
     print(json.dumps({"totals": totals, "geh_lt5_share": round(geh_ok, 3), "n_jam_edges": len(jams)}))
     print("top backlog sources:")

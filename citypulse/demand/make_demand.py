@@ -126,6 +126,9 @@ def main():
                  RESULTS / "routesampler_proxy.log")
     route_sample(SCEN / "cand_twin.rou.xml", SCEN / "counts_twin_cand.xml", SCEN / "twin_cand.rou.xml", 2002, "t",
                  "tdist", RESULTS / "routesampler_twin.log")
+    import hashlib
+    info["input_sha256"] = {str(p.name): hashlib.sha256(p.read_bytes()).hexdigest() for p in
+                            (NET_FILE, SCEN / "detector_map.json", HK_DIR / "raw" / "archive" / f"{a.day}.csv")}
     json.dump({**info, "edge_counts_vph": counts}, open(SCEN / "demand_info.json", "w"), indent=1)
     print(json.dumps(info))
 
