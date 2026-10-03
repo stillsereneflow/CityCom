@@ -13,7 +13,7 @@ import sumolib
 from citypulse.config import RESULTS, SCEN
 from citypulse.network.bounded import NET, OUT, adjacent, save, sha
 from citypulse.scenario import CONTROL
-from citypulse.demand.bounded_gates import ENTRY_LANE_CAPACITY_VPH, gate_priors, is_corridor_road
+from citypulse.demand.bounded_gates import gate_priors
 
 
 def candidates(net, gates, mapped, seed):
@@ -97,7 +97,7 @@ def fit(matrix, targets, prior, arrival_factor, feedback=None, regularization=0.
     low = lower / np.sqrt(np.maximum(lower, 120))
 
     if gate_caps is not None:
-        gm, gc, active_gates, routes_by_gate, bounds = gate_caps
+        gm, gc, active_gates, routes_by_gate, bounds = gate_caps[:5]
         g_scale = np.sqrt(np.maximum(gc, 120))
         def objective(x):
             res = a @ x - b
@@ -119,13 +119,29 @@ def fit(matrix, targets, prior, arrival_factor, feedback=None, regularization=0.
                       method='L-BFGS-B', options={'maxiter': 1200, 'ftol': 1e-10})
     weights = np.maximum(result.x, 0.0)
     if gate_caps is not None:
-        for gid in active_gates:
+        gm, gc, active_gates, routes_by_gate, bounds = gate_caps[:5]
+        gate_low = np.asarray(gate_caps[5]) if len(gate_caps) > 5 else np.zeros(len(gc))
+        for g_index, gid in enumerate(active_gates):
             r_indices = routes_by_gate[gid]
-            tot = sum(weights[idx] for idx in r_indices)
-            cap = gc[active_gates.index(gid)]
-            if tot > cap > 0:
+            cap = gc[g_index]
+            low = gate_low[g_index]
+            total = sum(weights[idx] for idx in r_indices)
+            if total > cap > 0:
                 for idx in r_indices:
-                    weights[idx] *= cap / tot
+                    weights[idx] *= cap / total
+            elif total < low and r_indices:
+                if total <= 0:
+                    for idx in r_indices:
+                        weights[idx] = 0.0
+                    weights[r_indices[0]] = low
+                else:
+                    for idx in r_indices:
+                        weights[idx] *= low / total
+            # No gate may carry demand outside its class bounds (measured / measured_congested /
+            # inferred / assumed). The per-gate total is what the route file realises.
+            total = sum(weights[idx] for idx in r_indices)
+            assert total <= cap + 1e-6, f'gate {gid} carries {total:.3f} veh/h above its class bound {cap:.3f}'
+            assert total >= low - 1e-6, f'gate {gid} carries {total:.3f} veh/h below its class bound {low:.3f}'
     return weights, {'success': bool(result.success), 'message': str(result.message),
                      'objective': float(result.fun), 'max_negative': float(max(0, -result.x.min()))}
 
@@ -169,6 +185,8 @@ def main(argv=None):
     ap.add_argument('--gate-weight', type=float, default=0, help='Weight of uncertain local flow-balance priors')
     ap.add_argument('--net', default=str(NET), help='Network file to use')
     ap.add_argument('--net-meta', default=str(OUT / 'network.json'), help='Network metadata JSON file')
+    ap.add_argument('--scale', type=float, default=1.0,
+                    help='Multiplier on every gate demand (all fitted gate rates before Poisson sampling)')
     args = ap.parse_args(argv)
     # Reuse already-installed local SciPy; never writes into the shared interpreter.
     sys.path.insert(0, str(RESULTS / 'astra_step1' / 'packages'))
@@ -188,10 +206,7 @@ def main(argv=None):
     for i, r in enumerate(routes):
         routes_by_gate[r[0]].append(i)
     active_gates = [g['edge'] for g in metadata['gates'] if g['direction'] == 'entry']
-    gate_caps_dict = {g['edge']: net.getEdge(g['edge']).getLaneNumber() * ENTRY_LANE_CAPACITY_VPH
-                      for g in metadata['gates'] if g['direction'] == 'entry'}
     gm = np.array([[float(r[0] == gid) for r in routes] for gid in active_gates])
-    gc = np.array([gate_caps_dict[gid] for gid in active_gates])
 
     feedback = None
     if args.feedback:
@@ -213,16 +228,15 @@ def main(argv=None):
         for i, r in enumerate(routes):
             gid = r[0]
             gp = prior_by_gate.get(gid)
-            edge = net.getEdge(gid)
-            is_corridor = is_corridor_road(edge)
-            can_carry = gp and (is_corridor or (gp['identified'] and gp['prior_vph'] > 0))
-            if can_carry and gp['prior_vph'] > 0:
+            # Demand is allowed only inside the gate's declared class bounds (B1): assumed gates carry
+            # no prior but keep their declared range, measured/inferred gates keep their own bounds.
+            upper = gp['upper_vph'] if gp else 0.0
+            if gp and gp['prior_vph'] > 0:
                 k = len(routes_by_gate[gid])
                 route_prior[i] = gp['prior_vph'] / k
-                bounds.append((0.0, gate_caps_dict[gid]))
-            else:
-                route_prior[i] = 0.0
-                bounds.append((0.0, gate_caps_dict[gid]) if can_carry else (0.0, 0.0))
+            bounds.append((0.0, upper))
+        gate_upper = np.array([prior_by_gate[g]['upper_vph'] for g in active_gates])
+        gate_lower = np.array([prior_by_gate[g]['lower_vph'] for g in active_gates])
 
         edge_matrix, edge_targets = aggregate_edge_targets(targets, mapped_edges, routes)
         correction = None
@@ -239,19 +253,22 @@ def main(argv=None):
             usable = [g for g in priors if g['near'] and g['direction'] == 'entry' and g['identified'] and g['prior_vph'] > 0]
             gdata_m = np.array([[float(r[0] == g['edge']) for r in routes] for g in usable])
             gate_data = gdata_m, np.array([g['prior_vph'] for g in usable]), args.gate_weight
-        caps_tuple = (gm, gc, active_gates, routes_by_gate, bounds)
+        caps_tuple = (gm, gate_upper, active_gates, routes_by_gate, bounds, gate_lower)
         weights, solver = fit(edge_matrix, edge_targets, route_prior, args.arrival_factor, correction,
                               args.regularization, gate_data, gate_caps=caps_tuple)
         fitted = edge_matrix @ weights
         slices.append({'start': start, 'end': start + 900, 'solver': solver, 'targets': [
             {**x, 'planned_vph': float(q)} for x, q in zip(edge_targets, fitted)]})
         gate_rates = defaultdict(float)
-        scale = 1 if args.world == 'proxy' else 1.5
+        twin_scale = 1.5 if args.world == 'twin' else 1.0
         for r, q in zip(routes, weights):
             gate_rates['entry', r[0]] += q
             gate_rates['exit', r[-1]] += q
-            for depart in rng.uniform(start, start + 900, rng.poisson(q * 0.25 * scale)):
+            for depart in rng.uniform(start, start + 900, rng.poisson(q * 0.25 * twin_scale * args.scale)):
                 vehicles.append((float(depart), r))
+        for gid, upper, lower in zip(active_gates, gate_upper, gate_lower):
+            realised = gate_rates['entry', gid]
+            assert lower - 1e-6 <= realised <= upper + 1e-6, (gid, realised, lower, upper)
         for g, estimate in zip(metadata['gates'], priors):
             gate_rows.append({**g, 'start': start, 'vph': gate_rates[g['direction'], g['edge']],
                               'flow_balance_prior': estimate})
@@ -264,7 +281,7 @@ def main(argv=None):
     ET.ElementTree(root).write(directory / 'demand.rou.xml', encoding='utf-8')
     save(directory / 'demand.json', {'tag': args.tag, 'world': args.world, 'seed': seed,
          'arrival_factor': args.arrival_factor, 'regularization': args.regularization,
-         'gate_weight': args.gate_weight,
+         'gate_weight': args.gate_weight, 'gate_scale': args.scale,
          'feedback': args.feedback, 'candidate_count': len(routes), 'vehicles': len(vehicles),
          'profile_sha256': sha(RESULTS / 'obs' / 'obs_profile.json'),
          'network_path': str(net_path),
@@ -273,7 +290,10 @@ def main(argv=None):
          'network_meta_sha256': sha(net_meta_path) if net_meta_path.exists() else None,
          'code_sha256': {str(p): sha(p) for p in (__file__, __import__('citypulse.demand.bounded_gates', fromlist=['x']).__file__)},
          'route_sha256': sha(directory / 'demand.rou.xml'), 'slices': slices, 'gates': gate_rows,
-         'congested_arrivals': 'p75 discharge times scenario factor is a lower-bound prior, not an arrival measurement',
+         'gate_classes': 'measured | measured_congested | inferred | assumed; every gate carries demand only '
+                         'inside its class bounds (asserted in fit and main)',
+         'congested_arrivals': 'a congested detector measures discharge, not demand; measured_congested gates are '
+                               'bounded by observed median..p75 and are not capped by the lane capacity',
          'twin_contract': 'Independent seed/candidate selection/Poisson departures; TwinDemandStream(path=..., scale=1.5), stream seed 202'})
     print(args.tag, len(routes), 'candidates', len(vehicles), 'vehicles')
 
