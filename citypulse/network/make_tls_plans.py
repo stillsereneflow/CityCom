@@ -14,11 +14,28 @@ from citypulse.scenario import CONTROL
 FACTOR, MIN_GREEN = 1.5, 5
 
 
-def main():
-    net = sumolib.net.readNet(str(NET_FILE), withPrograms=True)
+def main(argv=None):
+    import argparse
+    from pathlib import Path
+    ap = argparse.ArgumentParser(description="Pre-build A1 incident signal plans")
+    ap.add_argument("--net", default=str(NET_FILE), help="SUMO network file")
+    ap.add_argument("--output", default=str(SCEN / "tls_incident.add.xml"), help="Output XML file")
+    args = ap.parse_args(argv)
+
+    net = sumolib.net.readNet(args.net, withPrograms=True)
+    all_tls = {tl.getID() for tl in net.getTrafficLights()}
+    missing = [t for t in CONTROL["tls_plan"] if t not in all_tls]
+    if missing:
+        print(f"Warning: signals in CONTROL['tls_plan'] missing from {args.net}: {missing}")
+    else:
+        print(f"All {len(CONTROL['tls_plan'])} signals exist in network.")
+
     fav = set(CONTROL["corridor_b"])
     out = ["<additional>"]
+    written = 0
     for tid in CONTROL["tls_plan"]:
+        if tid not in all_tls:
+            continue
         tl = net.getTLS(tid)
         prog = list(tl.getPrograms().values())[0]
         fav_idx = {idx for (inl, _outl, idx) in tl.getConnections() if inl.getEdge().getID() in fav}
@@ -28,9 +45,11 @@ def main():
             dur = ph.duration * FACTOR if serves else max(MIN_GREEN, ph.duration)
             out.append(f'    <phase duration="{dur:.0f}" state="{ph.state}"/>')
         out.append("  </tlLogic>")
+        written += 1
     out.append("</additional>")
-    (SCEN / "tls_incident.add.xml").write_text("\n".join(out) + "\n", encoding="utf-8")
-    print(f"wrote P_inc for {len(CONTROL['tls_plan'])} signals")
+    Path(args.output).parent.mkdir(parents=True, exist_ok=True)
+    Path(args.output).write_text("\n".join(out) + "\n", encoding="utf-8")
+    print(f"wrote P_inc for {written} signals")
 
 
 if __name__ == "__main__":

@@ -73,13 +73,14 @@ def map_all(net):
     return mapped, unmapped
 
 
-def write_additional(mapped, path):
+def write_additional(mapped, path, lane_lens=None):
+    lens = lane_lens if lane_lens is not None else sumolib_lane_len
     with open(path, "w", encoding="utf-8") as fh:
         fh.write("<additional>\n")
         for m in mapped:
             for i in range(m["n_lanes"]):
-                lane_len = sumolib_lane_len[(m["edge"], i)]
-                pos = min(max(m["pos"], 1.0), lane_len - 1.0)
+                lane_len = lens[(m["edge"], i)]
+                pos = min(max(m["pos"], 1.0), max(0.1, lane_len - 0.5))
                 fh.write(f'    <inductionLoop id={quoteattr(f"{m["id"]}_{i}")} lane="{m["edge"]}_{i}" '
                          f'pos="{pos:.1f}" period="{SENSOR_PERIOD}" file="NUL"/>\n')
         fh.write("</additional>\n")
@@ -88,14 +89,23 @@ def write_additional(mapped, path):
 sumolib_lane_len = {}
 
 
-def main():
-    net = sumolib.net.readNet(str(NET_FILE))
+def main(argv=None):
+    import argparse
+    ap = argparse.ArgumentParser(description="Map TD detectors to SUMO network")
+    ap.add_argument("--net", default=str(NET_FILE), help="SUMO network file")
+    ap.add_argument("--output-detectors", default=str(SCEN / "detectors.add.xml"), help="Output detectors XML file")
+    ap.add_argument("--output-map", default=str(SCEN / "detector_map.json"), help="Output detector map JSON file")
+    args = ap.parse_args(argv)
+
+    net = sumolib.net.readNet(args.net)
+    lane_lens = {}
     for e in net.getEdges():
         for ln in e.getLanes():
+            lane_lens[(e.getID(), ln.getIndex())] = ln.getLength()
             sumolib_lane_len[(e.getID(), ln.getIndex())] = ln.getLength()
     mapped, unmapped = map_all(net)
-    write_additional(mapped, SCEN / "detectors.add.xml")
-    with open(SCEN / "detector_map.json", "w", encoding="utf-8") as fh:
+    write_additional(mapped, args.output_detectors, lane_lens)
+    with open(args.output_map, "w", encoding="utf-8") as fh:
         json.dump({"mapped": mapped, "unmapped": unmapped}, fh, indent=1, ensure_ascii=False)
     print(f"mapped {len(mapped)} / {len(mapped) + len(unmapped)} detectors")
     for u in unmapped:

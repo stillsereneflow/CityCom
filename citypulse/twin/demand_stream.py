@@ -7,6 +7,7 @@ vehicles (common random numbers) and a rewind never duplicates or skips vehicles
 """
 import xml.etree.ElementTree as ET
 
+import os
 import numpy as np
 
 from citypulse.config import SCEN
@@ -15,7 +16,10 @@ from citypulse.demand.make_demand import TWIN_CAND_SCALE
 
 class TwinDemandStream:
     def __init__(self, seed=0, path=None, scale=TWIN_CAND_SCALE):
-        root = ET.parse(path or SCEN / "twin_cand.rou.xml").getroot()
+        if path is None:
+            is_v4 = os.environ.get("CITYPULSE_NET", "").strip().lower() == "v4"
+            path = (SCEN / "v4" / "twin_cand.rou.xml") if is_v4 else (SCEN / "twin_cand.rou.xml")
+        root = ET.parse(path).getroot()
         cands = []
         for v in root.iter("vehicle"):
             r = v.find("route")

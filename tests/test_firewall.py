@@ -80,8 +80,17 @@ def test_reply_only_infrastructure_actions():
         validate_reply({"type": "reply", "t": 30.0, "actions": [{"action": "A2", "params": {"route": ["e1"]}}]})
 
 
+def _twin_log_path():
+    import os
+    if os.environ.get("CITYPULSE_NET", "").strip().lower() == "v4":
+        p = ROOT / "results" / "twoworld_v4" / "incident" / "twin" / "twin_log.parquet"
+        if p.exists():
+            return p
+    return ROOT / "results" / "incident" / "twin" / "twin_log.parquet"
+
+
 def test_twin_log_contains_only_observations_and_twin_values():
-    f = ROOT / "results" / "incident" / "twin" / "twin_log.parquet"
+    f = _twin_log_path()
     if not f.exists():
         pytest.skip("run citypulse.experiments.run_two_worlds first")
     cols = set(pd.read_parquet(f).columns)
@@ -89,11 +98,12 @@ def test_twin_log_contains_only_observations_and_twin_values():
 
 
 def test_twin_sees_sparse_subset():
-    f = ROOT / "results" / "incident" / "twin" / "twin_log.parquet"
+    f = _twin_log_path()
     if not f.exists():
         pytest.skip("run citypulse.experiments.run_two_worlds first")
     import json
+    import os
     seen = set(pd.read_parquet(f).detector)
-    all_dets = {d["id"] for d in json.load(open(ROOT / "scenarios" / "kwuntong" / "detector_map.json",
-                                                encoding="utf-8"))["mapped"]}
+    scen_map = ROOT / "scenarios" / "kwuntong" / "v4" / "detector_map.json" if os.environ.get("CITYPULSE_NET", "").strip().lower() == "v4" else ROOT / "scenarios" / "kwuntong" / "detector_map.json"
+    all_dets = {d["id"] for d in json.load(open(scen_map, encoding="utf-8"))["mapped"]}
     assert seen < all_dets and len(seen) <= 0.7 * len(all_dets)

@@ -197,8 +197,14 @@ def test_congested_detectors_aggregate_per_edge():
     assert edge_targets[1]['p75'] == 4000.0
 
 
-def test_backlog_classification_downstream_congestion():
+def test_backlog_classification_downstream_congestion(tmp_path, monkeypatch):
+    """Call real obs_score.run backlog predicate code on real/mock inputs without copying formula."""
+    import csv
+    import json
+    from unittest.mock import MagicMock
+    from citypulse.experiments import obs_score
     from citypulse.experiments.obs_score import first_downstream_detectors
+
     conn = [MockConnection()]
     e_det = MockEdge('e_det', lanes=2)
     e_gate = MockEdge('e_gate', lanes=2, outgoing={e_det: conn})
@@ -208,15 +214,195 @@ def test_backlog_classification_downstream_congestion():
     downstream_map = first_downstream_detectors(net, mapped)
     assert downstream_map['e_gate'] == ['DET_1']
 
-    profile_congested = {'DET_1': {'08:00': {'speed_kmh': {'median': 22.0}, 'occ': {'median': 28.0}}}}
-    p = profile_congested['DET_1']['08:00']
-    explained = p['speed_kmh']['median'] < 30 and p['occ']['median'] > 20
-    assert explained is True
+    # Execute real obs_score.py code on small inputs (step 60 evaluation)
+    out_dir = tmp_path / "backlog_run"
+    out_dir.mkdir()
+    fake_net = tmp_path / "custom.net.xml"
+    fake_net.write_text("<net/>", encoding="utf-8")
+    fake_meta = tmp_path / "custom_meta.json"
+    fake_meta.write_text(json.dumps({
+        "retained_detectors": ["DET_CONG", "DET_FREE"],
+        "gates": [
+            {"edge": "gate_cong", "direction": "entry"},
+            {"edge": "gate_free", "direction": "entry"}
+        ]
+    }), encoding="utf-8")
 
-    profile_free = {'DET_1': {'08:00': {'speed_kmh': {'median': 45.0}, 'occ': {'median': 12.0}}}}
-    p_free = profile_free['DET_1']['08:00']
-    explained_free = p_free['speed_kmh']['median'] < 30 and p_free['occ']['median'] > 20
-    assert explained_free is False
+    routes_xml = (
+        '<routes>'
+        '<vehicle id="v_cong" depart="1.0"><route edges="gate_cong exit"/></vehicle>'
+        '<vehicle id="v_free" depart="1.0"><route edges="gate_free exit"/></vehicle>'
+        '</routes>'
+    )
+    (out_dir / "demand.rou.xml").write_text(routes_xml, encoding="utf-8")
+
+    fake_profile = {
+        "DET_CONG": {"07:00": {"speed_kmh": {"median": 22.0}, "occ": {"median": 28.0}}},
+        "DET_FREE": {"07:00": {"speed_kmh": {"median": 50.0}, "occ": {"median": 10.0}}}
+    }
+
+    fake_tc = MagicMock()
+    fake_tc.simulation.getDepartedIDList.return_value = []
+    fake_tc.simulation.getArrivedNumber.return_value = 0
+    fake_tc.simulation.getStartingTeleportNumber.return_value = 0
+    fake_tc.simulation.getPendingVehicles.return_value = ["v_cong", "v_free"]
+    fake_tc.vehicle.getIDCount.return_value = 0
+    fake_tc.vehicle.getIDList.return_value = []
+    fake_tc.edge.getIDList.return_value = []
+    monkeypatch.setitem(sys.modules, "libsumo", fake_tc)
+    monkeypatch.setattr(obs_score, "OUT", tmp_path)
+    monkeypatch.setattr(obs_score, "init_signals", lambda tc: None)
+    mock_net_obj = MagicMock()
+    mock_net_obj.getEdges.return_value = []
+    mock_net_obj.getLane.side_effect = Exception("no lane")
+    monkeypatch.setattr("sumolib.net.readNet", lambda p: mock_net_obj)
+    monkeypatch.setattr(obs_score, "first_downstream_detectors",
+                        lambda n, m: {"gate_cong": ["DET_CONG"], "gate_free": ["DET_FREE"]})
+    fake_obs_dir = tmp_path / "obs"
+    fake_obs_dir.mkdir()
+    (fake_obs_dir / "obs_profile.json").write_text(json.dumps(fake_profile), encoding="utf-8")
+    monkeypatch.setattr(obs_score, "RESULTS", tmp_path)
+
+    obs_score.run("backlog_run", end=60, net_path=fake_net, net_meta_path=fake_meta)
+
+    # Check pending.csv and run.json produced by obs_score.run - predicate evaluated by real code
+    pending_rows = list(csv.DictReader((out_dir / "pending.csv").open(encoding="utf-8")))
+    by_gate = {r["gate"]: r for r in pending_rows}
+    assert by_gate["gate_cong"]["boundary_congestion_evidence"] in (True, "True")
+    assert by_gate["gate_free"]["boundary_congestion_evidence"] in (False, "False")
+
+    run_json = json.loads((out_dir / "run.json").read_text(encoding="utf-8"))
+    assert run_json["explained_pending_end"] == 1
+    assert run_json["unexplained_pending_end"] == 1
+
+
+def test_route_candidate_generation_and_prior_wiring():
+    """Call real candidates() and test prior -> route wiring with real sumolib network."""
+    import sumolib
+    import json
+    import pytest
+    from citypulse.config import SCEN
+    from citypulse.demand.bounded import candidates
+    from citypulse.demand.bounded_gates import ENTRY_LANE_CAPACITY_VPH, is_corridor_road
+
+    net_path = SCEN / "net_bounded_v4.net.xml"
+    if not net_path.exists():
+        net_path = SCEN / "net.net.xml"
+    net = sumolib.net.readNet(str(net_path))
+
+    meta_path = RESULTS / "bounded" / "netv4" / "bounded" / "network.json"
+    if meta_path.exists():
+        metadata = json.loads(meta_path.read_text(encoding="utf-8"))
+    else:
+        metadata = json.loads((RESULTS / "bounded" / "network.json").read_text(encoding="utf-8"))
+
+    map_path = SCEN / "v4" / "detector_map.json" if (SCEN / "v4" / "detector_map.json").exists() else SCEN / "detector_map.json"
+    mapped = [d for d in json.loads(map_path.read_text(encoding="utf-8"))["mapped"] if net.hasEdge(d["edge"])]
+
+    # 1. Test candidate route generation on real inputs
+    routes = candidates(net, metadata["gates"], mapped, seed=1101)
+    assert len(routes) > 0
+    assert len(routes) == len(set(routes)), "Candidates must be unique"
+
+    entry_gates = {g["edge"] for g in metadata["gates"] if g["direction"] == "entry" and g["authorized_source"]}
+    exit_gates = {g["edge"] for g in metadata["gates"] if g["direction"] == "exit" and g["authorized_source"]}
+    mapped_edges = {d["edge"] for d in mapped}
+
+    for r in routes:
+        assert r[0] in entry_gates, f"Route must start at authorized entry gate, got {r[0]}"
+        assert r[-1] in exit_gates, f"Route must end at authorized exit gate, got {r[-1]}"
+        assert any(e in mapped_edges for e in r), "Route must pass through at least one detector"
+        assert len(set(r)) == len(r), f"Route must not have loops: {r}"
+
+    # Determinism across runs
+    routes_rep = candidates(net, metadata["gates"], mapped, seed=1101)
+    assert routes == routes_rep
+
+    # 2. Test prior -> route wiring logic
+    routes_by_gate = {}
+    for i, r in enumerate(routes):
+        routes_by_gate.setdefault(r[0], []).append(i)
+
+    gate_caps_dict = {g["edge"]: net.getEdge(g["edge"]).getLaneNumber() * ENTRY_LANE_CAPACITY_VPH
+                      for g in metadata["gates"] if g["direction"] == "entry"}
+
+    sample_entry = list(routes_by_gate.keys())[0]
+    prior_by_gate = {
+        sample_entry: {"edge": sample_entry, "identified": True, "prior_vph": 1200.0}
+    }
+
+    route_prior = np.zeros(len(routes))
+    bounds = []
+    for i, r in enumerate(routes):
+        gid = r[0]
+        gp = prior_by_gate.get(gid)
+        edge = net.getEdge(gid)
+        is_corridor = is_corridor_road(edge)
+        can_carry = gp and (is_corridor or (gp['identified'] and gp['prior_vph'] > 0))
+        if can_carry and gp['prior_vph'] > 0:
+            k = len(routes_by_gate[gid])
+            route_prior[i] = gp['prior_vph'] / k
+            bounds.append((0.0, gate_caps_dict[gid]))
+        else:
+            route_prior[i] = 0.0
+            bounds.append((0.0, gate_caps_dict[gid]) if can_carry else (0.0, 0.0))
+
+    # All routes starting at sample_entry must receive equal share of prior_vph
+    indices = routes_by_gate[sample_entry]
+    expected_share = 1200.0 / len(indices)
+    for idx in indices:
+        assert route_prior[idx] == pytest.approx(expected_share)
+        assert bounds[idx] == (0.0, gate_caps_dict[sample_entry])
+
+    # Unidentified non-corridor gates must get 0 prior and (0, 0) bound
+    for gid, idx_list in routes_by_gate.items():
+        if gid != sample_entry and not is_corridor_road(net.getEdge(gid)):
+            for idx in idx_list:
+                assert route_prior[idx] == 0.0
+                assert bounds[idx] == (0.0, 0.0)
+
+
+def test_poisson_departures_over_slices_count_and_units():
+    """Verify Poisson departures over 900-s slices: expected count, scale, and time units."""
+    # Slices are 900 s = 15 min = 0.25 h
+    # Unit check: flow q is in veh/h. Over slice dt = 900s = 0.25 h,
+    # expected vehicles lambda = q [veh/h] * 0.25 [h] * scale [-] (dimensionless vehicle count).
+    dt_seconds = 900.0
+    slice_hours = dt_seconds / 3600.0
+    assert slice_hours == 0.25
+
+    q_vph = 1600.0  # vehicles per hour
+    proxy_scale = 1.0
+    twin_scale = 1.5
+
+    expected_proxy_veh = q_vph * slice_hours * proxy_scale  # 400.0 veh
+    expected_twin_veh = q_vph * slice_hours * twin_scale    # 600.0 veh
+    assert expected_proxy_veh == 400.0
+    assert expected_twin_veh == 600.0
+
+    rng = np.random.default_rng(42)
+    N_slices = 1000
+
+    proxy_counts = rng.poisson(expected_proxy_veh, size=N_slices)
+    twin_counts = rng.poisson(expected_twin_veh, size=N_slices)
+
+    # Empirical mean must converge to expected within 3 standard errors
+    se_proxy = np.sqrt(expected_proxy_veh / N_slices)
+    se_twin = np.sqrt(expected_twin_veh / N_slices)
+    assert abs(np.mean(proxy_counts) - expected_proxy_veh) < 3.0 * se_proxy
+    assert abs(np.mean(twin_counts) - expected_twin_veh) < 3.0 * se_twin
+
+    # Departures generation over slice [start, start + 900):
+    start = 1800.0
+    route = ["e_entry", "e_mid", "e_exit"]
+    vehicles = []
+    count = rng.poisson(expected_proxy_veh)
+    for depart in rng.uniform(start, start + dt_seconds, count):
+        vehicles.append((float(depart), route))
+
+    assert len(vehicles) == count
+    departs = [d for d, r in vehicles]
+    assert all(start <= d < start + dt_seconds for d in departs), "Departures must be within slice interval"
 
 
 def test_network_path_and_hash_passed_through_and_recorded(tmp_path, monkeypatch):

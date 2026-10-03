@@ -20,6 +20,7 @@ def main():
     ap.add_argument("--no-incident", action="store_true")
     ap.add_argument("--twin-snapshot", type=float, nargs="*", default=[])
     ap.add_argument("--proxy-snapshot", type=float, nargs="*", default=[])
+    ap.add_argument("--routes", default=None, help="Proxy routes XML file")
     a = ap.parse_args()
     run = RESULTS / a.run
     ep = f"tcp://127.0.0.1:{a.port}"
@@ -31,6 +32,8 @@ def main():
              "--t-end", str(a.t_end), "--snapshot-times", *map(str, a.proxy_snapshot)]
     if a.no_incident:
         pargs.append("--no-incident")
+    if a.routes:
+        pargs.extend(["--routes", str(a.routes)])
     proxy = subprocess.Popen(pargs)
     rc_p, rc_t = proxy.wait(), twin.wait()
     info = {"proxy_rc": rc_p, "twin_rc": rc_t, "wall_s": round(time.time() - t0, 1), "t_end": a.t_end,

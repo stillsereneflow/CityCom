@@ -74,8 +74,9 @@ def main():
     ap.add_argument("--t-end", type=float, default=3000)
     ap.add_argument("--no-incident", action="store_true")
     ap.add_argument("--snapshot-times", type=float, nargs="*", default=[])
+    ap.add_argument("--routes", default=None, help="Proxy routes XML file")
     a = ap.parse_args()
-    s = run(a.endpoint, Path(a.out), a.seed, a.sensor_seed, a.t_end, not a.no_incident, set(a.snapshot_times))
+    s = run(a.endpoint, Path(a.out), a.seed, a.sensor_seed, a.t_end, not a.no_incident, set(a.snapshot_times), routes=a.routes)
     print(json.dumps({k: v for k, v in s.items() if k != "observed_detectors"}))
 
 

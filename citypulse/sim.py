@@ -2,33 +2,86 @@
 import json
 from collections import defaultdict
 
+import os
+from pathlib import Path
+
 from citypulse.config import NET_FILE, SCEN, SENSOR_PERIOD, sumo_bin
 
-DET_FILE = SCEN / "detectors.add.xml"
-TLS_FILE = SCEN / "tls_incident.add.xml"   # predefined A1 plans (runtime-created programs break loadState)
+
+def get_net_setting():
+    return os.environ.get("CITYPULSE_NET", "").strip().lower()
+
+
+def get_scen_dir():
+    if get_net_setting() == "v4":
+        return SCEN / "v4"
+    return SCEN
+
+
+def get_net_file():
+    if get_net_setting() == "v4":
+        return SCEN / "net_bounded_v4.net.xml"
+    return NET_FILE
+
+
+def get_det_file():
+    if get_net_setting() == "v4":
+        return SCEN / "v4" / "detectors.add.xml"
+    return SCEN / "detectors.add.xml"
+
+
+def get_tls_file():
+    if get_net_setting() == "v4":
+        return SCEN / "v4" / "tls_incident.add.xml"
+    return SCEN / "tls_incident.add.xml"
+
+
+def get_detector_map():
+    if get_net_setting() == "v4":
+        return SCEN / "v4" / "detector_map.json"
+    return SCEN / "detector_map.json"
+
+
+def get_vtypes_file(world):
+    scen_dir = get_scen_dir()
+    f = scen_dir / f"vtypes_{world}.add.xml"
+    if f.exists():
+        return f
+    return SCEN / f"vtypes_{world}.add.xml"
+
+
+def __getattr__(name):
+    if name == "DET_FILE":
+        return get_det_file()
+    if name == "TLS_FILE":
+        return get_tls_file()
+    if name == "NET_FILE":
+        return get_net_file()
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
 def base_cmd(binary="sumo"):
-    return [sumo_bin(binary), "-n", str(NET_FILE), "--step-length", "1", "--no-step-log", "true",
+    return [sumo_bin(binary), "-n", str(get_net_file()), "--step-length", "1", "--no-step-log", "true",
             "--no-warnings", "true", "--time-to-teleport", "-1", "--collision.action", "warn"]
 
 
 def proxy_cmd(seed, routes=None, extra=()):
-    c = base_cmd() + ["-a", f"{SCEN / 'vtypes_proxy.add.xml'},{DET_FILE},{TLS_FILE}",
-                      "-r", str(routes or SCEN / "proxy.rou.xml"), "--seed", str(seed),
+    default_routes = get_scen_dir() / "proxy.rou.xml" if (get_scen_dir() / "proxy.rou.xml").exists() else SCEN / "proxy.rou.xml"
+    c = base_cmd() + ["-a", f"{get_vtypes_file('proxy')},{get_det_file()},{get_tls_file()}",
+                      "-r", str(routes or default_routes), "--seed", str(seed),
                       "--device.rerouting.probability", "0.3", "--device.rerouting.period", "60"]
     return c + list(extra)
 
 
 def twin_cmd(seed, extra=()):
     """Twin has NO route file: its demand is inserted from Python (twin/demand_stream.py)."""
-    c = base_cmd() + ["-a", f"{SCEN / 'vtypes_twin.add.xml'},{DET_FILE},{TLS_FILE}", "--seed", str(seed)]
+    c = base_cmd() + ["-a", f"{get_vtypes_file('twin')},{get_det_file()},{get_tls_file()}", "--seed", str(seed)]
     return c + list(extra)
 
 
 def detector_loops():
     """AID -> list of E1 loop ids (one per lane)."""
-    m = json.load(open(SCEN / "detector_map.json", encoding="utf-8"))["mapped"]
+    m = json.load(open(get_detector_map(), encoding="utf-8"))["mapped"]
     return {d["id"]: [f"{d['id']}_{i}" for i in range(d["n_lanes"])] for d in m}
 
 
