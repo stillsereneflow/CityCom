@@ -1,6 +1,6 @@
 # Oct 5: normal-mode assimilation (report2 §G.3) on the frozen synthetic baseline. Predeclared before any assimilated run.
 
-Baseline: net5 / synth5, frozen (`results/blite/synth5/READY`; Astra freeze review `~/.claude/runs/D--CityCom/20261003-1955-codex-astra-freeze/out.md`). The designed Proxy/Twin mismatch is retained: driver models, independent demand draws, and Twin TKO demand about 8% below the Proxy's.
+Baseline: net5 / synth5, frozen (`results/blite/synth5/READY`; Astra freeze review `~/.claude/runs/D--CityCom/20261003-1958-codex-astra-freeze/out.md`). The designed Proxy/Twin mismatch is retained: driver models, independent demand draws, and Twin TKO demand about 8% below the Proxy's.
 
 ## What is compared
 
