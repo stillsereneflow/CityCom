@@ -1,0 +1,123 @@
+{
+  "net": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\net5.net.xml",
+  "a_routes_connected": {
+    "pass": true,
+    "detail": "31075 routes, 0 unconnected []"
+  },
+  "b_no_dead_lanes": {
+    "pass": true,
+    "detail": "133 lanes, dead: none"
+  },
+  "c_D_no_mutual_foes": {
+    "pass": true,
+    "detail": "links [0, 1, 2] states ['M', 'M', 'M'] offending pairs none"
+  },
+  "c_D_requests": {
+    "0": {
+      "response": "000000",
+      "foes": "000000",
+      "cont": "0",
+      "from": "tko_vms",
+      "fromLane": 0,
+      "to": "tko_a1",
+      "toLane": 0,
+      "state": "M",
+      "dir": "L"
+    },
+    "1": {
+      "response": "000000",
+      "foes": "111000",
+      "cont": "0",
+      "from": "tko_vms",
+      "fromLane": 1,
+      "to": "ktb_w1",
+      "toLane": 0,
+      "state": "M",
+      "dir": "s"
+    },
+    "2": {
+      "response": "000000",
+      "foes": "111000",
+      "cont": "0",
+      "from": "tko_vms",
+      "fromLane": 2,
+      "to": "ktb_w1",
+      "toLane": 1,
+      "state": "M",
+      "dir": "s"
+    },
+    "3": {
+      "response": "000110",
+      "foes": "000110",
+      "cont": "0",
+      "from": "on_tko_a1",
+      "fromLane": 0,
+      "to": "tko_a1",
+      "toLane": 1,
+      "state": "m",
+      "dir": "r"
+    },
+    "4": {
+      "response": "000110",
+      "foes": "000110",
+      "cont": "0",
+      "from": "on_tko_a1",
+      "fromLane": 0,
+      "to": "tko_a1",
+      "toLane": 2,
+      "state": "m",
+      "dir": "r"
+    },
+    "5": {
+      "response": "000110",
+      "foes": "000110",
+      "cont": "1",
+      "from": ":D_5",
+      "fromLane": 0,
+      "to": "ktb_w1",
+      "toLane": 1,
+      "state": "m",
+      "dir": "T"
+    }
+  },
+  "c2_D_connectors_no_crossing": {
+    "pass": true,
+    "detail": "crossing pairs: none"
+  },
+  "d_entry_connections": {
+    "pass": true,
+    "detail": "tko_in->tko_1 = [('tko_in', 0, 'tko_1', 0), ('tko_in', 0, 'tko_1', 1), ('tko_in', 1, 'tko_1', 2)]"
+  },
+  "e_detectors_equal_net4": {
+    "pass": true,
+    "detail": "62 loops, identical to net4: True"
+  },
+  "f_signal_state_lengths": {
+    "pass": true,
+    "detail": "S1-S4 mismatches: none"
+  },
+  "g_route_equivalence": {
+    "pass": true,
+    "detail": "31075 vehicles compared, 0 differences []"
+  },
+  "x_insert_stub_spec": {
+    "pass": true,
+    "detail": "tko_insert: length 500.0 m, 3 lanes, 69.98 km/h"
+  },
+  "x_insert_connections": {
+    "pass": true,
+    "detail": "tko_insert links = [('tko_insert', 0, 'tko_in', 0), ('tko_insert', 1, 'tko_in', 1), ('tko_insert', 2, 'tko_in', 1)]"
+  },
+  "x_insert_zipper_node": {
+    "pass": true,
+    "detail": "node src type = zipper"
+  },
+  "x_tko_1_tko_vms_identity": {
+    "pass": true,
+    "detail": "links = [(0, 0), (1, 1), (2, 2)]"
+  },
+  "x_lane_change_room": {
+    "pass": true,
+    "detail": "edges >= 150 m: {'tko_insert': 500.0, 'tko_in': 307.4, 'tko_1': 276.6, 'tko_vms': 382.7}"
+  }
+}

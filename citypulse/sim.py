@@ -51,6 +51,15 @@ def get_tls_file():
     net = get_net_setting()
     if net == "blite":
         rev = os.environ.get("CITYPULSE_BLITE_REV", "4").strip()
+        if rev == "5":
+            # net5 keeps its signal plans next to the synth5 routes; the link indices at
+            # S1-S4 are identical to net4's (scenarios/kwuntong/blite/tls_base5.add.xml is
+            # byte-identical to tls_base4.add.xml).
+            synth5 = SCEN / "blite" / "synth5"
+            webster, inc = synth5 / "tls_webster_synth.add.xml", synth5 / "tls_incident_synth.add.xml"
+            if webster.exists() and inc.exists():
+                return f"{webster},{inc}"
+            return inc
         if rev == "3":
             grid_webster = RESULTS / "blite" / "grid" / "tls_webster3.add.xml"
             inc = SCEN / "blite" / "tls_incident3.add.xml"
@@ -76,9 +85,12 @@ def get_detector_map():
         m = SCEN / "blite" / f"detector_map{rev}.json"
         if m.exists():
             return m
-        m3 = SCEN / "blite" / "detector_map3.json"
-        if m3.exists():
-            return m3
+        # net5's map lives with the other net5 build inputs (results/blite/net5/scratch/);
+        # its detector set is net4's, so fall back to the net4 map rather than to net3's.
+        for fallback in ("detector_map4.json", "detector_map3.json", "detector_map.json"):
+            m = SCEN / "blite" / fallback
+            if m.exists():
+                return m
         return SCEN / "blite" / "detector_map.json"
     if net == "v4":
         return SCEN / "v4" / "detector_map.json"

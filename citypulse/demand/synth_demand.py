@@ -54,6 +54,16 @@ ENTRY_DETECTOR = 'AID07105'
 SYNTH_DIR = SCEN / 'blite' / 'synth'
 NET4 = SCEN / 'blite' / 'net4.net.xml'
 
+# --- net5 (decision 2026-10-03c): the same synthetic demand with the insertion stub ------
+SYNTH5_DIR = SCEN / 'blite' / 'synth5'
+NET5 = SCEN / 'blite' / 'net5.net.xml'
+INSERT_EDGE = 'tko_insert'
+TKO_ENTRY = 'tko_in'
+# route files copied into synth5/; the signal plans are copied byte-for-byte because the
+# net5 link indices at S1-S4 are identical to net4's (tls_base5 == tls_base4).
+SYNTH5_ROUTE_FILES = ('proxy.rou.xml', 'proxy_shock.rou.xml', 'twin_cand.rou.xml')
+SYNTH5_TLS_FILES = ('tls_webster_synth.add.xml', 'tls_incident_synth.add.xml')
+
 _NET_CACHE = {}
 _PAIR_CACHE = {}
 
@@ -336,15 +346,82 @@ def generate_synth_files(out_dir=None, proxy_seed=PROXY_SEED, twin_seed=TWIN_SEE
     return demand
 
 
+def build_synth5(src_dir=None, out_dir=None):
+    """Copy the synthetic route files with ``tko_insert`` prepended to every TKO route.
+
+    Every vehicle whose route starts at ``tko_in`` (the corridor entry) gets the 500 m
+    insertion stub in front of it and the net5 departure settings
+    (``departLane="free"``, ``departSpeed="max"``); cross-street vehicles are untouched.
+    Scheduled departure time, vehicle class, destination and the vehicle count are preserved
+    exactly, and the function asserts that against the ``synth/`` source files.  The two
+    signal plans are copied byte-for-byte (net5 does not move any link index).
+    """
+    import xml.etree.ElementTree as ET
+
+    src_dir = Path(src_dir or SYNTH_DIR)
+    out_dir = Path(out_dir or SYNTH5_DIR)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    stats = {}
+    for name in SYNTH5_ROUTE_FILES:
+        tree = ET.parse(src_dir / name)
+        root = tree.getroot()
+        before = {}
+        tko = 0
+        for v in root.iter('vehicle'):
+            route = v.find('route')
+            edges = route.get('edges').split()
+            before[v.get('id')] = (float(v.get('depart')), v.get('type'), edges[0], edges[-1])
+            if edges[0] == TKO_ENTRY:
+                route.set('edges', ' '.join([INSERT_EDGE] + edges))
+                v.set('departLane', 'free')
+                v.set('departSpeed', 'max')
+                tko += 1
+        ET.indent(tree, space='  ')
+        tree.write(out_dir / name, encoding='utf-8', xml_declaration=True)
+
+        after = ET.parse(out_dir / name).getroot()
+        seen = {}
+        for v in after.iter('vehicle'):
+            edges = v.find('route').get('edges').split()
+            seen[v.get('id')] = (float(v.get('depart')), v.get('type'), edges[0], edges[-1],
+                                 v.get('departLane'), v.get('departSpeed'))
+        assert set(seen) == set(before), f'{name}: vehicle ids changed'
+        for vid, (dep, typ, src_edge, dest) in before.items():
+            got = seen[vid]
+            assert got[0] == dep and got[1] == typ and got[3] == dest, \
+                f'{name}: {vid} depart/type/destination changed'
+            if src_edge == TKO_ENTRY:
+                assert got[2] == INSERT_EDGE, f'{name}: {vid} missing {INSERT_EDGE}'
+                assert got[4] == 'free' and got[5] == 'max', f'{name}: {vid} departure settings'
+            else:
+                assert got[2] == src_edge, f'{name}: {vid} first edge {got[2]} != {src_edge}'
+        stats[name] = {'vehicles': len(before), 'tko_routes': tko}
+    for name in SYNTH5_TLS_FILES:
+        (out_dir / name).write_bytes((src_dir / name).read_bytes())
+    return stats
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description='Build synthetic B-lite net4 boundary demand.')
     ap.add_argument('--out-dir', default=str(SYNTH_DIR), help='Output directory')
     ap.add_argument('--proxy-seed', type=int, default=PROXY_SEED)
     ap.add_argument('--twin-seed', type=int, default=TWIN_SEED)
+    ap.add_argument('--net5', action='store_true',
+                    help='build scenarios/kwuntong/blite/synth5/ from the synth/ files '
+                         '(tko_insert prepended to every TKO route)')
     args = ap.parse_args(argv)
+
+    if args.net5:
+        stats = build_synth5()
+        for name, s in stats.items():
+            print(f'{name}: {s["vehicles"]} vehicles, {s["tko_routes"]} TKO routes -> '
+                  f'{INSERT_EDGE} prepended')
+        print(f'synth5 written to {SYNTH5_DIR}')
+        return stats
 
     generate_synth_files(out_dir=args.out_dir, proxy_seed=args.proxy_seed, twin_seed=args.twin_seed)
     print(f'Synthetic demand written to {args.out_dir}')
+    return None
 
 
 if __name__ == '__main__':

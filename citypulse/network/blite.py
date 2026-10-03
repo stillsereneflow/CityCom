@@ -76,6 +76,37 @@ MERGE_MAJOR = {"ktr_w6": ROAD_PRIORITY + 1}
 # cycle length is unchanged (probe report section 8.3).
 YELLOW = 3
 
+# ---------------------------------------------------------------------------------------
+# net5 (decision 2026-10-03c, docs/decision-2026-10-03c-net5.md): the net4 corridor with
+# (1) a repaired entry, (2) a repaired diverge at D and (3) a fixed upstream insertion stub.
+# Built only with --net5; every net4 code path below is untouched.
+# ---------------------------------------------------------------------------------------
+# (1) Entry.  net4 gave tko_in lane 1 the only reachable bypass lane (1 -> 1, 1 -> 2), so
+#     tko_in lane 0 could only reach the arterial.  net5 wires lane 0 to BOTH tko_1 lane 0
+#     (arterial) and lane 1 (bypass), and lane 1 to lane 2 (bypass): both entry lanes then
+#     have a direct bypass link and the arterial is reached from lane 0 (or by a lane change).
+NET5_ENTRY = ((0, 0), (0, 1), (1, 2))
+# (2) Diverge D.  Exactly three mainline links out of tko_vms; the two redundant arterial
+#     links of net4 (1 -> tko_a1_1, 2 -> tko_a1_2) are gone.
+NET5_D = ((0, "tko_a1", 0), (1, "ktb_w1", 0), (2, "ktb_w1", 1))
+# `tko_a1` is placed on the side of tko_vms lane 0 -- in this lefthand network lane 0 is the
+# LEFTMOST lane, and ktb_w1 leaves D on the left, so a straight tko_a1 (net4's chord from D
+# to j3) sits on the RIGHT of the bypass lanes and the three links cross.  net5 gives
+# tko_a1 an explicit shape that fans its lanes out on the left of the tko_vms axis over the
+# first FAN_BACK metres and rejoins the original D -> j3 chord: the three connectors then
+# leave the junction in lane order (tko_a1_0 leftmost, then ktb_w1_0, ktb_w1_1) and do not
+# cross, and the downstream geometry, the j3 junction and the detector chainage are the
+# net4 ones.
+NET5_FAN_OUT, NET5_FAN_BACK, NET5_FAN_LATERAL = 25.0, 75.0, 12.0
+# `tko_a1` lane 1 would have no incoming link at all (the mainline only feeds lane 0), i.e.
+# it would be a dead lane.  The zero-demand on-ramp `on_tko_a1` therefore feeds both of the
+# arterial's inner lanes (1 and 2) instead of lane 2 only; both links stay subordinate.
+NET5_ON_A1_LANES = (1, 2)
+# (3) Insertion stub: exactly 500 m, three lanes, 70 km/h, upstream of the unchanged 2-lane
+#     tko_in, with a zipper merge 0 -> 0, 1 -> 1, 2 -> 1 (lane 2 drops into lane 1).
+NET5_INSERT, NET5_INSERT_LANES, NET5_INSERT_SPEED = 500.0, 3, 70
+NET5_INSERT_CONNS = ((0, 0), (1, 1), (2, 1))
+
 
 def demand_peaks():
     """Peak 15-minute slice volumes (veh/h, scale 1.0) per ramp edge and through merge M.
@@ -312,7 +343,7 @@ def through(conns, U, ul, V, vl, off=None, off_lanes=1, on=None, on_lanes=1, spr
         conns += [(on, j, V, vl - on_lanes + j) for j in range(on_lanes)]
 
 
-def build_graph(net, dm, ramp_peak, m_peak):
+def build_graph(net, dm, ramp_peak, m_peak, net5=False):
     """Nodes, edges, connections and detector rows, all derived from real chainage."""
     ramp_lanes = {k: lanes_for(v) for k, v in ramp_peak.items()}
     chain = detector_chainage(net, dm)
@@ -388,6 +419,11 @@ def build_graph(net, dm, ramp_peak, m_peak):
             key = kind + "_" + eid
             if key in ramps or key in SKIP_RAMPS:
                 continue
+            if net5 and key == "off_tko_vms":
+                # net5 drops the D off-ramp stub: keeping it would need a fourth mainline
+                # link out of tko_vms (the spec allows exactly three) and an unconnected
+                # stub lane would be a dead lane.  Node and edge are not emitted at all.
+                continue
             d, off_ramp = edge_dir(eid), kind == "off"
             sgn, length = (-1.0, RAMP_OFF) if off_ramp else (1.0, RAMP_ON)
             node = f"off_{eid}_end" if off_ramp else f"on_{eid}_src"
@@ -405,10 +441,15 @@ def build_graph(net, dm, ramp_peak, m_peak):
         for i in range(len(seq) - 1):
             u, v, node = seq[i], seq[i + 1], nds[i + 1]
             if node == "D":                               # the stem splits into both routes
-                conns += [("tko_vms", 0, "tko_a1", 0), ("tko_vms", 1, "tko_a1", 1),
-                          ("tko_vms", 2, "tko_a1", 2), ("tko_vms", 1, "ktb_w1", 0),
-                          ("tko_vms", 2, "ktb_w1", 1), ("tko_vms", 2, "off_tko_vms", 0),
-                          ("on_tko_a1", 0, "tko_a1", 2), ("on_ktb_w1", 0, "ktb_w1", 1)]
+                if net5:
+                    conns += [("tko_vms", fl, t, tl) for fl, t, tl in NET5_D]
+                    conns += [("on_tko_a1", 0, "tko_a1", ln) for ln in NET5_ON_A1_LANES]
+                    conns += [("on_ktb_w1", 0, "ktb_w1", 1)]
+                else:
+                    conns += [("tko_vms", 0, "tko_a1", 0), ("tko_vms", 1, "tko_a1", 1),
+                              ("tko_vms", 2, "tko_a1", 2), ("tko_vms", 1, "ktb_w1", 0),
+                              ("tko_vms", 2, "ktb_w1", 1), ("tko_vms", 2, "off_tko_vms", 0),
+                              ("on_tko_a1", 0, "tko_a1", 2), ("on_ktb_w1", 0, "ktb_w1", 1)]
                 continue
             if v["id"].startswith("ms_on_"):              # on-ramp joins the add-lane section
                 off_key, on_key = f"off_{u['id']}", "on_" + section_host(v["id"])
@@ -420,6 +461,12 @@ def build_graph(net, dm, ramp_peak, m_peak):
                 off_key, on_key = f"off_{u['id']}", f"on_{v['id']}"
             off = off_key if off_key in ramps else None
             on = on_key if on_key in ramps else None
+            if net5 and node == "j1":
+                # (1) repaired entry: exactly 0->0, 0->1, 1->2 out of tko_in, plus the
+                # unchanged zero-demand off-ramp take-off and the on_tko_1 merge.
+                conns += [("tko_in", fl, "tko_1", tl) for fl, tl in NET5_ENTRY]
+                conns += [("tko_in", 1, "off_tko_in", 0), ("on_tko_1", 0, "tko_1", 2)]
+                continue
             if node == "M":
                 # Lane-preserving carriageway merge: every incoming lane keeps a target lane
                 # of its own in rejoin (the 6 arterial lanes, then the 2 bypass lanes, then
@@ -443,8 +490,29 @@ def build_graph(net, dm, ramp_peak, m_peak):
                     ramp_lanes.get(off, 1), on, ramp_lanes.get(on, 1), spread)
     for i in range(1, len(SIGNALS) + 1):
         through(conns, f"x{i}_in", XLANES, f"x{i}_out", XLANES)
-    return {"node_xy": node_xy, "node_type": {s: "traffic_light" for s, _, _ in SIGNALS},
+    edge_shapes, node_type = {}, {s: "traffic_light" for s, _, _ in SIGNALS}
+    if net5:
+        # (3) insertion stub, exactly 500 m of three lanes at 70 km/h upstream of tko_in.
+        src_xy, j1_xy = node_xy["src"], node_xy["j1"]
+        d_in = unit(src_xy, j1_xy)
+        ins_xy = (src_xy[0] - NET5_INSERT * d_in[0], src_xy[1] - NET5_INSERT * d_in[1])
+        node_xy["ins_src"] = ins_xy
+        node_type["src"] = "zipper"        # the 3 -> 2 zipper merge tko_insert -> tko_in
+        edges.append(("tko_insert", "ins_src", "src", NET5_INSERT_LANES,
+                      NET5_INSERT_SPEED, NET5_INSERT, ROAD_PRIORITY))
+        conns += [("tko_insert", fl, "tko_in", tl) for fl, tl in NET5_INSERT_CONNS]
+        # (2) the tko_a1 fan: leave D on the side of tko_vms lane 0, rejoin the net4 chord.
+        d_xy, j3_xy = node_xy["D"], node_xy["j3"]
+        d_vms = unit(node_xy["j2"], d_xy)
+        n_left = left(d_vms, 1.0)
+        p_out = add(d_xy, add(tuple(NET5_FAN_LATERAL * w for w in n_left),
+                              tuple(NET5_FAN_OUT * w for w in d_vms)))
+        d_a1 = unit(d_xy, j3_xy)
+        p_back = add(d_xy, tuple(NET5_FAN_BACK * w for w in d_a1))
+        edge_shapes["tko_a1"] = (d_xy, p_out, p_back, j3_xy)
+    return {"node_xy": node_xy, "node_type": node_type,
             "edges": edges, "conns": conns, "det_rows": det_rows, "map_rows": map_rows,
+            "edge_shapes": edge_shapes,
             "chain": chain, "low": low, "up": up, "merge_in": merge_in}
 
 
@@ -455,6 +523,9 @@ def main(argv=None):
     ap.add_argument("--scratch", default=None,
                     help="directory for the netconvert inputs, the base signal programs are "
                          "still written next to the net; default: the scenario dir")
+    ap.add_argument("--net5", action="store_true",
+                    help="build the net5 revision (repaired entry + diverge D + tko_insert); "
+                         "the net4 path is unchanged when this is off")
     args = ap.parse_args(argv)
     tag = args.tag
     OUT.mkdir(parents=True, exist_ok=True)
@@ -463,21 +534,28 @@ def main(argv=None):
     net = sumolib.net.readNet(str(V4NET))
     dm = {m["id"]: m for m in json.loads(V4MAP.read_text(encoding="utf-8"))["mapped"]}
     ramp_peak, m_peak = demand_peaks()
-    g = build_graph(net, dm, ramp_peak, m_peak)
+    g = build_graph(net, dm, ramp_peak, m_peak, net5=args.net5)
     node_xy, node_type, edges = g["node_xy"], g["node_type"], g["edges"]
     conns, det_rows, chain = g["conns"], g["det_rows"], g["chain"]
+    shapes = g["edge_shapes"]
     nod = scratch / f"blite{tag}.nod.xml"
     edg = scratch / f"blite{tag}.edg.xml"
     con = scratch / f"blite{tag}.con.xml"
     net_file = OUT / f"net{tag}.net.xml"
-    base_tls = OUT / f"tls_base{tag}.add.xml"
+    # net5 keeps the scenario directory to net5.net.xml / detectors5.add.xml only, so the
+    # generated signal programs go next to the other netconvert inputs in the scratch dir.
+    tls_dir = scratch if args.net5 else OUT
+    base_tls = tls_dir / f"tls_base{tag}.add.xml"
     add = OUT / f"detectors{tag}.add.xml"
     write_xml(nod, "nodes",
               [f'<node id="{n}" x="{node_xy[n][0]:.2f}" y="{node_xy[n][1]:.2f}" '
                f'type="{node_type.get(n, "priority")}"/>' for n in node_xy])
     write_xml(edg, "edges",
               [f'<edge id="{e}" from="{f}" to="{t}" numLanes="{ln}" speed="{sp / 3.6:.2f}" '
-               f'length="{le:.1f}" priority="{pr}"/>' for e, f, t, ln, sp, le, pr in edges])
+               f'length="{le:.1f}" priority="{pr}"'
+               + (f' shape="{" ".join(f"{p[0]:.2f},{p[1]:.2f}" for p in shapes[e])}"'
+                  if e in shapes else "")
+               + "/>" for e, f, t, ln, sp, le, pr in edges])
     write_xml(con, "connections",
               [f'<connection from="{f}" to="{t}" fromLane="{fl}" toLane="{tl}"/>'
                for f, fl, t, tl in conns])
@@ -490,7 +568,7 @@ def main(argv=None):
     subprocess.run(base, check=True, cwd=str(ROOT))
     write_tll(net_file, base_tls)
     subprocess.run(base + ["--tllogic-files", str(base_tls)], check=True, cwd=str(ROOT))
-    write_tll(net_file, OUT / f"tls_incident{tag}.add.xml", program="P_inc",
+    write_tll(net_file, tls_dir / f"tls_incident{tag}.add.xml", program="P_inc",
               fav=set(CONTROL["corridor_b"]), factor=1.5)
     with open(add, "w", encoding="utf-8") as fh:
         fh.write("<additional>\n")
