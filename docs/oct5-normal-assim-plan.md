@@ -56,6 +56,34 @@ Interior detectors are all detectors **except** AID07105, which is used for assi
   - ≥ 80% of the time within ±5% of the median.
 - **A negative result is reported as such.** No retuning after the evaluation runs.
 
+## Amendment 2026-10-03 20:15 (before any NA evaluation result existed)
+
+Astra's ruling is quoted in full in `~/.claude/runs/D--CityCom/20261003-2013-codex-astra-assim/out.md`.
+
+**What exposed the problem.** dsh's implementation smoke run (`results/assim/impl/report.md`) found that the firewall coverage rule `drop_every_3rd` (`citypulse/proxy/sensors.py:11-12`) drops AID07105, which is sorted index 11. The as-predeclared NA arm is therefore NA ≡ OL by construction. That establishes unobservability, not ineffectiveness.
+
+A labelled dev-seed diagnostic, with AID07105 forced observable on seed 1001 only, also showed:
+- the congestion gate blocked 44 of 60 ticks;
+- σ ≈ 623 veh/h;
+- m moved down to 0.86.
+
+**No evaluation-seed result had been produced or seen.** At 20:14 only the OL run directories existed.
+
+**Amended (for the amended NA arm only):**
+- **Boundary rule:** b(s) is the most upstream detector in the fixed observed set along the entry path, with no demand-carrying entry or exit between the entry boundary and that detector. This is frozen as **b(TKO) = AID07106**. Missing observations do not trigger dynamic re-selection.
+- **Coverage rule unchanged.**
+- **σ for AID07106:**
+  - pool the valid paired **30-s** flow residuals in veh/h from the OL development runs, seeds 1001–1003, t ∈ [900, 7200] s, no incident, without occupancy selection;
+  - σ = 1.4826 × median(|r − median(r)|);
+  - report the counts and exclusions;
+  - do not reuse the provisional σ from AID07105.
+- **Parameters unchanged:** κ = 0.3, δ = 1σ, o_crit = 15%, the two-interval mean, 60-s ticks, step and m bounds.
+- **Scoring mask:** interior excludes **both AID07105 and AID07106**, identically for OL and amended NA, including forecasts. The boundary sanity metric moves to AID07106.
+- **Unchanged:** seeds, windows, acceptance criteria and stability limits. All tick reasons are reported.
+- **Reserved for a separately preregistered revision:** a 60-s σ, longer averaging, and fitting o_crit from occupancy.
+
+**Records.** Any NA runs made under the original mapping are kept as the as-predeclared record, labelled with their start times.
+
 ## Also on Oct 5: G4 detector correction (from the freeze review)
 
 - Reset the 2-interval streak across missing intervals: two crossings must be at timestamps exactly 30 s apart.
