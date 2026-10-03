@@ -7,6 +7,7 @@ vehicles (common random numbers) and a rewind never duplicates or skips vehicles
 """
 import xml.etree.ElementTree as ET
 
+import bisect
 import os
 import numpy as np
 
@@ -56,6 +57,18 @@ class TwinDemandStream:
 
     def multiplier(self, entry):
         return self.m.get(entry, 1.0)
+
+    def base_rate(self, entry, t, window=300.0):
+        """base_s(t): candidate-pool insertion rate of `entry` in veh/h, over [t-window, t+window).
+
+        Reads only the candidate list (a pure function of the pool, so identical in every branch),
+        divided by the pool scale: with m_s = 1.0 the expected insertion rate is exactly this value.
+        Candidates are counted by their first edge, the same key ``due`` uses for the multiplier.
+        """
+        lo = bisect.bisect_left(self.cands, (t - window,))
+        hi = bisect.bisect_left(self.cands, (t + window,))
+        n = sum(1 for i in range(lo, hi) if self.cands[i][2][0] == entry)
+        return n * 3600.0 / (2.0 * window) / self.scale
 
     def seek(self, t):
         """Position the pointer at the first candidate with depart > t (used after loadState)."""

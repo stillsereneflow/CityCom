@@ -1,0 +1,4 @@
+AMEND_READY
+service.py  38125d713c9bc43b22297a70fe0138b9c43f30eb66e93857c6327824cafdbf79  citypulse\twin\service.py
+sigma_json  9b436a1288132ec9cc2857071fd324be5105529f1753d3f03219af84b3099b10  results\assim\eval_amend\sigma_dev_AID07106.json
+flag: --boundary-detector (default AID07105); amended arm selects AID07106

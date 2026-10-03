@@ -60,6 +60,7 @@ def _worker(job):
             tc.vehicle.setStop(vid, hyp["edge"], pos=hyp["pos"], laneIndex=ln, duration=hyp.get("duration", 3600))
             tc.vehicle.setLaneChangeMode(vid, 0)
     stream = TwinDemandStream(seed=meta["demand_seed"], path=meta.get("demand_path"))
+    stream.m = dict(meta.get("m") or {})   # assimilated multipliers travel with the snapshot
     stream.seek(t0)
     control = get_control()
     default_compliance = get_twin_compliance()
