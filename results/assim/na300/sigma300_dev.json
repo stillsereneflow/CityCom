@@ -1,0 +1,189 @@
+{
+  "AID07106": 177.912,
+  "sigma300": 177.912,
+  "mad": 120.0,
+  "median": 480.0,
+  "mean": 462.1463,
+  "total_blocks_considered": 63,
+  "complete_blocks": 41,
+  "excluded_blocks": 22,
+  "per_seed_counts": {
+    "ol_4001": {
+      "total_blocks": 21,
+      "complete_blocks": 15,
+      "excluded_blocks": 6
+    },
+    "ol_4002": {
+      "total_blocks": 21,
+      "complete_blocks": 12,
+      "excluded_blocks": 9
+    },
+    "ol_4003": {
+      "total_blocks": 21,
+      "complete_blocks": 14,
+      "excluded_blocks": 7
+    }
+  },
+  "exclusions": {
+    "ol_4001": [
+      {
+        "window": [
+          1200.0,
+          1500.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          1500.0,
+          1800.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          3600.0,
+          3900.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          4800.0,
+          5100.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          6000.0,
+          6300.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          6600.0,
+          6900.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      }
+    ],
+    "ol_4002": [
+      {
+        "window": [
+          900.0,
+          1200.0
+        ],
+        "reason": "invalid_readings_valid_8_of_10"
+      },
+      {
+        "window": [
+          1500.0,
+          1800.0
+        ],
+        "reason": "invalid_readings_valid_8_of_10"
+      },
+      {
+        "window": [
+          1800.0,
+          2100.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          3000.0,
+          3300.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          3300.0,
+          3600.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          4200.0,
+          4500.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          4800.0,
+          5100.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          5100.0,
+          5400.0
+        ],
+        "reason": "invalid_readings_valid_8_of_10"
+      },
+      {
+        "window": [
+          5400.0,
+          5700.0
+        ],
+        "reason": "invalid_readings_valid_7_of_10"
+      }
+    ],
+    "ol_4003": [
+      {
+        "window": [
+          1200.0,
+          1500.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          2400.0,
+          2700.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          2700.0,
+          3000.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          5100.0,
+          5400.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          6000.0,
+          6300.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          6300.0,
+          6600.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      },
+      {
+        "window": [
+          6900.0,
+          7200.0
+        ],
+        "reason": "invalid_readings_valid_9_of_10"
+      }
+    ]
+  }
+}
