@@ -1,0 +1,3177 @@
+{
+  "meta": {
+    "scale": 1.0,
+    "time_start": "07:00",
+    "time_end": "09:00",
+    "slices": 8,
+    "slice_duration_s": 900,
+    "proxy_seed": 1001,
+    "twin_seed": 2202,
+    "twin_cand_scale": 1.5
+  },
+  "slices": [
+    {
+      "slice_index": 0,
+      "start_s": 0,
+      "end_s": 900,
+      "entry": {
+        "flow_vph": 3040.0,
+        "class": "measured",
+        "lower_vph": 3040.0,
+        "upper_vph": 3040.0,
+        "basis": "direct detector on gate edge, uncongested; flow = 3040.0 veh/h",
+        "congested": false
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.11174159755565256,
+        "alpha_arterial": 0.8882584024443474,
+        "bypass_flow_vph": 339.6944565691838,
+        "arterial_flow_vph": 2700.305543430816,
+        "method": "least_squares",
+        "basis": "fitted per slice by least squares to AID02105 / AID07107"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 2479.4722100974827,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2479.5 veh/h"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2479.5 veh/h"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 954.166666666667,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 954.2 veh/h"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 954.2 veh/h"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 110.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 110.0 veh/h"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 110.0 veh/h"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 2295.4 veh/h"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 2295.416666666667,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 2295.4 veh/h"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 267.0 veh/h"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 266.97221009748273,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 267.0 veh/h"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 631.7 veh/h"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 631.6666666666667,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 631.7 veh/h"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 763.3 veh/h"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 763.3333333333335,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 763.3 veh/h"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 521.6666666666667,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 521.7 veh/h"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 521.7 veh/h"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 413.33333333333326,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 413.3 veh/h"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 413.3 veh/h"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 1171.6666666666667,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1171.7 veh/h"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1171.7 veh/h"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->off_ktb_n1": 200.79149798708514,
+        "on_ktb_w2->off_ktb_n1": 1465.6021894235014,
+        "on_ktb_w3->off_ktb_n1": 564.0025929899858,
+        "on_ktb_n1->off_ktb_n1": 65.02038626609442,
+        "tko_in_bypass->out": 138.90295858209865,
+        "on_ktb_w2->out": 1013.8700206739813,
+        "on_ktb_w3->out": 390.16407367668114,
+        "on_ktb_n1->out": 44.97961373390558,
+        "tko_in_arterial->off_tko_a1": 266.97221009748273,
+        "tko_in_arterial->off_ktr_w1": 631.6666666666667,
+        "tko_in_arterial->off_ktr_w2": 763.3333333333335,
+        "tko_in_arterial->out": 1038.3333333333333,
+        "on_ktr_w4->out": 521.6666666666667,
+        "on_ktr_w5->out": 413.33333333333326,
+        "on_ktr_w6->out": 1171.6666666666667,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 10290.305543430815,
+        "total_outflow_vph": 10290.305543430817,
+        "conservation_delta": -1.8189894035458565e-12
+      }
+    },
+    {
+      "slice_index": 1,
+      "start_s": 900,
+      "end_s": 1800,
+      "entry": {
+        "flow_vph": 2921.6666666666665,
+        "class": "measured",
+        "lower_vph": 2921.6666666666665,
+        "upper_vph": 2921.6666666666665,
+        "basis": "direct detector on gate edge, uncongested; flow = 2921.7 veh/h",
+        "congested": false
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.15934706568208318,
+        "alpha_arterial": 0.8406529343179168,
+        "bypass_flow_vph": 465.5590102344863,
+        "arterial_flow_vph": 2456.10765643218,
+        "method": "least_squares",
+        "basis": "fitted per slice by least squares to AID02105 / AID07107"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 2756.1076564321806,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2756.1 veh/h"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2756.1 veh/h"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 911.6666666666661,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 911.7 veh/h"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 911.7 veh/h"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 178.8888888888887,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 178.9 veh/h"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 178.9 veh/h"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 2298.9 veh/h"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 2298.8888888888882,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 2298.9 veh/h"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 152.8 veh/h"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 152.7743230988467,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 152.8 veh/h"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 823.3 veh/h"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 823.3333333333335,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 823.3 veh/h"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 322.5,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 322.5 veh/h"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 322.5 veh/h"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 334.1666666666665,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 334.2 veh/h"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 334.2 veh/h"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 1980.0000000000005,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1980.0 veh/h"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1980.0 veh/h"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->off_ktb_n1": 248.19417474237363,
+        "on_ktb_w2->off_ktb_n1": 1469.3086166344192,
+        "on_ktb_w3->off_ktb_n1": 486.01863780812465,
+        "on_ktb_n1->off_ktb_n1": 95.3674597039708,
+        "tko_in_bypass->out": 217.3648354921127,
+        "on_ktb_w2->out": 1286.7990397977615,
+        "on_ktb_w3->out": 425.6480288585414,
+        "on_ktb_n1->out": 83.52142918491789,
+        "tko_in_arterial->off_ktr_w1": 152.7743230988467,
+        "tko_in_arterial->off_ktr_w2": 823.3333333333334,
+        "tko_in_arterial->out": 1480.0,
+        "on_ktr_w4->out": 322.5,
+        "on_ktr_w5->out": 334.1666666666665,
+        "on_ktr_w6->out": 1980.0000000000005,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 11004.996545321068,
+        "total_outflow_vph": 11004.996545321068,
+        "conservation_delta": 0.0
+      }
+    },
+    {
+      "slice_index": 2,
+      "start_s": 1800,
+      "end_s": 2700,
+      "entry": {
+        "flow_vph": 2725.0,
+        "class": "measured_congested",
+        "lower_vph": 2540.0,
+        "upper_vph": 2725.0,
+        "basis": "direct detector on gate edge, congested; demand in [2540.0, 2725.0] veh/h",
+        "congested": true
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.16081491114000868,
+        "alpha_arterial": 0.8391850888599913,
+        "bypass_flow_vph": 438.22063285652365,
+        "arterial_flow_vph": 2286.7793671434765,
+        "method": "least_squares",
+        "basis": "fitted per slice by least squares to AID02105 / AID07107"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 2452.6127004768096,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2452.6 veh/h"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2452.6 veh/h"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 1315.833333333334,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1315.8 veh/h"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1315.8 veh/h"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 851.553966189857,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 851.6 veh/h"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 851.6 veh/h"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 523.3 veh/h"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 523.3333333333335,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 523.3 veh/h"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 1091.7 veh/h"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 1091.6666666666667,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 1091.7 veh/h"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 458.33333333333326,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 458.3 veh/h"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 458.3 veh/h"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 386.66666666666697,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 386.7 veh/h"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 386.7 veh/h"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 1766.6666666666665,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1766.7 veh/h"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1766.7 veh/h"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->out": 438.22063285652365,
+        "on_ktb_w2->out": 2452.6127004768096,
+        "on_ktb_w3->out": 1315.833333333334,
+        "tko_in_arterial->off_ktr_w1": 381.33230020342637,
+        "on_ktr_w1->off_ktr_w1": 142.00103312990714,
+        "tko_in_arterial->off_ktr_w2": 795.4543204880389,
+        "on_ktr_w1->off_ktr_w2": 296.2123461786279,
+        "tko_in_arterial->out": 1109.9927464520115,
+        "on_ktr_w1->out": 413.34058688132194,
+        "on_ktr_w4->out": 458.33333333333326,
+        "on_ktr_w5->out": 386.66666666666697,
+        "on_ktr_w6->out": 1766.6666666666665,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 11556.666666666668,
+        "total_outflow_vph": 11556.666666666668,
+        "conservation_delta": 0.0
+      }
+    },
+    {
+      "slice_index": 3,
+      "start_s": 2700,
+      "end_s": 3600,
+      "entry": {
+        "flow_vph": 2360.0,
+        "class": "measured_congested",
+        "lower_vph": 2155.0,
+        "upper_vph": 2360.0,
+        "basis": "direct detector on gate edge, congested; demand in [2155.0, 2360.0] veh/h",
+        "congested": true
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.17069351230425056,
+        "alpha_arterial": 0.8293064876957494,
+        "bypass_flow_vph": 402.8366890380313,
+        "arterial_flow_vph": 1957.1633109619686,
+        "method": "least_squares",
+        "basis": "fitted per slice by least squares to AID02105 / AID07107"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 2328.8299776286353,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2328.8 veh/h"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2328.8 veh/h"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 934.166666666667,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 934.2 veh/h"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 934.2 veh/h"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 142.8 veh/h"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 142.77777777777828,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 142.8 veh/h"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 1873.7 veh/h"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 1873.6805555555552,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 1873.7 veh/h"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 1202.8366890380314,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1202.8 veh/h"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1202.8 veh/h"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 420.0 veh/h"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 420.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 420.0 veh/h"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 1321.7 veh/h"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 1321.6666666666667,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 1321.7 veh/h"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 297.5000000000002,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 297.5 veh/h"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 297.5 veh/h"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 706.6666666666665,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 706.7 veh/h"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 706.7 veh/h"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 1939.166666666667,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1939.2 veh/h"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1939.2 veh/h"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->off_ktb_w3": 15.689782387326574,
+        "on_ktb_w2->off_ktb_w3": 90.70384242639408,
+        "on_ktb_w3->off_ktb_w3": 36.38415296405763,
+        "tko_in_bypass->off_ktb_n1": 205.8978689652027,
+        "on_ktb_w2->off_ktb_n1": 1190.3114652269112,
+        "on_ktb_w3->off_ktb_n1": 477.47122136344115,
+        "tko_in_bypass->out": 181.24903768550206,
+        "on_ktb_w2->out": 1047.81466997533,
+        "on_ktb_w3->out": 420.3112923391682,
+        "tko_in_arterial->off_ktr_w1": 260.1293008240591,
+        "on_ktr_w1->off_ktr_w1": 159.87069917594087,
+        "tko_in_arterial->off_ktr_w2": 818.5814902915829,
+        "on_ktr_w1->off_ktr_w2": 503.08517637508385,
+        "tko_in_arterial->out": 878.4525198463266,
+        "on_ktr_w1->out": 539.8808134870067,
+        "on_ktr_w4->out": 297.5000000000002,
+        "on_ktr_w5->out": 706.6666666666665,
+        "on_ktr_w6->out": 1939.166666666667,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 11369.166666666668,
+        "total_outflow_vph": 11369.166666666666,
+        "conservation_delta": 1.8189894035458565e-12
+      }
+    },
+    {
+      "slice_index": 4,
+      "start_s": 3600,
+      "end_s": 4500,
+      "entry": {
+        "flow_vph": 2260.0,
+        "class": "measured_congested",
+        "lower_vph": 1970.0,
+        "upper_vph": 2260.0,
+        "basis": "direct detector on gate edge, congested; demand in [1970.0, 2260.0] veh/h",
+        "congested": true
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.17666392769104355,
+        "alpha_arterial": 0.8233360723089564,
+        "bypass_flow_vph": 399.26047658175844,
+        "arterial_flow_vph": 1860.7395234182416,
+        "method": "least_squares",
+        "basis": "fitted per slice by least squares to AID02105 / AID07107"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 2543.2395234182413,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2543.2 veh/h"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2543.2 veh/h"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 697.5,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 697.5 veh/h"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 697.5 veh/h"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 1187.593809915092,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1187.6 veh/h"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1187.6 veh/h"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 263.3 veh/h"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 263.3333333333335,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 263.3 veh/h"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 1233.3 veh/h"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 1233.3333333333333,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 1233.3 veh/h"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 159.16666666666674,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 159.2 veh/h"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 159.2 veh/h"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 695.833333333333,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 695.8 veh/h"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 695.8 veh/h"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 1500.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1500.0 veh/h"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1500.0 veh/h"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->out": 399.26047658175844,
+        "on_ktb_w2->out": 2543.2395234182413,
+        "on_ktb_w3->out": 697.5,
+        "tko_in_arterial->off_ktr_w1": 160.74185057412922,
+        "on_ktr_w1->off_ktr_w1": 102.59148275920428,
+        "tko_in_arterial->off_ktr_w2": 752.8415786383263,
+        "on_ktr_w1->off_ktr_w2": 480.49175469500705,
+        "tko_in_arterial->out": 947.1560942057862,
+        "on_ktr_w1->out": 604.5105724608804,
+        "on_ktr_w4->out": 159.16666666666674,
+        "on_ktr_w5->out": 695.833333333333,
+        "on_ktr_w6->out": 1500.0,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 10643.333333333332,
+        "total_outflow_vph": 10643.333333333332,
+        "conservation_delta": 0.0
+      }
+    },
+    {
+      "slice_index": 5,
+      "start_s": 4500,
+      "end_s": 5400,
+      "entry": {
+        "flow_vph": 2238.3333333333335,
+        "class": "measured_congested",
+        "lower_vph": 2093.3333333333335,
+        "upper_vph": 2238.3333333333335,
+        "basis": "direct detector on gate edge, congested; demand in [2093.3, 2238.3] veh/h",
+        "congested": true
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.22231473771856786,
+        "alpha_arterial": 0.7776852622814321,
+        "bypass_flow_vph": 497.61448792672775,
+        "arterial_flow_vph": 1740.7188454066056,
+        "method": "least_squares",
+        "basis": "fitted per slice by least squares to AID02105 / AID07107"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 2388.2188454066054,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2388.2 veh/h"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2388.2 veh/h"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 254.16666666666697,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 254.2 veh/h"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 254.2 veh/h"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 1319.2811545933944,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1319.3 veh/h"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1319.3 veh/h"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 206.7 veh/h"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 206.66666666666652,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 206.7 veh/h"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 1293.3 veh/h"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 1293.3333333333335,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 1293.3 veh/h"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 312.5,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 312.5 veh/h"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 312.5 veh/h"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 660.8333333333335,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 660.8 veh/h"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 660.8 veh/h"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 2004.9999999999995,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2005.0 veh/h"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2005.0 veh/h"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->out": 497.61448792672775,
+        "on_ktb_w2->out": 2388.2188454066054,
+        "on_ktb_w3->out": 254.16666666666697,
+        "tko_in_arterial->off_ktr_w1": 117.56488934118678,
+        "on_ktr_w1->off_ktr_w1": 89.10177732547973,
+        "tko_in_arterial->off_ktr_w2": 735.728662328718,
+        "on_ktr_w1->off_ktr_w2": 557.6046710046155,
+        "tko_in_arterial->out": 887.425293736701,
+        "on_ktr_w1->out": 672.574706263299,
+        "on_ktr_w4->out": 312.5,
+        "on_ktr_w5->out": 660.8333333333335,
+        "on_ktr_w6->out": 2004.9999999999995,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 10778.333333333332,
+        "total_outflow_vph": 10778.333333333332,
+        "conservation_delta": 0.0
+      }
+    },
+    {
+      "slice_index": 6,
+      "start_s": 5400,
+      "end_s": 6300,
+      "entry": {
+        "flow_vph": 2018.3333333333333,
+        "class": "measured_congested",
+        "lower_vph": 1690.0,
+        "upper_vph": 2018.3333333333333,
+        "basis": "direct detector on gate edge, congested; demand in [1690.0, 2018.3] veh/h",
+        "congested": true
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.21455576559546313,
+        "alpha_arterial": 0.7854442344045369,
+        "bypass_flow_vph": 433.0450535601764,
+        "arterial_flow_vph": 1585.288279773157,
+        "method": "least_squares",
+        "basis": "fitted per slice by least squares to AID02105 / AID07107"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 2231.9549464398237,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2232.0 veh/h"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2232.0 veh/h"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 555.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 555.0 veh/h"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 555.0 veh/h"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 1566.3783868935095,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1566.4 veh/h"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1566.4 veh/h"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 300.0 veh/h"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 300.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 300.0 veh/h"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 1445.0 veh/h"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 1444.9999999999998,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 1445.0 veh/h"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 338.33333333333326,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 338.3 veh/h"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 338.3 veh/h"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 765.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 765.0 veh/h"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 765.0 veh/h"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 1763.333333333333,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1763.3 veh/h"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1763.3 veh/h"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->out": 433.0450535601764,
+        "on_ktb_w2->out": 2231.9549464398237,
+        "on_ktb_w3->out": 555.0,
+        "tko_in_arterial->off_ktr_w1": 150.89999490172835,
+        "on_ktr_w1->off_ktr_w1": 149.10000509827168,
+        "tko_in_arterial->off_ktr_w2": 726.8349754433247,
+        "on_ktr_w1->off_ktr_w2": 718.1650245566751,
+        "tko_in_arterial->out": 707.553309428104,
+        "on_ktr_w1->out": 699.1133572385628,
+        "on_ktr_w4->out": 338.33333333333326,
+        "on_ktr_w5->out": 765.0,
+        "on_ktr_w6->out": 1763.333333333333,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 10838.333333333332,
+        "total_outflow_vph": 10838.333333333332,
+        "conservation_delta": 0.0
+      }
+    },
+    {
+      "slice_index": 7,
+      "start_s": 6300,
+      "end_s": 7200,
+      "entry": {
+        "flow_vph": 2107.5,
+        "class": "measured_congested",
+        "lower_vph": 1983.3333333333333,
+        "upper_vph": 2107.5,
+        "basis": "direct detector on gate edge, congested; demand in [1983.3, 2107.5] veh/h",
+        "congested": true
+      },
+      "split": {
+        "bypass_edge": "ktb_w1",
+        "arterial_edge": "tko_a1",
+        "alpha_bypass": 0.19981834695731154,
+        "alpha_arterial": 0.8001816530426884,
+        "bypass_flow_vph": 421.1171662125341,
+        "arterial_flow_vph": 1686.3828337874659,
+        "method": "least_squares",
+        "basis": "fitted per slice by least squares to AID02105 / AID07107"
+      },
+      "ramps": [
+        {
+          "edge": "on_ktb_w2",
+          "type": "on",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 2309.716167120799,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2309.7 veh/h"
+        },
+        {
+          "edge": "off_ktb_w1",
+          "type": "off",
+          "between": [
+            "ktb_w1",
+            "ktb_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 2309.7 veh/h"
+        },
+        {
+          "edge": "on_ktb_w3",
+          "type": "on",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 270.8333333333335,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 270.8 veh/h"
+        },
+        {
+          "edge": "off_ktb_w2",
+          "type": "off",
+          "between": [
+            "ktb_w2",
+            "ktb_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 270.8 veh/h"
+        },
+        {
+          "edge": "on_ktb_n1",
+          "type": "on",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "off_ktb_w3",
+          "type": "off",
+          "between": [
+            "ktb_w3",
+            "ktb_n1"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "on_ktb_n2",
+          "type": "on",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "off_ktb_n1",
+          "type": "off",
+          "between": [
+            "ktb_n1",
+            "ktb_n2"
+          ],
+          "flow_vph": 0.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "congested or missing bracketing detector; declared range [0, 1800] veh/h"
+        },
+        {
+          "edge": "on_ktr_w1",
+          "type": "on",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 1198.6171662125341,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1198.6 veh/h"
+        },
+        {
+          "edge": "off_tko_a1",
+          "type": "off",
+          "between": [
+            "tko_a1",
+            "ktr_w1"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1198.6 veh/h"
+        },
+        {
+          "edge": "on_ktr_w2",
+          "type": "on",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 71.7 veh/h"
+        },
+        {
+          "edge": "off_ktr_w1",
+          "type": "off",
+          "between": [
+            "ktr_w1",
+            "ktr_w2"
+          ],
+          "flow_vph": 71.66666666666652,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 71.7 veh/h"
+        },
+        {
+          "edge": "on_ktr_w3",
+          "type": "on",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 1501.7 veh/h"
+        },
+        {
+          "edge": "off_ktr_w2",
+          "type": "off",
+          "between": [
+            "ktr_w2",
+            "ktr_w3"
+          ],
+          "flow_vph": 1501.6666666666667,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (upstream - downstream) = 1501.7 veh/h"
+        },
+        {
+          "edge": "on_ktr_w4",
+          "type": "on",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 544.1666666666667,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 544.2 veh/h"
+        },
+        {
+          "edge": "off_ktr_w3",
+          "type": "off",
+          "between": [
+            "ktr_w3",
+            "ktr_w4"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 544.2 veh/h"
+        },
+        {
+          "edge": "on_ktr_w5",
+          "type": "on",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 504.1666666666665,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 504.2 veh/h"
+        },
+        {
+          "edge": "off_ktr_w4",
+          "type": "off",
+          "between": [
+            "ktr_w4",
+            "ktr_w5"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 504.2 veh/h"
+        },
+        {
+          "edge": "on_ktr_w6",
+          "type": "on",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 1928.333333333333,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1928.3 veh/h"
+        },
+        {
+          "edge": "off_ktr_w5",
+          "type": "off",
+          "between": [
+            "ktr_w5",
+            "ktr_w6"
+          ],
+          "flow_vph": 0.0,
+          "class": "inferred",
+          "range": [
+            0.0,
+            1800.0
+          ],
+          "basis": "observed balance (downstream - upstream) = 1928.3 veh/h"
+        }
+      ],
+      "cross_streets": [
+        {
+          "edge": "x1_in",
+          "exit": "x1_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x2_in",
+          "exit": "x2_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x3_in",
+          "exit": "x3_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        },
+        {
+          "edge": "x4_in",
+          "exit": "x4_out",
+          "flow_vph": 400.0,
+          "class": "assumed",
+          "range": [
+            0.0,
+            3600.0
+          ],
+          "basis": "scenario-assumed 400 veh/h per stub"
+        }
+      ],
+      "od_flows": {
+        "tko_in_bypass->out": 421.1171662125341,
+        "on_ktb_w2->out": 2309.716167120799,
+        "on_ktb_w3->out": 270.8333333333335,
+        "tko_in_arterial->off_ktr_w1": 41.89165907155452,
+        "on_ktr_w1->off_ktr_w1": 29.775007595111994,
+        "tko_in_arterial->off_ktr_w2": 877.7763912435048,
+        "on_ktr_w1->off_ktr_w2": 623.890275423162,
+        "tko_in_arterial->out": 766.7147834724065,
+        "on_ktr_w1->out": 544.9518831942602,
+        "on_ktr_w4->out": 544.1666666666667,
+        "on_ktr_w5->out": 504.1666666666665,
+        "on_ktr_w6->out": 1928.333333333333,
+        "x1_in->x1_out": 400.0,
+        "x2_in->x2_out": 400.0,
+        "x3_in->x3_out": 400.0,
+        "x4_in->x4_out": 400.0
+      },
+      "summary": {
+        "total_inflow_vph": 10463.333333333332,
+        "total_outflow_vph": 10463.333333333334,
+        "conservation_delta": -1.8189894035458565e-12
+      }
+    }
+  ]
+}

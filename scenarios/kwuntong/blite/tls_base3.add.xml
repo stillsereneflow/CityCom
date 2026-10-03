@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<additional>
+    <tlLogic id="S1" type="static" programID="0" offset="0"><phase duration="42" state="GGGGGgrr"/><phase duration="3" state="yyyyyyrr"/><phase duration="12" state="rrrrrrGG"/><phase duration="3" state="rrrrrryy"/></tlLogic>
+    <tlLogic id="S2" type="static" programID="0" offset="0"><phase duration="42" state="GGgGgGgrr"/><phase duration="3" state="yyyyyyyrr"/><phase duration="12" state="rrrrrrrGG"/><phase duration="3" state="rrrrrrryy"/></tlLogic>
+    <tlLogic id="S3" type="static" programID="0" offset="0"><phase duration="42" state="GGGGgrr"/><phase duration="3" state="yyyyyrr"/><phase duration="12" state="rrrrrGG"/><phase duration="3" state="rrrrryy"/></tlLogic>
+    <tlLogic id="S4" type="static" programID="0" offset="0"><phase duration="42" state="GGGGGgrr"/><phase duration="3" state="yyyyyyrr"/><phase duration="12" state="rrrrrrGG"/><phase duration="3" state="rrrrrryy"/></tlLogic>
+</additional>

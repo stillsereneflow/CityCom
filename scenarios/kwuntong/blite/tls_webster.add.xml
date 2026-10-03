@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-10-03 16:06:33.002993 by Eclipse SUMO tlsCycleAdaptation.py v1.27.1
+<configuration>
+    <net-file value="scenarios/kwuntong/blite/net.net.xml"/>
+    <output-file value="scenarios/kwuntong/blite/tls_webster.add.xml"/>
+    <route-files value="scenarios/kwuntong/blite/demand/proxy.rou.xml"/>
+    <begin value="0.0"/>
+    <min-cycle value="60"/>
+    <max-cycle value="140"/>
+    <program value="webster"/>
+    <verbose value="True"/>
+</configuration>
+-->
+
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <tlLogic id="S1" type="static" programID="webster" offset="0">
+        <phase duration="40" state="GGGGgGrr"/>
+        <phase duration="12" state="rrrrrrGG"/>
+    </tlLogic>
+    <tlLogic id="S2" type="static" programID="webster" offset="0">
+        <phase duration="39" state="GGggGgrr"/>
+        <phase duration="13" state="rrrrrrGG"/>
+    </tlLogic>
+    <tlLogic id="S3" type="static" programID="webster" offset="0">
+        <phase duration="40" state="GGGGgrr"/>
+        <phase duration="12" state="rrrrrGG"/>
+    </tlLogic>
+    <tlLogic id="S4" type="static" programID="webster" offset="0">
+        <phase duration="38" state="GGGGGgrr"/>
+        <phase duration="14" state="rrrrrrGG"/>
+    </tlLogic>
+</additional>

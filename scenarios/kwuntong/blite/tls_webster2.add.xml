@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-10-03 16:28:03.607002 by Eclipse SUMO tlsCycleAdaptation.py v1.27.1
+<configuration>
+    <net-file value="D:\CityCom-astra\scenarios\kwuntong\blite\net2.net.xml"/>
+    <output-file value="D:\CityCom-astra\scenarios\kwuntong\blite\tls_webster2.add.xml"/>
+    <route-files value="D:\CityCom-astra\scenarios\kwuntong\blite\demand\proxy.rou.xml"/>
+    <begin value="0.0"/>
+    <min-cycle value="60"/>
+    <max-cycle value="140"/>
+    <program value="webster"/>
+    <verbose value="True"/>
+</configuration>
+-->
+
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <tlLogic id="S1" type="static" programID="webster" offset="0">
+        <phase duration="40" state="GGGGGgrr"/>
+        <phase duration="12" state="rrrrrrGG"/>
+    </tlLogic>
+    <tlLogic id="S2" type="static" programID="webster" offset="0">
+        <phase duration="39" state="GGgGgGgrr"/>
+        <phase duration="13" state="rrrrrrrGG"/>
+    </tlLogic>
+    <tlLogic id="S3" type="static" programID="webster" offset="0">
+        <phase duration="40" state="GGGGgrr"/>
+        <phase duration="12" state="rrrrrGG"/>
+    </tlLogic>
+    <tlLogic id="S4" type="static" programID="webster" offset="0">
+        <phase duration="38" state="GGGGGgrr"/>
+        <phase duration="14" state="rrrrrrGG"/>
+    </tlLogic>
+</additional>

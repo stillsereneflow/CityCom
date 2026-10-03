@@ -1,0 +1,52 @@
+the total number of tls: 4
+Begin time:0.0
+parsing route file: D:\CityCom-astra\scenarios\kwuntong\blite\demand\proxy.rou.xml
+Parsed 32303 vehicles passing traffic lights from D:\CityCom-astra\scenarios\kwuntong\blite\demand\proxy.rou.xml.
+tl-logic ID: S1
+phase: 0
+group flows: [45, 2811.0, 0]
+The used lanes: [[0, 1, 2, 3], [0]]
+phase: 1
+group flows: [15, 414.0]
+The used lanes: [[0, 1]]
+the current cycle length:60 sec
+Green time for phase 0: 40
+Green time for phase 1: 12
+The optimal cycle length:60
+
+tl-logic ID: S2
+phase: 0
+group flows: [45, 2382.0, 0]
+The used lanes: [[0, 1, 2, 3], [0]]
+phase: 1
+group flows: [15, 393.0]
+The used lanes: [[0, 1]]
+the current cycle length:60 sec
+Green time for phase 0: 39
+Green time for phase 1: 13
+The optimal cycle length:60
+
+tl-logic ID: S3
+phase: 0
+group flows: [45, 1332.0, 371.0]
+The used lanes: [[0, 1], [0]]
+phase: 1
+group flows: [15, 396.0]
+The used lanes: [[0, 1]]
+the current cycle length:60 sec
+Green time for phase 0: 40
+Green time for phase 1: 12
+The optimal cycle length:60
+
+tl-logic ID: S4
+phase: 0
+group flows: [45, 1703.0, 485.0]
+The used lanes: [[0, 1, 2], [0]]
+phase: 1
+group flows: [15, 424.0]
+The used lanes: [[0, 1]]
+the current cycle length:60 sec
+Green time for phase 0: 38
+Green time for phase 1: 14
+The optimal cycle length:60
+
