@@ -1,0 +1,75 @@
+{
+  "audit_i_reload": {
+    "identical": true,
+    "max_pos_diff": 0.0,
+    "n_diffs": 0,
+    "tls_match": true,
+    "pending_match": true,
+    "n_pending_in_snapshot": 2,
+    "pending_sample": [
+      "t8860",
+      "t8861"
+    ],
+    "tls_program_sample": {
+      "S1": [
+        "webster",
+        3
+      ],
+      "S2": [
+        "webster",
+        3
+      ],
+      "S3": [
+        "webster",
+        3
+      ],
+      "S4": [
+        "webster",
+        3
+      ]
+    },
+    "pass": true
+  },
+  "audit_ii_firewall": {
+    "probe_results": [
+      {
+        "desc": "extra incident truth field",
+        "rejected": true,
+        "error": "SensorMsg: keys ['incident', 'obs', 'period', 't', 'type'] != ['obs', 'period', 't', 'type']",
+        "pass": true
+      },
+      {
+        "desc": "extra lanes_closed truth field",
+        "rejected": true,
+        "error": "SensorMsg: keys ['lanes_closed', 'obs', 'period', 't', 'type'] != ['obs', 'period', 't', 'type']",
+        "pass": true
+      },
+      {
+        "desc": "extra truth_pos in obs",
+        "rejected": true,
+        "error": "ObsItem: keys ['detector', 'o', 'q', 'truth_pos', 'v', 'valid'] != ['detector', 'o', 'q', 'v', 'valid']",
+        "pass": true
+      },
+      {
+        "desc": "valid sensor message",
+        "rejected": false,
+        "pass": true
+      }
+    ],
+    "twin_log_columns": [
+      "detector",
+      "obs_o",
+      "obs_q",
+      "obs_v",
+      "obs_valid",
+      "t",
+      "twin_o",
+      "twin_q",
+      "twin_v"
+    ],
+    "twin_cols_pass": true,
+    "firewall_pass": true,
+    "pass": true
+  },
+  "all_audit_pass": true
+}

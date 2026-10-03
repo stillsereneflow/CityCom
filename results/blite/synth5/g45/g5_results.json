@@ -1,0 +1,1648 @@
+{
+  "hypothesis": {
+    "edge": "ktb_n1",
+    "lanes_closed": [
+      0,
+      1
+    ],
+    "mode": "blocker",
+    "pos": 755.3,
+    "duration": 3600,
+    "source": "midpoint of observed detectors AID02109 (455.7m) and AID02111 (1054.9m)"
+  },
+  "tko_stream_counts": {
+    "scheduled_proxy_rou": 721,
+    "twin_demand_accepted": 664,
+    "twin_cand_raw": 1029
+  },
+  "selection": {
+    "group": "selection",
+    "seeds": [
+      11,
+      12,
+      13,
+      14
+    ],
+    "raw_branches": {
+      "11": [
+        {
+          "action": "A0",
+          "kpis": {
+            "900": {
+              "delay_vh": 35.13712357833222,
+              "corridor_delay_vh": 33.48002335202714,
+              "n_affected": 950,
+              "arrived": 901,
+              "backlog_end": 0,
+              "halt_inc": 9.544444444444444,
+              "running": 445
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 2.0561559200286865,
+          "setup_s": 0.18239951133728027
+        },
+        {
+          "action": "A1",
+          "kpis": {
+            "900": {
+              "delay_vh": 32.18522098882276,
+              "corridor_delay_vh": 29.76263432532871,
+              "n_affected": 950,
+              "arrived": 914,
+              "backlog_end": 0,
+              "halt_inc": 9.766666666666667,
+              "running": 432
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 2.351118803024292,
+          "setup_s": 0.2932114601135254
+        },
+        {
+          "action": "A2",
+          "kpis": {
+            "900": {
+              "delay_vh": 26.003479595708427,
+              "corridor_delay_vh": 24.349186489127494,
+              "n_affected": 950,
+              "arrived": 960,
+              "backlog_end": 0,
+              "halt_inc": 8.0,
+              "running": 386
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 153,
+          "wall_s": 1.8840746879577637,
+          "setup_s": 0.26344871520996094
+        },
+        {
+          "action": "A3",
+          "kpis": {
+            "900": {
+              "delay_vh": 20.621865459862807,
+              "corridor_delay_vh": 18.200335759091864,
+              "n_affected": 950,
+              "arrived": 1001,
+              "backlog_end": 0,
+              "halt_inc": 8.422222222222222,
+              "running": 345
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 152,
+          "wall_s": 1.987511396408081,
+          "setup_s": 0.23283147811889648
+        },
+        {
+          "action": "A4",
+          "kpis": {
+            "900": {
+              "delay_vh": 26.604151114526225,
+              "corridor_delay_vh": 24.949001297605317,
+              "n_affected": 950,
+              "arrived": 955,
+              "backlog_end": 0,
+              "halt_inc": 4.7555555555555555,
+              "running": 391
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 238,
+          "wall_s": 2.116893768310547,
+          "setup_s": 0.20010614395141602
+        }
+      ],
+      "12": [
+        {
+          "action": "A0",
+          "kpis": {
+            "900": {
+              "delay_vh": 33.21422050052698,
+              "corridor_delay_vh": 31.549390923223246,
+              "n_affected": 950,
+              "arrived": 913,
+              "backlog_end": 0,
+              "halt_inc": 10.433333333333334,
+              "running": 433
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 2.0812110900878906,
+          "setup_s": 0.22080111503601074
+        },
+        {
+          "action": "A1",
+          "kpis": {
+            "900": {
+              "delay_vh": 32.29796270119136,
+              "corridor_delay_vh": 29.8695243435087,
+              "n_affected": 950,
+              "arrived": 916,
+              "backlog_end": 0,
+              "halt_inc": 9.533333333333333,
+              "running": 430
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 2.0735983848571777,
+          "setup_s": 0.23865246772766113
+        },
+        {
+          "action": "A2",
+          "kpis": {
+            "900": {
+              "delay_vh": 24.193852154219226,
+              "corridor_delay_vh": 22.526587383528973,
+              "n_affected": 950,
+              "arrived": 970,
+              "backlog_end": 0,
+              "halt_inc": 6.877777777777778,
+              "running": 376
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 152,
+          "wall_s": 1.9326245784759521,
+          "setup_s": 0.2188253402709961
+        },
+        {
+          "action": "A3",
+          "kpis": {
+            "900": {
+              "delay_vh": 18.763683776682516,
+              "corridor_delay_vh": 16.30833297917288,
+              "n_affected": 950,
+              "arrived": 1008,
+              "backlog_end": 0,
+              "halt_inc": 6.844444444444444,
+              "running": 338
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 152,
+          "wall_s": 2.142759323120117,
+          "setup_s": 0.23622560501098633
+        },
+        {
+          "action": "A4",
+          "kpis": {
+            "900": {
+              "delay_vh": 25.561126876120376,
+              "corridor_delay_vh": 23.908915407476808,
+              "n_affected": 950,
+              "arrived": 953,
+              "backlog_end": 0,
+              "halt_inc": 3.6777777777777776,
+              "running": 393
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 237,
+          "wall_s": 1.6325368881225586,
+          "setup_s": 0.16818952560424805
+        }
+      ],
+      "13": [
+        {
+          "action": "A0",
+          "kpis": {
+            "900": {
+              "delay_vh": 33.61966047675364,
+              "corridor_delay_vh": 32.05490374968715,
+              "n_affected": 950,
+              "arrived": 912,
+              "backlog_end": 0,
+              "halt_inc": 10.044444444444444,
+              "running": 434
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 1.8797829151153564,
+          "setup_s": 0.16472268104553223
+        },
+        {
+          "action": "A1",
+          "kpis": {
+            "900": {
+              "delay_vh": 32.23102336827416,
+              "corridor_delay_vh": 29.765531857977646,
+              "n_affected": 950,
+              "arrived": 917,
+              "backlog_end": 0,
+              "halt_inc": 12.8,
+              "running": 429
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 2.0963761806488037,
+          "setup_s": 0.16147851943969727
+        },
+        {
+          "action": "A2",
+          "kpis": {
+            "900": {
+              "delay_vh": 24.020310619270052,
+              "corridor_delay_vh": 22.445816306485128,
+              "n_affected": 950,
+              "arrived": 970,
+              "backlog_end": 0,
+              "halt_inc": 7.811111111111111,
+              "running": 376
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 153,
+          "wall_s": 1.722914695739746,
+          "setup_s": 0.21247363090515137
+        },
+        {
+          "action": "A3",
+          "kpis": {
+            "900": {
+              "delay_vh": 19.161473371901398,
+              "corridor_delay_vh": 16.697449669385072,
+              "n_affected": 950,
+              "arrived": 1003,
+              "backlog_end": 0,
+              "halt_inc": 6.677777777777778,
+              "running": 343
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 154,
+          "wall_s": 1.6644058227539062,
+          "setup_s": 0.15956449508666992
+        },
+        {
+          "action": "A4",
+          "kpis": {
+            "900": {
+              "delay_vh": 26.503051131247158,
+              "corridor_delay_vh": 24.935075535590286,
+              "n_affected": 950,
+              "arrived": 949,
+              "backlog_end": 0,
+              "halt_inc": 4.177777777777778,
+              "running": 397
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 236,
+          "wall_s": 1.7834124565124512,
+          "setup_s": 0.1566162109375
+        }
+      ],
+      "14": [
+        {
+          "action": "A0",
+          "kpis": {
+            "900": {
+              "delay_vh": 33.53306044017664,
+              "corridor_delay_vh": 31.949290166655697,
+              "n_affected": 950,
+              "arrived": 905,
+              "backlog_end": 0,
+              "halt_inc": 10.0,
+              "running": 441
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 1.9015612602233887,
+          "setup_s": 0.1535811424255371
+        },
+        {
+          "action": "A1",
+          "kpis": {
+            "900": {
+              "delay_vh": 32.60035736485579,
+              "corridor_delay_vh": 30.13539022314873,
+              "n_affected": 950,
+              "arrived": 911,
+              "backlog_end": 0,
+              "halt_inc": 10.244444444444444,
+              "running": 435
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 1.7623295783996582,
+          "setup_s": 0.2213447093963623
+        },
+        {
+          "action": "A2",
+          "kpis": {
+            "900": {
+              "delay_vh": 26.232070186285018,
+              "corridor_delay_vh": 24.634139208569707,
+              "n_affected": 950,
+              "arrived": 954,
+              "backlog_end": 0,
+              "halt_inc": 6.888888888888889,
+              "running": 392
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 154,
+          "wall_s": 1.7902312278747559,
+          "setup_s": 0.18855834007263184
+        },
+        {
+          "action": "A3",
+          "kpis": {
+            "900": {
+              "delay_vh": 20.737112593916006,
+              "corridor_delay_vh": 18.289359587636678,
+              "n_affected": 950,
+              "arrived": 993,
+              "backlog_end": 0,
+              "halt_inc": 8.0,
+              "running": 353
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 154,
+          "wall_s": 1.6920337677001953,
+          "setup_s": 0.1568763256072998
+        },
+        {
+          "action": "A4",
+          "kpis": {
+            "900": {
+              "delay_vh": 26.565037916791294,
+              "corridor_delay_vh": 24.96359278200265,
+              "n_affected": 950,
+              "arrived": 947,
+              "backlog_end": 0,
+              "halt_inc": 4.166666666666667,
+              "running": 399
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 239,
+          "wall_s": 1.719681978225708,
+          "setup_s": 0.20319747924804688
+        }
+      ]
+    },
+    "actions_stats": {
+      "A0": {
+        "delay_vh": {
+          "values": [
+            35.13712357833222,
+            33.21422050052698,
+            33.61966047675364,
+            33.53306044017664
+          ],
+          "mean": 33.876016248947366,
+          "sd": 0.8586233705884732
+        },
+        "paired_diff_vs_a0": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "paired_t_ci": null,
+        "ci_excludes_zero": false,
+        "corridor_delay_vh": {
+          "values": [
+            33.48002335202714,
+            31.549390923223246,
+            32.05490374968715,
+            31.949290166655697
+          ],
+          "mean": 32.25840204789831,
+          "sd": 0.8430138587462261
+        },
+        "arrived": {
+          "values": [
+            901,
+            913,
+            912,
+            905
+          ],
+          "mean": 907.75
+        },
+        "running": {
+          "values": [
+            445,
+            433,
+            434,
+            441
+          ],
+          "mean": 438.25
+        },
+        "backlog_end": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0
+        },
+        "n_diverted": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0
+        }
+      },
+      "A1": {
+        "delay_vh": {
+          "values": [
+            32.18522098882276,
+            32.29796270119136,
+            32.23102336827416,
+            32.60035736485579
+          ],
+          "mean": 32.32864110578602,
+          "sd": 0.1869665233653986
+        },
+        "paired_diff_vs_a0": [
+          -2.9519025895094586,
+          -0.916257799335618,
+          -1.3886371084794789,
+          -0.9327030753208518
+        ],
+        "paired_t_ci": {
+          "n": 4,
+          "mean": -1.5473751431613518,
+          "sd": 0.9616003958437835,
+          "se": 0.48080019792189177,
+          "t_crit": 3.182446,
+          "ci_low": -3.0774958098370844,
+          "ci_high": -0.017254476485619064,
+          "excludes_zero": true
+        },
+        "ci_excludes_zero": true,
+        "corridor_delay_vh": {
+          "values": [
+            29.76263432532871,
+            29.8695243435087,
+            29.765531857977646,
+            30.13539022314873
+          ],
+          "mean": 29.883270187490947,
+          "sd": 0.17527957295235033
+        },
+        "arrived": {
+          "values": [
+            914,
+            916,
+            917,
+            911
+          ],
+          "mean": 914.5
+        },
+        "running": {
+          "values": [
+            432,
+            430,
+            429,
+            435
+          ],
+          "mean": 431.5
+        },
+        "backlog_end": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0
+        },
+        "n_diverted": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0
+        }
+      },
+      "A2": {
+        "delay_vh": {
+          "values": [
+            26.003479595708427,
+            24.193852154219226,
+            24.020310619270052,
+            26.232070186285018
+          ],
+          "mean": 25.11242813887068,
+          "sd": 1.1667724041514207
+        },
+        "paired_diff_vs_a0": [
+          -9.133643982623795,
+          -9.020368346307752,
+          -9.599349857483585,
+          -7.300990253891623
+        ],
+        "paired_t_ci": {
+          "n": 4,
+          "mean": -8.76358811007669,
+          "sd": 1.0067385668370346,
+          "se": 0.5033692834185173,
+          "t_crit": 3.182446,
+          "ci_low": -10.365533672614816,
+          "ci_high": -7.1616425475385626,
+          "excludes_zero": true
+        },
+        "ci_excludes_zero": true,
+        "corridor_delay_vh": {
+          "values": [
+            24.349186489127494,
+            22.526587383528973,
+            22.445816306485128,
+            24.634139208569707
+          ],
+          "mean": 23.488932346927825,
+          "sd": 1.1641498826083811
+        },
+        "arrived": {
+          "values": [
+            960,
+            970,
+            970,
+            954
+          ],
+          "mean": 963.5
+        },
+        "running": {
+          "values": [
+            386,
+            376,
+            376,
+            392
+          ],
+          "mean": 382.5
+        },
+        "backlog_end": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0
+        },
+        "n_diverted": {
+          "values": [
+            153,
+            152,
+            153,
+            154
+          ],
+          "mean": 153.0
+        }
+      },
+      "A3": {
+        "delay_vh": {
+          "values": [
+            20.621865459862807,
+            18.763683776682516,
+            19.161473371901398,
+            20.737112593916006
+          ],
+          "mean": 19.821033800590683,
+          "sd": 1.0055745843752415
+        },
+        "paired_diff_vs_a0": [
+          -14.515258118469415,
+          -14.450536723844461,
+          -14.45818710485224,
+          -12.795947846260635
+        ],
+        "paired_t_ci": {
+          "n": 4,
+          "mean": -14.054982448356686,
+          "sd": 0.8398529636488441,
+          "se": 0.41992648182442205,
+          "t_crit": 3.182446,
+          "ci_low": -15.39137580073289,
+          "ci_high": -12.718589095980482,
+          "excludes_zero": true
+        },
+        "ci_excludes_zero": true,
+        "corridor_delay_vh": {
+          "values": [
+            18.200335759091864,
+            16.30833297917288,
+            16.697449669385072,
+            18.289359587636678
+          ],
+          "mean": 17.373869498821623,
+          "sd": 1.018836009448004
+        },
+        "arrived": {
+          "values": [
+            1001,
+            1008,
+            1003,
+            993
+          ],
+          "mean": 1001.25
+        },
+        "running": {
+          "values": [
+            345,
+            338,
+            343,
+            353
+          ],
+          "mean": 344.75
+        },
+        "backlog_end": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0
+        },
+        "n_diverted": {
+          "values": [
+            152,
+            152,
+            154,
+            154
+          ],
+          "mean": 153.0
+        }
+      },
+      "A4": {
+        "delay_vh": {
+          "values": [
+            26.604151114526225,
+            25.561126876120376,
+            26.503051131247158,
+            26.565037916791294
+          ],
+          "mean": 26.308341759671265,
+          "sd": 0.49987928978882684
+        },
+        "paired_diff_vs_a0": [
+          -8.532972463805997,
+          -7.653093624406601,
+          -7.116609345506479,
+          -6.968022523385347
+        ],
+        "paired_t_ci": {
+          "n": 4,
+          "mean": -7.567674489276106,
+          "sd": 0.7076107339487624,
+          "se": 0.3538053669743812,
+          "t_crit": 3.182446,
+          "ci_low": -8.693640964182258,
+          "ci_high": -6.441708014369954,
+          "excludes_zero": true
+        },
+        "ci_excludes_zero": true,
+        "corridor_delay_vh": {
+          "values": [
+            24.949001297605317,
+            23.908915407476808,
+            24.935075535590286,
+            24.96359278200265
+          ],
+          "mean": 24.689146255668767,
+          "sd": 0.520284193439714
+        },
+        "arrived": {
+          "values": [
+            955,
+            953,
+            949,
+            947
+          ],
+          "mean": 951.0
+        },
+        "running": {
+          "values": [
+            391,
+            393,
+            397,
+            399
+          ],
+          "mean": 395.0
+        },
+        "backlog_end": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0
+        },
+        "n_diverted": {
+          "values": [
+            238,
+            237,
+            236,
+            239
+          ],
+          "mean": 237.5
+        }
+      }
+    },
+    "reach_stats": {
+      "A2": {
+        "mean_diverted": 153.0,
+        "share_twin_stream": 0.23042168674698796,
+        "share_proxy_stream": 0.21220527045769763,
+        "target_met": true
+      },
+      "A3": {
+        "mean_diverted": 153.0,
+        "share_twin_stream": 0.23042168674698796,
+        "share_proxy_stream": 0.21220527045769763,
+        "target_met": true
+      },
+      "A4": {
+        "mean_diverted": 237.5,
+        "share_twin_stream": 0.35768072289156627,
+        "share_proxy_stream": 0.32940360610263525,
+        "target_met": true
+      }
+    },
+    "significant_actions": [
+      "A1",
+      "A2",
+      "A3",
+      "A4"
+    ],
+    "reach_pass": true,
+    "effect_pass": true
+  },
+  "audit": {
+    "group": "audit",
+    "seeds": [
+      21,
+      22,
+      23,
+      24
+    ],
+    "raw_branches": {
+      "21": [
+        {
+          "action": "A0",
+          "kpis": {
+            "900": {
+              "delay_vh": 32.61076248426677,
+              "corridor_delay_vh": 30.947869354214145,
+              "n_affected": 950,
+              "arrived": 912,
+              "backlog_end": 0,
+              "halt_inc": 11.0,
+              "running": 434
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 1.7980682849884033,
+          "setup_s": 0.20737338066101074
+        },
+        {
+          "action": "A1",
+          "kpis": {
+            "900": {
+              "delay_vh": 32.78696598531445,
+              "corridor_delay_vh": 30.365873043429115,
+              "n_affected": 950,
+              "arrived": 911,
+              "backlog_end": 0,
+              "halt_inc": 9.177777777777777,
+              "running": 435
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 1.7628567218780518,
+          "setup_s": 0.16562247276306152
+        },
+        {
+          "action": "A2",
+          "kpis": {
+            "900": {
+              "delay_vh": 24.992499271793438,
+              "corridor_delay_vh": 23.339797051813846,
+              "n_affected": 950,
+              "arrived": 964,
+              "backlog_end": 0,
+              "halt_inc": 7.2444444444444445,
+              "running": 382
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 152,
+          "wall_s": 1.7361795902252197,
+          "setup_s": 0.16915583610534668
+        },
+        {
+          "action": "A3",
+          "kpis": {
+            "900": {
+              "delay_vh": 20.29996341979251,
+              "corridor_delay_vh": 17.883993266120672,
+              "n_affected": 950,
+              "arrived": 1005,
+              "backlog_end": 0,
+              "halt_inc": 7.2,
+              "running": 341
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 153,
+          "wall_s": 1.8240668773651123,
+          "setup_s": 0.1981368064880371
+        },
+        {
+          "action": "A4",
+          "kpis": {
+            "900": {
+              "delay_vh": 26.212235495748764,
+              "corridor_delay_vh": 24.567623662203555,
+              "n_affected": 950,
+              "arrived": 955,
+              "backlog_end": 0,
+              "halt_inc": 3.7555555555555555,
+              "running": 391
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 238,
+          "wall_s": 1.6911239624023438,
+          "setup_s": 0.1577286720275879
+        }
+      ],
+      "22": [
+        {
+          "action": "A0",
+          "kpis": {
+            "900": {
+              "delay_vh": 34.70349373921102,
+              "corridor_delay_vh": 33.137328822081535,
+              "n_affected": 950,
+              "arrived": 893,
+              "backlog_end": 0,
+              "halt_inc": 7.288888888888889,
+              "running": 453
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 1.8045165538787842,
+          "setup_s": 0.1748676300048828
+        },
+        {
+          "action": "A1",
+          "kpis": {
+            "900": {
+              "delay_vh": 33.28999270121804,
+              "corridor_delay_vh": 30.818334364118353,
+              "n_affected": 950,
+              "arrived": 908,
+              "backlog_end": 0,
+              "halt_inc": 10.588888888888889,
+              "running": 438
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 1.8358280658721924,
+          "setup_s": 0.16222381591796875
+        },
+        {
+          "action": "A2",
+          "kpis": {
+            "900": {
+              "delay_vh": 26.073855516083757,
+              "corridor_delay_vh": 24.49205584930267,
+              "n_affected": 950,
+              "arrived": 952,
+              "backlog_end": 0,
+              "halt_inc": 6.677777777777778,
+              "running": 394
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 153,
+          "wall_s": 1.7594962120056152,
+          "setup_s": 0.19309258460998535
+        },
+        {
+          "action": "A3",
+          "kpis": {
+            "900": {
+              "delay_vh": 21.36602903653609,
+              "corridor_delay_vh": 18.908016121550123,
+              "n_affected": 950,
+              "arrived": 988,
+              "backlog_end": 0,
+              "halt_inc": 8.222222222222221,
+              "running": 358
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 153,
+          "wall_s": 1.7373378276824951,
+          "setup_s": 0.16266894340515137
+        },
+        {
+          "action": "A4",
+          "kpis": {
+            "900": {
+              "delay_vh": 26.707873074032648,
+              "corridor_delay_vh": 25.114034381076262,
+              "n_affected": 950,
+              "arrived": 952,
+              "backlog_end": 0,
+              "halt_inc": 3.8555555555555556,
+              "running": 394
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 239,
+          "wall_s": 1.7058470249176025,
+          "setup_s": 0.1564321517944336
+        }
+      ],
+      "23": [
+        {
+          "action": "A0",
+          "kpis": {
+            "900": {
+              "delay_vh": 33.528824394398484,
+              "corridor_delay_vh": 31.864183074098303,
+              "n_affected": 950,
+              "arrived": 908,
+              "backlog_end": 0,
+              "halt_inc": 32.81111111111111,
+              "running": 438
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 1.7572987079620361,
+          "setup_s": 0.19523119926452637
+        },
+        {
+          "action": "A1",
+          "kpis": {
+            "900": {
+              "delay_vh": 32.2643121915101,
+              "corridor_delay_vh": 29.727901186284875,
+              "n_affected": 950,
+              "arrived": 918,
+              "backlog_end": 0,
+              "halt_inc": 21.555555555555557,
+              "running": 428
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 1.8126935958862305,
+          "setup_s": 0.18874144554138184
+        },
+        {
+          "action": "A2",
+          "kpis": {
+            "900": {
+              "delay_vh": 24.844425125476675,
+              "corridor_delay_vh": 23.17801147633526,
+              "n_affected": 950,
+              "arrived": 965,
+              "backlog_end": 0,
+              "halt_inc": 16.9,
+              "running": 381
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 153,
+          "wall_s": 1.753739595413208,
+          "setup_s": 0.19728755950927734
+        },
+        {
+          "action": "A3",
+          "kpis": {
+            "900": {
+              "delay_vh": 20.20763821278541,
+              "corridor_delay_vh": 17.68815677892482,
+              "n_affected": 950,
+              "arrived": 995,
+              "backlog_end": 0,
+              "halt_inc": 15.688888888888888,
+              "running": 351
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 153,
+          "wall_s": 1.6253056526184082,
+          "setup_s": 0.18554091453552246
+        },
+        {
+          "action": "A4",
+          "kpis": {
+            "900": {
+              "delay_vh": 26.736404645437958,
+              "corridor_delay_vh": 25.068376285113995,
+              "n_affected": 950,
+              "arrived": 954,
+              "backlog_end": 0,
+              "halt_inc": 9.577777777777778,
+              "running": 392
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 237,
+          "wall_s": 1.681833267211914,
+          "setup_s": 0.16727876663208008
+        }
+      ],
+      "24": [
+        {
+          "action": "A0",
+          "kpis": {
+            "900": {
+              "delay_vh": 33.730105796507665,
+              "corridor_delay_vh": 32.12400819783643,
+              "n_affected": 950,
+              "arrived": 907,
+              "backlog_end": 0,
+              "halt_inc": 10.78888888888889,
+              "running": 439
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 1.669288158416748,
+          "setup_s": 0.18307781219482422
+        },
+        {
+          "action": "A1",
+          "kpis": {
+            "900": {
+              "delay_vh": 33.046670722613555,
+              "corridor_delay_vh": 30.589807137870267,
+              "n_affected": 950,
+              "arrived": 911,
+              "backlog_end": 0,
+              "halt_inc": 9.033333333333333,
+              "running": 435
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 0,
+          "wall_s": 1.8645217418670654,
+          "setup_s": 0.20703554153442383
+        },
+        {
+          "action": "A2",
+          "kpis": {
+            "900": {
+              "delay_vh": 24.864119491881755,
+              "corridor_delay_vh": 23.241268520231888,
+              "n_affected": 950,
+              "arrived": 967,
+              "backlog_end": 0,
+              "halt_inc": 7.088888888888889,
+              "running": 379
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 152,
+          "wall_s": 1.649360179901123,
+          "setup_s": 0.15356087684631348
+        },
+        {
+          "action": "A3",
+          "kpis": {
+            "900": {
+              "delay_vh": 20.115769788315188,
+              "corridor_delay_vh": 17.607868845330483,
+              "n_affected": 950,
+              "arrived": 1009,
+              "backlog_end": 0,
+              "halt_inc": 8.688888888888888,
+              "running": 337
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 152,
+          "wall_s": 1.682401180267334,
+          "setup_s": 0.18355798721313477
+        },
+        {
+          "action": "A4",
+          "kpis": {
+            "900": {
+              "delay_vh": 25.73497158839272,
+              "corridor_delay_vh": 24.122394864787733,
+              "n_affected": 950,
+              "arrived": 950,
+              "backlog_end": 0,
+              "halt_inc": 3.6444444444444444,
+              "running": 396
+            }
+          },
+          "t_snap": 4800.0,
+          "pending_after_first_step": 3,
+          "n_pending_meta": 2,
+          "n_diverted": 237,
+          "wall_s": 1.655806303024292,
+          "setup_s": 0.2107391357421875
+        }
+      ]
+    },
+    "actions_stats": {
+      "A0": {
+        "delay_vh": {
+          "values": [
+            32.61076248426677,
+            34.70349373921102,
+            33.528824394398484,
+            33.730105796507665
+          ],
+          "mean": 33.643296603595985,
+          "sd": 0.8584451829903121
+        },
+        "paired_diff_vs_a0": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "paired_t_ci": null,
+        "ci_excludes_zero": false,
+        "corridor_delay_vh": {
+          "values": [
+            30.947869354214145,
+            33.137328822081535,
+            31.864183074098303,
+            32.12400819783643
+          ],
+          "mean": 32.018347362057604,
+          "sd": 0.9005504822150483
+        },
+        "arrived": {
+          "values": [
+            912,
+            893,
+            908,
+            907
+          ],
+          "mean": 905.0
+        },
+        "running": {
+          "values": [
+            434,
+            453,
+            438,
+            439
+          ],
+          "mean": 441.0
+        },
+        "backlog_end": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0
+        },
+        "n_diverted": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0
+        }
+      },
+      "A1": {
+        "delay_vh": {
+          "values": [
+            32.78696598531445,
+            33.28999270121804,
+            32.2643121915101,
+            33.046670722613555
+          ],
+          "mean": 32.84698540016404,
+          "sd": 0.439408729632173
+        },
+        "paired_diff_vs_a0": [
+          0.1762035010476808,
+          -1.4135010379929795,
+          -1.2645122028883833,
+          -0.6834350738941097
+        ],
+        "paired_t_ci": {
+          "n": 4,
+          "mean": -0.796311203431948,
+          "sd": 0.720800790516127,
+          "se": 0.3604003952580635,
+          "t_crit": 3.182446,
+          "ci_low": -1.943265999719391,
+          "ci_high": 0.3506435928554952,
+          "excludes_zero": false
+        },
+        "ci_excludes_zero": false,
+        "corridor_delay_vh": {
+          "values": [
+            30.365873043429115,
+            30.818334364118353,
+            29.727901186284875,
+            30.589807137870267
+          ],
+          "mean": 30.375478932925652,
+          "sd": 0.46957666162513534
+        },
+        "arrived": {
+          "values": [
+            911,
+            908,
+            918,
+            911
+          ],
+          "mean": 912.0
+        },
+        "running": {
+          "values": [
+            435,
+            438,
+            428,
+            435
+          ],
+          "mean": 434.0
+        },
+        "backlog_end": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0
+        },
+        "n_diverted": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0
+        }
+      },
+      "A2": {
+        "delay_vh": {
+          "values": [
+            24.992499271793438,
+            26.073855516083757,
+            24.844425125476675,
+            24.864119491881755
+          ],
+          "mean": 25.193724851308907,
+          "sd": 0.5904155915844166
+        },
+        "paired_diff_vs_a0": [
+          -7.618263212473334,
+          -8.629638223127262,
+          -8.684399268921808,
+          -8.86598630462591
+        ],
+        "paired_t_ci": {
+          "n": 4,
+          "mean": -8.449571752287078,
+          "sd": 0.5633361531260244,
+          "se": 0.2816680765630122,
+          "t_crit": 3.182446,
+          "ci_low": -9.34596519587273,
+          "ci_high": -7.553178308701426,
+          "excludes_zero": true
+        },
+        "ci_excludes_zero": true,
+        "corridor_delay_vh": {
+          "values": [
+            23.339797051813846,
+            24.49205584930267,
+            23.17801147633526,
+            23.241268520231888
+          ],
+          "mean": 23.562783224420915,
+          "sd": 0.6230814413496906
+        },
+        "arrived": {
+          "values": [
+            964,
+            952,
+            965,
+            967
+          ],
+          "mean": 962.0
+        },
+        "running": {
+          "values": [
+            382,
+            394,
+            381,
+            379
+          ],
+          "mean": 384.0
+        },
+        "backlog_end": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0
+        },
+        "n_diverted": {
+          "values": [
+            152,
+            153,
+            153,
+            152
+          ],
+          "mean": 152.5
+        }
+      },
+      "A3": {
+        "delay_vh": {
+          "values": [
+            20.29996341979251,
+            21.36602903653609,
+            20.20763821278541,
+            20.115769788315188
+          ],
+          "mean": 20.4973501143573,
+          "sd": 0.5839809095520515
+        },
+        "paired_diff_vs_a0": [
+          -12.310799064474264,
+          -13.337464702674929,
+          -13.321186181613072,
+          -13.614336008192478
+        ],
+        "paired_t_ci": {
+          "n": 4,
+          "mean": -13.145946489238685,
+          "sd": 0.5727850493910407,
+          "se": 0.28639252469552035,
+          "t_crit": 3.182446,
+          "ci_low": -14.057375233885846,
+          "ci_high": -12.234517744591525,
+          "excludes_zero": true
+        },
+        "ci_excludes_zero": true,
+        "corridor_delay_vh": {
+          "values": [
+            17.883993266120672,
+            18.908016121550123,
+            17.68815677892482,
+            17.607868845330483
+          ],
+          "mean": 18.022008752981524,
+          "sd": 0.6019485956630243
+        },
+        "arrived": {
+          "values": [
+            1005,
+            988,
+            995,
+            1009
+          ],
+          "mean": 999.25
+        },
+        "running": {
+          "values": [
+            341,
+            358,
+            351,
+            337
+          ],
+          "mean": 346.75
+        },
+        "backlog_end": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0
+        },
+        "n_diverted": {
+          "values": [
+            153,
+            153,
+            153,
+            152
+          ],
+          "mean": 152.75
+        }
+      },
+      "A4": {
+        "delay_vh": {
+          "values": [
+            26.212235495748764,
+            26.707873074032648,
+            26.736404645437958,
+            25.73497158839272
+          ],
+          "mean": 26.347871200903025,
+          "sd": 0.4742019842876348
+        },
+        "paired_diff_vs_a0": [
+          -6.398526988518007,
+          -7.995620665178372,
+          -6.792419748960526,
+          -7.995134208114944
+        ],
+        "paired_t_ci": {
+          "n": 4,
+          "mean": -7.295425402692962,
+          "sd": 0.8240767098250851,
+          "se": 0.41203835491254254,
+          "t_crit": 3.182446,
+          "ci_low": -8.606715217130963,
+          "ci_high": -5.984135588254961,
+          "excludes_zero": true
+        },
+        "ci_excludes_zero": true,
+        "corridor_delay_vh": {
+          "values": [
+            24.567623662203555,
+            25.114034381076262,
+            25.068376285113995,
+            24.122394864787733
+          ],
+          "mean": 24.718107298295386,
+          "sd": 0.46796198071116085
+        },
+        "arrived": {
+          "values": [
+            955,
+            952,
+            954,
+            950
+          ],
+          "mean": 952.75
+        },
+        "running": {
+          "values": [
+            391,
+            394,
+            392,
+            396
+          ],
+          "mean": 393.25
+        },
+        "backlog_end": {
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean": 0.0
+        },
+        "n_diverted": {
+          "values": [
+            238,
+            239,
+            237,
+            237
+          ],
+          "mean": 237.75
+        }
+      }
+    },
+    "reach_stats": {
+      "A2": {
+        "mean_diverted": 152.5,
+        "share_twin_stream": 0.22966867469879518,
+        "share_proxy_stream": 0.21151178918169208,
+        "target_met": true
+      },
+      "A3": {
+        "mean_diverted": 152.75,
+        "share_twin_stream": 0.23004518072289157,
+        "share_proxy_stream": 0.21185852981969486,
+        "target_met": true
+      },
+      "A4": {
+        "mean_diverted": 237.75,
+        "share_twin_stream": 0.35805722891566266,
+        "share_proxy_stream": 0.329750346740638,
+        "target_met": true
+      }
+    },
+    "significant_actions": [
+      "A2",
+      "A3",
+      "A4"
+    ],
+    "reach_pass": true,
+    "effect_pass": true
+  },
+  "g5_pass": true
+}

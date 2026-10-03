@@ -1,0 +1,50 @@
+[
+  {
+    "path": "D:/CityCom-astra/scenarios/kwuntong/blite/net5.net.xml",
+    "expected_sha256": "8ab6c9e8ef0cc4d03b690d8f8210aad8c7a88c384d782df673079830a6c012d8",
+    "actual_sha256": "8ab6c9e8ef0cc4d03b690d8f8210aad8c7a88c384d782df673079830a6c012d8",
+    "match": true
+  },
+  {
+    "path": "D:/CityCom-astra/scenarios/kwuntong/blite/detectors5.add.xml",
+    "expected_sha256": "2a45506ca311feb1be076afb774914e1c65ca1b66d46a465bcfdfaa3a65d78cf",
+    "actual_sha256": "2a45506ca311feb1be076afb774914e1c65ca1b66d46a465bcfdfaa3a65d78cf",
+    "match": true
+  },
+  {
+    "path": "D:/CityCom-astra/scenarios/kwuntong/blite/synth5/proxy.rou.xml",
+    "expected_sha256": "86a19d8f7a2a72fff1c864eee17f249e77b952525bcfa487588d1d5efc8bfa93",
+    "actual_sha256": "86a19d8f7a2a72fff1c864eee17f249e77b952525bcfa487588d1d5efc8bfa93",
+    "match": true
+  },
+  {
+    "path": "D:/CityCom-astra/scenarios/kwuntong/blite/synth5/proxy_shock.rou.xml",
+    "expected_sha256": "78926be5a23ef2133ca5b8944ef1446a758409d5ab02fafce090107ff61aff3f",
+    "actual_sha256": "78926be5a23ef2133ca5b8944ef1446a758409d5ab02fafce090107ff61aff3f",
+    "match": true
+  },
+  {
+    "path": "D:/CityCom-astra/scenarios/kwuntong/blite/synth5/tls_incident_synth.add.xml",
+    "expected_sha256": "e7219af2140e3f63a863894d51bb75301ba19826c7efcf83052dc384527547e5",
+    "actual_sha256": "e7219af2140e3f63a863894d51bb75301ba19826c7efcf83052dc384527547e5",
+    "match": true
+  },
+  {
+    "path": "D:/CityCom-astra/scenarios/kwuntong/blite/synth5/tls_webster_synth.add.xml",
+    "expected_sha256": "e92e4d52fd72dd6657dcb715f89713967e7835544b96070c30c8e142bc2b6bac",
+    "actual_sha256": "e92e4d52fd72dd6657dcb715f89713967e7835544b96070c30c8e142bc2b6bac",
+    "match": true
+  },
+  {
+    "path": "D:/CityCom-astra/scenarios/kwuntong/blite/synth5/twin_cand.rou.xml",
+    "expected_sha256": "a449427a0cb47e6efe31d16a98365aa115d1f146fd2ad5af40355ed52dd4e212",
+    "actual_sha256": "a449427a0cb47e6efe31d16a98365aa115d1f146fd2ad5af40355ed52dd4e212",
+    "match": true
+  },
+  {
+    "path": "D:/CityCom-astra/results/blite/synth5/g3v2.py",
+    "expected_sha256": "cba21ab944df0d625ac901972046267e2dc0d9740cb5fe7c75c7345750fcf202",
+    "actual_sha256": "cba21ab944df0d625ac901972046267e2dc0d9740cb5fe7c75c7345750fcf202",
+    "match": true
+  }
+]
