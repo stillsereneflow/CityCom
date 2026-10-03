@@ -45,3 +45,27 @@ Goal: the Proxy carries the observed 2026-09-29 08–09h HK demand at scale 1.0.
 - **Current files:** `scenarios/kwuntong/net.net.xml` is the g100 network. `proxy.rou.xml` and `twin_cand.rou.xml` are scale 1.0 (the D1–D4 runs used 0.6). The D1–D4 results and figures were produced on the earlier network and are not regenerated.
 - **Astra's worktree:** `D:/CityCom-astra` (branch `astra/step1`) holds its partial edit to `net_diag.py`, already adopted in main.
 - **HK data:** the recorder is still running as the scheduled task. Weekday mornings 2026-09-21 to 2026-09-30 are backfilled (07–11h archive window).
+
+## 2026-10-03: consultation with GPT-6 Astra, and the new direction
+
+Full report: `results/astra_consult_step1.md` (commit 8a276e5). I checked its key claims independently (`results/verify_astra_consult.txt`).
+
+- **The demand-construction hypothesis is not established.** On the unchanged network, two demand-only interventions both made things worse. Strict boundary OD with fastest paths gave 53.6% backlog. routeSampler `--optimize full` gave 46.9% backlog, even though it fits 97.6% of targets in route space. The baseline was 38.5%. Astra's control run reproduces the g100 totals exactly (verified).
+- **The observed counts include congestion.** 2026-09-29, 08–09h, verified:
+
+  | Detector | Speed (km/h) | Occupancy (%) |
+  |---|---:|---:|
+  | AID02109 | 20.3 | 25.1 |
+  | AID02110 | 22.9 | 24.9 |
+  | AID07105 (Tseung Kwan O Road) | 15.7 | 28.8 |
+  | AID07106 (Tseung Kwan O Road) | 19.3 | 32.1 |
+
+  The Tseung Kwan O Road sites are congested on all 8 examined weekdays. Counts there are discharge flows, so "no backlog at observed counts" was the wrong target. Note that AID02109 and AID02110 bracket the D1–D4 incident site: in reality that section is already congested in the AM peak, whereas the D1–D4 Proxy baseline ran at about 77 km/h there.
+- **Bug found:** a stale count target (`1128468458`; AID07224 now maps to `1128468457`), so only 40 of 41 targets were scored. Fixed by regenerating demand against the current detector map; `net_diag` now lists unscored targets.
+- **Accepted direction:**
+  1. Repair observation provenance (done).
+  2. A bounded Bypass / Kai Fuk Road / Kwun Tong Road demonstrator with justified gates and path alternatives.
+  3. 07–08h warm-up, with 08–09h scored on flows **and** speeds/occupancy and congestion state.
+  4. Entry queues allowed only where observed congestion reaches the boundary.
+- **Observation dataset:** `citypulse/hkdata/obs_set.py`, built by agy-flash and verified by me (code read, test rerun, one cell recomputed independently). It produces 5-min profiles for 07–09h over 6 calibration and 2 holdout weekdays: `results/obs/`. 77.8% of cells have coverage ≥ 0.3.
+- **In progress:** Astra is implementing the bounded network, gates, 07–09h demand and an observation scorer in `D:/CityCom-astra` (run dir `~/.claude/runs/D--CityCom/*-codex-astra-bounded`).
