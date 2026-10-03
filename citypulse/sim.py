@@ -24,7 +24,11 @@ def get_scen_dir():
 def get_net_file():
     net = get_net_setting()
     if net == "blite":
-        return SCEN / "blite" / "net3.net.xml"
+        rev = os.environ.get("CITYPULSE_BLITE_REV", "4").strip()
+        f = SCEN / "blite" / f"net{rev}.net.xml"
+        if f.exists():
+            return f
+        return SCEN / "blite" / "net4.net.xml"
     if net == "v4":
         return SCEN / "net_bounded_v4.net.xml"
     return NET_FILE
@@ -33,7 +37,11 @@ def get_net_file():
 def get_det_file():
     net = get_net_setting()
     if net == "blite":
-        return SCEN / "blite" / "detectors3.add.xml"
+        rev = os.environ.get("CITYPULSE_BLITE_REV", "4").strip()
+        f = SCEN / "blite" / f"detectors{rev}.add.xml"
+        if f.exists():
+            return f
+        return SCEN / "blite" / "detectors4.add.xml"
     if net == "v4":
         return SCEN / "v4" / "detectors.add.xml"
     return SCEN / "detectors.add.xml"
@@ -42,8 +50,17 @@ def get_det_file():
 def get_tls_file():
     net = get_net_setting()
     if net == "blite":
-        grid_webster = RESULTS / "blite" / "grid" / "tls_webster3.add.xml"
-        inc = SCEN / "blite" / "tls_incident3.add.xml"
+        rev = os.environ.get("CITYPULSE_BLITE_REV", "4").strip()
+        if rev == "3":
+            grid_webster = RESULTS / "blite" / "grid" / "tls_webster3.add.xml"
+            inc = SCEN / "blite" / "tls_incident3.add.xml"
+            if grid_webster.exists() and inc.exists():
+                return f"{grid_webster},{inc}"
+            return inc
+        grid_webster = RESULTS / "blite" / "grid4" / "tls_webster4.add.xml"
+        inc = SCEN / "blite" / f"tls_incident{rev}.add.xml"
+        if not inc.exists():
+            inc = SCEN / "blite" / "tls_incident4.add.xml"
         if grid_webster.exists() and inc.exists():
             return f"{grid_webster},{inc}"
         return inc
@@ -55,6 +72,10 @@ def get_tls_file():
 def get_detector_map():
     net = get_net_setting()
     if net == "blite":
+        rev = os.environ.get("CITYPULSE_BLITE_REV", "4").strip()
+        m = SCEN / "blite" / f"detector_map{rev}.json"
+        if m.exists():
+            return m
         m3 = SCEN / "blite" / "detector_map3.json"
         if m3.exists():
             return m3
