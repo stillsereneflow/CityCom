@@ -1,0 +1,5 @@
+Warning: no routes pass edge '1128468449' (count 1418)
+Warning: no routes pass edge '1134206869' (count 169)
+Warning: no routes pass edge '39596703' (count 2192)
+Wrote 23178 routes (880 distinct) achieving total count 77008 (85.39%) at 41 locations. GEH<5 for 68.29%
+Warning: underflow locations: count 16, min 21.00 (('299215751',)), max 2323.00 (('252845683',)), mean 823.25, Q1 259.00, median 801.00, Q3 1418.00 (total 13172)

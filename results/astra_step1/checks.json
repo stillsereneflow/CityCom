@@ -1,0 +1,85 @@
+{
+ "td_day29_pandas": "54 detector aggregates agree; no duplicate keys or partial valid periods",
+ "td_day29_discard": {
+  "rows": 7130,
+  "invalid": 188
+ },
+ "baseline_g100_exact_payload": true,
+ "g100_hash_after_lf_to_crlf": {
+  "net.net.xml": true,
+  "proxy.rou.xml": true,
+  "demand_info.json": true,
+  "detector_map.json": true
+ },
+ "runs": [
+  {
+   "tag": "astra_base",
+   "inserted": 16003,
+   "loaded": 26020,
+   "arrived_total": 11477,
+   "running_end": 4526,
+   "pending_end": 10011,
+   "teleports": 0,
+   "pending_pct": 38.474250576479626,
+   "slope_vps": 0.7239460784313738,
+   "geh_lt5": 1,
+   "fit_denominator": 40,
+   "unaccounted_loaded": 6,
+   "depart_ge_3599": 6,
+   "pending_top5_share": 0.3399260813105584,
+   "sources_with_pending": 164
+  },
+  {
+   "tag": "astra_boundary",
+   "inserted": 10744,
+   "loaded": 23178,
+   "arrived_total": 6926,
+   "running_end": 3818,
+   "pending_end": 12429,
+   "teleports": 0,
+   "pending_pct": 53.6241263266891,
+   "slope_vps": 0.6106372549019616,
+   "geh_lt5": 0,
+   "fit_denominator": 40,
+   "unaccounted_loaded": 5,
+   "depart_ge_3599": 5,
+   "pending_top5_share": 0.4296403572290611,
+   "sources_with_pending": 30
+  },
+  {
+   "tag": "astra_optimized",
+   "inserted": 13340,
+   "loaded": 25131,
+   "arrived_total": 10964,
+   "running_end": 2376,
+   "pending_end": 11782,
+   "teleports": 0,
+   "pending_pct": 46.88233655644423,
+   "slope_vps": 0.33377450980392187,
+   "geh_lt5": 4,
+   "fit_denominator": 40,
+   "unaccounted_loaded": 9,
+   "depart_ge_3599": 9,
+   "pending_top5_share": 0.6331692412154133,
+   "sources_with_pending": 18
+  }
+ ],
+ "original_worktree_inputs_unchanged": 33,
+ "e1_xml_comparison": {
+  "cells": 1590,
+  "differences": [
+   {
+    "loop_end": [
+     "AID07108_0",
+     240
+    ],
+    "api": 4,
+    "xml": 3
+   }
+  ],
+  "api_total": 4133,
+  "xml_total": 4132,
+  "entered_total": 4187,
+  "entered_mismatch_cells": 152
+ }
+}

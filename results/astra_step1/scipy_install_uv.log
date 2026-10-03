@@ -1,0 +1,7 @@
+Using CPython 3.12.13 interpreter at: D:\CityCom\.venv\Scripts\python.exe
+Resolved 1 package in 1.64s
+Downloading scipy (35.0MiB)
+ Downloaded scipy
+Prepared 1 package in 24.13s
+Installed 1 package in 180ms
+ + scipy==1.18.1
