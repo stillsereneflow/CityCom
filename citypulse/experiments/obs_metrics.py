@@ -7,8 +7,10 @@ import xml.etree.ElementTree as ET
 import numpy as np
 import pandas as pd
 
+from pathlib import Path
+
 from citypulse.config import RESULTS, SCEN
-from citypulse.network.bounded import OUT, save
+from citypulse.network.bounded import NET, OUT, save, sha
 
 
 def geh(model, observed):
@@ -43,7 +45,13 @@ def aggregate(raw):
     return periods, bins
 
 
-def score(directory, metadata):
+def score(directory, metadata, net_path=None, net_meta_path=None):
+    if net_path and 'network_path' not in metadata:
+        metadata['network_path'] = str(net_path)
+        metadata['network_sha256'] = sha(net_path)
+    if net_meta_path and 'network_meta_path' not in metadata:
+        metadata['network_meta_path'] = str(net_meta_path)
+        metadata['network_meta_sha256'] = sha(net_meta_path) if Path(net_meta_path).exists() else None
     profile = json.loads((RESULTS / 'obs' / 'obs_profile.json').read_text())
     mapped = json.loads((SCEN / 'detector_map.json').read_text())['mapped']
     raw = read_e1(directory / 'e1.xml')
@@ -96,6 +104,10 @@ def score(directory, metadata):
                              'speed_error': abs(h.speed_kmh - speed) if speed is not None else np.nan,
                              'occ_error': abs(h.occ - p['occ']['median'])})
     cells, baseline = pd.DataFrame(grid), pd.DataFrame(held)
+    if 'detector' not in cells:
+        cells['detector'] = []
+    if 'detector' not in baseline:
+        baseline['detector'] = []
     per_detector = []
     for d in mapped:
         sub = cells[cells.detector == d['id']]
@@ -152,11 +164,18 @@ def score(directory, metadata):
     return summary
 
 
-if __name__ == '__main__':
+def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument('--tag', required=True)
-    args = ap.parse_args()
+    ap.add_argument('--net', default=str(NET), help='Network file')
+    ap.add_argument('--net-meta', default=str(OUT / 'network.json'), help='Network metadata JSON file')
+    args = ap.parse_args(argv)
     directory = OUT / args.tag
-    result = score(directory, json.loads((directory / 'run.json').read_text()))
+    metadata = json.loads((directory / 'run.json').read_text())
+    result = score(directory, metadata, net_path=args.net, net_meta_path=args.net_meta)
     print(json.dumps({k: result[k] for k in ('tag', 'geh_lt5_share', 'speed_mae', 'occ_mae',
                      'congestion_agreement', 'detectors_speed_pass', 'pending_end', 'accepted')}))
+
+
+if __name__ == '__main__':
+    main()

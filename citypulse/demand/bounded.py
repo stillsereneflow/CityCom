@@ -5,6 +5,7 @@ import json
 import sys
 import xml.etree.ElementTree as ET
 from collections import defaultdict
+from pathlib import Path
 
 import numpy as np
 import sumolib
@@ -12,7 +13,7 @@ import sumolib
 from citypulse.config import RESULTS, SCEN
 from citypulse.network.bounded import NET, OUT, adjacent, save, sha
 from citypulse.scenario import CONTROL
-from citypulse.demand.bounded_gates import gate_priors
+from citypulse.demand.bounded_gates import ENTRY_LANE_CAPACITY_VPH, gate_priors, is_corridor_road
 
 
 def candidates(net, gates, mapped, seed):
@@ -77,7 +78,7 @@ def slice_targets(profile, mapped, start):
     return values
 
 
-def fit(matrix, targets, prior, arrival_factor, feedback=None, regularization=0.03, gate_data=None):
+def fit(matrix, targets, prior, arrival_factor, feedback=None, regularization=0.03, gate_data=None, gate_caps=None):
     # Congested counts are discharge, excluded from static count equality. A boundary
     # arrival lower-bound scenario uses upper-quartile discharge, explicitly not identified.
     from scipy.optimize import minimize
@@ -88,26 +89,77 @@ def fit(matrix, targets, prior, arrival_factor, feedback=None, regularization=0.
     scale = np.sqrt(np.maximum(y, 120))
     a, b = matrix[valid] / scale[valid, None], y[valid] / scale[valid]
     if gate_data is not None:
-        gm, gy, weight = gate_data
+        gm_d, gy, weight = gate_data
         gs = np.sqrt(np.maximum(gy, 120) / weight)
-        a, b = np.vstack([a, gm / gs[:, None]]), np.concatenate([b, gy / gs])
+        a, b = np.vstack([a, gm_d / gs[:, None]]), np.concatenate([b, gy / gs])
     lower = np.array([x['p75'] * arrival_factor if x['congested'] else 0 for x in targets])
     c = matrix / np.sqrt(np.maximum(lower, 120))[:, None]
     low = lower / np.sqrt(np.maximum(lower, 120))
-    # Prior is uniform over identified OD/signature classes; regularization keeps alternatives.
-    def objective(x):
-        res = a @ x - b
-        short = np.minimum(c @ x - low, 0)
-        delta = x - prior
-        return (res @ res + short @ short + regularization * np.sum(delta * delta / (prior + 1)),
-                2 * (a.T @ res + c.T @ short + regularization * delta / (prior + 1)))
-    result = minimize(objective, prior, jac=True, bounds=[(0, None)] * len(prior),
+
+    if gate_caps is not None:
+        gm, gc, active_gates, routes_by_gate, bounds = gate_caps
+        g_scale = np.sqrt(np.maximum(gc, 120))
+        def objective(x):
+            res = a @ x - b
+            short = np.minimum(c @ x - low, 0)
+            delta = x - prior
+            excess = np.maximum(gm @ x - gc, 0)
+            return (res @ res + short @ short + regularization * np.sum(delta * delta / (prior + 1)) + 10.0 * np.sum((excess / g_scale) ** 2),
+                    2 * (a.T @ res + c.T @ short + regularization * delta / (prior + 1) + 10.0 * gm.T @ (excess / (g_scale ** 2))))
+    else:
+        bounds = [(0, None)] * len(prior)
+        def objective(x):
+            res = a @ x - b
+            short = np.minimum(c @ x - low, 0)
+            delta = x - prior
+            return (res @ res + short @ short + regularization * np.sum(delta * delta / (prior + 1)),
+                    2 * (a.T @ res + c.T @ short + regularization * delta / (prior + 1)))
+
+    result = minimize(objective, prior, jac=True, bounds=bounds,
                       method='L-BFGS-B', options={'maxiter': 1200, 'ftol': 1e-10})
-    return result.x, {'success': bool(result.success), 'message': str(result.message),
-                      'objective': float(result.fun), 'max_negative': float(max(0, -result.x.min()))}
+    weights = np.maximum(result.x, 0.0)
+    if gate_caps is not None:
+        for gid in active_gates:
+            r_indices = routes_by_gate[gid]
+            tot = sum(weights[idx] for idx in r_indices)
+            cap = gc[active_gates.index(gid)]
+            if tot > cap > 0:
+                for idx in r_indices:
+                    weights[idx] *= cap / tot
+    return weights, {'success': bool(result.success), 'message': str(result.message),
+                     'objective': float(result.fun), 'max_negative': float(max(0, -result.x.min()))}
 
 
-def main():
+def aggregate_edge_targets(targets, mapped_edges, routes):
+    """One target and matrix row per edge to eliminate conflicting bounds on identical rows."""
+    unique_edges = []
+    seen = set()
+    for e in mapped_edges:
+        if e not in seen:
+            seen.add(e)
+            unique_edges.append(e)
+    edge_matrix = np.array([[float(e in r) for r in routes] for e in unique_edges])
+    by_edge = defaultdict(list)
+    for t in targets:
+        by_edge[t['edge']].append(t)
+    edge_targets = []
+    for e in unique_edges:
+        ts = by_edge[e]
+        avail = [x for x in ts if x['available']]
+        if not avail:
+            edge_targets.append({'edge': e, 'available': False, 'congested': False, 'flow': 0.0, 'p75': 0.0})
+            continue
+        uncongested = [x for x in avail if not x['congested']]
+        if uncongested:
+            flow = float(np.median([x['flow'] for x in uncongested]))
+            edge_targets.append({'edge': e, 'available': True, 'congested': False, 'flow': flow, 'p75': 0.0})
+        else:
+            p75 = float(np.median([x['p75'] for x in avail]))
+            edge_targets.append({'edge': e, 'available': True, 'congested': True, 'flow': 0.0, 'p75': p75})
+    return edge_matrix, edge_targets
+
+
+def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument('--tag', required=True)
     ap.add_argument('--world', choices=['proxy', 'twin'], default='proxy')
@@ -115,21 +167,32 @@ def main():
     ap.add_argument('--regularization', type=float, default=0.03)
     ap.add_argument('--feedback', help='Prior simulation directory, calibration medians only')
     ap.add_argument('--gate-weight', type=float, default=0, help='Weight of uncertain local flow-balance priors')
-    args = ap.parse_args()
+    ap.add_argument('--net', default=str(NET), help='Network file to use')
+    ap.add_argument('--net-meta', default=str(OUT / 'network.json'), help='Network metadata JSON file')
+    args = ap.parse_args(argv)
     # Reuse already-installed local SciPy; never writes into the shared interpreter.
     sys.path.insert(0, str(RESULTS / 'astra_step1' / 'packages'))
     directory = OUT / args.tag
     directory.mkdir(parents=True, exist_ok=True)
-    metadata = json.loads((OUT / 'network.json').read_text(encoding='utf-8'))
+    net_path = Path(args.net).resolve()
+    net_meta_path = Path(args.net_meta).resolve()
+    metadata = json.loads(net_meta_path.read_text(encoding='utf-8'))
     profile = json.loads((RESULTS / 'obs' / 'obs_profile.json').read_text())
-    net = sumolib.net.readNet(str(NET))
+    net = sumolib.net.readNet(str(net_path))
     mapped = [d for d in json.loads((SCEN / 'detector_map.json').read_text())['mapped'] if net.hasEdge(d['edge'])]
     seed = 1101 if args.world == 'proxy' else 2202
     rng = np.random.default_rng(seed + 77)
     routes = candidates(net, metadata['gates'], mapped, seed)
-    matrix = np.array([[float(d['edge'] in r) for r in routes] for d in mapped])
-    assert len(routes) and np.all(matrix.sum(axis=1) > 0), 'Uncovered retained detector'
-    prior = np.full(len(routes), 30.0)
+    mapped_edges = [d['edge'] for d in mapped]
+    routes_by_gate = defaultdict(list)
+    for i, r in enumerate(routes):
+        routes_by_gate[r[0]].append(i)
+    active_gates = [g['edge'] for g in metadata['gates'] if g['direction'] == 'entry']
+    gate_caps_dict = {g['edge']: net.getEdge(g['edge']).getLaneNumber() * ENTRY_LANE_CAPACITY_VPH
+                      for g in metadata['gates'] if g['direction'] == 'entry'}
+    gm = np.array([[float(r[0] == gid) for r in routes] for gid in active_gates])
+    gc = np.array([gate_caps_dict[gid] for gid in active_gates])
+
     feedback = None
     if args.feedback:
         import pandas as pd
@@ -142,25 +205,46 @@ def main():
     ET.ElementTree(candidate_root).write(directory / 'candidates.rou.xml', encoding='utf-8')
     for start in range(0, 7200, 900):
         targets = slice_targets(profile, mapped, start)
+        priors = gate_priors(net, metadata['gates'], mapped, targets, args.arrival_factor)
+        prior_by_gate = {p['edge']: p for p in priors}
+
+        route_prior = np.zeros(len(routes))
+        bounds = []
+        for i, r in enumerate(routes):
+            gid = r[0]
+            gp = prior_by_gate.get(gid)
+            edge = net.getEdge(gid)
+            is_corridor = is_corridor_road(edge)
+            can_carry = gp and (is_corridor or (gp['identified'] and gp['prior_vph'] > 0))
+            if can_carry and gp['prior_vph'] > 0:
+                k = len(routes_by_gate[gid])
+                route_prior[i] = gp['prior_vph'] / k
+                bounds.append((0.0, gate_caps_dict[gid]))
+            else:
+                route_prior[i] = 0.0
+                bounds.append((0.0, gate_caps_dict[gid]) if can_carry else (0.0, 0.0))
+
+        edge_matrix, edge_targets = aggregate_edge_targets(targets, mapped_edges, routes)
         correction = None
         if feedback is not None:
             correction = []
-            for x in targets:
-                vals = [feedback.get((x['id'], f'{7 + t // 3600:02d}:{t % 3600 // 60:02d}'))
+            for x in edge_targets:
+                vals = [feedback.get((x['edge'], f'{7 + t // 3600:02d}:{t % 3600 // 60:02d}'))
                         for t in range(start, start + 900, 300)]
                 vals = [v for v in vals if v is not None]
                 correction.append(float(np.clip(x['flow'] / max(np.mean(vals), 120), 0.7, 1.4)) if vals else 1)
             correction = np.array(correction)
-        priors = gate_priors(net, metadata['gates'], mapped, targets, args.arrival_factor)
         gate_data = None
         if args.gate_weight:
-            usable = [g for g in priors if g['near'] and g['direction'] == 'entry']
-            gm = np.array([[float(r[0] == g['edge']) for r in routes] for g in usable])
-            gate_data = gm, np.array([g['prior_vph'] for g in usable]), args.gate_weight
-        weights, solver = fit(matrix, targets, prior, args.arrival_factor, correction, args.regularization, gate_data)
-        fitted = matrix @ weights
+            usable = [g for g in priors if g['near'] and g['direction'] == 'entry' and g['identified'] and g['prior_vph'] > 0]
+            gdata_m = np.array([[float(r[0] == g['edge']) for r in routes] for g in usable])
+            gate_data = gdata_m, np.array([g['prior_vph'] for g in usable]), args.gate_weight
+        caps_tuple = (gm, gc, active_gates, routes_by_gate, bounds)
+        weights, solver = fit(edge_matrix, edge_targets, route_prior, args.arrival_factor, correction,
+                              args.regularization, gate_data, gate_caps=caps_tuple)
+        fitted = edge_matrix @ weights
         slices.append({'start': start, 'end': start + 900, 'solver': solver, 'targets': [
-            {**x, 'planned_vph': float(q)} for x, q in zip(targets, fitted)]})
+            {**x, 'planned_vph': float(q)} for x, q in zip(edge_targets, fitted)]})
         gate_rates = defaultdict(float)
         scale = 1 if args.world == 'proxy' else 1.5
         for r, q in zip(routes, weights):
@@ -182,7 +266,11 @@ def main():
          'arrival_factor': args.arrival_factor, 'regularization': args.regularization,
          'gate_weight': args.gate_weight,
          'feedback': args.feedback, 'candidate_count': len(routes), 'vehicles': len(vehicles),
-         'profile_sha256': sha(RESULTS / 'obs' / 'obs_profile.json'), 'network_sha256': sha(NET),
+         'profile_sha256': sha(RESULTS / 'obs' / 'obs_profile.json'),
+         'network_path': str(net_path),
+         'network_sha256': sha(net_path),
+         'network_meta_path': str(net_meta_path),
+         'network_meta_sha256': sha(net_meta_path) if net_meta_path.exists() else None,
          'code_sha256': {str(p): sha(p) for p in (__file__, __import__('citypulse.demand.bounded_gates', fromlist=['x']).__file__)},
          'route_sha256': sha(directory / 'demand.rou.xml'), 'slices': slices, 'gates': gate_rows,
          'congested_arrivals': 'p75 discharge times scenario factor is a lower-bound prior, not an arrival measurement',
