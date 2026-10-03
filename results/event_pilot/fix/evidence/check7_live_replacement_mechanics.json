@@ -1,0 +1,52 @@
+{
+ "check": "7",
+ "name": "successful_state_replacement",
+ "kind": "manual mechanics check: no pilot run adopted, so no adoption exercised this path",
+ "run": "results/event_pilot/fix/evt_inc_4001",
+ "snapshot": "event_snapshot_4230.xml.gz",
+ "snapshot_meta": "event_snapshot_4230.json",
+ "hypothesis": "inc_ktb_n1_k1_s1",
+ "params": {
+  "kind": "incident",
+  "edge": "ktb_n1",
+  "lanes_closed": [
+   0
+  ],
+  "n_lanes": 3,
+  "speed_factor": 1.0,
+  "pos": 503.1
+ },
+ "t_on": 4290.0,
+ "t_end": 4890.0,
+ "replay_endpoint": {
+  "veh_digest": "1119eebc74f790bc84a1af7edc496421f59e7242e9bf615628765aff572170e7",
+  "n_vehicles": 302,
+  "restriction_present_replay": true,
+  "wall_s": 1.0935370922088623,
+  "wall_total_s": 1.6977763175964355
+ },
+ "replay_endpoint_duplicate": {
+  "veh_digest": "1119eebc74f790bc84a1af7edc496421f59e7242e9bf615628765aff572170e7",
+  "n_vehicles": 302,
+  "identical_to_first": true
+ },
+ "live_twin": {
+  "veh_digest": "1119eebc74f790bc84a1af7edc496421f59e7242e9bf615628765aff572170e7",
+  "n_vehicles": 302,
+  "restriction_present_live": true,
+  "lane_disallow_live": {
+   "ktb_n1_0": [
+    "passenger",
+    "bus",
+    "delivery",
+    "truck",
+    "trailer"
+   ]
+  },
+  "t_end_live": 4890.0,
+  "applied": true
+ },
+ "vehicles_match": true,
+ "lane_disallow_present_live": true,
+ "passed": true
+}

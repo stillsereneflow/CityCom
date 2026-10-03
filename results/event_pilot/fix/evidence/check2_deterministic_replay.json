@@ -1,0 +1,24 @@
+{
+ "check": "2",
+ "name": "deterministic_replay",
+ "source": "results/event_pilot/impl/check_replay.json",
+ "snapshot": "twin_state_4800",
+ "t_on": 4860,
+ "t_end": 5400,
+ "hypothesis": "inc_ktb_n1_k2_s0.6",
+ "logL_run1": -527.610130417885,
+ "logL_run2": -527.610130417885,
+ "logL_identical": true,
+ "n_O": 138,
+ "n_O_run2": 138,
+ "digest_run1": "6b7fee1a52f4531d05d665738641bdf7ac8eb618f2ffbc52668fd635c50337af",
+ "digest_run2": "6b7fee1a52f4531d05d665738641bdf7ac8eb618f2ffbc52668fd635c50337af",
+ "digest_identical": true,
+ "interval_tables_identical": true,
+ "identical": true,
+ "wall_s": [
+  1.1135509014129639,
+  0.905296802520752
+ ],
+ "n_vehicles": 394
+}

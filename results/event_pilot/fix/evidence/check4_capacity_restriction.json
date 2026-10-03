@@ -1,0 +1,27 @@
+{
+ "check": "4",
+ "name": "effective_capacity_restriction",
+ "source": "results/event_pilot/impl/check_replay.json",
+ "snapshot": "twin_state_4800",
+ "t_on": 4860,
+ "t_end": 5400,
+ "hypothesis": "inc_ktb_n1_k2_s0.6",
+ "lanes_closed": [
+  "ktb_n1_0",
+  "ktb_n1_1"
+ ],
+ "restriction_present": true,
+ "downstream_detector": "AID02111",
+ "incident_mean_q": 0.05555555555555555,
+ "noevent_mean_q": 7.222222222222222,
+ "incident_intervals": 18,
+ "noevent_intervals": 18,
+ "flow_drops": true,
+ "drop_pct": -99.23,
+ "n_vehicles_incident": 394,
+ "n_vehicles_noevent": 324,
+ "wall_s": [
+  1.1135509014129639,
+  1.102086067199707
+ ]
+}

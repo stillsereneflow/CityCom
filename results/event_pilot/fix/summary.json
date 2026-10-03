@@ -1,0 +1,8072 @@
+{
+ "seeds": {
+  "4001": {
+   "run_dir": "results/event_pilot/fix/evt_inc_4001",
+   "run_info": {
+    "run_name": "evt_inc_4001",
+    "scenario": "INC",
+    "seed": 4001,
+    "arm": "evt",
+    "proxy_rc": 0,
+    "twin_rc": 0,
+    "wall_s": 201.9,
+    "t_end": 7200.0,
+    "twin_seed": 2,
+    "demand_seed": 202,
+    "twin_base_factor": 0.85,
+    "boundary_detector": "AID07106",
+    "routes": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy.rou.xml",
+    "sensor_fault": null,
+    "incident": true
+   },
+   "twin_stats": {
+    "messages": 240,
+    "wall_s": 199.32363605499268,
+    "arrived": 1,
+    "running": 337,
+    "pending": 0,
+    "assim": "normal300",
+    "twin_base_factor": 0.85,
+    "event": {
+     "state": "NORMAL",
+     "t_on": 5490.0,
+     "t_alarm": 6090.0,
+     "n_eval": 13,
+     "wall_s": 154.16951179504395,
+     "masked": false,
+     "frozen": false,
+     "active_hyp": null,
+     "restriction": null,
+     "downweight": {
+      "AID02111": 5.0,
+      "AID02109": 5.0
+     },
+     "n_alarms": 24,
+     "alarms": [
+      4890.0,
+      4920.0,
+      5010.0,
+      5040.0,
+      5070.0,
+      5100.0,
+      5130.0,
+      5160.0,
+      5250.0,
+      5280.0,
+      5310.0,
+      5340.0,
+      5370.0,
+      5400.0,
+      5430.0,
+      5460.0,
+      5490.0,
+      5640.0,
+      5760.0,
+      5790.0,
+      5880.0,
+      5910.0,
+      5940.0,
+      6090.0
+     ],
+     "false_alarms": [],
+     "unexplained": [
+      {
+       "t": 6000.0,
+       "seconds": 960.0
+      }
+     ],
+     "transitions": [
+      {
+       "t": 4890.0,
+       "from": "NORMAL",
+       "to": "SUSPECTED_EVENT",
+       "reason": "trigger_alarm"
+      },
+      {
+       "t": 4890.0,
+       "from": "SUSPECTED_EVENT",
+       "to": "NORMAL",
+       "reason": "detector_fault_AID02111_zero"
+      },
+      {
+       "t": 4920.0,
+       "from": "NORMAL",
+       "to": "SUSPECTED_EVENT",
+       "reason": "trigger_alarm"
+      },
+      {
+       "t": 5040.0,
+       "from": "SUSPECTED_EVENT",
+       "to": "DEGRADED",
+       "reason": "unresolved_3_evals"
+      },
+      {
+       "t": 6000.0,
+       "from": "DEGRADED",
+       "to": "NORMAL",
+       "reason": "unexplained_anomaly"
+      },
+      {
+       "t": 6090.0,
+       "from": "NORMAL",
+       "to": "SUSPECTED_EVENT",
+       "reason": "trigger_alarm"
+      },
+      {
+       "t": 6090.0,
+       "from": "SUSPECTED_EVENT",
+       "to": "NORMAL",
+       "reason": "detector_fault_AID02109_noise"
+      }
+     ],
+     "freeze_entries": [
+      "tko_insert"
+     ],
+     "lane_counts": {
+      "ktb_n1": 3,
+      "ktb_w3": 3,
+      "ktb_n2": 2
+     },
+     "midpoints": {
+      "ktb_n1": 503.1,
+      "ktb_w3": 145.95,
+      "ktb_n2": 997.45
+     },
+     "n_replacements": 0
+    },
+    "event_info": {
+     "lane_counts": {
+      "ktb_n1": 3,
+      "ktb_w3": 3,
+      "ktb_n2": 2
+     },
+     "midpoints": {
+      "ktb_n1": 503.1,
+      "ktb_w3": 145.95,
+      "ktb_n2": 997.45
+     },
+     "freeze_entries": [
+      "tko_insert"
+     ]
+    }
+   },
+   "state_trace": [
+    {
+     "t": 4890.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 4890.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02111_zero"
+    },
+    {
+     "t": 4920.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 5040.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "DEGRADED",
+     "reason": "unresolved_3_evals"
+    },
+    {
+     "t": 6000.0,
+     "from": "DEGRADED",
+     "to": "NORMAL",
+     "reason": "unexplained_anomaly"
+    },
+    {
+     "t": 6090.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 6090.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02109_noise"
+    }
+   ],
+   "alarms": [
+    4890.0,
+    4920.0,
+    6090.0
+   ],
+   "evaluations": [
+    {
+     "t": 4890.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4290.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -38.69307172313912,
+       "post": 0.15695626485350506,
+       "n_O": 180
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -205.48407643904966,
+       "post": 1.2208868338407648e-19,
+       "n_O": 180
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -60.29683062863345,
+       "post": 0.0007082398102163385,
+       "n_O": 180
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -247.4662032445585,
+       "post": 3.37694438074696e-24,
+       "n_O": 180
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -71.39864847767748,
+       "post": 4.413831777932197e-05,
+       "n_O": 180
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -335.42389855200724,
+       "post": 9.520033563048858e-34,
+       "n_O": 180
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -76.06245532367348,
+       "post": 2.0631967341771002e-05,
+       "n_O": 180
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -58.3581187892488,
+       "post": 0.0017249025227048659,
+       "n_O": 180
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -40.17198563615959,
+       "post": 0.16266678238729115,
+       "n_O": 180
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -38.678253807412524,
+       "post": 0.2363081764938608,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -49.690804984711576,
+       "post": 0.010039565970867912,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -66.18426972375379,
+       "post": 0.00016253981344196622,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -56.875508140426035,
+       "post": 0.0016658876331935317,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -44.13186485734116,
+       "post": 0.040296673220223636,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -35.08592352386506,
+       "post": 0.38674062494337297,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -54.9952657437789,
+       "post": 0.0026655720662009117,
+       "n_O": 180
+      }
+     ],
+     "h_star": "flt_AID02111_zero",
+     "gap_vs_demand": 0.4926174627786999,
+     "evr": 0.0928772612495502,
+     "adopted": false,
+     "excluded": {
+      "obs_invalid": 30
+     },
+     "p_clear": null,
+     "wall_s": 11.147008180618286
+    },
+    {
+     "t": 4920.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4320.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -29.83795550613083,
+       "post": 0.06764350508732277,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -166.8072411418563,
+       "post": 9.098606185969618e-17,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -53.55796662209606,
+       "post": 0.00017982854018970526,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -217.4474895591756,
+       "post": 2.889214298283197e-22,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -52.08134098400885,
+       "post": 0.0002601244712257806,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -272.4734768694934,
+       "post": 3.0648490740795733e-28,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -59.36950325422217,
+       "post": 6.309142043145112e-05,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -41.94509681911297,
+       "post": 0.004918143501946867,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -25.434179467666443,
+       "post": 0.3051063670247429,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -25.96510398918601,
+       "post": 0.2671818011231197,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -31.335466480279987,
+       "post": 0.046519593939933476,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -44.745166348580184,
+       "post": 0.0016281568885364625,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -37.501324706329534,
+       "post": 0.00995832656959734,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -26.766348000166772,
+       "post": 0.1457879573219987,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -26.664910896112193,
+       "post": 0.14953231075553094,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -45.89695712093403,
+       "post": 0.0012207933554240853,
+       "n_O": 144
+      }
+     ],
+     "h_star": "dem_f1.15",
+     "gap_vs_demand": 0.0,
+     "evr": 0.0,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 24
+     },
+     "p_clear": null,
+     "wall_s": 11.319706201553345
+    },
+    {
+     "t": 4980.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4320.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -29.83795550613083,
+       "post": 0.06764350508732277,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -166.8072411418563,
+       "post": 9.098606185969618e-17,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -53.55796662209606,
+       "post": 0.00017982854018970526,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -217.4474895591756,
+       "post": 2.889214298283197e-22,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -52.08134098400885,
+       "post": 0.0002601244712257806,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -272.4734768694934,
+       "post": 3.0648490740795733e-28,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -59.36950325422217,
+       "post": 6.309142043145112e-05,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -41.94509681911297,
+       "post": 0.004918143501946867,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -25.434179467666443,
+       "post": 0.3051063670247429,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -25.96510398918601,
+       "post": 0.2671818011231197,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -31.335466480279987,
+       "post": 0.046519593939933476,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -44.745166348580184,
+       "post": 0.0016281568885364625,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -37.501324706329534,
+       "post": 0.00995832656959734,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -26.766348000166772,
+       "post": 0.1457879573219987,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -26.664910896112193,
+       "post": 0.14953231075553094,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -45.89695712093403,
+       "post": 0.0012207933554240853,
+       "n_O": 144
+      }
+     ],
+     "h_star": "dem_f1.15",
+     "gap_vs_demand": 0.0,
+     "evr": 0.0,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 24
+     },
+     "p_clear": null,
+     "wall_s": 12.429645538330078
+    },
+    {
+     "t": 5040.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4320.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -52.1741392396743,
+       "post": 0.13573722498796148,
+       "n_O": 177
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -223.62425795776952,
+       "post": 3.294115677766954e-20,
+       "n_O": 177
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -78.86334832155944,
+       "post": 0.00017177300314041467,
+       "n_O": 177
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -290.07867928760857,
+       "post": 2.0069739042371804e-27,
+       "n_O": 177
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -82.94333943562815,
+       "post": 6.194061339062373e-05,
+       "n_O": 177
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -369.045478964534,
+       "post": 5.3558744420635786e-36,
+       "n_O": 177
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -97.05772431448449,
+       "post": 2.7265715183602593e-06,
+       "n_O": 177
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -74.88839325661895,
+       "post": 0.0006960195369961154,
+       "n_O": 177
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -50.933243911388445,
+       "post": 0.2776634552380894,
+       "n_O": 177
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -54.339446190051525,
+       "post": 0.11849363167559891,
+       "n_O": 177
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -62.74501349932798,
+       "post": 0.00966008340813459,
+       "n_O": 177
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -78.76740527901643,
+       "post": 0.00017594291865857952,
+       "n_O": 177
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -50.29414213591665,
+       "post": 0.21717861453364434,
+       "n_O": 177
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -52.749158749284376,
+       "post": 0.11756201364720842,
+       "n_O": 177
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -52.591176928824986,
+       "post": 0.12229808999493844,
+       "n_O": 177
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -76.65318015779422,
+       "post": 0.00029848387072039004,
+       "n_O": 177
+      }
+     ],
+     "h_star": "dem_f1.15",
+     "gap_vs_demand": 0.0,
+     "evr": 0.0,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 33
+     },
+     "p_clear": null,
+     "wall_s": 9.814603805541992
+    },
+    {
+     "t": 5160.0,
+     "state": "DEGRADED",
+     "t_on": 4320.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -218.3650935115815,
+       "post": 7.729760094074284e-17,
+       "n_O": 216
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -403.26775755167733,
+       "post": 6.495526286208769e-37,
+       "n_O": 216
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -272.7840025235066,
+       "post": 9.543507987125169e-23,
+       "n_O": 216
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -537.6373640782343,
+       "post": 1.6734767466905875e-51,
+       "n_O": 216
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -284.2137619391806,
+       "post": 5.479458983682392e-24,
+       "n_O": 216
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -660.0492044812308,
+       "post": 8.568858681535688e-65,
+       "n_O": 216
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -316.89556893897094,
+       "post": 2.3251278054709157e-27,
+       "n_O": 216
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -280.60450762150066,
+       "post": 2.0262766878074653e-23,
+       "n_O": 216
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -238.91860052831402,
+       "post": 6.802814110377501e-19,
+       "n_O": 216
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -239.69821420239222,
+       "post": 5.598131872086243e-19,
+       "n_O": 216
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -264.6712291613004,
+       "post": 7.253393141978229e-22,
+       "n_O": 216
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -294.9434116687097,
+       "post": 3.747837590372036e-25,
+       "n_O": 216
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -69.96961849367548,
+       "post": 1.0,
+       "n_O": 216
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -240.4722282035646,
+       "post": 3.075490311416179e-19,
+       "n_O": 216
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -240.25598159045003,
+       "post": 3.246332808668377e-19,
+       "n_O": 216
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -269.1494480697399,
+       "post": 2.3676896580181225e-22,
+       "n_O": 216
+      }
+     ],
+     "h_star": "flt_AID02109_noise",
+     "gap_vs_demand": 41.831780400551466,
+     "evr": -0.008059510161445349,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 36
+     },
+     "p_clear": null,
+     "wall_s": 10.33411955833435
+    },
+    {
+     "t": 5280.0,
+     "state": "DEGRADED",
+     "t_on": 4320.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -390.8408047751814,
+       "post": 1.51829573111239e-33,
+       "n_O": 249
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -612.106372485152,
+       "post": 1.437979179843941e-57,
+       "n_O": 249
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -484.0495009853872,
+       "post": 1.1517302232792397e-43,
+       "n_O": 249
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -806.6256674500681,
+       "post": 1.0916627496318224e-78,
+       "n_O": 249
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -471.1051757060687,
+       "post": 2.9292944163706887e-42,
+       "n_O": 249
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -886.3068114258672,
+       "post": 2.4367905747853897e-87,
+       "n_O": 249
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -548.403656341221,
+       "post": 1.7794196534877567e-50,
+       "n_O": 249
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -502.7749395447459,
+       "post": 1.6008600369479026e-45,
+       "n_O": 249
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -445.76457818667797,
+       "post": 2.478418832929084e-39,
+       "n_O": 249
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -435.08366532962555,
+       "post": 3.5796459924981756e-38,
+       "n_O": 249
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -484.0947539811433,
+       "post": 1.1387738401365104e-43,
+       "n_O": 249
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -523.288745537646,
+       "post": 6.324175564430722e-48,
+       "n_O": 249
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -88.5699264050825,
+       "post": 1.0,
+       "n_O": 249
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -434.1107515850127,
+       "post": 3.0435580396094805e-38,
+       "n_O": 249
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -433.89450497189813,
+       "post": 3.2126267094371075e-38,
+       "n_O": 249
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -462.7879714511878,
+       "post": 2.3431063551760396e-41,
+       "n_O": 249
+      }
+     ],
+     "h_star": "flt_AID02109_noise",
+     "gap_vs_demand": 86.2229696230276,
+     "evr": 0.0013812849781246195,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 45
+     },
+     "p_clear": null,
+     "wall_s": 11.209759950637817
+    },
+    {
+     "t": 5400.0,
+     "state": "DEGRADED",
+     "t_on": 4320.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -517.1882566725766,
+       "post": 3.597080932781155e-45,
+       "n_O": 282
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -758.4454235171168,
+       "post": 2.3003087918481074e-71,
+       "n_O": 282
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -634.210038809871,
+       "post": 7.087150382841352e-58,
+       "n_O": 282
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1010.2051202570675,
+       "post": 1.0649381231024746e-98,
+       "n_O": 282
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -610.1907395623653,
+       "post": 2.8729887724375323e-55,
+       "n_O": 282
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1095.3477925719117,
+       "post": 6.068427729239822e-108,
+       "n_O": 282
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -715.8061371344928,
+       "post": 1.4702090624653362e-66,
+       "n_O": 282
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -668.5310588831428,
+       "post": 1.9962066566184703e-61,
+       "n_O": 282
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -609.4463250708214,
+       "post": 5.190975322983385e-55,
+       "n_O": 282
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -590.3679124334362,
+       "post": 6.1187301085112195e-53,
+       "n_O": 282
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -654.0093798570916,
+       "post": 5.020945503706857e-60,
+       "n_O": 282
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -705.2444891206547,
+       "post": 1.3740552614673287e-65,
+       "n_O": 282
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -107.84343059180246,
+       "post": 1.0,
+       "n_O": 282
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -589.9267432901954,
+       "post": 4.554800601834291e-53,
+       "n_O": 282
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -589.6498740652069,
+       "post": 4.881238898719816e-53,
+       "n_O": 282
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -623.3781958887784,
+       "post": 1.0629774476979833e-56,
+       "n_O": 282
+      }
+     ],
+     "h_star": "flt_AID02109_noise",
+     "gap_vs_demand": 120.22565535230028,
+     "evr": -7.8104913091126e-05,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 54
+     },
+     "p_clear": null,
+     "wall_s": 10.419931411743164
+    },
+    {
+     "t": 5520.0,
+     "state": "DEGRADED",
+     "t_on": 4320.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -694.4658697031049,
+       "post": 2.4282503162329312e-61,
+       "n_O": 321
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -971.1465987125182,
+       "post": 2.2134259105453616e-91,
+       "n_O": 321
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -869.9503283953585,
+       "post": 2.149366306118463e-80,
+       "n_O": 321
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1272.135532100949,
+       "post": 4.6302748199390964e-124,
+       "n_O": 321
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -794.5312719563643,
+       "post": 3.317649078285654e-72,
+       "n_O": 321
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1369.5824749892886,
+       "post": 1.2174170357729984e-134,
+       "n_O": 321
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -971.3858435330083,
+       "post": 3.127379407882339e-91,
+       "n_O": 321
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -907.4350830752713,
+       "post": 2.745024135516396e-84,
+       "n_O": 321
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -823.9392921189263,
+       "post": 3.191438544705623e-75,
+       "n_O": 321
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -822.5401491226335,
+       "post": 4.527896662134732e-75,
+       "n_O": 321
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -894.2839560013412,
+       "post": 4.901402726391214e-83,
+       "n_O": 321
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -959.6596310268013,
+       "post": 3.91062938640902e-90,
+       "n_O": 321
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -136.18379086668213,
+       "post": 1.0,
+       "n_O": 321
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -812.1473094647863,
+       "post": 4.0568922791913124e-74,
+       "n_O": 321
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -812.0140253586403,
+       "post": 4.1943494841822535e-74,
+       "n_O": 321
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -850.175220739693,
+       "post": 3.0155426134591684e-78,
+       "n_O": 321
+      }
+     ],
+     "h_star": "flt_AID02109_noise",
+     "gap_vs_demand": 171.18362445587968,
+     "evr": 0.012077494378922027,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 57
+     },
+     "p_clear": null,
+     "wall_s": 11.70790958404541
+    },
+    {
+     "t": 5640.0,
+     "state": "DEGRADED",
+     "t_on": 4320.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -778.7463161187155,
+       "post": 2.1085699575402574e-64,
+       "n_O": 357
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1039.1757129291057,
+       "post": 1.1174433734670747e-92,
+       "n_O": 357
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -977.7520147639115,
+       "post": 5.214573788117384e-86,
+       "n_O": 357
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1382.8408532490457,
+       "post": 5.4357191357072185e-130,
+       "n_O": 357
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -859.763210890382,
+       "post": 3.370469716839683e-73,
+       "n_O": 357
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1463.898611346587,
+       "post": 8.600481069929301e-139,
+       "n_O": 357
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -1107.2053329990015,
+       "post": 6.888023702820748e-100,
+       "n_O": 357
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -1032.4016076294918,
+       "post": 9.11603368675618e-92,
+       "n_O": 357
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -924.051592190536,
+       "post": 5.293700615433787e-80,
+       "n_O": 357
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -913.8624698267571,
+       "post": 6.761285593194766e-79,
+       "n_O": 357
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1001.4300870122879,
+       "post": 1.4008924263590786e-88,
+       "n_O": 357
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1080.1472204362603,
+       "post": 3.9792444392516594e-97,
+       "n_O": 357
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -192.26857220213287,
+       "post": 1.0,
+       "n_O": 357
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -910.7243057834635,
+       "post": 9.87779146851882e-79,
+       "n_O": 357
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -910.5910216773175,
+       "post": 1.0212474647983623e-78,
+       "n_O": 357
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -948.7522170583702,
+       "post": 7.342295296566154e-83,
+       "n_O": 357
+      }
+     ],
+     "h_star": "flt_AID02109_noise",
+     "gap_vs_demand": 179.9930092980479,
+     "evr": 0.00293211342120292,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 63
+     },
+     "p_clear": null,
+     "wall_s": 12.071321964263916
+    },
+    {
+     "t": 5760.0,
+     "state": "DEGRADED",
+     "t_on": 4320.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -859.8522716714853,
+       "post": 1.2874469737374844e-64,
+       "n_O": 393
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1107.4462956989184,
+       "post": 1.688689309019333e-91,
+       "n_O": 393
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1072.1410658619654,
+       "post": 1.1501815028698306e-87,
+       "n_O": 393
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1475.580839508084,
+       "post": 1.8107125443338483e-131,
+       "n_O": 393
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -915.2038379626038,
+       "post": 1.2589526591958191e-70,
+       "n_O": 393
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1548.1568621753431,
+       "post": 2.3878551013193847e-139,
+       "n_O": 393
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -1237.3570451959258,
+       "post": 1.989576310984206e-105,
+       "n_O": 393
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -1154.7674754769444,
+       "post": 1.844205017505056e-96,
+       "n_O": 393
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -1014.7955677886357,
+       "post": 2.904463893019438e-81,
+       "n_O": 393
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -995.7500870559288,
+       "post": 3.395492525145164e-79,
+       "n_O": 393
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1099.0680524883758,
+       "post": 1.3715320241967121e-90,
+       "n_O": 393
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1186.2610361758184,
+       "post": 4.681101235421915e-100,
+       "n_O": 393
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -271.40113253405354,
+       "post": 1.0,
+       "n_O": 393
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1006.5452606484067,
+       "post": 1.5231421589192582e-80,
+       "n_O": 393
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1006.4119765422607,
+       "post": 1.5747498550473506e-80,
+       "n_O": 393
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1044.5731719233145,
+       "post": 1.1321720594197336e-84,
+       "n_O": 393
+      }
+     ],
+     "h_star": "flt_AID02109_noise",
+     "gap_vs_demand": 180.68177352236066,
+     "evr": -0.011301820978125265,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 69
+     },
+     "p_clear": null,
+     "wall_s": 13.762882709503174
+    },
+    {
+     "t": 5880.0,
+     "state": "DEGRADED",
+     "t_on": 4320.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -968.4450222032797,
+       "post": 1.769014309217541e-66,
+       "n_O": 435
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1203.6794627520792,
+       "post": 5.098899767856181e-92,
+       "n_O": 435
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1186.745534072885,
+       "post": 3.516044965186023e-90,
+       "n_O": 435
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1605.9704035479028,
+       "post": 1.0697752551028687e-135,
+       "n_O": 435
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -992.0885047658903,
+       "post": 4.793721986435884e-69,
+       "n_O": 435
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1649.2485575156957,
+       "post": 2.1400636198077623e-140,
+       "n_O": 435
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -1389.8151610236666,
+       "post": 4.722164073900722e-112,
+       "n_O": 435
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -1288.3889068882197,
+       "post": 4.8568724195526916e-101,
+       "n_O": 435
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -1126.6495884790234,
+       "post": 1.7659567722183573e-83,
+       "n_O": 435
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -1090.6655493949147,
+       "post": 1.4252710742031122e-79,
+       "n_O": 435
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1220.6479853562912,
+       "post": 7.330650960027716e-94,
+       "n_O": 435
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1324.4595701081996,
+       "post": 3.925933489028003e-105,
+       "n_O": 435
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -362.8442476689261,
+       "post": 1.0,
+       "n_O": 435
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1119.7920553919178,
+       "post": 6.5378658380589035e-83,
+       "n_O": 435
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1120.1306497849835,
+       "post": 6.007220662928735e-83,
+       "n_O": 435
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1161.7592672039448,
+       "post": 1.815113874876192e-87,
+       "n_O": 435
+      }
+     ],
+     "h_star": "flt_AID02109_noise",
+     "gap_vs_demand": 181.549860323389,
+     "evr": -0.026979866833790833,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 69
+     },
+     "p_clear": null,
+     "wall_s": 15.076413631439209
+    },
+    {
+     "t": 6000.0,
+     "state": "DEGRADED",
+     "t_on": 4320.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1017.386905545497,
+       "post": 4.8219164254632564e-67,
+       "n_O": 468
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1254.6745564612102,
+       "post": 8.318410048255061e-93,
+       "n_O": 468
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1250.7594821587713,
+       "post": 2.2136763035026034e-92,
+       "n_O": 468
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1680.5813392131065,
+       "post": 4.762104661763137e-139,
+       "n_O": 468
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1027.4446176447964,
+       "post": 3.901372896192309e-68,
+       "n_O": 468
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1691.5030020743643,
+       "post": 3.104519968862268e-140,
+       "n_O": 468
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -1470.5919123146161,
+       "post": 4.499896606691492e-116,
+       "n_O": 468
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -1357.9805440074556,
+       "post": 7.582745832445594e-104,
+       "n_O": 468
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -1176.3867127581457,
+       "post": 3.9457195516834126e-84,
+       "n_O": 468
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -1142.4838244808118,
+       "post": 1.8927163715932008e-80,
+       "n_O": 468
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1282.0512011650985,
+       "post": 8.864594879516998e-96,
+       "n_O": 468
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1399.9311479405735,
+       "post": 1.409309209039446e-108,
+       "n_O": 468
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -406.58678641383256,
+       "post": 1.0,
+       "n_O": 468
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1180.0789284046684,
+       "post": 1.045099727409265e-84,
+       "n_O": 468
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1181.0343174897585,
+       "post": 8.23052773129594e-85,
+       "n_O": 468
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -1223.805758308623,
+       "post": 1.8688631461756022e-89,
+       "n_O": 468
+      }
+     ],
+     "h_star": "flt_AID02109_noise",
+     "gap_vs_demand": 183.56879440863665,
+     "evr": -0.03305062765955413,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 78
+     },
+     "p_clear": null,
+     "wall_s": 17.431292295455933
+    },
+    {
+     "t": 6090.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 5490.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -375.65656643099635,
+       "post": 3.231997249150568e-09,
+       "n_O": 183
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -392.47736213852784,
+       "post": 4.82143474465141e-11,
+       "n_O": 183
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -416.63593621209463,
+       "post": 1.1486624933308349e-13,
+       "n_O": 183
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -449.72281515598945,
+       "post": 2.9365013397871925e-17,
+       "n_O": 183
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -350.1102922202017,
+       "post": 1.9192098468695146e-06,
+       "n_O": 183
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -505.7917752084977,
+       "post": 2.4000495838323445e-23,
+       "n_O": 183
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -491.1577140336008,
+       "post": 1.3969616286251958e-21,
+       "n_O": 183
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -446.9106060845714,
+       "post": 8.897196509617199e-17,
+       "n_O": 183
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -395.8226928349204,
+       "post": 3.1336673081792566e-11,
+       "n_O": 183
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -372.54008867908817,
+       "post": 1.0566460020607755e-08,
+       "n_O": 183
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -932.8806011294446,
+       "post": 1.0224453852603646e-69,
+       "n_O": 183
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -490.2176187278822,
+       "post": 1.1780474107503082e-21,
+       "n_O": 183
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -297.4559119736999,
+       "post": 0.9999980669088938,
+       "n_O": 183
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -404.4596420099941,
+       "post": 2.4111086772206385e-12,
+       "n_O": 183
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -409.71835515131943,
+       "post": 6.475290564627773e-13,
+       "n_O": 183
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -418.14102093071756,
+       "post": 7.884605043573235e-14,
+       "n_O": 183
+      }
+     ],
+     "h_star": "flt_AID02109_noise",
+     "gap_vs_demand": 18.3655790682389,
+     "evr": -0.0942375368021493,
+     "adopted": false,
+     "excluded": {
+      "obs_invalid": 27
+     },
+     "p_clear": null,
+     "wall_s": 7.4449169635772705
+    }
+   ],
+   "old_evaluations": [
+    {
+     "t": 4890.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4290.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -38.69307172313912,
+       "post": 0.22202843531582314,
+       "n_O": 180
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -205.48407643904966,
+       "post": 1.7270517597265598e-19,
+       "n_O": 180
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -60.29683062863345,
+       "post": 0.0010018674758696486,
+       "n_O": 180
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -247.4662032445585,
+       "post": 4.776984707845918e-24,
+       "n_O": 180
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -71.39864847767748,
+       "post": 6.243753088264568e-05,
+       "n_O": 180
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -335.42389855200724,
+       "post": 1.3466924420829722e-33,
+       "n_O": 180
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -76.06245532367348,
+       "post": 2.918573164732316e-05,
+       "n_O": 180
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -58.3581187892488,
+       "post": 0.002440026261748322,
+       "n_O": 180
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -40.17198563615959,
+       "post": 0.23010646440280155,
+       "n_O": 180
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -38.678253807412524,
+       "post": 0.3342786904889552,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -40.086127744640876,
+       "post": 0.15673264494084735,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -55.881640254649554,
+       "post": 0.0030212278687144736,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -56.875508140426035,
+       "post": 0.002356544512289214,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -46.28834552588579,
+       "post": 0.03324774715240066,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -50.74042926670076,
+       "post": 0.010924042288810479,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -54.9952657437789,
+       "post": 0.0037706860292103703,
+       "n_O": 180
+      }
+     ],
+     "h_star": "dem_f1.3",
+     "gap_vs_demand": 0.0,
+     "evr": 0.0,
+     "adopted": false,
+     "excluded": {
+      "obs_invalid": 30
+     },
+     "p_clear": null,
+     "wall_s": 16.555403232574463
+    },
+    {
+     "t": 4950.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4290.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -38.69307172313912,
+       "post": 0.22202843531582314,
+       "n_O": 180
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -205.48407643904966,
+       "post": 1.7270517597265598e-19,
+       "n_O": 180
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -60.29683062863345,
+       "post": 0.0010018674758696486,
+       "n_O": 180
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -247.4662032445585,
+       "post": 4.776984707845918e-24,
+       "n_O": 180
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -71.39864847767748,
+       "post": 6.243753088264568e-05,
+       "n_O": 180
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -335.42389855200724,
+       "post": 1.3466924420829722e-33,
+       "n_O": 180
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -76.06245532367348,
+       "post": 2.918573164732316e-05,
+       "n_O": 180
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -58.3581187892488,
+       "post": 0.002440026261748322,
+       "n_O": 180
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -40.17198563615959,
+       "post": 0.23010646440280155,
+       "n_O": 180
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -38.678253807412524,
+       "post": 0.3342786904889552,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -40.086127744640876,
+       "post": 0.15673264494084735,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -55.881640254649554,
+       "post": 0.0030212278687144736,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -56.875508140426035,
+       "post": 0.002356544512289214,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -46.28834552588579,
+       "post": 0.03324774715240066,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -50.74042926670076,
+       "post": 0.010924042288810479,
+       "n_O": 180
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -54.9952657437789,
+       "post": 0.0037706860292103703,
+       "n_O": 180
+      }
+     ],
+     "h_star": "dem_f1.3",
+     "gap_vs_demand": 0.0,
+     "evr": 0.0,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 42,
+      "obs_invalid": 30
+     },
+     "p_clear": null,
+     "wall_s": 14.961698532104492
+    },
+    {
+     "t": 5010.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4290.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -61.42672230519873,
+       "post": 0.08364821007370127,
+       "n_O": 213
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -257.786202232328,
+       "post": 4.008639502226677e-23,
+       "n_O": 213
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -86.45361834989197,
+       "post": 0.00016039688855510947,
+       "n_O": 213
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -318.5143942136338,
+       "post": 1.0221563558379064e-29,
+       "n_O": 213
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -104.77456836881426,
+       "post": 1.644462844309236e-06,
+       "n_O": 213
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -432.08165412257574,
+       "post": 4.776488732706286e-42,
+       "n_O": 213
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -115.85180057792566,
+       "post": 1.5467499781500194e-07,
+       "n_O": 213
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -94.0914687589402,
+       "post": 3.564660115536927e-05,
+       "n_O": 213
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -70.51151755795664,
+       "post": 0.01294728772751312,
+       "n_O": 213
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -69.11917944373346,
+       "post": 0.018337916438449064,
+       "n_O": 213
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -52.050886746088274,
+       "post": 0.8718164591930007,
+       "n_O": 213
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -71.35437967460906,
+       "post": 0.006991573841457071,
+       "n_O": 213
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -73.95067458650547,
+       "post": 0.003653303983380516,
+       "n_O": 213
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -76.50717058673995,
+       "post": 0.0019280477433202478,
+       "n_O": 213
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -83.19707930324998,
+       "post": 0.00036205135227175176,
+       "n_O": 213
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -87.70504515908748,
+       "post": 0.00011730701935409636,
+       "n_O": 213
+      }
+     ],
+     "h_star": "flt_AID02109_stuck",
+     "gap_vs_demand": 3.8616080663031322,
+     "evr": 0.2469400365428187,
+     "adopted": false,
+     "excluded": {
+      "obs_invalid": 39
+     },
+     "p_clear": null,
+     "wall_s": 15.966688394546509
+    },
+    {
+     "t": 5040.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4440.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -30.603373020537035,
+       "post": 0.17357339980970637,
+       "n_O": 138
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -150.3764597409145,
+       "post": 1.71903812788173e-14,
+       "n_O": 138
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -48.72313640942608,
+       "post": 0.0018713492904279087,
+       "n_O": 138
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -199.062120237273,
+       "post": 8.898300827905122e-20,
+       "n_O": 138
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -58.057280971237745,
+       "post": 0.0001814316238979489,
+       "n_O": 138
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -283.6484569191155,
+       "post": 5.827231445011544e-29,
+       "n_O": 138
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -56.066505841292866,
+       "post": 0.000447661669673322,
+       "n_O": 138
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -41.79065863516896,
+       "post": 0.01588291920624918,
+       "n_O": 138
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -38.856869121735336,
+       "post": 0.033072153568613434,
+       "n_O": 138
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -40.27082882378404,
+       "post": 0.023224359839096365,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -39.45677761611472,
+       "post": 0.018977411712700086,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -39.988105787631355,
+       "post": 0.016616852177329996,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -53.947560374295804,
+       "post": 0.0005068975966140326,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -25.035487141772574,
+       "post": 0.6982463889738694,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -42.21342213355588,
+       "post": 0.009526603805115214,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -42.97623664298322,
+       "post": 0.00787257072668929,
+       "n_O": 138
+      }
+     ],
+     "h_star": "flt_AID02111_stuck",
+     "gap_vs_demand": 3.049880386882526,
+     "evr": 0.35569983615153145,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 30
+     },
+     "p_clear": null,
+     "wall_s": 10.830575227737427
+    }
+   ],
+   "old_state_trace": [
+    {
+     "t": 4890.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 5010.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02109_stuck"
+    },
+    {
+     "t": 5040.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 5040.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02111_stuck"
+    }
+   ],
+   "n_replacements": 0,
+   "trigger_log_rows": 240
+  },
+  "4002": {
+   "run_dir": "results/event_pilot/fix/evt_inc_4002",
+   "run_info": {
+    "run_name": "evt_inc_4002",
+    "scenario": "INC",
+    "seed": 4002,
+    "arm": "evt",
+    "proxy_rc": 0,
+    "twin_rc": 0,
+    "wall_s": 95.1,
+    "t_end": 7200.0,
+    "twin_seed": 2,
+    "demand_seed": 202,
+    "twin_base_factor": 0.85,
+    "boundary_detector": "AID07106",
+    "routes": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy.rou.xml",
+    "sensor_fault": null,
+    "incident": true
+   },
+   "twin_stats": {
+    "messages": 240,
+    "wall_s": 92.50127506256104,
+    "arrived": 2,
+    "running": 336,
+    "pending": 0,
+    "assim": "normal300",
+    "twin_base_factor": 0.85,
+    "event": {
+     "state": "NORMAL",
+     "t_on": 4380.0,
+     "t_alarm": 4980.0,
+     "n_eval": 3,
+     "wall_s": 35.59519338607788,
+     "masked": false,
+     "frozen": false,
+     "active_hyp": null,
+     "restriction": null,
+     "downweight": {
+      "AID02111": 5.0,
+      "AID02109": 5.0
+     },
+     "n_alarms": 4,
+     "alarms": [
+      4890.0,
+      4980.0,
+      5010.0,
+      5040.0
+     ],
+     "false_alarms": [],
+     "unexplained": [],
+     "transitions": [
+      {
+       "t": 4890.0,
+       "from": "NORMAL",
+       "to": "SUSPECTED_EVENT",
+       "reason": "trigger_alarm"
+      },
+      {
+       "t": 4890.0,
+       "from": "SUSPECTED_EVENT",
+       "to": "NORMAL",
+       "reason": "detector_fault_AID02111_zero"
+      },
+      {
+       "t": 4980.0,
+       "from": "NORMAL",
+       "to": "SUSPECTED_EVENT",
+       "reason": "trigger_alarm"
+      },
+      {
+       "t": 5040.0,
+       "from": "SUSPECTED_EVENT",
+       "to": "NORMAL",
+       "reason": "detector_fault_AID02109_stuck"
+      }
+     ],
+     "freeze_entries": [
+      "tko_insert"
+     ],
+     "lane_counts": {
+      "ktb_n1": 3,
+      "ktb_w3": 3,
+      "ktb_n2": 2
+     },
+     "midpoints": {
+      "ktb_n1": 503.1,
+      "ktb_w3": 145.95,
+      "ktb_n2": 997.45
+     },
+     "n_replacements": 0
+    },
+    "event_info": {
+     "lane_counts": {
+      "ktb_n1": 3,
+      "ktb_w3": 3,
+      "ktb_n2": 2
+     },
+     "midpoints": {
+      "ktb_n1": 503.1,
+      "ktb_w3": 145.95,
+      "ktb_n2": 997.45
+     },
+     "freeze_entries": [
+      "tko_insert"
+     ]
+    }
+   },
+   "state_trace": [
+    {
+     "t": 4890.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 4890.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02111_zero"
+    },
+    {
+     "t": 4980.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 5040.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02109_stuck"
+    }
+   ],
+   "alarms": [
+    4890.0,
+    4980.0
+   ],
+   "evaluations": [
+    {
+     "t": 4890.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4290.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -44.42511616346192,
+       "post": 0.07390078330439993,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -163.68415398989885,
+       "post": 8.322686395032097e-15,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -50.333955789322744,
+       "post": 0.016869605658121727,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -207.63550495214724,
+       "post": 1.407039312153674e-19,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -83.55869463556084,
+       "post": 4.166532221892055e-06,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -432.39483229145213,
+       "post": 5.563810460635227e-44,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -71.91491331225663,
+       "post": 0.00011483479465677192,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -56.72063809276881,
+       "post": 0.0051259099126529225,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -43.69762886337691,
+       "post": 0.13296159944376693,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -45.724054979290635,
+       "post": 0.08011425726588167,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -45.91170207105533,
+       "post": 0.05096183149729439,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -61.076605324252824,
+       "post": 0.0011501025786445442,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -57.798041328396096,
+       "post": 0.0026103704240372635,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -41.14885880494761,
+       "post": 0.16763479385098257,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -37.17535454426071,
+       "post": 0.4526702032592333,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -50.57537978705851,
+       "post": 0.015881541478097137,
+       "n_O": 174
+      }
+     ],
+     "h_star": "flt_AID02111_zero",
+     "gap_vs_demand": 1.2251034716708844,
+     "evr": 0.1492592273028922,
+     "adopted": false,
+     "excluded": {
+      "obs_invalid": 36
+     },
+     "p_clear": null,
+     "wall_s": 11.187807559967041
+    },
+    {
+     "t": 4980.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4380.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -32.99622220162937,
+       "post": 0.03790876847228583,
+       "n_O": 138
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -205.69158380316856,
+       "post": 6.738745075062611e-21,
+       "n_O": 138
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -40.44314162892833,
+       "post": 0.005891158022731888,
+       "n_O": 138
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -174.34556313171637,
+       "post": 1.705807341657967e-17,
+       "n_O": 138
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -62.55128553556307,
+       "post": 2.343362341137616e-05,
+       "n_O": 138
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -338.53647860564934,
+       "post": 2.5417207651334204e-35,
+       "n_O": 138
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -50.06016629313753,
+       "post": 0.000798245989646296,
+       "n_O": 138
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -42.78115027886757,
+       "post": 0.004925449464245286,
+       "n_O": 138
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -28.209509413280628,
+       "post": 0.18816622517376133,
+       "n_O": 138
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -26.554232551653502,
+       "post": 0.2846171557449726,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -30.649850776416,
+       "post": 0.06815437139008451,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -37.827688554988626,
+       "post": 0.011328434076272624,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -35.83403402078624,
+       "post": 0.01864782446560502,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -26.602520801424298,
+       "post": 0.1874679305074454,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -26.612175087916373,
+       "post": 0.187016008822207,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -41.05544511755332,
+       "post": 0.005054994247330397,
+       "n_O": 138
+      }
+     ],
+     "h_star": "dem_f1.3",
+     "gap_vs_demand": 0.0,
+     "evr": 0.0,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 30
+     },
+     "p_clear": null,
+     "wall_s": 11.60076904296875
+    },
+    {
+     "t": 5040.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4380.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -56.408894883357775,
+       "post": 0.0310048521037343,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -242.69044650686195,
+       "post": 1.8457257724130499e-22,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -74.43911007092657,
+       "post": 0.0003418408212602096,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -243.9910086492402,
+       "post": 1.333399954567054e-22,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -86.36031204800243,
+       "post": 1.735784732510997e-05,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -419.4433763350481,
+       "post": 1.1897662777290798e-41,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -87.76157629010333,
+       "post": 1.8342004309998334e-05,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -77.45129172533444,
+       "post": 0.00024147474409539257,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -53.9725853635123,
+       "post": 0.08551452117125179,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -59.015938194651554,
+       "post": 0.024236214754075943,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -46.31558078333419,
+       "post": 0.3866315748897763,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -70.34959091782073,
+       "post": 0.0009502498804676706,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -48.00460703525216,
+       "post": 0.253462446936205,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -51.40743604465958,
+       "post": 0.10825704237917885,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -51.4004160482129,
+       "post": 0.10844720020698843,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -70.67099991916994,
+       "post": 0.0008768822613310297,
+       "n_O": 174
+      }
+     ],
+     "h_star": "flt_AID02109_stuck",
+     "gap_vs_demand": 1.5087860369363622,
+     "evr": 0.1418684046466776,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 36
+     },
+     "p_clear": null,
+     "wall_s": 12.80661678314209
+    }
+   ],
+   "old_evaluations": [
+    {
+     "t": 4890.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4290.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -44.42511616346192,
+       "post": 0.07477061462668567,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -163.68415398989885,
+       "post": 8.420646565253027e-15,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -50.333955789322744,
+       "post": 0.017068165277383154,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -207.63550495214724,
+       "post": 1.423600528566729e-19,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -83.55869463556084,
+       "post": 4.215573383160757e-06,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -432.39483229145213,
+       "post": 5.629297947959811e-44,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -71.91491331225663,
+       "post": 0.00011618642987380708,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -56.72063809276881,
+       "post": 0.005186243197333749,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -43.69762886337691,
+       "post": 0.13452659183878682,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -45.724054979290635,
+       "post": 0.08105722278283002,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -44.02240412486714,
+       "post": 0.08269035466841126,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -55.5938253581688,
+       "post": 0.0045825135449770946,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -57.798041328396096,
+       "post": 0.0026410951586891725,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -36.39865630649423,
+       "post": 0.5561510441242797,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -48.785407740654804,
+       "post": 0.025137281450805037,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -50.57537978705851,
+       "post": 0.016068471326552567,
+       "n_O": 174
+      }
+     ],
+     "h_star": "flt_AID02111_stuck",
+     "gap_vs_demand": 1.4192780311125048,
+     "evr": 0.16703360678226564,
+     "adopted": false,
+     "excluded": {
+      "obs_invalid": 36
+     },
+     "p_clear": null,
+     "wall_s": 16.471096515655518
+    },
+    {
+     "t": 4980.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4380.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -32.99622220162937,
+       "post": 0.0400786584507749,
+       "n_O": 138
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -205.69158380316856,
+       "post": 7.124469433707016e-21,
+       "n_O": 138
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -40.44314162892833,
+       "post": 0.006228366675779187,
+       "n_O": 138
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -174.34556313171637,
+       "post": 1.803447397113815e-17,
+       "n_O": 138
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -62.55128553556307,
+       "post": 2.4774959114149128e-05,
+       "n_O": 138
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -338.53647860564934,
+       "post": 2.6872083301122776e-35,
+       "n_O": 138
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -50.06016629313753,
+       "post": 0.0008439374231353288,
+       "n_O": 138
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -42.78115027886757,
+       "post": 0.005207381161389014,
+       "n_O": 138
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -28.209509413280628,
+       "post": 0.19893682054652215,
+       "n_O": 138
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -26.554232551653502,
+       "post": 0.30090858221029243,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -33.0857275890172,
+       "post": 0.03919180377579362,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -34.88731012715531,
+       "post": 0.02497991252894732,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -35.83403402078624,
+       "post": 0.01971522203770293,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -26.85202636036855,
+       "post": 0.1862133286547046,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -27.162025806185294,
+       "post": 0.17232687051508122,
+       "n_O": 138
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -41.05544511755332,
+       "post": 0.005344341060762786,
+       "n_O": 138
+      }
+     ],
+     "h_star": "dem_f1.3",
+     "gap_vs_demand": 0.0,
+     "evr": 0.0,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 30
+     },
+     "p_clear": null,
+     "wall_s": 14.386732578277588
+    },
+    {
+     "t": 5040.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4380.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -56.408894883357775,
+       "post": 0.016305051765394065,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -242.69044650686195,
+       "post": 9.706433742443799e-23,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -74.43911007092657,
+       "post": 0.00017976967822727415,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -243.9910086492402,
+       "post": 7.012178355326338e-23,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -86.36031204800243,
+       "post": 9.128267995757908e-06,
+       "n_O": 174
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -419.4433763350481,
+       "post": 6.256827377272489e-42,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -87.76157629010333,
+       "post": 9.645823458696116e-06,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -77.45129172533444,
+       "post": 0.00012698845294722267,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -53.9725853635123,
+       "post": 0.044970983564930865,
+       "n_O": 174
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -59.015938194651554,
+       "post": 0.012745512697182649,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -43.382464901277395,
+       "post": 0.42330056385571674,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -45.227000873278065,
+       "post": 0.26691986614978075,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -48.00460703525216,
+       "post": 0.13329263123240362,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -51.676362333634394,
+       "post": 0.05322925341720332,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -52.052709716201285,
+       "post": 0.04844946402511901,
+       "n_O": 174
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -70.67099991916994,
+       "post": 0.00046114106964039375,
+       "n_O": 174
+      }
+     ],
+     "h_star": "flt_AID02109_stuck",
+     "gap_vs_demand": 2.2420650074505613,
+     "evr": 0.19621295498277658,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 36
+     },
+     "p_clear": null,
+     "wall_s": 15.321865797042847
+    }
+   ],
+   "old_state_trace": [
+    {
+     "t": 4890.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 4890.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02111_stuck"
+    },
+    {
+     "t": 4980.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 5040.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02109_stuck"
+    }
+   ],
+   "n_replacements": 0,
+   "trigger_log_rows": 240
+  },
+  "4003": {
+   "run_dir": "results/event_pilot/fix/evt_inc_4003",
+   "run_info": {
+    "run_name": "evt_inc_4003",
+    "scenario": "INC",
+    "seed": 4003,
+    "arm": "evt",
+    "proxy_rc": 0,
+    "twin_rc": 0,
+    "wall_s": 96.5,
+    "t_end": 7200.0,
+    "twin_seed": 2,
+    "demand_seed": 202,
+    "twin_base_factor": 0.85,
+    "boundary_detector": "AID07106",
+    "routes": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy.rou.xml",
+    "sensor_fault": null,
+    "incident": true
+   },
+   "twin_stats": {
+    "messages": 240,
+    "wall_s": 93.9129991531372,
+    "arrived": 1,
+    "running": 352,
+    "pending": 0,
+    "assim": "normal300",
+    "twin_base_factor": 0.85,
+    "event": {
+     "state": "NORMAL",
+     "t_on": 4350.0,
+     "t_alarm": 4950.0,
+     "n_eval": 3,
+     "wall_s": 36.55019187927246,
+     "masked": false,
+     "frozen": false,
+     "active_hyp": null,
+     "restriction": null,
+     "downweight": {
+      "AID02111": 5.0,
+      "AID02109": 5.0
+     },
+     "n_alarms": 4,
+     "alarms": [
+      4920.0,
+      4950.0,
+      4980.0,
+      5010.0
+     ],
+     "false_alarms": [],
+     "unexplained": [],
+     "transitions": [
+      {
+       "t": 4920.0,
+       "from": "NORMAL",
+       "to": "SUSPECTED_EVENT",
+       "reason": "trigger_alarm"
+      },
+      {
+       "t": 4920.0,
+       "from": "SUSPECTED_EVENT",
+       "to": "NORMAL",
+       "reason": "detector_fault_AID02111_zero"
+      },
+      {
+       "t": 4950.0,
+       "from": "NORMAL",
+       "to": "SUSPECTED_EVENT",
+       "reason": "trigger_alarm"
+      },
+      {
+       "t": 5010.0,
+       "from": "SUSPECTED_EVENT",
+       "to": "NORMAL",
+       "reason": "detector_fault_AID02109_noise"
+      }
+     ],
+     "freeze_entries": [
+      "tko_insert"
+     ],
+     "lane_counts": {
+      "ktb_n1": 3,
+      "ktb_w3": 3,
+      "ktb_n2": 2
+     },
+     "midpoints": {
+      "ktb_n1": 503.1,
+      "ktb_w3": 145.95,
+      "ktb_n2": 997.45
+     },
+     "n_replacements": 0
+    },
+    "event_info": {
+     "lane_counts": {
+      "ktb_n1": 3,
+      "ktb_w3": 3,
+      "ktb_n2": 2
+     },
+     "midpoints": {
+      "ktb_n1": 503.1,
+      "ktb_w3": 145.95,
+      "ktb_n2": 997.45
+     },
+     "freeze_entries": [
+      "tko_insert"
+     ]
+    }
+   },
+   "state_trace": [
+    {
+     "t": 4920.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 4920.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02111_zero"
+    },
+    {
+     "t": 4950.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 5010.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02109_noise"
+    }
+   ],
+   "alarms": [
+    4920.0,
+    4950.0
+   ],
+   "evaluations": [
+    {
+     "t": 4920.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4320.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -40.15677209812761,
+       "post": 0.21224387819633642,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -173.38173777103418,
+       "post": 7.279780954230909e-16,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -66.87672168618661,
+       "post": 0.00026653454615995604,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -212.64315424774938,
+       "post": 3.975247561735004e-20,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -67.69685826047643,
+       "post": 0.00021712423923638707,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -379.6330112574972,
+       "post": 2.942190721700578e-38,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -72.70353633680206,
+       "post": 9.315505005264116e-05,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -51.936241836773156,
+       "post": 0.01674891794359843,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -44.35078259074455,
+       "post": 0.11157516254191067,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -49.42259073550913,
+       "post": 0.03139807015891183,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -50.0023166820629,
+       "post": 0.01810792769124047,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -65.27063072763954,
+       "post": 0.0003982287559878536,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -51.41854662909324,
+       "post": 0.012708770550151492,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -41.48065857307857,
+       "post": 0.15243897676701035,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -37.54472497575448,
+       "post": 0.40778813515344986,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -47.25196080346804,
+       "post": 0.03601511840595331,
+       "n_O": 144
+      }
+     ],
+     "h_star": "flt_AID02111_zero",
+     "gap_vs_demand": 1.296049295639353,
+     "evr": 0.15345969602823673,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 24
+     },
+     "p_clear": null,
+     "wall_s": 11.686992168426514
+    },
+    {
+     "t": 4950.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4350.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -42.14044314437255,
+       "post": 0.03857217772432803,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -162.61304227883338,
+       "post": 3.2072137339147495e-15,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -60.50694387048684,
+       "post": 0.00039098192437256703,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -205.5917347583724,
+       "post": 6.914736851356862e-20,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -86.193721491504,
+       "post": 6.35697107238523e-07,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -372.59219989041424,
+       "post": 5.104233536186685e-38,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -63.65904357229064,
+       "post": 0.0002666938876153725,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -48.29939379755913,
+       "post": 0.012406973295050727,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -35.43080611960754,
+       "post": 0.3096385336103389,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -39.70078421352161,
+       "post": 0.10647509127558905,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -36.281229674759366,
+       "post": 0.16688994774424745,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -57.23061687346155,
+       "post": 0.0008869096163225945,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -43.50806114497316,
+       "post": 0.027402293988207538,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -36.52988437880791,
+       "post": 0.15683133423405446,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -36.31584619650124,
+       "post": 0.16545189190463674,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -45.97570016935186,
+       "post": 0.014786535098126118,
+       "n_O": 144
+      }
+     ],
+     "h_star": "dem_f1.15",
+     "gap_vs_demand": 0.0,
+     "evr": 0.0,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 24
+     },
+     "p_clear": null,
+     "wall_s": 11.896953821182251
+    },
+    {
+     "t": 5010.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4350.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -82.78079624594831,
+       "post": 0.0016430577258146164,
+       "n_O": 183
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -241.23259307424226,
+       "post": 1.0279395344353554e-20,
+       "n_O": 183
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -122.66121268527111,
+       "post": 7.685845019767425e-08,
+       "n_O": 183
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -316.8567076127679,
+       "post": 6.326793482565749e-29,
+       "n_O": 183
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -134.4504131515021,
+       "post": 4.033624310416924e-09,
+       "n_O": 183
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -474.7602631658041,
+       "post": 4.539656015243168e-46,
+       "n_O": 183
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -138.37881621099848,
+       "post": 2.266030557304913e-09,
+       "n_O": 183
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -120.29581404425457,
+       "post": 2.0825851932441048e-07,
+       "n_O": 183
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -97.041456871728,
+       "post": 6.972885380494568e-05,
+       "n_O": 183
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -93.96097890476652,
+       "post": 0.00015061602165835342,
+       "n_O": 183
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -84.95096346686337,
+       "post": 0.0009550583581159344,
+       "n_O": 183
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -124.9184910222546,
+       "post": 4.3713012940056064e-08,
+       "n_O": 183
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -57.14999904859775,
+       "post": 0.9965091005976693,
+       "n_O": 183
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -89.34050664144722,
+       "post": 0.0003187434836913942,
+       "n_O": 183
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -89.03369856138069,
+       "post": 0.000344153807736177,
+       "n_O": 183
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -103.51862196882306,
+       "post": 9.206021870752803e-06,
+       "n_O": 183
+      }
+     ],
+     "h_star": "flt_AID02109_noise",
+     "gap_vs_demand": 8.797279855934029,
+     "evr": 0.04795353801084512,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 42,
+      "obs_invalid": 27
+     },
+     "p_clear": null,
+     "wall_s": 12.966245889663696
+    }
+   ],
+   "old_evaluations": [
+    {
+     "t": 4920.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4320.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -40.15677209812761,
+       "post": 0.21891149110375224,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -173.38173777103418,
+       "post": 7.508474294486813e-16,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -66.87672168618661,
+       "post": 0.00027490769310464384,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -212.64315424774938,
+       "post": 4.100129429603425e-20,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -67.69685826047643,
+       "post": 0.00022394516802994304,
+       "n_O": 144
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -379.6330112574972,
+       "post": 3.034619247784832e-38,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -72.70353633680206,
+       "post": 9.608150342976702e-05,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -51.936241836773156,
+       "post": 0.017275082949699008,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -44.35078259074455,
+       "post": 0.11508028127717652,
+       "n_O": 144
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -49.42259073550913,
+       "post": 0.03238443631297282,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -39.32123373391052,
+       "post": 0.26976523721339835,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -51.771546889891624,
+       "post": 0.012000805829282842,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -51.41854662909324,
+       "post": 0.013108014868893115,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -40.051021227248256,
+       "post": 0.22477619440439073,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -45.404209094934544,
+       "post": 0.058956993165716724,
+       "n_O": 144
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -47.25196080346804,
+       "post": 0.03714652851015197,
+       "n_O": 144
+      }
+     ],
+     "h_star": "flt_AID02109_stuck",
+     "gap_vs_demand": 0.8519221061003428,
+     "evr": 0.11340383558155376,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 24
+     },
+     "p_clear": null,
+     "wall_s": 16.882041931152344
+    },
+    {
+     "t": 5250.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4650.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -70.3890327417216,
+       "post": 0.0030798510395309685,
+       "n_O": 177
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -189.33053368025466,
+       "post": 3.7550898248067527e-16,
+       "n_O": 177
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -92.70630842638943,
+       "post": 1.1626855944176016e-05,
+       "n_O": 177
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -255.01687485197516,
+       "post": 2.772148258888151e-23,
+       "n_O": 177
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -109.31076021310817,
+       "post": 1.830867203236291e-07,
+       "n_O": 177
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -455.0219851171217,
+       "post": 5.339954027897997e-45,
+       "n_O": 177
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -85.56126878422963,
+       "post": 0.00010406779986281875,
+       "n_O": 177
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -77.73694096382243,
+       "post": 0.0007359223155195977,
+       "n_O": 177
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -71.76795483536051,
+       "post": 0.003272701585414161,
+       "n_O": 177
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -76.36957360483918,
+       "post": 0.001035838376425967,
+       "n_O": 177
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -49.78560023329666,
+       "post": 0.531519220105835,
+       "n_O": 177
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -50.47232737475335,
+       "post": 0.4476705461244031,
+       "n_O": 177
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -69.64043244655453,
+       "post": 0.0037137097358312405,
+       "n_O": 177
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -69.77278269533,
+       "post": 0.00359284275757004,
+       "n_O": 177
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -68.98876531433187,
+       "post": 0.004370808873433434,
+       "n_O": 177
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -75.3426600696857,
+       "post": 0.0008926813435086318,
+       "n_O": 177
+      }
+     ],
+     "h_star": "flt_AID02109_stuck",
+     "gap_vs_demand": 5.090123542407799,
+     "evr": 0.30629763175629754,
+     "adopted": false,
+     "excluded": {
+      "obs_invalid": 33
+     },
+     "p_clear": null,
+     "wall_s": 15.546429634094238
+    },
+    {
+     "t": 5430.0,
+     "state": "SUSPECTED_EVENT",
+     "t_on": 4830.0,
+     "hypotheses": [
+      {
+       "id": "inc_ktb_n1_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -59.19581899561515,
+       "post": 0.05360337612519658,
+       "n_O": 141
+      },
+      {
+       "id": "inc_ktb_n1_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n1",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 755.0,
+        "pos_kind": "fixed",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -131.4411665184201,
+       "post": 7.678090041831353e-10,
+       "n_O": 141
+      },
+      {
+       "id": "inc_ktb_w3_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -88.81505191928858,
+       "post": 3.260804710316979e-05,
+       "n_O": 141
+      },
+      {
+       "id": "inc_ktb_w3_k2_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_w3",
+        "lanes_closed": [
+         0,
+         1
+        ],
+        "n_lanes": 3,
+        "pos": 145.9,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -178.94728794052344,
+       "post": 5.337545660641031e-15,
+       "n_O": 141
+      },
+      {
+       "id": "inc_ktb_n2_k1_s1",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -103.61139466673906,
+       "post": 8.06923359150932e-07,
+       "n_O": 141
+      },
+      {
+       "id": "inc_ktb_n2_k1_s0.6",
+       "family": "incident",
+       "params": {
+        "edge": "ktb_n2",
+        "lanes_closed": [
+         0
+        ],
+        "n_lanes": 2,
+        "pos": 997.5,
+        "pos_kind": "mid",
+        "speed_factor": 0.6
+       },
+       "prior": 0.05555555555555555,
+       "logL": -411.61814457293656,
+       "post": 2.9202788256356263e-40,
+       "n_O": 141
+      },
+      {
+       "id": "dem_f0.7",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.7,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -79.97408234973732,
+       "post": 0.0004459766525303964,
+       "n_O": 141
+      },
+      {
+       "id": "dem_f0.85",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 0.85,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -66.00712770012397,
+       "post": 0.014647211638204176,
+       "n_O": 141
+      },
+      {
+       "id": "dem_f1.15",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.15,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -63.7756611924363,
+       "post": 0.0255878239761092,
+       "n_O": 141
+      },
+      {
+       "id": "dem_f1.3",
+       "family": "demand",
+       "params": {
+        "entry": "tko_insert",
+        "factor": 1.3,
+        "t_on": null
+       },
+       "prior": 0.08333333333333333,
+       "logL": -69.24649071747517,
+       "post": 0.006516967961180091,
+       "n_O": 141
+      },
+      {
+       "id": "flt_AID02109_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -50.58608756480265,
+       "post": 0.46129830271567634,
+       "n_O": 141
+      },
+      {
+       "id": "flt_AID02109_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -50.99822401080149,
+       "post": 0.4161354464547825,
+       "n_O": 141
+      },
+      {
+       "id": "flt_AID02109_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02109",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -65.52977008939777,
+       "post": 0.01100251936832018,
+       "n_O": 141
+      },
+      {
+       "id": "flt_AID02111_stuck",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "stuck",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -69.70869500980191,
+       "post": 0.0038705361982239394,
+       "n_O": 141
+      },
+      {
+       "id": "flt_AID02111_zero",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "zero",
+        "c": 1.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -69.27924891411551,
+       "post": 0.004309209919102599,
+       "n_O": 141
+      },
+      {
+       "id": "flt_AID02111_noise",
+       "family": "fault",
+       "params": {
+        "detector": "AID02111",
+        "type": "noise",
+        "c": 5.0
+       },
+       "prior": 0.05555555555555555,
+       "logL": -71.37912807725446,
+       "post": 0.002549213252396533,
+       "n_O": 141
+      }
+     ],
+     "h_star": "flt_AID02109_stuck",
+     "gap_vs_demand": 2.8919282988002504,
+     "evr": 0.20681202485436434,
+     "adopted": false,
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 27
+     },
+     "p_clear": null,
+     "wall_s": 14.134262800216675
+    }
+   ],
+   "old_state_trace": [
+    {
+     "t": 4920.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 4920.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02109_stuck"
+    },
+    {
+     "t": 5250.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 5250.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02109_stuck"
+    },
+    {
+     "t": 5430.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 5430.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02109_stuck"
+    }
+   ],
+   "n_replacements": 0,
+   "trigger_log_rows": 240
+  }
+ },
+ "controls": {
+  "evt_noi_4001": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_noi_4002": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_noi_4003": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_shk_4001": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_shk_4002": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_shk_4003": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_det_4001": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_det_4002": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_det_4003": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  }
+ }
+}

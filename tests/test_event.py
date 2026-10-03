@@ -176,6 +176,123 @@ def test_identical_support_excludes_invalid_observations_and_partial_blocks():
     assert len({h["n_O"] for h in evl.rows()}) == 1
 
 
+# ------------------------------------------------- fault-model likelihood (report2 G.4)
+# A fault hypothesis on detector i predicts what i would report, and the likelihood scores the ACTUAL
+# observation of i against that prediction: stuck -> the anchor, zero -> 0 for q and o (v keeps the
+# no-event replay), noise -> the replay with c = 5. Other detectors keep (obs - twin)/sigma.
+# The pre-onset anchor is a quiet reading (q = o = 2), the no-event replay sits between it and the
+# congested observation (q = o = 12), and congestion is (q = 25, v = 20, o = 25): so the observation
+# is closer to the no-event replay than to the anchor, while the anchor is closer to the zero model.
+ANCHOR = {d: {"q": 2.0, "v": 50.0, "o": 2.0} for d in DETS}
+TIMES = [10.0, 20.0, 30.0, 40.0]                       # one complete 120-s block
+CONGESTED = {"q": 25, "v": 20.0, "o": 25.0}            # what the Proxy really saw (queue)
+AT_ANCHOR = {"q": 2, "v": 50.0, "o": 2.0}              # what a stuck detector keeps reporting
+REPLAY = {"q": 12, "v": 45.0, "o": 12.0}               # the no-event Twin replay
+
+
+def _fault_library():
+    """A no-event (demand) baseline plus the three fault types on U, so logL can be compared."""
+    return [ev.Hypothesis("base", "demand", {"entry": "tko_insert", "factor": 1.0}, 1 / 3),
+            ev.Hypothesis(f"flt_{U}_stuck", "fault", {"detector": U, "type": "stuck", "c": 1.0}, 1 / 3),
+            ev.Hypothesis(f"flt_{U}_zero", "fault", {"detector": U, "type": "zero", "c": 1.0}, 1 / 3),
+            ev.Hypothesis(f"flt_{U}_noise", "fault", {"detector": U, "type": "noise", "c": 5.0}, 1 / 3)]
+
+
+def _no_event_replays(hyps):
+    """The no-event Twin replay every fault hypothesis is scored against."""
+    return replays_for(hyps, TIMES, **REPLAY)
+
+
+def _logl(hyps, obs, rp):
+    return ev.evaluate(hyps, list(DETS), TIMES, obs, rp, SIGMA, 0.0, 40.0, anchor=ANCHOR)
+
+
+def test_stuck_fault_scores_the_observation_against_the_anchor():
+    """Congestion at U (obs != anchor) must cost the stuck hypothesis; obs == anchor must fit it."""
+    hyps = _fault_library()
+    stuck = next(h for h in hyps if h.id == f"flt_{U}_stuck")
+    base = next(h for h in hyps if h.id == "base")
+    rp = _no_event_replays(hyps)
+
+    hot = obs_hist(TIMES, **CONGESTED)
+    r_q, why = ev.block_residual(stuck, U, TIMES, "q", hot, rp, SIGMA, anchor=ANCHOR)
+    r_v, _ = ev.block_residual(stuck, U, TIMES, "v", hot, rp, SIGMA, anchor=ANCHOR)
+    r_o, _ = ev.block_residual(stuck, U, TIMES, "o", hot, rp, SIGMA, anchor=ANCHOR)
+    assert why is None
+    # (obs - anchor) / sigma, channel by channel: the anomaly is charged, not erased
+    assert (r_q, r_v, r_o) == (pytest.approx(23.0), pytest.approx(-30.0), pytest.approx(23.0))
+    evl_hot = _logl(hyps, hot, rp)
+    assert evl_hot.logL[stuck.id] < evl_hot.logL[base.id]      # worse than the no-event baseline
+
+    flat = obs_hist(TIMES, **AT_ANCHOR)
+    r_q, _ = ev.block_residual(stuck, U, TIMES, "q", flat, rp, SIGMA, anchor=ANCHOR)
+    r_o, _ = ev.block_residual(stuck, U, TIMES, "o", flat, rp, SIGMA, anchor=ANCHOR)
+    assert (r_q, r_o) == (pytest.approx(0.0), pytest.approx(0.0))
+    evl_flat = _logl(hyps, flat, rp)
+    assert evl_flat.logL[stuck.id] > evl_flat.logL[base.id]    # better than the no-event baseline
+    assert evl_flat.logL[stuck.id] > evl_hot.logL[stuck.id]    # and better than under congestion
+
+
+def test_zero_fault_scores_the_observation_against_zero():
+    """Congestion at U must cost the zero hypothesis too; v stays the no-event replay residual."""
+    hyps = _fault_library()
+    zero = next(h for h in hyps if h.id == f"flt_{U}_zero")
+    base = next(h for h in hyps if h.id == "base")
+    rp = _no_event_replays(hyps)
+
+    hot = obs_hist(TIMES, **CONGESTED)
+    r_q, _ = ev.block_residual(zero, U, TIMES, "q", hot, rp, SIGMA, anchor=ANCHOR)
+    r_v, _ = ev.block_residual(zero, U, TIMES, "v", hot, rp, SIGMA, anchor=ANCHOR)
+    r_o, _ = ev.block_residual(zero, U, TIMES, "o", hot, rp, SIGMA, anchor=ANCHOR)
+    assert (r_q, r_v, r_o) == (pytest.approx(25.0), pytest.approx(-25.0), pytest.approx(25.0))
+    # v is undefined at zero flow: the zero model keeps the no-event replay value, so the support and
+    # the v residual are exactly the baseline's
+    assert r_v == ev.block_residual(base, U, TIMES, "v", hot, rp, SIGMA, anchor=ANCHOR)[0]
+    evl_hot = _logl(hyps, hot, rp)
+    assert evl_hot.logL[zero.id] < evl_hot.logL[base.id]
+
+    flat = obs_hist(TIMES, **AT_ANCHOR)
+    evl_flat = _logl(hyps, flat, rp)
+    assert evl_flat.logL[zero.id] > evl_flat.logL[base.id]
+    assert evl_flat.logL[zero.id] > evl_hot.logL[zero.id]
+
+
+def test_noise_fault_residual_is_unchanged():
+    """Noise still scores the actual observation against the replay, with c = 5 on U only."""
+    hyps = _fault_library()
+    noise = next(h for h in hyps if h.id == f"flt_{U}_noise")
+    base = next(h for h in hyps if h.id == "base")
+    rp = _no_event_replays(hyps)
+    hot = obs_hist(TIMES, **CONGESTED)
+
+    for x, expect in (("q", 13.0), ("v", -25.0), ("o", 13.0)):          # (obs - replay) / sigma
+        r = ev.block_residual(noise, U, TIMES, x, hot, rp, SIGMA, anchor=ANCHOR)[0]
+        assert r == pytest.approx(expect)
+        assert r == ev.block_residual(base, U, TIMES, x, hot, rp, SIGMA, anchor=ANCHOR)[0]
+    assert ev._c_of(noise, U) == ev.NOISE_C and ev._c_of(noise, D) == 1.0
+
+    evl = _logl(hyps, hot, rp)
+    expect = 0.0
+    for x in ev.CHANNELS:
+        r = ev.block_residual(base, U, TIMES, x, hot, rp, SIGMA, anchor=ANCHOR)[0]
+        expect += -0.5 * (r / ev.NOISE_C) ** 2 - math.log(ev.NOISE_C)
+        r = ev.block_residual(base, D, TIMES, x, hot, rp, SIGMA, anchor=ANCHOR)[0]
+        expect += -0.5 * r ** 2
+    assert evl.logL[noise.id] == pytest.approx(expect)
+
+
+def test_single_hypothesis_logl_needs_no_demand_family():
+    """check_replay check 2 rescores one hypothesis alone: no demand family, so logL is direct."""
+    hyp = ev.Hypothesis("inc_ktb_n1_k2_s0.6", "incident", {"edge": "ktb_n1"}, 1.0)
+    oh = obs_hist(TIMES, q=10)
+    rp = replays_for([hyp], TIMES, q=12)                 # every channel is 2 sigma above the obs
+    ll, n_o = ev.logl_of_one(hyp, list(DETS), TIMES, oh, rp, SIGMA, 0.0, 40.0, anchor=ANCHOR)
+    assert n_o == 6                                      # 2 detectors x 3 channels x 1 block
+    assert ll == pytest.approx(-4.0)                     # q: 2 x -0.5 * (-2)^2 (v and o fit)
+    assert ev.logl_of_one(hyp, list(DETS), TIMES, oh, rp, SIGMA, 0.0, 40.0,
+                          anchor=ANCHOR) == (ll, n_o)
+
+
 def test_posterior_is_beta_scaled_and_evr_is_relative_to_the_demand_family():
     hyps = _small_library()
     times = [10.0, 20.0, 30.0, 40.0]

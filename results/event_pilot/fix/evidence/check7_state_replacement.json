@@ -1,0 +1,66 @@
+{
+ "check": "7",
+ "name": "successful_state_replacement",
+ "adoption_happened": false,
+ "runs": {
+  "evt_inc_4001": {
+   "replacement_log_rows": [],
+   "n_replacements": 0,
+   "adoption_transitions": [],
+   "event_log_rows": 13,
+   "note": "no adoption: the MAP never left the fault/demand families with the ln-10 gap, so the live-Twin digest/count vs the replay endpoint and the live lane disallow were never exercised by these runs (replacement_log.jsonl is empty, 0 bytes)"
+  },
+  "evt_inc_4002": {
+   "replacement_log_rows": [],
+   "n_replacements": 0,
+   "adoption_transitions": [],
+   "event_log_rows": 3,
+   "note": "no adoption: the MAP never left the fault/demand families with the ln-10 gap, so the live-Twin digest/count vs the replay endpoint and the live lane disallow were never exercised by these runs (replacement_log.jsonl is empty, 0 bytes)"
+  },
+  "evt_inc_4003": {
+   "replacement_log_rows": [],
+   "n_replacements": 0,
+   "adoption_transitions": [],
+   "event_log_rows": 3,
+   "note": "no adoption: the MAP never left the fault/demand families with the ln-10 gap, so the live-Twin digest/count vs the replay endpoint and the live lane disallow were never exercised by these runs (replacement_log.jsonl is empty, 0 bytes)"
+  }
+ },
+ "controls": {
+  "evt_noi_4001": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_noi_4002": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_noi_4003": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_shk_4001": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_shk_4002": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_shk_4003": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_det_4001": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_det_4002": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  },
+  "evt_det_4003": {
+   "event_log_bytes": 0,
+   "event_log_rows": 0
+  }
+ }
+}

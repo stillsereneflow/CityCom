@@ -10,9 +10,10 @@ logs; this module owns:
   inside a family);
 * the identical-support set O (120-s blocks whose four intervals are valid in the observations and
   non-null under every hypothesis) and the exclusions by reason;
-* the block-mean standardised residuals, logL (c = 1, or c = 5 on the noise-fault detector), the
-  beta = 0.25 posterior, adoption (MAP in the incident family and a demand-family log gap > ln 10)
-  and EVR;
+* the block-mean standardised residuals of the observation against the hypothesis's prediction (the
+  fault model on a faulting detector, the no-event replay elsewhere), logL (c = 1, or c = 5 on the
+  noise-fault detector), the beta = 0.25 posterior, adoption (MAP in the incident family and a
+  demand-family log gap > ln 10) and EVR;
 * the clearance posterior H_clear(tau_c) against the active hypothesis;
 * the NORMAL / SUSPECTED_EVENT / DEGRADED / EVENT_ASSIMILATION / RECOVERY state machine.
 
@@ -261,25 +262,40 @@ def candidate_blocks(dets, times, t_on, t_end):
     return complete, partial
 
 
-def effective_obs(hyp, det, x, obs_row, anchor):
-    """The observation the hypothesis predicts, and its c.
+_REPLAY = object()   # no fault-model value: the hypothesis is scored against the no-event replay
 
-    Incident/demand: the actual observation. Fault on another detector: the actual observation.
-    Fault on this detector: stuck -> the last pre-t_on reading, zero -> 0 (v missing), noise -> the
-    actual observation with c = 5.
+
+def effective_obs(hyp, det, x, obs_row, anchor):
+    """What the hypothesis predicts detector `det` reports on channel `x`, and its c.
+
+    Incident/demand, and a fault on another detector: `_REPLAY`, i.e. the no-event Twin replay, so the
+    residual stays (obs - twin)/sigma. A fault on this detector predicts its own value, which the
+    actual observation is then scored against (report2 G.4: "the observations of that detector are
+    scored under the fault model"):
+
+    * stuck -> the last pre-t_on reading; None when there is no anchor for q/o (that channel leaves
+      the identical support, as before);
+    * zero  -> 0 for q and o; `_REPLAY` for v (v is undefined at zero flow, so the support and the
+      v residual are unchanged);
+    * noise -> `_REPLAY` (the actual observation against the replay) with c = 5 on this detector.
     """
     if hyp.family == "fault" and hyp.params.get("detector") == det:
         kind = hyp.params.get("type")
-        if kind == "zero":
-            return (0.0 if x in ("q", "o") else None), 1.0
         if kind == "stuck":
             return _num((anchor or {}).get(det, {}).get(x)), 1.0
-        return _num(_field(obs_row, x)), NOISE_C
-    return _num(_field(obs_row, x)), 1.0
+        if kind == "zero":
+            return (0.0 if x in ("q", "o") else _REPLAY), 1.0
+        return _REPLAY, NOISE_C
+    return _REPLAY, 1.0
 
 
 def block_residual(hyp, det, ts, x, obs_hist, replays, sigma, anchor=None, weights=None):
-    """Mean standardised residual of one (hypothesis, detector, block, channel) or (None, reason)."""
+    """Mean standardised residual of one (hypothesis, detector, block, channel) or (None, reason).
+
+    The residual is (obs - prediction)/sigma: the prediction is the fault model's value on a faulting
+    detector and the no-event replay everywhere else. A stuck or zero hypothesis therefore has to
+    explain detector i's observed anomaly instead of erasing it.
+    """
     s = sigma_of(sigma, det, x, weights)
     if s is None:
         return None, "no_sigma"
@@ -290,14 +306,19 @@ def block_residual(hyp, det, ts, x, obs_hist, replays, sigma, anchor=None, weigh
             return None, "obs_invalid"
         if _field(obs_row, "q") is None or _field(obs_row, "o") is None:
             return None, "obs_null"
-        eff, _c = effective_obs(hyp, det, x, obs_row, anchor)
+        obs = _num(_field(obs_row, x))
+        pred, _c = effective_obs(hyp, det, x, obs_row, anchor)
         twin_row = ((replays.get(hyp.id) or {}).get(det) or {}).get(t)
         if twin_row is None:
             return None, "twin_null"
         w = _num(_field(twin_row, x))
-        if eff is None and x != "v":
+        if pred is _REPLAY:
+            pred = w                                   # (obs - twin_baseline) / sigma
+        elif pred is None and x != "v":
+            return None, "no_anchor"                   # stuck without a pre-t_on anchor
+        if obs is None and x != "v":
             return None, ("no_anchor" if hyp.family == "fault" else "obs_null")
-        total += 0.0 if (eff is None or w is None) else (eff - w) / s
+        total += 0.0 if (obs is None or pred is None) else (obs - pred) / s
     return total / len(ts), None
 
 
@@ -305,6 +326,28 @@ def _c_of(hyp, det):
     if hyp.family == "fault" and hyp.params.get("detector") == det:
         return float(hyp.params.get("c", 1.0))
     return 1.0
+
+
+def logl_of_one(hyp, dets, times, obs_hist, replays, sigma, t_on, t_end, anchor=None, weights=None):
+    """logL of a single hypothesis over its own support, and the size of that support.
+
+    ``evaluate`` normalises a posterior over a library and needs a demand family for the gap and the
+    EVR; scoring one hypothesis alone (check 2's deterministic-replay rescore) has no such family, so
+    its log-likelihood is accumulated directly over the (detector, block, channel) triples whose
+    residual is defined -- exactly the per-hypothesis sum ``evaluate`` performs.
+    """
+    complete, _partial = candidate_blocks(dets, times, t_on, t_end)
+    ll, n_o = 0.0, 0
+    for det in dets:
+        c = _c_of(hyp, det)
+        for _b, ts in sorted(complete.items()):
+            for x in CHANNELS:
+                r, _why = block_residual(hyp, det, ts, x, obs_hist, replays, sigma, anchor, weights)
+                if r is None:
+                    continue
+                ll += -0.5 * (r / c) ** 2 - math.log(c)
+                n_o += 1
+    return ll, n_o
 
 
 @dataclass

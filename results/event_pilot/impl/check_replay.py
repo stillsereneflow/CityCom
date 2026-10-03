@@ -1,6 +1,8 @@
 """Mechanics checks 2 and 4 on a real smoke-run snapshot (no new two-world run).
 
 Check 2 (deterministic replay): the same hypothesis scored twice at the same t gives identical logL.
+A single hypothesis has no demand family, so its logL is accumulated directly (``ev.logl_of_one``)
+instead of through ``ev.evaluate``, which needs that family for the posterior gap and the EVR.
 Check 4 (effective capacity restriction): under an incident hypothesis the lanes are disallowed and
 the downstream flow drops relative to the no-event replay.
 
@@ -91,12 +93,15 @@ def main():
     # check 2: the same hypothesis twice, independent processes
     res1, wall1 = score_replays(state, meta, [job("run1", spec)], workers=1, seed=2)
     res2, wall2 = score_replays(state, meta, [job("run2", spec)], workers=1, seed=2)
-    logls, digests, tables = [], [], []
+    logls, digests, tables, n_os = [], [], [], []
     for r in (res1[0], res2[0]):
         times = sorted(r["intervals"][dets[0]].keys())
-        evl = ev.evaluate([hyp], dets, times, obs_hist, {hyp.id: r["intervals"]}, sigma, a.t_on,
-                          a.t_end, anchor=anchor)
-        logls.append(evl.logL[hyp.id])
+        # one hypothesis alone has no demand family, so ``ev.evaluate`` (which needs one for the
+        # posterior gap and the EVR) does not apply: its logL is accumulated directly instead.
+        ll, n_o = ev.logl_of_one(hyp, dets, times, obs_hist, {hyp.id: r["intervals"]}, sigma,
+                                 a.t_on, a.t_end, anchor=anchor)
+        logls.append(ll)
+        n_os.append(n_o)
         digests.append(r["veh_digest"])
         tables.append(r["intervals"])
     identical = (logls[0] == logls[1] and digests[0] == digests[1] and tables[0] == tables[1])
@@ -117,6 +122,7 @@ def main():
         "hypothesis": hyp.id, "params": dict(hyp.params),
         "check2_deterministic_replay": {
             "logL_run1": logls[0], "logL_run2": logls[1], "logL_identical": logls[0] == logls[1],
+            "n_O": n_os[0], "n_O_run2": n_os[1],
             "digest_run1": digests[0], "digest_run2": digests[1], "digest_identical": digests[0] == digests[1],
             "interval_tables_identical": tables[0] == tables[1], "identical": bool(identical),
             "wall_s": [wall1, wall2], "n_vehicles": inc["n_vehicles"]},

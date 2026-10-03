@@ -1,0 +1,687 @@
+{
+ "name": "fault_likelihood_before_after",
+ "defect": "effective_obs replaced detector i's observation with the fault prediction and compared it with the no-event replay, so the stuck/zero residual did not depend on what i reported",
+ "fix": "the observation is scored against the prediction: stuck (obs-anchor)/sigma, zero (obs-0)/sigma for q and o (v keeps the replay), noise (obs-replay)/sigma with c = 5",
+ "sigma_source": "results/event_pilot/impl/sigma_event.json",
+ "per_seed": {
+  "4001": {
+   "first_alarm_t": 4890.0,
+   "t_on": 4290.0,
+   "stuck_block_residuals_on_the_faulting_detector": {
+    "t_on": 4290.0,
+    "t_eval": 4890.0,
+    "anchor": {
+     "AID02109": {
+      "q": 16.0,
+      "v": 74.0869824555128,
+      "o": 1.3116923273960914
+     },
+     "AID02111": {
+      "q": 4.0,
+      "v": 58.12930444983783,
+      "o": 4.3941500274046685
+     }
+    },
+    "detectors": {
+     "AID02109": {
+      "fixed_stuck_block_residuals": {
+       "36": {
+        "q": {
+         "residual": 0.0843113449345744,
+         "excluded": null
+        },
+        "v": {
+         "residual": -0.6972591506338173,
+         "excluded": null
+        },
+        "o": {
+         "residual": 1.5403133668377023,
+         "excluded": null
+        }
+       },
+       "37": {
+        "q": {
+         "residual": 0.0421556724672872,
+         "excluded": null
+        },
+        "v": {
+         "residual": -0.954692293476116,
+         "excluded": null
+        },
+        "o": {
+         "residual": 1.5413723170245612,
+         "excluded": null
+        }
+       },
+       "38": {
+        "q": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "v": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "o": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        }
+       },
+       "39": {
+        "q": {
+         "residual": -0.25293403480372323,
+         "excluded": null
+        },
+        "v": {
+         "residual": -0.6781452272576449,
+         "excluded": null
+        },
+        "o": {
+         "residual": 1.1277707164902782,
+         "excluded": null
+        }
+       },
+       "40": {
+        "q": {
+         "residual": 0.4215567246728721,
+         "excluded": null
+        },
+        "v": {
+         "residual": -3.2321061042416495,
+         "excluded": null
+        },
+        "o": {
+         "residual": 2.4697528098226598,
+         "excluded": null
+        }
+       }
+      },
+      "old_formula_block_residuals": {
+       "36": {
+        "q": 0.0421556724672872,
+        "v": 0.4233921950846092,
+        "o": -1.2173066128330987
+       },
+       "37": {
+        "q": 0.042155672467287214,
+        "v": 0.3100525408377642,
+        "o": -1.1048746422201576
+       },
+       "38": {
+        "q": 0.42155672467287203,
+        "v": -0.03436132929010435,
+        "o": -0.723347631546494
+       },
+       "39": {
+        "q": -0.0843113449345744,
+        "v": 0.5108436551530572,
+        "o": -1.248917121326129
+       },
+       "40": {
+        "q": 0.16862268986914877,
+        "v": 0.8798339574451527,
+        "o": -1.2479007042278187
+       }
+      },
+      "n_complete_blocks": 5,
+      "n_partial_blocks": 0
+     },
+     "AID02111": {
+      "fixed_stuck_block_residuals": {
+       "36": {
+        "q": {
+         "residual": 0.25293403480372323,
+         "excluded": null
+        },
+        "v": {
+         "residual": 1.6543692278027122,
+         "excluded": null
+        },
+        "o": {
+         "residual": -1.3770020636967208,
+         "excluded": null
+        }
+       },
+       "37": {
+        "q": {
+         "residual": 0.16862268986914883,
+         "excluded": null
+        },
+        "v": {
+         "residual": 1.756435430491431,
+         "excluded": null
+        },
+        "o": {
+         "residual": -1.2965547527626686,
+         "excluded": null
+        }
+       },
+       "38": {
+        "q": {
+         "residual": -1.3489815189531904,
+         "excluded": null
+        },
+        "v": {
+         "residual": 0.0,
+         "excluded": null
+        },
+        "o": {
+         "residual": -1.8077463163071856,
+         "excluded": null
+        }
+       },
+       "39": {
+        "q": {
+         "residual": -1.3489815189531904,
+         "excluded": null
+        },
+        "v": {
+         "residual": 0.0,
+         "excluded": null
+        },
+        "o": {
+         "residual": -1.7318470980806404,
+         "excluded": null
+        }
+       },
+       "40": {
+        "q": {
+         "residual": -1.3489815189531904,
+         "excluded": null
+        },
+        "v": {
+         "residual": 0.0,
+         "excluded": null
+        },
+        "o": {
+         "residual": -2.51290510216225,
+         "excluded": null
+        }
+       }
+      },
+      "old_formula_block_residuals": {
+       "36": {
+        "q": -1.433292863887765,
+        "v": -2.245658717519266,
+        "o": 1.2115813111564073
+       },
+       "37": {
+        "q": -1.1803588290840417,
+        "v": -1.771424734133976,
+        "o": 1.3907899431021635
+       },
+       "38": {
+        "q": -1.2646701740186161,
+        "v": -1.895458917166283,
+        "o": 1.0815428279992618
+       },
+       "39": {
+        "q": -1.011736139214893,
+        "v": -1.3425314588727786,
+        "o": 1.438969677820255
+       },
+       "40": {
+        "q": -1.6019155537569136,
+        "v": -0.7157502907076855,
+        "o": 0.9968061021427158
+       }
+      },
+      "n_complete_blocks": 5,
+      "n_partial_blocks": 0
+     }
+    }
+   },
+   "stuck_logL_at_matched_evaluations": {
+    "4890.0": {
+     "old_formula": -40.086127744640876,
+     "fixed_formula": -49.690804984711576
+    },
+    "5040.0": {
+     "old_formula": -39.45677761611472,
+     "fixed_formula": -62.74501349932798
+    }
+   },
+   "note": "matched evaluations are the timestamps both the old and the fixed run evaluated; the faulting detector's q/o residuals need no replay, so the fixed column is exact"
+  },
+  "4002": {
+   "first_alarm_t": 4890.0,
+   "t_on": 4290.0,
+   "stuck_block_residuals_on_the_faulting_detector": {
+    "t_on": 4290.0,
+    "t_eval": 4890.0,
+    "anchor": {
+     "AID02109": {
+      "q": 16.0,
+      "v": 72.66344213059284,
+      "o": 3.0289992185811148
+     },
+     "AID02111": {
+      "q": 6.0,
+      "v": 69.1782287909046,
+      "o": 2.161444937939192
+     }
+    },
+    "detectors": {
+     "AID02109": {
+      "fixed_stuck_block_residuals": {
+       "36": {
+        "q": {
+         "residual": -0.042155672467287214,
+         "excluded": null
+        },
+        "v": {
+         "residual": -0.8176748465552353,
+         "excluded": null
+        },
+        "o": {
+         "residual": 0.9729949191058334,
+         "excluded": null
+        }
+       },
+       "37": {
+        "q": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "v": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "o": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        }
+       },
+       "38": {
+        "q": {
+         "residual": 0.37940105220558484,
+         "excluded": null
+        },
+        "v": {
+         "residual": -0.5347103973634493,
+         "excluded": null
+        },
+        "o": {
+         "residual": 1.3286832872765064,
+         "excluded": null
+        }
+       },
+       "39": {
+        "q": {
+         "residual": -0.632335087009308,
+         "excluded": null
+        },
+        "v": {
+         "residual": -0.23663087802469196,
+         "excluded": null
+        },
+        "o": {
+         "residual": 1.0335617637639851,
+         "excluded": null
+        }
+       },
+       "40": {
+        "q": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "v": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "o": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        }
+       }
+      },
+      "old_formula_block_residuals": {
+       "36": {
+        "q": 0.421556724672872,
+        "v": -0.32537295148210255,
+        "o": -0.31074560578497384
+       },
+       "37": {
+        "q": 0.12646701740186161,
+        "v": -0.10686117379292825,
+        "o": -0.37132785328004714
+       },
+       "38": {
+        "q": 0.12646701740186161,
+        "v": 0.20799494084012413,
+        "o": -0.4727325897442442
+       },
+       "39": {
+        "q": 0.12646701740186161,
+        "v": 0.10519137791141746,
+        "o": -0.45864266858140934
+       },
+       "40": {
+        "q": -0.1264670174018616,
+        "v": -0.02459018929108135,
+        "o": -0.6339007696814322
+       }
+      },
+      "n_complete_blocks": 5,
+      "n_partial_blocks": 0
+     },
+     "AID02111": {
+      "fixed_stuck_block_residuals": {
+       "36": {
+        "q": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "v": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "o": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        }
+       },
+       "37": {
+        "q": {
+         "residual": -0.5901794145420208,
+         "excluded": null
+        },
+        "v": {
+         "residual": -0.4533792645539132,
+         "excluded": null
+        },
+        "o": {
+         "residual": -0.5202349530502965,
+         "excluded": null
+        }
+       },
+       "38": {
+        "q": {
+         "residual": -2.023472278429786,
+         "excluded": null
+        },
+        "v": {
+         "residual": 0.0,
+         "excluded": null
+        },
+        "o": {
+         "residual": -1.015380828928757,
+         "excluded": null
+        }
+       },
+       "39": {
+        "q": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "v": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "o": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        }
+       },
+       "40": {
+        "q": {
+         "residual": -2.023472278429786,
+         "excluded": null
+        },
+        "v": {
+         "residual": 0.0,
+         "excluded": null
+        },
+        "o": {
+         "residual": -0.9019853234184627,
+         "excluded": null
+        }
+       }
+      },
+      "old_formula_block_residuals": {
+       "36": {
+        "q": -0.421556724672872,
+        "v": -0.4705019932772101,
+        "o": -0.030339890575407757
+       },
+       "37": {
+        "q": -0.6744907594765952,
+        "v": 0.0022626879069160832,
+        "o": -0.07443190347482316
+       },
+       "38": {
+        "q": -0.6744907594765952,
+        "v": 0.1951214460167112,
+        "o": 0.011891923114339661
+       },
+       "39": {
+        "q": -0.6744907594765952,
+        "v": -0.1262925887730646,
+        "o": -0.10459161455729551
+       },
+       "40": {
+        "q": -1.0960474841494672,
+        "v": 0.3092969188564287,
+        "o": -0.4498492345817147
+       }
+      },
+      "n_complete_blocks": 5,
+      "n_partial_blocks": 0
+     }
+    }
+   },
+   "stuck_logL_at_matched_evaluations": {
+    "4890.0": {
+     "old_formula": -44.02240412486714,
+     "fixed_formula": -45.91170207105533
+    },
+    "4980.0": {
+     "old_formula": -33.0857275890172,
+     "fixed_formula": -30.649850776416
+    },
+    "5040.0": {
+     "old_formula": -43.382464901277395,
+     "fixed_formula": -46.31558078333419
+    }
+   },
+   "note": "matched evaluations are the timestamps both the old and the fixed run evaluated; the faulting detector's q/o residuals need no replay, so the fixed column is exact"
+  },
+  "4003": {
+   "first_alarm_t": 4920.0,
+   "t_on": 4320.0,
+   "stuck_block_residuals_on_the_faulting_detector": {
+    "t_on": 4320.0,
+    "t_eval": 4920.0,
+    "anchor": {
+     "AID02109": {
+      "q": 13.0,
+      "v": 77.06006579879674,
+      "o": 4.064619580425756
+     },
+     "AID02111": {
+      "q": 6.0,
+      "v": 61.75063399227259,
+      "o": 0.6271461506549916
+     }
+    },
+    "detectors": {
+     "AID02109": {
+      "fixed_stuck_block_residuals": {
+       "37": {
+        "q": {
+         "residual": 0.9274247942803184,
+         "excluded": null
+        },
+        "v": {
+         "residual": -1.3169308749244675,
+         "excluded": null
+        },
+        "o": {
+         "residual": 0.7101433429534403,
+         "excluded": null
+        }
+       },
+       "38": {
+        "q": {
+         "residual": 0.5901794145420208,
+         "excluded": null
+        },
+        "v": {
+         "residual": -1.118822346908185,
+         "excluded": null
+        },
+        "o": {
+         "residual": 0.3308967748191518,
+         "excluded": null
+        }
+       },
+       "39": {
+        "q": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "v": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "o": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        }
+       },
+       "40": {
+        "q": {
+         "residual": 1.05389181168218,
+         "excluded": null
+        },
+        "v": {
+         "residual": -4.180918570817729,
+         "excluded": null
+        },
+        "o": {
+         "residual": 1.8397062289344652,
+         "excluded": null
+        }
+       }
+      },
+      "old_formula_block_residuals": {
+       "37": {
+        "q": -0.1686226898691488,
+        "v": 0.961528298982668,
+        "o": -0.22335364873856434
+       },
+       "38": {
+        "q": -0.8431134493457441,
+        "v": 0.7696907056674118,
+        "o": -0.32408212162474453
+       },
+       "39": {
+        "q": -0.5058680696074465,
+        "v": 0.7084907163862304,
+        "o": -0.1630816793033111
+       },
+       "40": {
+        "q": -0.5058680696074463,
+        "v": 0.5173754345713888,
+        "o": -0.012132773739427762
+       }
+      },
+      "n_complete_blocks": 4,
+      "n_partial_blocks": 2
+     },
+     "AID02111": {
+      "fixed_stuck_block_residuals": {
+       "37": {
+        "q": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "v": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "o": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        }
+       },
+       "38": {
+        "q": {
+         "residual": -2.023472278429786,
+         "excluded": null
+        },
+        "v": {
+         "residual": 0.0,
+         "excluded": null
+        },
+        "o": {
+         "residual": -0.2539862180008322,
+         "excluded": null
+        }
+       },
+       "39": {
+        "q": {
+         "residual": -2.023472278429786,
+         "excluded": null
+        },
+        "v": {
+         "residual": 0.0,
+         "excluded": null
+        },
+        "o": {
+         "residual": 0.32905471591711166,
+         "excluded": null
+        }
+       },
+       "40": {
+        "q": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "v": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        },
+        "o": {
+         "residual": null,
+         "excluded": "obs_invalid"
+        }
+       }
+      },
+      "old_formula_block_residuals": {
+       "37": {
+        "q": -0.25293403480372323,
+        "v": -0.510260724548616,
+        "o": -0.786939519739645
+       },
+       "38": {
+        "q": -0.8431134493457441,
+        "v": -1.0841899257085634,
+        "o": -0.9685297573058453
+       },
+       "39": {
+        "q": -0.3372453797382976,
+        "v": -1.5445984160741453,
+        "o": -0.8354261815350019
+       },
+       "40": {
+        "q": -1.011736139214893,
+        "v": -0.7318684952915857,
+        "o": -1.3346431977652848
+       }
+      },
+      "n_complete_blocks": 4,
+      "n_partial_blocks": 2
+     }
+    }
+   },
+   "stuck_logL_at_matched_evaluations": {
+    "4920.0": {
+     "old_formula": -39.32123373391052,
+     "fixed_formula": -50.0023166820629
+    }
+   },
+   "note": "matched evaluations are the timestamps both the old and the fixed run evaluated; the faulting detector's q/o residuals need no replay, so the fixed column is exact"
+  }
+ }
+}
