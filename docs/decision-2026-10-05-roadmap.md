@@ -55,3 +55,15 @@ Reopening it requires all of:
 | Oct 16 | Design freeze. |
 | Oct 16–18 | The frozen audit on fresh test seeds. |
 | Oct 18 | Results freeze. |
+
+## Revision 2026-10-05 evening (Codex ruling `~/.claude/runs/D--CityCom/20261005-2000-codex-sol-diagreview/out.md`)
+
+The replay diagnosis is done (3b5e575; corrections in `results/replay_diag/corrections.md`). The online method keeps R_E and the alarm − 600 s onset through the freeze; R_P is reported as a diagnosed alternative. Revised order:
+
+| Dates | Work |
+|---|---|
+| Oct 5–6 | Missing-queue test preregistered (`docs/oct11-missing-queue-plan.md`, 302152e); implementation, gates, pilot. |
+| Oct 13–14 | Complete the missing-queue grid. Alongside: fresh unchanged-method INC/NOI/SHK/DET development runs (needs its own preregistration first). |
+| Oct 15 | Natural adoption, clearance, forecast, exclusion and live DEGRADED coverage; reconcile claims, corrected audit records and the duration sensitivity. |
+| Oct 16 | Design freeze: R_E and the existing onset rule frozen; R_P successor requirements documented. |
+| Oct 16–18 | Frozen audit on untouched test seeds; results freeze Oct 18. |
