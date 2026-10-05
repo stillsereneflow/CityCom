@@ -1,6 +1,6 @@
 # CityCom handoff: where the work stands and what comes next
 
-Last updated: 2026-10-06 02:10 (session 2: replay diagnosis verified; missing-queue test done, Support; dev-runs preregistered, driver and analyzer dispatched).
+Last updated: 2026-10-06 05:10 (session 2: missing-queue Support; dev runs collected; frozen audit preregistered; forecast/exposure checks running).
 
 **When the user says "resume" (or anything like "continue", "pick up where we left off"), read this file, then do "On resume" below, then carry on with the queue.**
 
@@ -62,12 +62,12 @@ Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/s
 
 ## On resume (do these first, in order)
 
-1. **List the run directory** `C:/Users/chenq/.claude/runs/D--CityCom/` and handle every dispatch without a `merged` marker, as the global CLAUDE.md §11 describes. At handoff time, two may still be running (launched 2026-10-06 ~02:00, detached):
-   - `20261006-0200-agyflash-devdriver` (agy-flash): `citypulse/experiments/dev_runs.py` (prepare / collect / check) + `tests/test_dev_runs.py`; a smoke pair `evt_noi_4401` + `conv_noi_4401` in `results/dev_runs/smoke/`. It must not run the 48 slots.
-   - `20261006-0200-dsh-devoutcomes` (dsh): `citypulse/experiments/dev_outcomes.py` (outcomes 1–9) + `tests/test_dev_outcomes.py`; self-test on pilot 2 in `results/dev_runs/analyzer_selftest/`.
-   - Verify: outcome definitions against `docs/oct13-dev-runs-plan.md` (spot-check boundary cases); smoke pairing/completeness; dsh provider check (system Python: `python C:/Users/chenq/.claude/skills/fleet-dispatch/dsh_provider.py <run dir>`); full suite; files touched only inside each worker's allowed set. Commit both (execution code must be committed: provenance refuses a dirty tree), create `merged`.
-2. Then `dev_runs.py prepare` (clean tree) and `collect --parallel 4` detached (48 slots, ~1 h), then `check`, then `dev_outcomes.py analyze --slots`. Verify outcomes from the raw logs, then Codex read-only review.
-3. Then the frozen-audit preregistration (configuration, fresh seeds, estimands, claim boundary, descriptive state-history check: see `docs/decision-2026-10-06-missing-queue.md`), Codex review, before Oct 16.
+1. **List the run directory** `C:/Users/chenq/.claude/runs/D--CityCom/` and handle every dispatch without a `merged` marker, as the global CLAUDE.md §11 describes. At handoff time, two checks may still be running (launched 2026-10-06 ~05:00, detached, read-only on code):
+   - `20261006-0500-agyflash-fcstcheck` (agy-flash): an independent readout of the forecast instrument, because every Twin prediction in the dev runs is 0. Output: `results/dev_runs/checks/forecast_check.{py,json,md}`.
+   - `20261006-0500-dsh-exposurecheck` (dsh): realised SHK/DET injection and trigger B internals, because SHK/DET never alarmed. Output: `results/dev_runs/checks/exposure_check.{py,json,md}`.
+   - Verify both yourself (re-read a few numbers from the raw run files), run the dsh provider check (system Python: `python C:/Users/chenq/.claude/skills/fleet-dispatch/dsh_provider.py <run dir>`), commit with `git add -f`, and create `merged`. These are Codex's blocking checks before any forecast or SHK/DET statement is quoted (`20261006-0430-codex-sol-devresult/out.md`).
+2. **Dev-run results** (b06513a, verified): 48/48 complete; INC 0/6 natural adoption (0/25 library evals); NOI/SHK/DET 0 alarms (N/A); no live clearance, recovery or DEGRADED; forecasts EVT = CONV. Codex ruling: **freeze the method unchanged on Oct 16**; claim wording and limitations in its out.md (record them in a decision doc together with the check results).
+3. Next: implement the frozen audit (`docs/oct16-frozen-audit-plan.md`, d7d5935, Codex ACCEPT). Implementation goes to dsh + agy-flash; note the `maxtasksperchild=1` requirement and the field-based seed check. Collection only after the Oct 16 freeze, then verification, Codex review, and the write-up with a coverage-and-claims table.
 
 ## Queue (from `decision-2026-10-05-roadmap.md`)
 
@@ -77,8 +77,8 @@ Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/s
 | Oct 8–9 | One-factor audit sensitivities | done (a61e2bc) |
 | Oct 10–12 | Matched-observation replay diagnosis | done (3b5e575, 302152e) |
 | Oct 5–6 | Missing-queue test (`oct11-missing-queue-plan.md`) | done: **Support** (816829c); ruling and claim wording in `docs/decision-2026-10-06-missing-queue.md` (2e333b0) |
-| Oct 6–15 | Fresh INC/NOI/SHK/DET development runs (`oct13-dev-runs-plan.md`, rev 2, 382db30; seeds 4401–4406) | preregistered; driver + analyzer being built |
-| before Oct 16 | Frozen-audit preregistration | not started |
+| Oct 6 | Fresh INC/NOI/SHK/DET development runs (`oct13-dev-runs-plan.md`, rev 2, 382db30; seeds 4401–4406) | collected and analysed (b06513a); forecast and exposure checks running |
+| Oct 6 | Frozen-audit preregistration (`oct16-frozen-audit-plan.md`, seeds 4501–4508) | done, Codex ACCEPT (d7d5935); implementation next |
 | Oct 16 | **Design freeze** | |
 | Oct 16–18 | Frozen audit on fresh test seeds | |
 | Oct 18 | **Results freeze**, then writing the submission | |
@@ -89,7 +89,8 @@ Seeds already used:
 - 4201–4208: audit;
 - 5001–5008: NA-300;
 - 4301–4304: missing-queue test;
-- 4401–4406: development runs (preregistered).
+- 4401–4406: development runs;
+- 4501–4508: frozen audit (preregistered, untouched).
 
 **6001–6008 are reserved for E\* and untouched.** Pick fresh ranges for anything new, and check that no result uses them.
 
