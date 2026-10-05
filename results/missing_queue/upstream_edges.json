@@ -1,0 +1,7 @@
+{
+  "frozen": "2026-10-05, by Claude, from scenarios/kwuntong/blite/net5.net.xml before any run (prereg docs/oct11-missing-queue-plan.md rev 2)",
+  "Q_edges": ["ktb_w1", "ktb_w2", "ktb_w3", "ktb_n1"],
+  "upstream_spillback_edges": ["tko_vms", "tko_1", "tko_in", "tko_insert", "on_ktb_w1", "on_tko_vms", "on_tko_1"],
+  "descriptive_extra_edges": ["ms_on_ktb_w2", "on_ktb_w3", "on_ktb_n1"],
+  "note": "upstream_spillback_edges = every edge reached walking getIncoming() from ktb_w1 to the network boundary. descriptive_extra_edges are the merge segment between ktb_w1 and ktb_w2 and the side on-ramps feeding ktb_w3/ktb_n1; reported separately, not part of Q."
+}
