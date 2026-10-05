@@ -1,0 +1,233 @@
+{
+  "all_passed": true,
+  "seeds": {
+    "4301": {
+      "passed": true,
+      "G1": {
+        "passed": true,
+        "veh_digest_c1": "f5d94bae64efc355e64b91c38883d5306c31574801d3b55373a1bc0ea083da25",
+        "veh_digest_c2": "f5d94bae64efc355e64b91c38883d5306c31574801d3b55373a1bc0ea083da25",
+        "pending_c1": [],
+        "pending_c2": [],
+        "stream_ptr_c1": 9438,
+        "stream_ptr_c2": 9438,
+        "m_c1": {
+          "tko_insert": 1.1878049284559735
+        },
+        "m_c2": {
+          "tko_insert": 1.1878049284559735
+        }
+      },
+      "G2": {
+        "passed": true,
+        "n_inserted_c": 788,
+        "n_inserted_h": 788,
+        "n_inserted_regen": 788,
+        "inserted_c_equals_h": true,
+        "inserted_c_equals_regen": true,
+        "final_ptr_replay": 9438,
+        "final_ptr_live": 9438,
+        "final_m_replay": {
+          "tko_insert": 1.1878049284559735
+        },
+        "final_m_live": {
+          "tko_insert": 1.1878049284559735
+        }
+      },
+      "G3": {
+        "passed": true,
+        "hyp_blocker_0": {
+          "exists": true,
+          "road": "ktb_n1",
+          "lane": 0,
+          "pos": 755.2854226699585,
+          "stopped": true,
+          "stop_time": 4518.0,
+          "stop_pos": 755.2854226699585,
+          "delay_s": 18.0
+        },
+        "hyp_blocker_1": {
+          "exists": true,
+          "road": "ktb_n1",
+          "lane": 1,
+          "pos": 755.2898056044235,
+          "stopped": true,
+          "stop_time": 4503.0,
+          "stop_pos": 755.2898056044235,
+          "delay_s": 3.0
+        }
+      }
+    },
+    "4302": {
+      "passed": true,
+      "G1": {
+        "passed": true,
+        "veh_digest_c1": "0bbbc343989cea44b552e54e3915f41e959b3f39c77d898e80b14896dfe00441",
+        "veh_digest_c2": "0bbbc343989cea44b552e54e3915f41e959b3f39c77d898e80b14896dfe00441",
+        "pending_c1": [],
+        "pending_c2": [],
+        "stream_ptr_c1": 9438,
+        "stream_ptr_c2": 9438,
+        "m_c1": {
+          "tko_insert": 1.1570853145646778
+        },
+        "m_c2": {
+          "tko_insert": 1.1570853145646778
+        }
+      },
+      "G2": {
+        "passed": true,
+        "n_inserted_c": 767,
+        "n_inserted_h": 767,
+        "n_inserted_regen": 767,
+        "inserted_c_equals_h": true,
+        "inserted_c_equals_regen": true,
+        "final_ptr_replay": 9438,
+        "final_ptr_live": 9438,
+        "final_m_replay": {
+          "tko_insert": 1.1570853145646778
+        },
+        "final_m_live": {
+          "tko_insert": 1.1570853145646778
+        }
+      },
+      "G3": {
+        "passed": true,
+        "hyp_blocker_0": {
+          "exists": true,
+          "road": "ktb_n1",
+          "lane": 0,
+          "pos": 755.2931214129961,
+          "stopped": true,
+          "stop_time": 4505.0,
+          "stop_pos": 755.2931214129961,
+          "delay_s": 5.0
+        },
+        "hyp_blocker_1": {
+          "exists": true,
+          "road": "ktb_n1",
+          "lane": 1,
+          "pos": 755.2820032614316,
+          "stopped": true,
+          "stop_time": 4504.0,
+          "stop_pos": 755.2820032614316,
+          "delay_s": 4.0
+        }
+      }
+    },
+    "4303": {
+      "passed": true,
+      "G1": {
+        "passed": true,
+        "veh_digest_c1": "71bb91b274a318f56a21339846560a52a971aa067d0ef5dd6d70f43b251db31f",
+        "veh_digest_c2": "71bb91b274a318f56a21339846560a52a971aa067d0ef5dd6d70f43b251db31f",
+        "pending_c1": [],
+        "pending_c2": [],
+        "stream_ptr_c1": 9438,
+        "stream_ptr_c2": 9438,
+        "m_c1": {
+          "tko_insert": 1.129128177966102
+        },
+        "m_c2": {
+          "tko_insert": 1.129128177966102
+        }
+      },
+      "G2": {
+        "passed": true,
+        "n_inserted_c": 765,
+        "n_inserted_h": 765,
+        "n_inserted_regen": 765,
+        "inserted_c_equals_h": true,
+        "inserted_c_equals_regen": true,
+        "final_ptr_replay": 9438,
+        "final_ptr_live": 9438,
+        "final_m_replay": {
+          "tko_insert": 1.129128177966102
+        },
+        "final_m_live": {
+          "tko_insert": 1.129128177966102
+        }
+      },
+      "G3": {
+        "passed": true,
+        "hyp_blocker_0": {
+          "exists": true,
+          "road": "ktb_n1",
+          "lane": 0,
+          "pos": 755.285712597787,
+          "stopped": true,
+          "stop_time": 4506.0,
+          "stop_pos": 755.285712597787,
+          "delay_s": 6.0
+        },
+        "hyp_blocker_1": {
+          "exists": true,
+          "road": "ktb_n1",
+          "lane": 1,
+          "pos": 755.2784532952995,
+          "stopped": true,
+          "stop_time": 4504.0,
+          "stop_pos": 755.2784532952995,
+          "delay_s": 4.0
+        }
+      }
+    },
+    "4304": {
+      "passed": true,
+      "G1": {
+        "passed": true,
+        "veh_digest_c1": "5f529dd62e9c74b102bbe72d5053519224a9373d844cff722fea5bd4fe67bd7b",
+        "veh_digest_c2": "5f529dd62e9c74b102bbe72d5053519224a9373d844cff722fea5bd4fe67bd7b",
+        "pending_c1": [],
+        "pending_c2": [],
+        "stream_ptr_c1": 9438,
+        "stream_ptr_c2": 9438,
+        "m_c1": {
+          "tko_insert": 1.2260881241344626
+        },
+        "m_c2": {
+          "tko_insert": 1.2260881241344626
+        }
+      },
+      "G2": {
+        "passed": true,
+        "n_inserted_c": 793,
+        "n_inserted_h": 793,
+        "n_inserted_regen": 793,
+        "inserted_c_equals_h": true,
+        "inserted_c_equals_regen": true,
+        "final_ptr_replay": 9438,
+        "final_ptr_live": 9438,
+        "final_m_replay": {
+          "tko_insert": 1.2260881241344626
+        },
+        "final_m_live": {
+          "tko_insert": 1.2260881241344626
+        }
+      },
+      "G3": {
+        "passed": true,
+        "hyp_blocker_0": {
+          "exists": true,
+          "road": "ktb_n1",
+          "lane": 0,
+          "pos": 755.272767413504,
+          "stopped": true,
+          "stop_time": 4525.0,
+          "stop_pos": 755.272767413504,
+          "delay_s": 25.0
+        },
+        "hyp_blocker_1": {
+          "exists": true,
+          "road": "ktb_n1",
+          "lane": 1,
+          "pos": 755.2892696998216,
+          "stopped": true,
+          "stop_time": 4504.0,
+          "stop_pos": 755.2892696998216,
+          "delay_s": 4.0
+        }
+      }
+    }
+  }
+}

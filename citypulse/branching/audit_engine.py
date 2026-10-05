@@ -38,6 +38,11 @@ ACTIONS = ("A0", "A1", "A2", "A3", "A4")
 HORIZON_STEPS = 900
 T_D = 5100.0
 
+# Missing-queue experiment (docs/oct11-missing-queue-plan.md rev 2): frozen edge lists and queue trace.
+QUEUE_EDGES_FILE = Path(__file__).resolve().parents[2] / "results" / "missing_queue" / "upstream_edges.json"
+BLOCKER_ID_PREFIXES = ("hyp_", "incident_")   # hyp_blocker_* (Twin) / incident_* (Proxy) are blockers, not queue
+_QUEUE_EDGES_CACHE: Dict[str, Any] = {}
+
 # Fixed per-route rates in synth5 (decision 2026-10-03b / 2026-10-03c)
 ROUTE_SPECS = [
     {
@@ -251,6 +256,102 @@ def resolve_twin_job_overrides(job: Dict[str, Any], meta: Optional[Dict[str, Any
     }
 
 
+def load_queue_edges(path: Optional[Path] = None) -> Dict[str, List[str]]:
+    """Load the three frozen edge lists of results/missing_queue/upstream_edges.json."""
+    key = str(path or QUEUE_EDGES_FILE)
+    if key not in _QUEUE_EDGES_CACHE:
+        with open(key, encoding="utf-8") as fh:
+            data = json.load(fh)
+        _QUEUE_EDGES_CACHE[key] = {
+            "Q_edges": list(data["Q_edges"]),
+            "upstream_spillback_edges": list(data["upstream_spillback_edges"]),
+            "descriptive_extra_edges": list(data["descriptive_extra_edges"]),
+        }
+    return _QUEUE_EDGES_CACHE[key]
+
+
+def queue_snapshot(tc, t: float, edges: Optional[Dict[str, List[str]]] = None,
+                   pending: Optional[List[str]] = None) -> Dict[str, Any]:
+    """Queue counts at time t for the missing-queue plan (rev 2, Measurements).
+
+    Ordinary halted = speed < 0.1 m/s and id not a blocker (``hyp_blocker_*`` in the Twin,
+    ``incident_*`` in the Proxy); counted per edge of the three frozen lists.
+    ``pending`` is the pending-vehicle list, or None when ``getPendingVehicles()`` cannot be
+    trusted (right after a loadState it returns 0); pending vehicles count when their route
+    traverses a Q edge. Q = halted on Q_edges + pending on a Q edge.
+    """
+    edges = edges or load_queue_edges()
+    halted: Dict[str, Dict[str, int]] = {"q": {}, "upstream": {}, "extra": {}}
+    blocker_halted = 0
+    for vid in tc.vehicle.getIDList():
+        try:
+            if tc.vehicle.getSpeed(vid) >= 0.1:
+                continue
+            eid = tc.vehicle.getRoadID(vid)
+        except Exception:
+            continue
+        if vid.startswith(BLOCKER_ID_PREFIXES):
+            blocker_halted += 1
+            continue
+        for key, edge_list in (("q", edges["Q_edges"]),
+                               ("upstream", edges["upstream_spillback_edges"]),
+                               ("extra", edges["descriptive_extra_edges"])):
+            if eid in edge_list:
+                halted[key][eid] = halted[key].get(eid, 0) + 1
+
+    pending_q_ids: Optional[List[str]] = None
+    pending_total: Optional[int] = None
+    if pending is not None:
+        pending_total = len(pending)
+        q_set = set(edges["Q_edges"])
+        pending_q_ids = []
+        for vid in pending:
+            try:
+                if q_set.intersection(tc.vehicle.getRoute(vid)):
+                    pending_q_ids.append(str(vid))
+            except Exception:
+                continue
+
+    n_q = sum(halted["q"].values())
+    return {
+        "t": float(t),
+        "halted_q": n_q,
+        "halted_upstream": sum(halted["upstream"].values()),
+        "halted_extra": sum(halted["extra"].values()),
+        "halted_q_by_edge": halted["q"],
+        "halted_upstream_by_edge": halted["upstream"],
+        "halted_extra_by_edge": halted["extra"],
+        "blocker_halted": blocker_halted,
+        "pending_total": pending_total,
+        "pending_q": None if pending_q_ids is None else len(pending_q_ids),
+        "pending_q_ids": pending_q_ids,
+        "Q": n_q + (0 if pending_q_ids is None else len(pending_q_ids)),
+    }
+
+
+def reused_blocker_error(tc, hyp_pos: float) -> Optional[str]:
+    """Check the H state's blockers after loading (reuse_blockers=True); None if reusable."""
+    for ln in (0, 1):
+        vid = f"hyp_blocker_{ln}"
+        try:
+            if vid not in tc.vehicle.getIDList():
+                return f"{vid} missing from the loaded state"
+            road = tc.vehicle.getRoadID(vid)
+            if road != "ktb_n1":
+                return f"{vid} is on {road!r}, not ktb_n1"
+            lane = int(tc.vehicle.getLaneIndex(vid))
+            if lane != ln:
+                return f"{vid} is on lane {lane}, not {ln}"
+            pos = float(tc.vehicle.getLanePosition(vid))
+            if abs(pos - float(hyp_pos)) > 1.0:
+                return f"{vid} is at {pos:.3f} m, not within 1 m of {hyp_pos}"
+            if not tc.vehicle.isStopped(vid):
+                return f"{vid} is not stopped"
+        except Exception as exc:
+            return f"{vid} check failed: {type(exc).__name__}: {exc}"
+    return None
+
+
 def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
     """Execute one Twin audit branch in a new process."""
     import libsumo as tc
@@ -267,6 +368,8 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
     hyp_pos = float(job.get("hyp_pos", 755.3)) if job.get("hyp_pos") is not None else 755.3
     hyp_clear_time = float(job["hyp_clear_time"]) if job.get("hyp_clear_time") is not None else None
     job_branch_factor = job.get("branch_factor")
+    reuse_blockers = bool(job.get("reuse_blockers", False))
+    queue_trace = bool(job.get("queue_trace", False))
 
     cmd = twin_cmd(r, ["--load-state", state_path])
     try:
@@ -278,26 +381,49 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
         cs.apply(tc)
 
         # Apply H_G5 point blockage: ktb_n1 lanes 0-1 blocked at hyp_pos
-        if "hyp_route" not in tc.route.getIDList():
-            tc.route.add("hyp_route", ["ktb_n1"])
-        for ln in (0, 1):
-            vid = f"hyp_blocker_{ln}"
-            tc.vehicle.add(
-                vid,
-                "hyp_route",
-                typeID="t_car",
-                departLane=str(ln),
-                departPos=str(hyp_pos - 1),
-                departSpeed="0",
-            )
-            tc.vehicle.setStop(
-                vid,
-                "ktb_n1",
-                pos=hyp_pos,
-                laneIndex=ln,
-                duration=3600.0,
-            )
-            tc.vehicle.setLaneChangeMode(vid, 0)
+        if reuse_blockers:
+            # H arm: the blockers are already in the loaded state; never re-add them.
+            blocker_error = reused_blocker_error(tc, hyp_pos)
+            if blocker_error is not None:
+                return {
+                    "world": "twin",
+                    "seed": seed,
+                    "replication": r,
+                    "action": action,
+                    "J": None,
+                    "veh_digest": None,
+                    "error": blocker_error,
+                    "reason": "blockers_missing",
+                    "status": "blockers_missing",
+                    "wall_s": time.time() - t_wall0,
+                    "variant": variant,
+                    "hyp_pos": hyp_pos,
+                    "hyp_clear_time": hyp_clear_time,
+                    "branch_factor": job_branch_factor,
+                    "reuse_blockers": True,
+                    "queue_trace": None,
+                }
+        else:
+            if "hyp_route" not in tc.route.getIDList():
+                tc.route.add("hyp_route", ["ktb_n1"])
+            for ln in (0, 1):
+                vid = f"hyp_blocker_{ln}"
+                tc.vehicle.add(
+                    vid,
+                    "hyp_route",
+                    typeID="t_car",
+                    departLane=str(ln),
+                    departPos=str(hyp_pos - 1),
+                    departSpeed="0",
+                )
+                tc.vehicle.setStop(
+                    vid,
+                    "ktb_n1",
+                    pos=hyp_pos,
+                    laneIndex=ln,
+                    duration=3600.0,
+                )
+                tc.vehicle.setLaneChangeMode(vid, 0)
 
         # Twin future demand: D_T(r) = 900000 + 1000 * seed + r
         d_seed = D_T_seed(seed, r)
@@ -323,11 +449,51 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
         total_veh_steps = 0
         blocker_stops: Dict[str, Dict[str, Any]] = {}
         actual_clear_time: Optional[float] = None
+        release_evidence: Dict[str, Dict[str, Any]] = {}
+        pending_release_check: List[str] = []
+        release_done = False
+        trace: List[Dict[str, Any]] = []
+        edges = load_queue_edges() if queue_trace else None
+        if queue_trace:
+            # t = t_d: right after the load, before stepping; pending is unreadable here.
+            trace.append(queue_snapshot(tc, t0, edges, pending=None))
 
         for k in range(1, horizon + 1):
             stream.insert_due(tc, t0 + k)
             tc.simulationStep()
             t = tc.simulation.getTime()
+
+            # Verify releases from the previous step: a released blocker must not be stopped
+            if pending_release_check:
+                for vid in pending_release_check:
+                    ev = release_evidence[vid]
+                    ev["stopped_after"] = bool(vid in tc.vehicle.getIDList() and tc.vehicle.isStopped(vid))
+                    ev["checked_at"] = t
+                    ev["released"] = not ev["stopped_after"]
+                failed = [v for v in pending_release_check if not release_evidence[v]["released"]]
+                pending_release_check = []
+                if failed:
+                    return {
+                        "world": "twin",
+                        "seed": seed,
+                        "replication": r,
+                        "action": action,
+                        "J": None,
+                        "veh_digest": None,
+                        "error": f"blockers still stopped after resume: {failed}",
+                        "reason": "clear_failed",
+                        "status": "clear_failed",
+                        "wall_s": time.time() - t_wall0,
+                        "variant": variant,
+                        "hyp_pos": hyp_pos,
+                        "hyp_clear_time": hyp_clear_time,
+                        "branch_factor": base_factor,
+                        "reuse_blockers": reuse_blockers,
+                        "actual_clear_time": actual_clear_time,
+                        "blocker_release_0": release_evidence.get("hyp_blocker_0"),
+                        "blocker_release_1": release_evidence.get("hyp_blocker_1"),
+                        "queue_trace": trace if queue_trace else None,
+                    }
 
             # Record actual blocker placement (edge, lane, pos, time stopped)
             if len(blocker_stops) < 2:
@@ -341,13 +507,41 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
                             "time_stopped": t,
                         }
 
-            # Handle clearance override at absolute simulation time
-            if hyp_clear_time is not None and t >= hyp_clear_time:
+            if queue_trace and int(round(t)) % 60 == 0:
+                trace.append(queue_snapshot(tc, t, edges, pending=list(tc.simulation.getPendingVehicles())))
+
+            # Handle clearance override at absolute simulation time: resume after this step,
+            # before advancing to the next second (plan: after the 5,400-s step).
+            if hyp_clear_time is not None and t >= hyp_clear_time and not release_done:
+                release_done = True
                 for ln in (0, 1):
                     vid = f"hyp_blocker_{ln}"
-                    if vid in tc.vehicle.getIDList() and tc.vehicle.isStopped(vid):
-                        tc.vehicle.resume(vid)
-                if actual_clear_time is None:
+                    ev: Dict[str, Any] = {
+                        "present": vid in tc.vehicle.getIDList(),
+                        "stopped_at_clear": False,
+                        "resumed": False,
+                        "resumed_at": None,
+                        "stopped_after": None,
+                        "checked_at": None,
+                        "released": None,
+                    }
+                    release_evidence[vid] = ev
+                    if ev["present"]:
+                        ev["stopped_at_clear"] = bool(tc.vehicle.isStopped(vid))
+                        if ev["stopped_at_clear"]:
+                            try:
+                                tc.vehicle.resume(vid)
+                                ev["resumed"] = True
+                                ev["resumed_at"] = t
+                            except Exception as exc:
+                                ev["error"] = f"{type(exc).__name__}: {exc}"
+                        else:
+                            ev["released"] = True
+                    else:
+                        ev["released"] = True
+                    if ev["resumed"]:
+                        pending_release_check.append(vid)
+                if any(ev["resumed"] for ev in release_evidence.values()):
                     actual_clear_time = t
 
             act.step(tc)
@@ -375,6 +569,7 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
             "hyp_pos": hyp_pos,
             "hyp_clear_time": hyp_clear_time,
             "branch_factor": base_factor,
+            "reuse_blockers": reuse_blockers,
             "blocker_edge": "ktb_n1",
             "blocker_lane_0": 0,
             "blocker_pos_0": b0.get("pos"),
@@ -383,6 +578,9 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
             "blocker_pos_1": b1.get("pos"),
             "blocker_t_stop_1": b1.get("time_stopped"),
             "actual_clear_time": actual_clear_time,
+            "blocker_release_0": release_evidence.get("hyp_blocker_0"),
+            "blocker_release_1": release_evidence.get("hyp_blocker_1"),
+            "queue_trace": trace if queue_trace else None,
         }
     except Exception as e:
         return {
@@ -400,6 +598,8 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
             "hyp_pos": hyp_pos,
             "hyp_clear_time": hyp_clear_time,
             "branch_factor": job_branch_factor,
+            "reuse_blockers": reuse_blockers,
+            "queue_trace": None,
         }
     finally:
         try:
@@ -421,6 +621,7 @@ def _proxy_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
     horizon = int(job.get("horizon", HORIZON_STEPS))
     orig_future_ids = set(job.get("orig_future_ids") or [])
     world = str(job.get("world", "proxy"))
+    queue_trace = bool(job.get("queue_trace", False))
 
     cmd = proxy_cmd(m, routes=routes_path, extra=["--load-state", state_path])
     try:
@@ -436,9 +637,16 @@ def _proxy_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
             act.apply(tc, action)
 
         total_veh_steps = 0
+        trace: List[Dict[str, Any]] = []
+        edges = load_queue_edges() if queue_trace else None
+        if queue_trace:
+            # t = t_d: right after the load, before stepping; pending is unreadable here.
+            trace.append(queue_snapshot(tc, t0, edges, pending=None))
         for k in range(1, horizon + 1):
             tc.simulationStep()
             t = tc.simulation.getTime()
+            if queue_trace and int(round(t)) % 60 == 0:
+                trace.append(queue_snapshot(tc, t, edges, pending=list(tc.simulation.getPendingVehicles())))
             # Truth schedule clearance at 5,400 s inside branch
             if t >= 5400.0:
                 for vid in ("incident_0", "incident_1"):
@@ -468,6 +676,7 @@ def _proxy_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
             "n_vehicles": n_veh,
             "wall_s": time.time() - t_wall0,
             "status": "ok",
+            "queue_trace": trace if queue_trace else None,
         }
     except Exception as e:
         return {
@@ -481,6 +690,7 @@ def _proxy_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
             "reason": type(e).__name__,
             "status": "error",
             "wall_s": time.time() - t_wall0,
+            "queue_trace": None,
         }
     finally:
         try:

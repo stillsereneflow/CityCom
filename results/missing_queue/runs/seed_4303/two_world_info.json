@@ -1,0 +1,17 @@
+{
+  "seed": 4303,
+  "wall_s": 67.7,
+  "proxy_rc": 0,
+  "twin_rc": 0,
+  "alarm": {
+    "first_alarm_t": 4650.0,
+    "latency_s": 450.0,
+    "latency_ok": true,
+    "n_alarm_intervals": 23
+  },
+  "twin_state_4440": "D:\\CityCom-astra\\results\\missing_queue\\runs\\seed_4303\\twin\\twin_state_4440.xml.gz",
+  "twin_meta_4440": "D:\\CityCom-astra\\results\\missing_queue\\runs\\seed_4303\\twin\\twin_state_4440.json",
+  "twin_state": "D:\\CityCom-astra\\results\\missing_queue\\runs\\seed_4303\\twin\\twin_state_5100.xml.gz",
+  "twin_meta": "D:\\CityCom-astra\\results\\missing_queue\\runs\\seed_4303\\twin\\twin_state_5100.json",
+  "proxy_state": "D:\\CityCom-astra\\results\\missing_queue\\runs\\seed_4303\\proxy\\proxy_state_5100.xml.gz"
+}

@@ -1,0 +1,21 @@
+{
+  "t": 5100.0,
+  "control_state": {
+    "tls_program": {},
+    "lane_disallow": {},
+    "lane_maxspeed": {},
+    "vms": null
+  },
+  "stream_ptr": 9438,
+  "pending": [],
+  "pending_routes": {},
+  "demand_seed": 202,
+  "sumo_seed": 2,
+  "demand_path": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\twin_cand.rou.xml",
+  "m": {
+    "tko_insert": 1.2260881241344626
+  },
+  "twin_base_factor": 0.85,
+  "veh_digest": "5f529dd62e9c74b102bbe72d5053519224a9373d844cff722fea5bd4fe67bd7b",
+  "n_veh": 349
+}

@@ -1,0 +1,43 @@
+{
+  "t": 5100.0,
+  "control_state": {
+    "tls_program": {},
+    "lane_disallow": {},
+    "lane_maxspeed": {},
+    "vms": null
+  },
+  "stream_ptr": 9438,
+  "pending": [],
+  "pending_routes": {},
+  "demand_seed": 202,
+  "sumo_seed": 2,
+  "demand_path": "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\twin_cand.rou.xml",
+  "m": {
+    "tko_insert": 1.1878049284559735
+  },
+  "twin_base_factor": 0.85,
+  "veh_digest": "ee00bb58642684b2a9bbf4eb3054b3afb06ce6df8b0d5ca1cfd174685f08337e",
+  "n_veh": 418,
+  "blockers": {
+    "hyp_blocker_0": {
+      "exists": true,
+      "road": "ktb_n1",
+      "lane": 0,
+      "pos": 755.2854226699585,
+      "stopped": true,
+      "stop_time": 4518.0,
+      "stop_pos": 755.2854226699585,
+      "delay_s": 18.0
+    },
+    "hyp_blocker_1": {
+      "exists": true,
+      "road": "ktb_n1",
+      "lane": 1,
+      "pos": 755.2898056044235,
+      "stopped": true,
+      "stop_time": 4503.0,
+      "stop_pos": 755.2898056044235,
+      "delay_s": 3.0
+    }
+  }
+}
