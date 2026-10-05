@@ -1,6 +1,6 @@
 # CityCom handoff: where the work stands and what comes next
 
-Last updated: 2026-10-05 21:40 (session 2: replay diagnosis verified and reviewed; missing-queue test preregistered and dispatched).
+Last updated: 2026-10-06 02:10 (session 2: replay diagnosis verified; missing-queue test done, Support; dev-runs preregistered, driver and analyzer dispatched).
 
 **When the user says "resume" (or anything like "continue", "pick up where we left off"), read this file, then do "On resume" below, then carry on with the queue.**
 
@@ -62,12 +62,12 @@ Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/s
 
 ## On resume (do these first, in order)
 
-1. **List the run directory** `C:/Users/chenq/.claude/runs/D--CityCom/` and handle every dispatch without a `merged` marker, as the global CLAUDE.md §11 describes. At handoff time, two were running (launched 2026-10-05 21:48, detached):
-   - `20261005-2130-agyflash-mqstates` (agy-flash): two-world runs on 4301–4304 (Twin snapshots 4,440 and 5,100), C/H restart replays, gates G1–G3 (`results/missing_queue/gates.json`), `queue_td.parquet`. New files `citypulse/experiments/mq_replay.py`, `tests/test_mq_replay.py`.
-   - `20261005-2130-dsh-mqworker` (dsh): `audit_engine.py` changes (`reuse_blockers`, verified clearance, `queue_trace`), compat check (`results/missing_queue/compat_check.json`), grid runner `citypulse/experiments/missing_queue.py` + tests. It does **not** run the 4301–4304 grid.
-   - Verify each yourself: gates and Q numbers recomputed from the state files; compat check re-run on a few rows; the dsh provider check (system Python: `python C:/Users/chenq/.claude/skills/fleet-dispatch/dsh_provider.py <run dir>`); full suite. Watch for files touched outside each worker's allowed set (listed in each `prompt.md`). Commit with `git add -f` for `results/`, then create `merged`.
-2. If all gates pass: dispatch the pilot (`missing_queue.py pilot --seed 4301`), check it, then the grid and `analyze` (to dsh, with agy-flash taking a piece). Verify the classification yourself from `raw.parquet` and `queue_td.parquet`, then take it to Codex read-only. If a gate fails: stop, report, and take it to Codex; do not change the protocol without a revised preregistration.
-3. Then write the preregistration for the fresh INC/NOI/SHK/DET development runs (unchanged method) and get Codex's review.
+1. **List the run directory** `C:/Users/chenq/.claude/runs/D--CityCom/` and handle every dispatch without a `merged` marker, as the global CLAUDE.md §11 describes. At handoff time, two may still be running (launched 2026-10-06 ~02:00, detached):
+   - `20261006-0200-agyflash-devdriver` (agy-flash): `citypulse/experiments/dev_runs.py` (prepare / collect / check) + `tests/test_dev_runs.py`; a smoke pair `evt_noi_4401` + `conv_noi_4401` in `results/dev_runs/smoke/`. It must not run the 48 slots.
+   - `20261006-0200-dsh-devoutcomes` (dsh): `citypulse/experiments/dev_outcomes.py` (outcomes 1–9) + `tests/test_dev_outcomes.py`; self-test on pilot 2 in `results/dev_runs/analyzer_selftest/`.
+   - Verify: outcome definitions against `docs/oct13-dev-runs-plan.md` (spot-check boundary cases); smoke pairing/completeness; dsh provider check (system Python: `python C:/Users/chenq/.claude/skills/fleet-dispatch/dsh_provider.py <run dir>`); full suite; files touched only inside each worker's allowed set. Commit both (execution code must be committed: provenance refuses a dirty tree), create `merged`.
+2. Then `dev_runs.py prepare` (clean tree) and `collect --parallel 4` detached (48 slots, ~1 h), then `check`, then `dev_outcomes.py analyze --slots`. Verify outcomes from the raw logs, then Codex read-only review.
+3. Then the frozen-audit preregistration (configuration, fresh seeds, estimands, claim boundary, descriptive state-history check: see `docs/decision-2026-10-06-missing-queue.md`), Codex review, before Oct 16.
 
 ## Queue (from `decision-2026-10-05-roadmap.md`)
 
@@ -76,8 +76,9 @@ Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/s
 | Oct 6–7 | RNG isolation and paired CRN | done (d9d078b) |
 | Oct 8–9 | One-factor audit sensitivities | done (a61e2bc) |
 | Oct 10–12 | Matched-observation replay diagnosis | done (3b5e575, 302152e) |
-| Oct 5–14 | Missing-queue test (`oct11-missing-queue-plan.md`) | preregistered; states + worker dispatched |
-| Oct 13–15 | Fresh INC/NOI/SHK/DET development runs (natural adoption, false adoption, premature clearance, forecasts, exclusions; DEGRADED exercised live) | not started; needs a preregistration first |
+| Oct 5–6 | Missing-queue test (`oct11-missing-queue-plan.md`) | done: **Support** (816829c); ruling and claim wording in `docs/decision-2026-10-06-missing-queue.md` (2e333b0) |
+| Oct 6–15 | Fresh INC/NOI/SHK/DET development runs (`oct13-dev-runs-plan.md`, rev 2, 382db30; seeds 4401–4406) | preregistered; driver + analyzer being built |
+| before Oct 16 | Frozen-audit preregistration | not started |
 | Oct 16 | **Design freeze** | |
 | Oct 16–18 | Frozen audit on fresh test seeds | |
 | Oct 18 | **Results freeze**, then writing the submission | |
@@ -87,7 +88,8 @@ Seeds already used:
 - 4001–4003, 4101–4103: pilots;
 - 4201–4208: audit;
 - 5001–5008: NA-300;
-- 4301–4304: missing-queue test.
+- 4301–4304: missing-queue test;
+- 4401–4406: development runs (preregistered).
 
 **6001–6008 are reserved for E\* and untouched.** Pick fresh ranges for anything new, and check that no result uses them.
 
