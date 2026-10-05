@@ -1,0 +1,128 @@
+{
+ "forecasts": {
+  "4500": {
+   "5min": {
+    "target_t": 4800.0,
+    "pred": 0,
+    "truth": 5.0,
+    "err": -5.0
+   },
+   "15min": {
+    "target_t": 5400.0,
+    "pred": 0,
+    "truth": 44.0,
+    "err": -44.0
+   }
+  },
+  "4800": {
+   "5min": {
+    "target_t": 5100.0,
+    "pred": 0,
+    "truth": 10.0,
+    "err": -10.0
+   },
+   "15min": {
+    "target_t": 5700.0,
+    "pred": 0,
+    "truth": 158.0,
+    "err": -158.0
+   }
+  },
+  "5100": {
+   "5min": {
+    "target_t": 5400.0,
+    "pred": 0,
+    "truth": 44.0,
+    "err": -44.0
+   },
+   "15min": {
+    "target_t": 6000.0,
+    "pred": 0,
+    "truth": 0.0,
+    "err": 0.0
+   }
+  },
+  "5400": {
+   "5min": {
+    "target_t": 5700.0,
+    "pred": 0,
+    "truth": 158.0,
+    "err": -158.0
+   },
+   "15min": {
+    "target_t": 6300.0,
+    "pred": 0,
+    "truth": 0.0,
+    "err": 0.0
+   }
+  },
+  "5700": {
+   "5min": {
+    "target_t": 6000.0,
+    "pred": 0,
+    "truth": 0.0,
+    "err": 0.0
+   },
+   "15min": {
+    "target_t": 6600.0,
+    "pred": 0,
+    "truth": 0.0,
+    "err": 0.0
+   }
+  },
+  "6000": {
+   "5min": {
+    "target_t": 6300.0,
+    "pred": 0,
+    "truth": 0.0,
+    "err": 0.0
+   },
+   "15min": {
+    "target_t": 6900.0,
+    "pred": 0,
+    "truth": 0.0,
+    "err": 0.0
+   }
+  },
+  "6300": {
+   "5min": {
+    "target_t": 6600.0,
+    "pred": 0,
+    "truth": 0.0,
+    "err": 0.0
+   },
+   "15min": {
+    "target_t": 7200.0,
+    "pred": 0,
+    "truth": 0.0,
+    "err": 0.0
+   }
+  },
+  "6600": {
+   "5min": {
+    "target_t": 6900.0,
+    "pred": 0,
+    "truth": 0.0,
+    "err": 0.0
+   },
+   "15min": {
+    "target_t": 7500.0,
+    "pred": 0,
+    "truth": null,
+    "err": null
+   }
+  }
+ },
+ "summary_5min": {
+  "mae": 27.125,
+  "rmse": 58.12163968781335,
+  "bias": -27.125,
+  "n": 8
+ },
+ "summary_15min": {
+  "mae": 28.857142857142858,
+  "rmse": 61.99078272499181,
+  "bias": -28.857142857142858,
+  "n": 7
+ }
+}

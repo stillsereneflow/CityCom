@@ -1,0 +1,298 @@
+{
+  "summary": {
+    "complete": 48,
+    "complete_but_flagged": 0,
+    "incomplete": 0,
+    "permanently_failed": 0
+  },
+  "slots": {
+    "conv_det_4401": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_det_4402": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_det_4403": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_det_4404": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_det_4405": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_det_4406": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_inc_4401": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_inc_4402": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_inc_4403": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_inc_4404": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_inc_4405": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_inc_4406": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_noi_4401": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_noi_4402": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_noi_4403": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_noi_4404": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_noi_4405": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_noi_4406": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_shk_4401": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_shk_4402": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_shk_4403": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_shk_4404": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_shk_4405": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "conv_shk_4406": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_det_4401": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_det_4402": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_det_4403": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_det_4404": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_det_4405": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_det_4406": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_inc_4401": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_inc_4402": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_inc_4403": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_inc_4404": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_inc_4405": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_inc_4406": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_noi_4401": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_noi_4402": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_noi_4403": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_noi_4404": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_noi_4405": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_noi_4406": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_shk_4401": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_shk_4402": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_shk_4403": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_shk_4404": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_shk_4405": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_shk_4406": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    }
+  }
+}

@@ -1,0 +1,4 @@
+{"t": 4920.0, "from": "NORMAL", "to": "SUSPECTED_EVENT", "reason": "trigger_alarm"}
+{"t": 5040.0, "from": "SUSPECTED_EVENT", "to": "NORMAL", "reason": "detector_fault_AID02109_noise"}
+{"t": 5070.0, "from": "NORMAL", "to": "SUSPECTED_EVENT", "reason": "trigger_alarm"}
+{"t": 5070.0, "from": "SUSPECTED_EVENT", "to": "NORMAL", "reason": "detector_fault_AID02111_zero"}

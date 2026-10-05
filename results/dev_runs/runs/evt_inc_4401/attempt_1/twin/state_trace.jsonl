@@ -1,0 +1,4 @@
+{"t": 4890.0, "from": "NORMAL", "to": "SUSPECTED_EVENT", "reason": "trigger_alarm"}
+{"t": 4890.0, "from": "SUSPECTED_EVENT", "to": "NORMAL", "reason": "detector_fault_AID02111_stuck"}
+{"t": 4920.0, "from": "NORMAL", "to": "SUSPECTED_EVENT", "reason": "trigger_alarm"}
+{"t": 5040.0, "from": "SUSPECTED_EVENT", "to": "NORMAL", "reason": "detector_fault_AID02109_stuck"}

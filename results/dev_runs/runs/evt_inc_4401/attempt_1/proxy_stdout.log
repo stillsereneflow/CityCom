@@ -1,0 +1,1 @@
+{"t_end": 7200.0, "wall_s": 308.92896485328674, "arrived": 0, "running": 398, "pending": 0, "teleports_total": null, "incident": {"edge": "ktb_n1", "lanes": [0, 1], "pos": 900.0, "t_start": 4500.0, "duration": 900.0}, "n_diverted": 0}
