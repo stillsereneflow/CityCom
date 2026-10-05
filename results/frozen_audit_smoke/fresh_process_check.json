@@ -1,0 +1,146 @@
+{
+  "check": "fresh process per branch (maxtasksperchild=1, chunksize=1)",
+  "runner_file": "citypulse/branching/audit_engine.py",
+  "parent_pid": 2496,
+  "n_jobs": 6,
+  "n_matched_J": 6,
+  "n_matched_digest": 6,
+  "n_ok": 6,
+  "all_matched": true,
+  "pool_workers_2": {
+    "pids": [
+      9808,
+      1468,
+      24192,
+      9288
+    ],
+    "n_jobs": 4,
+    "n_distinct_pids": 4,
+    "all_distinct": true,
+    "all_outside_parent": true,
+    "wall_s": 5.12
+  },
+  "serial_workers_1": {
+    "pids": [
+      23568,
+      21684
+    ],
+    "n_jobs": 2,
+    "n_distinct_pids": 2,
+    "all_distinct": true,
+    "all_outside_parent": true,
+    "wall_s": 4.21
+  },
+  "all_jobs_distinct_pids": true,
+  "routes": {
+    "4201/1": {
+      "routes": "C:\\Users\\chenq\\AppData\\Local\\Temp\\citycom_frozen_smoke\\routes\\proxy_s4201_m1.rou.xml",
+      "n_resampled": 1071
+    }
+  },
+  "rows": [
+    {
+      "world": "twin",
+      "seed": 4203,
+      "replication": 5,
+      "action": "A2",
+      "phase": "pool_workers_2",
+      "worker_pid": 9808,
+      "parent_pid": 2496,
+      "status": "ok",
+      "stored_J": 96.54,
+      "replayed_J": 96.54,
+      "J_matches": true,
+      "stored_digest": "47567914e162b9848c26ed6b53c2b21b1cd314f336790058e15d373b18e4fd89",
+      "replayed_digest": "47567914e162b9848c26ed6b53c2b21b1cd314f336790058e15d373b18e4fd89",
+      "digest_matches": true,
+      "ok": true
+    },
+    {
+      "world": "twin",
+      "seed": 4207,
+      "replication": 2,
+      "action": "A4",
+      "phase": "pool_workers_2",
+      "worker_pid": 1468,
+      "parent_pid": 2496,
+      "status": "ok",
+      "stored_J": 89.85888888888888,
+      "replayed_J": 89.85888888888888,
+      "J_matches": true,
+      "stored_digest": "22e10aa7e1b9a3befa797dd353bbb921f2e0eed972800a7ea2faeb65cb5d6b9d",
+      "replayed_digest": "22e10aa7e1b9a3befa797dd353bbb921f2e0eed972800a7ea2faeb65cb5d6b9d",
+      "digest_matches": true,
+      "ok": true
+    },
+    {
+      "world": "proxy",
+      "seed": 4201,
+      "replication": 1,
+      "action": "A0",
+      "phase": "pool_workers_2",
+      "worker_pid": 24192,
+      "parent_pid": 2496,
+      "status": "ok",
+      "stored_J": 108.86861111111111,
+      "replayed_J": 108.86861111111111,
+      "J_matches": true,
+      "stored_digest": "56dfb081cd4c41ae161c7728a3c2929ede81f6c8d7081c5419f4ab45c821dcd6",
+      "replayed_digest": "56dfb081cd4c41ae161c7728a3c2929ede81f6c8d7081c5419f4ab45c821dcd6",
+      "digest_matches": true,
+      "ok": true
+    },
+    {
+      "world": "proxy",
+      "seed": 4201,
+      "replication": 1,
+      "action": "A3",
+      "phase": "pool_workers_2",
+      "worker_pid": 9288,
+      "parent_pid": 2496,
+      "status": "ok",
+      "stored_J": 103.91722222222222,
+      "replayed_J": 103.91722222222222,
+      "J_matches": true,
+      "stored_digest": "818b37d309bfaf11dd2ecdc6bcd2ac688a572624eaf35bed52a543eab342127d",
+      "replayed_digest": "818b37d309bfaf11dd2ecdc6bcd2ac688a572624eaf35bed52a543eab342127d",
+      "digest_matches": true,
+      "ok": true
+    },
+    {
+      "world": "twin",
+      "seed": 4203,
+      "replication": 5,
+      "action": "A2",
+      "phase": "serial_workers_1",
+      "worker_pid": 23568,
+      "parent_pid": 2496,
+      "status": "ok",
+      "stored_J": 96.54,
+      "replayed_J": 96.54,
+      "J_matches": true,
+      "stored_digest": "47567914e162b9848c26ed6b53c2b21b1cd314f336790058e15d373b18e4fd89",
+      "replayed_digest": "47567914e162b9848c26ed6b53c2b21b1cd314f336790058e15d373b18e4fd89",
+      "digest_matches": true,
+      "ok": true
+    },
+    {
+      "world": "twin",
+      "seed": 4207,
+      "replication": 2,
+      "action": "A4",
+      "phase": "serial_workers_1",
+      "worker_pid": 21684,
+      "parent_pid": 2496,
+      "status": "ok",
+      "stored_J": 89.85888888888888,
+      "replayed_J": 89.85888888888888,
+      "J_matches": true,
+      "stored_digest": "22e10aa7e1b9a3befa797dd353bbb921f2e0eed972800a7ea2faeb65cb5d6b9d",
+      "replayed_digest": "22e10aa7e1b9a3befa797dd353bbb921f2e0eed972800a7ea2faeb65cb5d6b9d",
+      "digest_matches": true,
+      "ok": true
+    }
+  ],
+  "passed": true
+}

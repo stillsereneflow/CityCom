@@ -1,0 +1,183 @@
+{
+  "passed": false,
+  "clean": false,
+  "seeds_checked": [
+    4201
+  ],
+  "matches": {
+    "D:\\CityCom-astra\\results\\audit\\metrics.json": [
+      "json_seed_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\raw.parquet": [
+      "parquet_seed_[4201]"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\rng_check.json": [
+      "json_seed_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\compat_check.json": [
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\routes\\proxy_s4201_m1.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\routes\\proxy_s4201_m10.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\routes\\proxy_s4201_m11.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\routes\\proxy_s4201_m12.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\routes\\proxy_s4201_m2.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\routes\\proxy_s4201_m3.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\routes\\proxy_s4201_m4.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\routes\\proxy_s4201_m5.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\routes\\proxy_s4201_m6.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\routes\\proxy_s4201_m7.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\routes\\proxy_s4201_m8.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\routes\\proxy_s4201_m9.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\runs\\seed_4201": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\sens\\baseline_check.json": [
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\sens\\metrics_sens.json": [
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201",
+      "json_seed_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\sens\\raw_sens.parquet": [
+      "parquet_seed_[4201]"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\v2\\metrics_v2.json": [
+      "json_seed_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\v2\\rng_check_v2.json": [
+      "json_seed_4201"
+    ],
+    "D:\\CityCom-astra\\results\\audit\\runs\\seed_4201\\two_world_info.json": [
+      "json_seed_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\pilot_4201_CD.txt": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\compat_routes\\proxy_s4201_m1.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\grid_test\\queue_td.parquet": [
+      "parquet_seed_[4201]"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\grid_test\\queue_trace.parquet": [
+      "parquet_seed_[4201]"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\grid_test\\raw.parquet": [
+      "parquet_seed_[4201]"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\routes\\proxy_s4201_m1.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\routes\\proxy_s4201_m10.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\routes\\proxy_s4201_m11.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\routes\\proxy_s4201_m12.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\routes\\proxy_s4201_m2.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\routes\\proxy_s4201_m3.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\routes\\proxy_s4201_m4.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\routes\\proxy_s4201_m5.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\routes\\proxy_s4201_m6.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\routes\\proxy_s4201_m7.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\routes\\proxy_s4201_m8.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\routes\\proxy_s4201_m9.rou.xml": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\runs\\seed_4201": [
+      "name_4201"
+    ],
+    "D:\\CityCom-astra\\results\\missing_queue\\scratch_dsh\\states\\seed_4201": [
+      "name_4201"
+    ]
+  }
+}

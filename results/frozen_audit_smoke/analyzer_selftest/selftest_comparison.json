@@ -1,0 +1,187 @@
+{
+  "source": {
+    "B": "results/audit/raw.parquet (belief B) + results/audit/v2/report.md",
+    "D300": "results/audit/sens/raw_sens.parquet variant D300 + results/audit/sens/report.md"
+  },
+  "n_seeds": 8,
+  "primary_complete_seeds": 8,
+  "secondary_complete_seeds": 8,
+  "n_checks": 20,
+  "n_passed": 20,
+  "passed": true,
+  "checks": [
+    {
+      "check": "BEE_signed (B)",
+      "ok": true,
+      "got": 1.6315393518518597,
+      "expected": 1.63,
+      "tol": 0.005
+    },
+    {
+      "check": "BEE_signed t-CI low (B)",
+      "ok": true,
+      "got": 1.0412214256936843,
+      "expected": 1.04,
+      "tol": 0.005
+    },
+    {
+      "check": "BEE_signed t-CI high (B)",
+      "ok": true,
+      "got": 2.2218572780100354,
+      "expected": 2.22,
+      "tol": 0.005
+    },
+    {
+      "check": "BEE_abs (B)",
+      "ok": true,
+      "got": 1.6315393518518597,
+      "expected": 1.63,
+      "tol": 0.005
+    },
+    {
+      "check": "floor abs (B)",
+      "ok": true,
+      "got": 0.1807986111111166,
+      "expected": 0.18,
+      "tol": 0.005
+    },
+    {
+      "check": "Regret (B)",
+      "ok": true,
+      "got": 0.0289930555555582,
+      "expected": 0.03,
+      "tol": 0.005
+    },
+    {
+      "check": "Spearman (B)",
+      "ok": true,
+      "got": 0.8499999999999999,
+      "expected": 0.85,
+      "tol": 0.0005
+    },
+    {
+      "check": "Kendall (B)",
+      "ok": true,
+      "got": 0.75,
+      "expected": 0.75,
+      "tol": 0.0005
+    },
+    {
+      "check": "a* = A3 on all 8 seeds (B)",
+      "ok": true,
+      "got": [
+        "A3",
+        "A3",
+        "A3",
+        "A3",
+        "A3",
+        "A3",
+        "A3",
+        "A3"
+      ],
+      "expected": "A3 x8",
+      "tol": 0
+    },
+    {
+      "check": "oracle agreement 7/8 (B)",
+      "ok": true,
+      "got": 7.0,
+      "expected": 7,
+      "tol": 0
+    },
+    {
+      "check": "D300 BEE_signed",
+      "ok": true,
+      "got": -3.186539351851847,
+      "expected": -3.19,
+      "tol": 0.005
+    },
+    {
+      "check": "D300 BEE_signed t-CI",
+      "ok": true,
+      "got": [
+        -5.474271076207335,
+        -0.898807627496359
+      ],
+      "expected": [
+        -5.47,
+        -0.9
+      ],
+      "tol": 0.01
+    },
+    {
+      "check": "D300 BEE_abs",
+      "ok": true,
+      "got": 3.2970486111111104,
+      "expected": 3.3,
+      "tol": 0.005
+    },
+    {
+      "check": "D300 Regret",
+      "ok": true,
+      "got": 1.863900462962965,
+      "expected": 1.86,
+      "tol": 0.005
+    },
+    {
+      "check": "D300 Spearman",
+      "ok": true,
+      "got": -0.2375,
+      "expected": -0.237,
+      "tol": 0.001
+    },
+    {
+      "check": "D300 a* per seed",
+      "ok": true,
+      "got": [
+        "A1",
+        "A1",
+        "A3",
+        "A3",
+        "A0",
+        "A3",
+        "A3",
+        "A3"
+      ],
+      "expected": [
+        "A1",
+        "A1",
+        "A3",
+        "A3",
+        "A0",
+        "A3",
+        "A3",
+        "A3"
+      ],
+      "tol": 0
+    },
+    {
+      "check": "claim boundary verbatim",
+      "ok": true,
+      "got": "substring of plan",
+      "expected": true,
+      "tol": 0
+    },
+    {
+      "check": "no floor subtraction key",
+      "ok": true,
+      "got": [],
+      "expected": "no gap key",
+      "tol": 0
+    },
+    {
+      "check": "CRN proxy median corr (B, v2)",
+      "ok": true,
+      "got": 0.9927414097913742,
+      "expected": 0.9927,
+      "tol": 0.0005
+    },
+    {
+      "check": "CRN twin median corr (B, v2)",
+      "ok": true,
+      "got": 0.902741385807958,
+      "expected": 0.9027,
+      "tol": 0.0005
+    }
+  ]
+}

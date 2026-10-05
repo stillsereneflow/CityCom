@@ -699,23 +699,46 @@ def _proxy_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
             pass
 
 
-def run_twin_branch_jobs(jobs: List[Dict[str, Any]], workers: int = 8) -> List[Dict[str, Any]]:
-    """Run Twin audit branch jobs across workers."""
+def _twin_job_with_pid(job: Dict[str, Any]) -> Dict[str, Any]:
+    """Thin runner wrapper: run one Twin branch here and record the executing OS pid.
+
+    The worker's own outputs (J, digest, status, blocker/clearance evidence, ...) are returned
+    unchanged; only ``worker_pid`` is added so the caller can verify one fresh process per branch.
+    """
+    result = _twin_audit_worker(job)
+    if isinstance(result, dict):
+        result["worker_pid"] = os.getpid()
+    return result
+
+
+def _proxy_job_with_pid(job: Dict[str, Any]) -> Dict[str, Any]:
+    """Thin runner wrapper: run one Proxy/Calibration branch here and record its OS pid."""
+    result = _proxy_audit_worker(job)
+    if isinstance(result, dict):
+        result["worker_pid"] = os.getpid()
+    return result
+
+
+def _run_branch_jobs(worker, jobs: List[Dict[str, Any]], workers: int) -> List[Dict[str, Any]]:
+    """Run every branch in its own freshly spawned process; results in job order.
+
+    ``maxtasksperchild=1`` with ``chunksize=1`` makes the spawn pool retire a worker after each
+    single job, so no worker is reused across branches. The serial path (one worker) takes the
+    same route and therefore also spawns one process per job.
+    """
     if not jobs:
         return []
     n = max(1, min(int(workers), len(jobs)))
-    if n == 1:
-        return [_twin_audit_worker(j) for j in jobs]
-    with mp.get_context("spawn").Pool(n) as pool:
-        return pool.map(_twin_audit_worker, jobs)
+    ctx = mp.get_context("spawn")
+    with ctx.Pool(n, maxtasksperchild=1) as pool:
+        return pool.map(worker, jobs, chunksize=1)
+
+
+def run_twin_branch_jobs(jobs: List[Dict[str, Any]], workers: int = 8) -> List[Dict[str, Any]]:
+    """Run Twin audit branch jobs, one freshly spawned process per branch."""
+    return _run_branch_jobs(_twin_job_with_pid, jobs, workers)
 
 
 def run_proxy_branch_jobs(jobs: List[Dict[str, Any]], workers: int = 8) -> List[Dict[str, Any]]:
-    """Run Proxy / Calibration audit branch jobs across workers."""
-    if not jobs:
-        return []
-    n = max(1, min(int(workers), len(jobs)))
-    if n == 1:
-        return [_proxy_audit_worker(j) for j in jobs]
-    with mp.get_context("spawn").Pool(n) as pool:
-        return pool.map(_proxy_audit_worker, jobs)
+    """Run Proxy / Calibration audit branch jobs, one freshly spawned process per branch."""
+    return _run_branch_jobs(_proxy_job_with_pid, jobs, workers)
