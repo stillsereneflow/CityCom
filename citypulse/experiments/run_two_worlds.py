@@ -20,6 +20,7 @@ def main():
     ap.add_argument("--no-incident", action="store_true")
     ap.add_argument("--twin-snapshot", type=float, nargs="*", default=[])
     ap.add_argument("--proxy-snapshot", type=float, nargs="*", default=[])
+    ap.add_argument("--proxy-snapshot-times", type=float, nargs="*", default=[])
     ap.add_argument("--routes", default=None, help="Proxy routes XML file")
     ap.add_argument("--twin-routes", default=None, help="Twin candidate routes XML file")
     ap.add_argument("--sensor-fault", default=None, help="Sensor fault specification, e.g. AID02109:stuck:4500:5400")
@@ -33,8 +34,9 @@ def main():
         targs.extend(["--demand-path", str(a.twin_routes)])
     twin = subprocess.Popen(targs)
     time.sleep(2)
+    proxy_snaps = a.proxy_snapshot_times if a.proxy_snapshot_times else a.proxy_snapshot
     pargs = [sys.executable, "-m", "citypulse.proxy.service", "--endpoint", ep, "--out", str(run / "proxy"),
-             "--t-end", str(a.t_end), "--snapshot-times", *map(str, a.proxy_snapshot)]
+             "--t-end", str(a.t_end), "--proxy-snapshot-times", *map(str, proxy_snaps)]
     if a.no_incident:
         pargs.append("--no-incident")
     if a.routes:

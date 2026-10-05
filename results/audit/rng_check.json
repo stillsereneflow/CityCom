@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "seed": 4201,
+  "twin": {
+    "identical_match": true,
+    "diff_seed_differs": true,
+    "r1_a_digest": "c0eeacf585979c4ecb8322627f429c0f72bf0063f137a5a9c9cfcad891c0042b",
+    "r1_b_digest": "c0eeacf585979c4ecb8322627f429c0f72bf0063f137a5a9c9cfcad891c0042b",
+    "r2_digest": "aaefe2f78491dac9dbc6436ea3f5f94dbf7c6a83781e7f38e4da296badea09ba",
+    "r1_a_J": 97.93722222222222,
+    "r1_b_J": 97.93722222222222,
+    "r2_J": 97.71
+  },
+  "proxy": {
+    "identical_match": true,
+    "diff_seed_differs": true,
+    "m1_a_digest": "56dfb081cd4c41ae161c7728a3c2929ede81f6c8d7081c5419f4ab45c821dcd6",
+    "m1_b_digest": "56dfb081cd4c41ae161c7728a3c2929ede81f6c8d7081c5419f4ab45c821dcd6",
+    "m2_digest": "27e6e277fc7b5a82ee468071d5e14b4ff26cacd20bd8daf85d5fa50812e30cc2",
+    "m1_a_J": 108.86861111111111,
+    "m1_b_J": 108.86861111111111,
+    "m2_J": 107.93305555555555
+  }
+}

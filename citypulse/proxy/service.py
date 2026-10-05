@@ -96,10 +96,12 @@ def main():
     ap.add_argument("--t-end", type=float, default=3000)
     ap.add_argument("--no-incident", action="store_true")
     ap.add_argument("--snapshot-times", type=float, nargs="*", default=[])
+    ap.add_argument("--proxy-snapshot-times", type=float, nargs="*", default=[], help="Proxy snapshot times")
     ap.add_argument("--routes", default=None, help="Proxy routes XML file")
     ap.add_argument("--sensor-fault", default=None, help="Sensor fault specification, e.g. AID02109:stuck:4500:5400")
     a = ap.parse_args()
-    s = run(a.endpoint, Path(a.out), a.seed, a.sensor_seed, a.t_end, not a.no_incident, set(a.snapshot_times),
+    snaps = set(a.snapshot_times) | set(a.proxy_snapshot_times)
+    s = run(a.endpoint, Path(a.out), a.seed, a.sensor_seed, a.t_end, not a.no_incident, snaps,
             routes=a.routes, sensor_fault=a.sensor_fault)
     print(json.dumps({k: v for k, v in s.items() if k != "observed_detectors"}))
 
