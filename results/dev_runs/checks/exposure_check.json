@@ -1,0 +1,3616 @@
+{
+ "task": "verify realised scenario exposure in the SHK and DET dev runs (EVT + CONV twin)",
+ "windows": {
+  "scenario": [
+   4500.0,
+   5400.0
+  ],
+  "trigger": [
+   4500.0,
+   5700.0
+  ],
+  "baseline": [
+   3600.0,
+   4500.0
+  ]
+ },
+ "trigger_rule": {
+  "pair_U": "AID02109",
+  "pair_D": "AID02111",
+  "threshold": 3.0,
+  "consecutive_ticks": 2,
+  "interval_s": 30.0,
+  "source": "citypulse/twin/event.py:TriggerRule, citypulse/twin/service.py:EventRuntime.step"
+ },
+ "files_used": {
+  "run_info.json": [
+   "scenario",
+   "seed",
+   "arm",
+   "routes",
+   "sensor_fault",
+   "proxy_cmd",
+   "twin_cmd"
+  ],
+  "proxy/proxy_truth.parquet": [
+   "t",
+   "detector",
+   "q",
+   "v",
+   "o"
+  ],
+  "proxy/proxy_halting.parquet": [
+   "t",
+   "ktb_w3",
+   "ktb_n1",
+   "halting_sum"
+  ],
+  "twin/twin_log.parquet": [
+   "t",
+   "detector",
+   "obs_valid",
+   "obs_q",
+   "obs_v",
+   "obs_o",
+   "twin_q",
+   "twin_v",
+   "twin_o"
+  ],
+  "twin/trigger_log.parquet": [
+   "t",
+   "B",
+   "streak",
+   "masked"
+  ],
+  "twin/twin_stats.json": [
+   "event.state",
+   "event.alarms",
+   "event.downweight",
+   "event.n_alarms"
+  ],
+  "scenarios/kwuntong/blite/synth5/{proxy,proxy_shock}.rou.xml": [
+   "vehicle@depart",
+   "route@edges"
+  ],
+  "results/event_pilot/impl/sigma_event.json": [
+   "sigma.<det>.{q,v,o}"
+  ]
+ },
+ "inferred_columns": {
+  "proxy_truth.q": "citypulse/sim.py:read_detectors -- 'vehicles in the previous completed 30 s interval' summed over the detector's lanes, so the row at tick t covers [t-30, t); v is the count-weighted mean speed (km/h, NaN when q=0), o the mean lane occupancy (%).",
+  "proxy_halting.ktb_w3|ktb_n1": "TraCI edge.getLastStepHaltingNumber, sampled on the same 30 s ticks; halting_sum = ktb_w3 + ktb_n1.",
+  "twin_log.obs_*": "the SensorMsg reading as the Twin received it (Proxy truth passed through SensorEmulator, including any --sensor-fault); twin_* is the Twin's own state.",
+  "trigger_log.B": "event.bottleneck_index; NaN means the interval was missing (obs invalid / null occupancy / null twin reading / no sigma). The logged frame drops the 'why' reason and the residual terms, so both are recomputed here from twin_log + sigma_event.json.",
+  "rou.xml vehicle@depart": "scheduled departure time of the Proxy demand; SUMO may insert later when the entry is congested, so this is the *scheduled* shock and proxy_truth.q is the realised passage."
+ },
+ "shk": [
+  {
+   "seed": 4401,
+   "scenario": "SHK",
+   "evt": {
+    "routes_file_shk": "proxy_shock.rou.xml",
+    "routes_file_noi": "proxy.rou.xml",
+    "uses_proxy_shock": true,
+    "scheduled_departures_4500_5400": {
+     "LOWER_ktr": {
+      "shk": 201,
+      "noi": 168,
+      "delta_pct": 19.64
+     },
+     "STUB_x": {
+      "shk": 418,
+      "noi": 423,
+      "delta_pct": -1.18
+     },
+     "UPPER_ktb": {
+      "shk": 724,
+      "noi": 561,
+      "delta_pct": 29.06
+     },
+     "ALL": {
+      "shk": 1343,
+      "noi": 1152,
+      "delta_pct": 16.58
+     }
+    },
+    "realised_q_4500_5400": {
+     "AID07105": {
+      "shk_q": 733,
+      "noi_q": 696,
+      "delta_pct": 5.32
+     },
+     "AID07106": {
+      "shk_q": 726,
+      "noi_q": 693,
+      "delta_pct": 4.76
+     },
+     "AID02105": {
+      "shk_q": 556,
+      "noi_q": 527,
+      "delta_pct": 5.5
+     },
+     "AID02109": {
+      "shk_q": 547,
+      "noi_q": 521,
+      "delta_pct": 4.99
+     },
+     "AID02111": {
+      "shk_q": 171,
+      "noi_q": 158,
+      "delta_pct": 8.23
+     }
+    },
+    "queue_release": {
+     "detectors": {
+      "AID07105": {
+       "shk_q_5400_7200": 1512,
+       "shk_q_full_run": 5696,
+       "noi_q_5400_7200": 1453,
+       "noi_q_full_run": 5605
+      },
+      "AID02105": {
+       "shk_q_5400_7200": 1166,
+       "shk_q_full_run": 4258,
+       "noi_q_5400_7200": 1095,
+       "noi_q_full_run": 4148
+      }
+     },
+     "scheduled_full_run": {
+      "UPPER_ktb": {
+       "shk": 4330,
+       "noi": 4254
+      },
+      "LOWER_ktr": {
+       "shk": 1408,
+       "noi": 1414
+      },
+      "STUB_x": {
+       "shk": 3223,
+       "noi": 3219
+      }
+     },
+     "note": "The window demand the entry could not pass is released after 5400; the full-run totals converge on the scheduled totals."
+    },
+    "halting": {
+     "shk": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     },
+     "noi": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     }
+    },
+    "proxy_truth_occupancy_4500_5400": {
+     "AID02109": {
+      "shk": {
+       "o_mean": 6.001,
+       "o_max": 9.997,
+       "v_mean": 68.66,
+       "q_sum": 547
+      },
+      "noi": {
+       "o_mean": 6.025,
+       "o_max": 13.389,
+       "v_mean": 68.08,
+       "q_sum": 521
+      }
+     },
+     "AID02111": {
+      "shk": {
+       "o_mean": 2.34,
+       "o_max": 4.518,
+       "v_mean": 67.37,
+       "q_sum": 171
+      },
+      "noi": {
+       "o_mean": 2.013,
+       "o_max": 4.262,
+       "v_mean": 67.68,
+       "q_sum": 158
+      }
+     }
+    },
+    "trigger": {
+     "seed": 4401,
+     "trigger_log": "trigger_log.parquet",
+     "n_ticks": 41,
+     "B_max": 2.9743,
+     "B_max_t": 4620.0,
+     "B_mean": 0.3467,
+     "B_ge_3_times": [],
+     "n_B_ge_3": 0,
+     "longest_streak_B_ge_3": 0,
+     "signature_present": false,
+     "streak_max_logged": 0,
+     "n_missing_intervals": 4,
+     "missing_interval_times": [
+      5130.0,
+      5190.0,
+      5250.0,
+      5310.0
+     ],
+     "masked_any": false,
+     "alarm_times_logged": [],
+     "residuals": {
+      "n": 37,
+      "n_missing": 4,
+      "mean_r_Uo": 0.4504,
+      "mean_r_Do": 0.1656,
+      "mean_r_Uv": -0.498,
+      "mean_r_Dv": -0.0894,
+      "mean_occ_term": 0.1424,
+      "mean_speed_term": 0.2043,
+      "mean_B_recon": 0.3467,
+      "max_abs_r_Uo": 2.9898,
+      "max_B_recon": 2.9743,
+      "min_B_recon": -2.3577
+     },
+     "streak_resets": [],
+     "noi_B_max_same_seed": 4.0825
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)",
+    "realised_upper_delta_pct": 5.5
+   },
+   "conv": {
+    "routes_file_shk": "proxy_shock.rou.xml",
+    "routes_file_noi": "proxy.rou.xml",
+    "uses_proxy_shock": true,
+    "scheduled_departures_4500_5400": {
+     "LOWER_ktr": {
+      "shk": 201,
+      "noi": 168,
+      "delta_pct": 19.64
+     },
+     "STUB_x": {
+      "shk": 418,
+      "noi": 423,
+      "delta_pct": -1.18
+     },
+     "UPPER_ktb": {
+      "shk": 724,
+      "noi": 561,
+      "delta_pct": 29.06
+     },
+     "ALL": {
+      "shk": 1343,
+      "noi": 1152,
+      "delta_pct": 16.58
+     }
+    },
+    "realised_q_4500_5400": {
+     "AID07105": {
+      "shk_q": 733,
+      "noi_q": 696,
+      "delta_pct": 5.32
+     },
+     "AID07106": {
+      "shk_q": 726,
+      "noi_q": 693,
+      "delta_pct": 4.76
+     },
+     "AID02105": {
+      "shk_q": 556,
+      "noi_q": 527,
+      "delta_pct": 5.5
+     },
+     "AID02109": {
+      "shk_q": 547,
+      "noi_q": 521,
+      "delta_pct": 4.99
+     },
+     "AID02111": {
+      "shk_q": 171,
+      "noi_q": 158,
+      "delta_pct": 8.23
+     }
+    },
+    "queue_release": {
+     "detectors": {
+      "AID07105": {
+       "shk_q_5400_7200": 1512,
+       "shk_q_full_run": 5696,
+       "noi_q_5400_7200": 1453,
+       "noi_q_full_run": 5605
+      },
+      "AID02105": {
+       "shk_q_5400_7200": 1166,
+       "shk_q_full_run": 4258,
+       "noi_q_5400_7200": 1095,
+       "noi_q_full_run": 4148
+      }
+     },
+     "scheduled_full_run": {
+      "UPPER_ktb": {
+       "shk": 4330,
+       "noi": 4254
+      },
+      "LOWER_ktr": {
+       "shk": 1408,
+       "noi": 1414
+      },
+      "STUB_x": {
+       "shk": 3223,
+       "noi": 3219
+      }
+     },
+     "note": "The window demand the entry could not pass is released after 5400; the full-run totals converge on the scheduled totals."
+    },
+    "halting": {
+     "shk": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     },
+     "noi": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     }
+    },
+    "proxy_truth_occupancy_4500_5400": {
+     "AID02109": {
+      "shk": {
+       "o_mean": 6.001,
+       "o_max": 9.997,
+       "v_mean": 68.66,
+       "q_sum": 547
+      },
+      "noi": {
+       "o_mean": 6.025,
+       "o_max": 13.389,
+       "v_mean": 68.08,
+       "q_sum": 521
+      }
+     },
+     "AID02111": {
+      "shk": {
+       "o_mean": 2.34,
+       "o_max": 4.518,
+       "v_mean": 67.37,
+       "q_sum": 171
+      },
+      "noi": {
+       "o_mean": 2.013,
+       "o_max": 4.262,
+       "v_mean": 67.68,
+       "q_sum": 158
+      }
+     }
+    },
+    "trigger": {
+     "trigger_log": "absent",
+     "seed": 4401
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)",
+    "realised_upper_delta_pct": 5.5
+   }
+  },
+  {
+   "seed": 4402,
+   "scenario": "SHK",
+   "evt": {
+    "routes_file_shk": "proxy_shock.rou.xml",
+    "routes_file_noi": "proxy.rou.xml",
+    "uses_proxy_shock": true,
+    "scheduled_departures_4500_5400": {
+     "LOWER_ktr": {
+      "shk": 201,
+      "noi": 168,
+      "delta_pct": 19.64
+     },
+     "STUB_x": {
+      "shk": 418,
+      "noi": 423,
+      "delta_pct": -1.18
+     },
+     "UPPER_ktb": {
+      "shk": 724,
+      "noi": 561,
+      "delta_pct": 29.06
+     },
+     "ALL": {
+      "shk": 1343,
+      "noi": 1152,
+      "delta_pct": 16.58
+     }
+    },
+    "realised_q_4500_5400": {
+     "AID07105": {
+      "shk_q": 739,
+      "noi_q": 701,
+      "delta_pct": 5.42
+     },
+     "AID07106": {
+      "shk_q": 734,
+      "noi_q": 697,
+      "delta_pct": 5.31
+     },
+     "AID02105": {
+      "shk_q": 553,
+      "noi_q": 520,
+      "delta_pct": 6.35
+     },
+     "AID02109": {
+      "shk_q": 547,
+      "noi_q": 523,
+      "delta_pct": 4.59
+     },
+     "AID02111": {
+      "shk_q": 168,
+      "noi_q": 157,
+      "delta_pct": 7.01
+     }
+    },
+    "queue_release": {
+     "detectors": {
+      "AID07105": {
+       "shk_q_5400_7200": 1501,
+       "shk_q_full_run": 5692,
+       "noi_q_5400_7200": 1451,
+       "noi_q_full_run": 5602
+      },
+      "AID02105": {
+       "shk_q_5400_7200": 1163,
+       "shk_q_full_run": 4252,
+       "noi_q_5400_7200": 1103,
+       "noi_q_full_run": 4160
+      }
+     },
+     "scheduled_full_run": {
+      "UPPER_ktb": {
+       "shk": 4330,
+       "noi": 4254
+      },
+      "LOWER_ktr": {
+       "shk": 1408,
+       "noi": 1414
+      },
+      "STUB_x": {
+       "shk": 3223,
+       "noi": 3219
+      }
+     },
+     "note": "The window demand the entry could not pass is released after 5400; the full-run totals converge on the scheduled totals."
+    },
+    "halting": {
+     "shk": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     },
+     "noi": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     }
+    },
+    "proxy_truth_occupancy_4500_5400": {
+     "AID02109": {
+      "shk": {
+       "o_mean": 6.408,
+       "o_max": 10.48,
+       "v_mean": 68.08,
+       "q_sum": 547
+      },
+      "noi": {
+       "o_mean": 5.83,
+       "o_max": 9.405,
+       "v_mean": 69.18,
+       "q_sum": 523
+      }
+     },
+     "AID02111": {
+      "shk": {
+       "o_mean": 2.333,
+       "o_max": 4.141,
+       "v_mean": 67.67,
+       "q_sum": 168
+      },
+      "noi": {
+       "o_mean": 2.264,
+       "o_max": 4.141,
+       "v_mean": 67.49,
+       "q_sum": 157
+      }
+     }
+    },
+    "trigger": {
+     "seed": 4402,
+     "trigger_log": "trigger_log.parquet",
+     "n_ticks": 41,
+     "B_max": 3.1607,
+     "B_max_t": 5460.0,
+     "B_mean": 0.2848,
+     "B_ge_3_times": [
+      4800.0,
+      5460.0
+     ],
+     "n_B_ge_3": 2,
+     "longest_streak_B_ge_3": 1,
+     "signature_present": false,
+     "streak_max_logged": 1,
+     "n_missing_intervals": 5,
+     "missing_interval_times": [
+      4830.0,
+      5010.0,
+      5400.0,
+      5430.0,
+      5610.0
+     ],
+     "masked_any": false,
+     "alarm_times_logged": [],
+     "residuals": {
+      "n": 36,
+      "n_missing": 5,
+      "mean_r_Uo": 0.3666,
+      "mean_r_Do": 0.1249,
+      "mean_r_Uv": -0.336,
+      "mean_r_Dv": -0.008,
+      "mean_occ_term": 0.1208,
+      "mean_speed_term": 0.164,
+      "mean_B_recon": 0.2848,
+      "max_abs_r_Uo": 2.2368,
+      "max_B_recon": 3.1607,
+      "min_B_recon": -1.9732
+     },
+     "streak_resets": [
+      {
+       "t": 4830.0,
+       "streak_before": 1,
+       "streak_after": 0,
+       "reason": "missing_interval:obs_invalid"
+      },
+      {
+       "t": 5490.0,
+       "streak_before": 1,
+       "streak_after": 0,
+       "reason": "B_below_threshold"
+      }
+     ],
+     "noi_B_max_same_seed": 2.804
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)",
+    "realised_upper_delta_pct": 6.35
+   },
+   "conv": {
+    "routes_file_shk": "proxy_shock.rou.xml",
+    "routes_file_noi": "proxy.rou.xml",
+    "uses_proxy_shock": true,
+    "scheduled_departures_4500_5400": {
+     "LOWER_ktr": {
+      "shk": 201,
+      "noi": 168,
+      "delta_pct": 19.64
+     },
+     "STUB_x": {
+      "shk": 418,
+      "noi": 423,
+      "delta_pct": -1.18
+     },
+     "UPPER_ktb": {
+      "shk": 724,
+      "noi": 561,
+      "delta_pct": 29.06
+     },
+     "ALL": {
+      "shk": 1343,
+      "noi": 1152,
+      "delta_pct": 16.58
+     }
+    },
+    "realised_q_4500_5400": {
+     "AID07105": {
+      "shk_q": 739,
+      "noi_q": 701,
+      "delta_pct": 5.42
+     },
+     "AID07106": {
+      "shk_q": 734,
+      "noi_q": 697,
+      "delta_pct": 5.31
+     },
+     "AID02105": {
+      "shk_q": 553,
+      "noi_q": 520,
+      "delta_pct": 6.35
+     },
+     "AID02109": {
+      "shk_q": 547,
+      "noi_q": 523,
+      "delta_pct": 4.59
+     },
+     "AID02111": {
+      "shk_q": 168,
+      "noi_q": 157,
+      "delta_pct": 7.01
+     }
+    },
+    "queue_release": {
+     "detectors": {
+      "AID07105": {
+       "shk_q_5400_7200": 1501,
+       "shk_q_full_run": 5692,
+       "noi_q_5400_7200": 1451,
+       "noi_q_full_run": 5602
+      },
+      "AID02105": {
+       "shk_q_5400_7200": 1163,
+       "shk_q_full_run": 4252,
+       "noi_q_5400_7200": 1103,
+       "noi_q_full_run": 4160
+      }
+     },
+     "scheduled_full_run": {
+      "UPPER_ktb": {
+       "shk": 4330,
+       "noi": 4254
+      },
+      "LOWER_ktr": {
+       "shk": 1408,
+       "noi": 1414
+      },
+      "STUB_x": {
+       "shk": 3223,
+       "noi": 3219
+      }
+     },
+     "note": "The window demand the entry could not pass is released after 5400; the full-run totals converge on the scheduled totals."
+    },
+    "halting": {
+     "shk": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     },
+     "noi": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     }
+    },
+    "proxy_truth_occupancy_4500_5400": {
+     "AID02109": {
+      "shk": {
+       "o_mean": 6.408,
+       "o_max": 10.48,
+       "v_mean": 68.08,
+       "q_sum": 547
+      },
+      "noi": {
+       "o_mean": 5.83,
+       "o_max": 9.405,
+       "v_mean": 69.18,
+       "q_sum": 523
+      }
+     },
+     "AID02111": {
+      "shk": {
+       "o_mean": 2.333,
+       "o_max": 4.141,
+       "v_mean": 67.67,
+       "q_sum": 168
+      },
+      "noi": {
+       "o_mean": 2.264,
+       "o_max": 4.141,
+       "v_mean": 67.49,
+       "q_sum": 157
+      }
+     }
+    },
+    "trigger": {
+     "trigger_log": "absent",
+     "seed": 4402
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)",
+    "realised_upper_delta_pct": 6.35
+   }
+  },
+  {
+   "seed": 4403,
+   "scenario": "SHK",
+   "evt": {
+    "routes_file_shk": "proxy_shock.rou.xml",
+    "routes_file_noi": "proxy.rou.xml",
+    "uses_proxy_shock": true,
+    "scheduled_departures_4500_5400": {
+     "LOWER_ktr": {
+      "shk": 201,
+      "noi": 168,
+      "delta_pct": 19.64
+     },
+     "STUB_x": {
+      "shk": 418,
+      "noi": 423,
+      "delta_pct": -1.18
+     },
+     "UPPER_ktb": {
+      "shk": 724,
+      "noi": 561,
+      "delta_pct": 29.06
+     },
+     "ALL": {
+      "shk": 1343,
+      "noi": 1152,
+      "delta_pct": 16.58
+     }
+    },
+    "realised_q_4500_5400": {
+     "AID07105": {
+      "shk_q": 749,
+      "noi_q": 702,
+      "delta_pct": 6.7
+     },
+     "AID07106": {
+      "shk_q": 746,
+      "noi_q": 699,
+      "delta_pct": 6.72
+     },
+     "AID02105": {
+      "shk_q": 563,
+      "noi_q": 526,
+      "delta_pct": 7.03
+     },
+     "AID02109": {
+      "shk_q": 562,
+      "noi_q": 527,
+      "delta_pct": 6.64
+     },
+     "AID02111": {
+      "shk_q": 163,
+      "noi_q": 155,
+      "delta_pct": 5.16
+     }
+    },
+    "queue_release": {
+     "detectors": {
+      "AID07105": {
+       "shk_q_5400_7200": 1493,
+       "shk_q_full_run": 5694,
+       "noi_q_5400_7200": 1446,
+       "noi_q_full_run": 5602
+      },
+      "AID02105": {
+       "shk_q_5400_7200": 1164,
+       "shk_q_full_run": 4254,
+       "noi_q_5400_7200": 1095,
+       "noi_q_full_run": 4152
+      }
+     },
+     "scheduled_full_run": {
+      "UPPER_ktb": {
+       "shk": 4330,
+       "noi": 4254
+      },
+      "LOWER_ktr": {
+       "shk": 1408,
+       "noi": 1414
+      },
+      "STUB_x": {
+       "shk": 3223,
+       "noi": 3219
+      }
+     },
+     "note": "The window demand the entry could not pass is released after 5400; the full-run totals converge on the scheduled totals."
+    },
+    "halting": {
+     "shk": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     },
+     "noi": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     }
+    },
+    "proxy_truth_occupancy_4500_5400": {
+     "AID02109": {
+      "shk": {
+       "o_mean": 6.491,
+       "o_max": 11.281,
+       "v_mean": 66.47,
+       "q_sum": 562
+      },
+      "noi": {
+       "o_mean": 5.896,
+       "o_max": 9.492,
+       "v_mean": 68.08,
+       "q_sum": 527
+      }
+     },
+     "AID02111": {
+      "shk": {
+       "o_mean": 2.241,
+       "o_max": 3.693,
+       "v_mean": 67.16,
+       "q_sum": 163
+      },
+      "noi": {
+       "o_mean": 2.092,
+       "o_max": 3.715,
+       "v_mean": 67.08,
+       "q_sum": 155
+      }
+     }
+    },
+    "trigger": {
+     "seed": 4403,
+     "trigger_log": "trigger_log.parquet",
+     "n_ticks": 41,
+     "B_max": 3.265,
+     "B_max_t": 4770.0,
+     "B_mean": 0.4135,
+     "B_ge_3_times": [
+      4770.0,
+      5610.0
+     ],
+     "n_B_ge_3": 2,
+     "longest_streak_B_ge_3": 1,
+     "signature_present": false,
+     "streak_max_logged": 1,
+     "n_missing_intervals": 3,
+     "missing_interval_times": [
+      4830.0,
+      5130.0,
+      5430.0
+     ],
+     "masked_any": false,
+     "alarm_times_logged": [],
+     "residuals": {
+      "n": 38,
+      "n_missing": 3,
+      "mean_r_Uo": 0.5464,
+      "mean_r_Do": 0.0944,
+      "mean_r_Uv": -0.4197,
+      "mean_r_Dv": -0.0447,
+      "mean_occ_term": 0.226,
+      "mean_speed_term": 0.1875,
+      "mean_B_recon": 0.4135,
+      "max_abs_r_Uo": 2.4148,
+      "max_B_recon": 3.265,
+      "min_B_recon": -2.3494
+     },
+     "streak_resets": [
+      {
+       "t": 4800.0,
+       "streak_before": 1,
+       "streak_after": 0,
+       "reason": "B_below_threshold"
+      },
+      {
+       "t": 5640.0,
+       "streak_before": 1,
+       "streak_after": 0,
+       "reason": "B_below_threshold"
+      }
+     ],
+     "noi_B_max_same_seed": 2.7098
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)",
+    "realised_upper_delta_pct": 7.03
+   },
+   "conv": {
+    "routes_file_shk": "proxy_shock.rou.xml",
+    "routes_file_noi": "proxy.rou.xml",
+    "uses_proxy_shock": true,
+    "scheduled_departures_4500_5400": {
+     "LOWER_ktr": {
+      "shk": 201,
+      "noi": 168,
+      "delta_pct": 19.64
+     },
+     "STUB_x": {
+      "shk": 418,
+      "noi": 423,
+      "delta_pct": -1.18
+     },
+     "UPPER_ktb": {
+      "shk": 724,
+      "noi": 561,
+      "delta_pct": 29.06
+     },
+     "ALL": {
+      "shk": 1343,
+      "noi": 1152,
+      "delta_pct": 16.58
+     }
+    },
+    "realised_q_4500_5400": {
+     "AID07105": {
+      "shk_q": 749,
+      "noi_q": 702,
+      "delta_pct": 6.7
+     },
+     "AID07106": {
+      "shk_q": 746,
+      "noi_q": 699,
+      "delta_pct": 6.72
+     },
+     "AID02105": {
+      "shk_q": 563,
+      "noi_q": 526,
+      "delta_pct": 7.03
+     },
+     "AID02109": {
+      "shk_q": 562,
+      "noi_q": 527,
+      "delta_pct": 6.64
+     },
+     "AID02111": {
+      "shk_q": 163,
+      "noi_q": 155,
+      "delta_pct": 5.16
+     }
+    },
+    "queue_release": {
+     "detectors": {
+      "AID07105": {
+       "shk_q_5400_7200": 1493,
+       "shk_q_full_run": 5694,
+       "noi_q_5400_7200": 1446,
+       "noi_q_full_run": 5602
+      },
+      "AID02105": {
+       "shk_q_5400_7200": 1164,
+       "shk_q_full_run": 4254,
+       "noi_q_5400_7200": 1095,
+       "noi_q_full_run": 4152
+      }
+     },
+     "scheduled_full_run": {
+      "UPPER_ktb": {
+       "shk": 4330,
+       "noi": 4254
+      },
+      "LOWER_ktr": {
+       "shk": 1408,
+       "noi": 1414
+      },
+      "STUB_x": {
+       "shk": 3223,
+       "noi": 3219
+      }
+     },
+     "note": "The window demand the entry could not pass is released after 5400; the full-run totals converge on the scheduled totals."
+    },
+    "halting": {
+     "shk": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     },
+     "noi": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     }
+    },
+    "proxy_truth_occupancy_4500_5400": {
+     "AID02109": {
+      "shk": {
+       "o_mean": 6.491,
+       "o_max": 11.281,
+       "v_mean": 66.47,
+       "q_sum": 562
+      },
+      "noi": {
+       "o_mean": 5.896,
+       "o_max": 9.492,
+       "v_mean": 68.08,
+       "q_sum": 527
+      }
+     },
+     "AID02111": {
+      "shk": {
+       "o_mean": 2.241,
+       "o_max": 3.693,
+       "v_mean": 67.16,
+       "q_sum": 163
+      },
+      "noi": {
+       "o_mean": 2.092,
+       "o_max": 3.715,
+       "v_mean": 67.08,
+       "q_sum": 155
+      }
+     }
+    },
+    "trigger": {
+     "trigger_log": "absent",
+     "seed": 4403
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)",
+    "realised_upper_delta_pct": 7.03
+   }
+  },
+  {
+   "seed": 4404,
+   "scenario": "SHK",
+   "evt": {
+    "routes_file_shk": "proxy_shock.rou.xml",
+    "routes_file_noi": "proxy.rou.xml",
+    "uses_proxy_shock": true,
+    "scheduled_departures_4500_5400": {
+     "LOWER_ktr": {
+      "shk": 201,
+      "noi": 168,
+      "delta_pct": 19.64
+     },
+     "STUB_x": {
+      "shk": 418,
+      "noi": 423,
+      "delta_pct": -1.18
+     },
+     "UPPER_ktb": {
+      "shk": 724,
+      "noi": 561,
+      "delta_pct": 29.06
+     },
+     "ALL": {
+      "shk": 1343,
+      "noi": 1152,
+      "delta_pct": 16.58
+     }
+    },
+    "realised_q_4500_5400": {
+     "AID07105": {
+      "shk_q": 741,
+      "noi_q": 705,
+      "delta_pct": 5.11
+     },
+     "AID07106": {
+      "shk_q": 736,
+      "noi_q": 698,
+      "delta_pct": 5.44
+     },
+     "AID02105": {
+      "shk_q": 557,
+      "noi_q": 532,
+      "delta_pct": 4.7
+     },
+     "AID02109": {
+      "shk_q": 550,
+      "noi_q": 524,
+      "delta_pct": 4.96
+     },
+     "AID02111": {
+      "shk_q": 160,
+      "noi_q": 160,
+      "delta_pct": 0.0
+     }
+    },
+    "queue_release": {
+     "detectors": {
+      "AID07105": {
+       "shk_q_5400_7200": 1495,
+       "shk_q_full_run": 5688,
+       "noi_q_5400_7200": 1438,
+       "noi_q_full_run": 5594
+      },
+      "AID02105": {
+       "shk_q_5400_7200": 1160,
+       "shk_q_full_run": 4250,
+       "noi_q_5400_7200": 1089,
+       "noi_q_full_run": 4155
+      }
+     },
+     "scheduled_full_run": {
+      "UPPER_ktb": {
+       "shk": 4330,
+       "noi": 4254
+      },
+      "LOWER_ktr": {
+       "shk": 1408,
+       "noi": 1414
+      },
+      "STUB_x": {
+       "shk": 3223,
+       "noi": 3219
+      }
+     },
+     "note": "The window demand the entry could not pass is released after 5400; the full-run totals converge on the scheduled totals."
+    },
+    "halting": {
+     "shk": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     },
+     "noi": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     }
+    },
+    "proxy_truth_occupancy_4500_5400": {
+     "AID02109": {
+      "shk": {
+       "o_mean": 6.096,
+       "o_max": 9.389,
+       "v_mean": 67.81,
+       "q_sum": 550
+      },
+      "noi": {
+       "o_mean": 5.743,
+       "o_max": 8.84,
+       "v_mean": 69.54,
+       "q_sum": 524
+      }
+     },
+     "AID02111": {
+      "shk": {
+       "o_mean": 2.066,
+       "o_max": 2.896,
+       "v_mean": 67.54,
+       "q_sum": 160
+      },
+      "noi": {
+       "o_mean": 2.158,
+       "o_max": 3.172,
+       "v_mean": 67.51,
+       "q_sum": 160
+      }
+     }
+    },
+    "trigger": {
+     "seed": 4404,
+     "trigger_log": "trigger_log.parquet",
+     "n_ticks": 41,
+     "B_max": 3.2471,
+     "B_max_t": 5580.0,
+     "B_mean": 0.4822,
+     "B_ge_3_times": [
+      5580.0
+     ],
+     "n_B_ge_3": 1,
+     "longest_streak_B_ge_3": 1,
+     "signature_present": false,
+     "streak_max_logged": 1,
+     "n_missing_intervals": 6,
+     "missing_interval_times": [
+      5100.0,
+      5160.0,
+      5280.0,
+      5460.0,
+      5490.0,
+      5520.0
+     ],
+     "masked_any": false,
+     "alarm_times_logged": [],
+     "residuals": {
+      "n": 35,
+      "n_missing": 6,
+      "mean_r_Uo": 0.6565,
+      "mean_r_Do": 0.0444,
+      "mean_r_Uv": -0.6631,
+      "mean_r_Dv": -0.3109,
+      "mean_occ_term": 0.3061,
+      "mean_speed_term": 0.1761,
+      "mean_B_recon": 0.4822,
+      "max_abs_r_Uo": 3.0926,
+      "max_B_recon": 3.2471,
+      "min_B_recon": -3.2703
+     },
+     "streak_resets": [
+      {
+       "t": 5610.0,
+       "streak_before": 1,
+       "streak_after": 0,
+       "reason": "B_below_threshold"
+      }
+     ],
+     "noi_B_max_same_seed": 2.4048
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)",
+    "realised_upper_delta_pct": 4.7
+   },
+   "conv": {
+    "routes_file_shk": "proxy_shock.rou.xml",
+    "routes_file_noi": "proxy.rou.xml",
+    "uses_proxy_shock": true,
+    "scheduled_departures_4500_5400": {
+     "LOWER_ktr": {
+      "shk": 201,
+      "noi": 168,
+      "delta_pct": 19.64
+     },
+     "STUB_x": {
+      "shk": 418,
+      "noi": 423,
+      "delta_pct": -1.18
+     },
+     "UPPER_ktb": {
+      "shk": 724,
+      "noi": 561,
+      "delta_pct": 29.06
+     },
+     "ALL": {
+      "shk": 1343,
+      "noi": 1152,
+      "delta_pct": 16.58
+     }
+    },
+    "realised_q_4500_5400": {
+     "AID07105": {
+      "shk_q": 741,
+      "noi_q": 705,
+      "delta_pct": 5.11
+     },
+     "AID07106": {
+      "shk_q": 736,
+      "noi_q": 698,
+      "delta_pct": 5.44
+     },
+     "AID02105": {
+      "shk_q": 557,
+      "noi_q": 532,
+      "delta_pct": 4.7
+     },
+     "AID02109": {
+      "shk_q": 550,
+      "noi_q": 524,
+      "delta_pct": 4.96
+     },
+     "AID02111": {
+      "shk_q": 160,
+      "noi_q": 160,
+      "delta_pct": 0.0
+     }
+    },
+    "queue_release": {
+     "detectors": {
+      "AID07105": {
+       "shk_q_5400_7200": 1495,
+       "shk_q_full_run": 5688,
+       "noi_q_5400_7200": 1438,
+       "noi_q_full_run": 5594
+      },
+      "AID02105": {
+       "shk_q_5400_7200": 1160,
+       "shk_q_full_run": 4250,
+       "noi_q_5400_7200": 1089,
+       "noi_q_full_run": 4155
+      }
+     },
+     "scheduled_full_run": {
+      "UPPER_ktb": {
+       "shk": 4330,
+       "noi": 4254
+      },
+      "LOWER_ktr": {
+       "shk": 1408,
+       "noi": 1414
+      },
+      "STUB_x": {
+       "shk": 3223,
+       "noi": 3219
+      }
+     },
+     "note": "The window demand the entry could not pass is released after 5400; the full-run totals converge on the scheduled totals."
+    },
+    "halting": {
+     "shk": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     },
+     "noi": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     }
+    },
+    "proxy_truth_occupancy_4500_5400": {
+     "AID02109": {
+      "shk": {
+       "o_mean": 6.096,
+       "o_max": 9.389,
+       "v_mean": 67.81,
+       "q_sum": 550
+      },
+      "noi": {
+       "o_mean": 5.743,
+       "o_max": 8.84,
+       "v_mean": 69.54,
+       "q_sum": 524
+      }
+     },
+     "AID02111": {
+      "shk": {
+       "o_mean": 2.066,
+       "o_max": 2.896,
+       "v_mean": 67.54,
+       "q_sum": 160
+      },
+      "noi": {
+       "o_mean": 2.158,
+       "o_max": 3.172,
+       "v_mean": 67.51,
+       "q_sum": 160
+      }
+     }
+    },
+    "trigger": {
+     "trigger_log": "absent",
+     "seed": 4404
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)",
+    "realised_upper_delta_pct": 4.7
+   }
+  },
+  {
+   "seed": 4405,
+   "scenario": "SHK",
+   "evt": {
+    "routes_file_shk": "proxy_shock.rou.xml",
+    "routes_file_noi": "proxy.rou.xml",
+    "uses_proxy_shock": true,
+    "scheduled_departures_4500_5400": {
+     "LOWER_ktr": {
+      "shk": 201,
+      "noi": 168,
+      "delta_pct": 19.64
+     },
+     "STUB_x": {
+      "shk": 418,
+      "noi": 423,
+      "delta_pct": -1.18
+     },
+     "UPPER_ktb": {
+      "shk": 724,
+      "noi": 561,
+      "delta_pct": 29.06
+     },
+     "ALL": {
+      "shk": 1343,
+      "noi": 1152,
+      "delta_pct": 16.58
+     }
+    },
+    "realised_q_4500_5400": {
+     "AID07105": {
+      "shk_q": 742,
+      "noi_q": 701,
+      "delta_pct": 5.85
+     },
+     "AID07106": {
+      "shk_q": 741,
+      "noi_q": 699,
+      "delta_pct": 6.01
+     },
+     "AID02105": {
+      "shk_q": 564,
+      "noi_q": 525,
+      "delta_pct": 7.43
+     },
+     "AID02109": {
+      "shk_q": 555,
+      "noi_q": 533,
+      "delta_pct": 4.13
+     },
+     "AID02111": {
+      "shk_q": 163,
+      "noi_q": 168,
+      "delta_pct": -2.98
+     }
+    },
+    "queue_release": {
+     "detectors": {
+      "AID07105": {
+       "shk_q_5400_7200": 1502,
+       "shk_q_full_run": 5696,
+       "noi_q_5400_7200": 1454,
+       "noi_q_full_run": 5605
+      },
+      "AID02105": {
+       "shk_q_5400_7200": 1158,
+       "shk_q_full_run": 4257,
+       "noi_q_5400_7200": 1105,
+       "noi_q_full_run": 4163
+      }
+     },
+     "scheduled_full_run": {
+      "UPPER_ktb": {
+       "shk": 4330,
+       "noi": 4254
+      },
+      "LOWER_ktr": {
+       "shk": 1408,
+       "noi": 1414
+      },
+      "STUB_x": {
+       "shk": 3223,
+       "noi": 3219
+      }
+     },
+     "note": "The window demand the entry could not pass is released after 5400; the full-run totals converge on the scheduled totals."
+    },
+    "halting": {
+     "shk": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     },
+     "noi": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     }
+    },
+    "proxy_truth_occupancy_4500_5400": {
+     "AID02109": {
+      "shk": {
+       "o_mean": 6.386,
+       "o_max": 10.212,
+       "v_mean": 67.25,
+       "q_sum": 555
+      },
+      "noi": {
+       "o_mean": 6.143,
+       "o_max": 11.721,
+       "v_mean": 68.1,
+       "q_sum": 533
+      }
+     },
+     "AID02111": {
+      "shk": {
+       "o_mean": 2.121,
+       "o_max": 3.535,
+       "v_mean": 67.29,
+       "q_sum": 163
+      },
+      "noi": {
+       "o_mean": 2.257,
+       "o_max": 3.395,
+       "v_mean": 67.61,
+       "q_sum": 168
+      }
+     }
+    },
+    "trigger": {
+     "seed": 4405,
+     "trigger_log": "trigger_log.parquet",
+     "n_ticks": 41,
+     "B_max": 2.6263,
+     "B_max_t": 4770.0,
+     "B_mean": 0.2347,
+     "B_ge_3_times": [],
+     "n_B_ge_3": 0,
+     "longest_streak_B_ge_3": 0,
+     "signature_present": false,
+     "streak_max_logged": 0,
+     "n_missing_intervals": 4,
+     "missing_interval_times": [
+      4830.0,
+      5010.0,
+      5460.0,
+      5520.0
+     ],
+     "masked_any": false,
+     "alarm_times_logged": [],
+     "residuals": {
+      "n": 37,
+      "n_missing": 4,
+      "mean_r_Uo": 0.506,
+      "mean_r_Do": 0.1828,
+      "mean_r_Uv": -0.3949,
+      "mean_r_Dv": -0.2488,
+      "mean_occ_term": 0.1616,
+      "mean_speed_term": 0.0731,
+      "mean_B_recon": 0.2347,
+      "max_abs_r_Uo": 2.306,
+      "max_B_recon": 2.6263,
+      "min_B_recon": -1.9536
+     },
+     "streak_resets": [],
+     "noi_B_max_same_seed": 3.9351
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)",
+    "realised_upper_delta_pct": 7.43
+   },
+   "conv": {
+    "routes_file_shk": "proxy_shock.rou.xml",
+    "routes_file_noi": "proxy.rou.xml",
+    "uses_proxy_shock": true,
+    "scheduled_departures_4500_5400": {
+     "LOWER_ktr": {
+      "shk": 201,
+      "noi": 168,
+      "delta_pct": 19.64
+     },
+     "STUB_x": {
+      "shk": 418,
+      "noi": 423,
+      "delta_pct": -1.18
+     },
+     "UPPER_ktb": {
+      "shk": 724,
+      "noi": 561,
+      "delta_pct": 29.06
+     },
+     "ALL": {
+      "shk": 1343,
+      "noi": 1152,
+      "delta_pct": 16.58
+     }
+    },
+    "realised_q_4500_5400": {
+     "AID07105": {
+      "shk_q": 742,
+      "noi_q": 701,
+      "delta_pct": 5.85
+     },
+     "AID07106": {
+      "shk_q": 741,
+      "noi_q": 699,
+      "delta_pct": 6.01
+     },
+     "AID02105": {
+      "shk_q": 564,
+      "noi_q": 525,
+      "delta_pct": 7.43
+     },
+     "AID02109": {
+      "shk_q": 555,
+      "noi_q": 533,
+      "delta_pct": 4.13
+     },
+     "AID02111": {
+      "shk_q": 163,
+      "noi_q": 168,
+      "delta_pct": -2.98
+     }
+    },
+    "queue_release": {
+     "detectors": {
+      "AID07105": {
+       "shk_q_5400_7200": 1502,
+       "shk_q_full_run": 5696,
+       "noi_q_5400_7200": 1454,
+       "noi_q_full_run": 5605
+      },
+      "AID02105": {
+       "shk_q_5400_7200": 1158,
+       "shk_q_full_run": 4257,
+       "noi_q_5400_7200": 1105,
+       "noi_q_full_run": 4163
+      }
+     },
+     "scheduled_full_run": {
+      "UPPER_ktb": {
+       "shk": 4330,
+       "noi": 4254
+      },
+      "LOWER_ktr": {
+       "shk": 1408,
+       "noi": 1414
+      },
+      "STUB_x": {
+       "shk": 3223,
+       "noi": 3219
+      }
+     },
+     "note": "The window demand the entry could not pass is released after 5400; the full-run totals converge on the scheduled totals."
+    },
+    "halting": {
+     "shk": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     },
+     "noi": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     }
+    },
+    "proxy_truth_occupancy_4500_5400": {
+     "AID02109": {
+      "shk": {
+       "o_mean": 6.386,
+       "o_max": 10.212,
+       "v_mean": 67.25,
+       "q_sum": 555
+      },
+      "noi": {
+       "o_mean": 6.143,
+       "o_max": 11.721,
+       "v_mean": 68.1,
+       "q_sum": 533
+      }
+     },
+     "AID02111": {
+      "shk": {
+       "o_mean": 2.121,
+       "o_max": 3.535,
+       "v_mean": 67.29,
+       "q_sum": 163
+      },
+      "noi": {
+       "o_mean": 2.257,
+       "o_max": 3.395,
+       "v_mean": 67.61,
+       "q_sum": 168
+      }
+     }
+    },
+    "trigger": {
+     "trigger_log": "absent",
+     "seed": 4405
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)",
+    "realised_upper_delta_pct": 7.43
+   }
+  },
+  {
+   "seed": 4406,
+   "scenario": "SHK",
+   "evt": {
+    "routes_file_shk": "proxy_shock.rou.xml",
+    "routes_file_noi": "proxy.rou.xml",
+    "uses_proxy_shock": true,
+    "scheduled_departures_4500_5400": {
+     "LOWER_ktr": {
+      "shk": 201,
+      "noi": 168,
+      "delta_pct": 19.64
+     },
+     "STUB_x": {
+      "shk": 418,
+      "noi": 423,
+      "delta_pct": -1.18
+     },
+     "UPPER_ktb": {
+      "shk": 724,
+      "noi": 561,
+      "delta_pct": 29.06
+     },
+     "ALL": {
+      "shk": 1343,
+      "noi": 1152,
+      "delta_pct": 16.58
+     }
+    },
+    "realised_q_4500_5400": {
+     "AID07105": {
+      "shk_q": 750,
+      "noi_q": 695,
+      "delta_pct": 7.91
+     },
+     "AID07106": {
+      "shk_q": 745,
+      "noi_q": 690,
+      "delta_pct": 7.97
+     },
+     "AID02105": {
+      "shk_q": 560,
+      "noi_q": 525,
+      "delta_pct": 6.67
+     },
+     "AID02109": {
+      "shk_q": 565,
+      "noi_q": 525,
+      "delta_pct": 7.62
+     },
+     "AID02111": {
+      "shk_q": 159,
+      "noi_q": 157,
+      "delta_pct": 1.27
+     }
+    },
+    "queue_release": {
+     "detectors": {
+      "AID07105": {
+       "shk_q_5400_7200": 1491,
+       "shk_q_full_run": 5697,
+       "noi_q_5400_7200": 1457,
+       "noi_q_full_run": 5607
+      },
+      "AID02105": {
+       "shk_q_5400_7200": 1157,
+       "shk_q_full_run": 4254,
+       "noi_q_5400_7200": 1095,
+       "noi_q_full_run": 4159
+      }
+     },
+     "scheduled_full_run": {
+      "UPPER_ktb": {
+       "shk": 4330,
+       "noi": 4254
+      },
+      "LOWER_ktr": {
+       "shk": 1408,
+       "noi": 1414
+      },
+      "STUB_x": {
+       "shk": 3223,
+       "noi": 3219
+      }
+     },
+     "note": "The window demand the entry could not pass is released after 5400; the full-run totals converge on the scheduled totals."
+    },
+    "halting": {
+     "shk": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     },
+     "noi": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     }
+    },
+    "proxy_truth_occupancy_4500_5400": {
+     "AID02109": {
+      "shk": {
+       "o_mean": 6.194,
+       "o_max": 12.546,
+       "v_mean": 68.25,
+       "q_sum": 565
+      },
+      "noi": {
+       "o_mean": 5.835,
+       "o_max": 10.913,
+       "v_mean": 69.23,
+       "q_sum": 525
+      }
+     },
+     "AID02111": {
+      "shk": {
+       "o_mean": 1.812,
+       "o_max": 2.784,
+       "v_mean": 67.87,
+       "q_sum": 159
+      },
+      "noi": {
+       "o_mean": 2.028,
+       "o_max": 3.814,
+       "v_mean": 68.22,
+       "q_sum": 157
+      }
+     }
+    },
+    "trigger": {
+     "seed": 4406,
+     "trigger_log": "trigger_log.parquet",
+     "n_ticks": 41,
+     "B_max": 2.9463,
+     "B_max_t": 4860.0,
+     "B_mean": 0.6357,
+     "B_ge_3_times": [],
+     "n_B_ge_3": 0,
+     "longest_streak_B_ge_3": 0,
+     "signature_present": false,
+     "streak_max_logged": 0,
+     "n_missing_intervals": 5,
+     "missing_interval_times": [
+      4650.0,
+      4710.0,
+      5160.0,
+      5490.0,
+      5670.0
+     ],
+     "masked_any": false,
+     "alarm_times_logged": [],
+     "residuals": {
+      "n": 36,
+      "n_missing": 5,
+      "mean_r_Uo": 0.3285,
+      "mean_r_Do": -0.1905,
+      "mean_r_Uv": -0.5238,
+      "mean_r_Dv": 0.2286,
+      "mean_occ_term": 0.2595,
+      "mean_speed_term": 0.3762,
+      "mean_B_recon": 0.6357,
+      "max_abs_r_Uo": 1.9245,
+      "max_B_recon": 2.9463,
+      "min_B_recon": -1.5735
+     },
+     "streak_resets": [],
+     "noi_B_max_same_seed": 2.5602
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)",
+    "realised_upper_delta_pct": 6.67
+   },
+   "conv": {
+    "routes_file_shk": "proxy_shock.rou.xml",
+    "routes_file_noi": "proxy.rou.xml",
+    "uses_proxy_shock": true,
+    "scheduled_departures_4500_5400": {
+     "LOWER_ktr": {
+      "shk": 201,
+      "noi": 168,
+      "delta_pct": 19.64
+     },
+     "STUB_x": {
+      "shk": 418,
+      "noi": 423,
+      "delta_pct": -1.18
+     },
+     "UPPER_ktb": {
+      "shk": 724,
+      "noi": 561,
+      "delta_pct": 29.06
+     },
+     "ALL": {
+      "shk": 1343,
+      "noi": 1152,
+      "delta_pct": 16.58
+     }
+    },
+    "realised_q_4500_5400": {
+     "AID07105": {
+      "shk_q": 750,
+      "noi_q": 695,
+      "delta_pct": 7.91
+     },
+     "AID07106": {
+      "shk_q": 745,
+      "noi_q": 690,
+      "delta_pct": 7.97
+     },
+     "AID02105": {
+      "shk_q": 560,
+      "noi_q": 525,
+      "delta_pct": 6.67
+     },
+     "AID02109": {
+      "shk_q": 565,
+      "noi_q": 525,
+      "delta_pct": 7.62
+     },
+     "AID02111": {
+      "shk_q": 159,
+      "noi_q": 157,
+      "delta_pct": 1.27
+     }
+    },
+    "queue_release": {
+     "detectors": {
+      "AID07105": {
+       "shk_q_5400_7200": 1491,
+       "shk_q_full_run": 5697,
+       "noi_q_5400_7200": 1457,
+       "noi_q_full_run": 5607
+      },
+      "AID02105": {
+       "shk_q_5400_7200": 1157,
+       "shk_q_full_run": 4254,
+       "noi_q_5400_7200": 1095,
+       "noi_q_full_run": 4159
+      }
+     },
+     "scheduled_full_run": {
+      "UPPER_ktb": {
+       "shk": 4330,
+       "noi": 4254
+      },
+      "LOWER_ktr": {
+       "shk": 1408,
+       "noi": 1414
+      },
+      "STUB_x": {
+       "shk": 3223,
+       "noi": 3219
+      }
+     },
+     "note": "The window demand the entry could not pass is released after 5400; the full-run totals converge on the scheduled totals."
+    },
+    "halting": {
+     "shk": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     },
+     "noi": {
+      "ktb_w3_max_4500_5700": 0,
+      "ktb_n1_max_4500_5700": 0,
+      "ktb_n1_mean_4500_5700": 0.0,
+      "ktb_n1_max_pre_4500": 0
+     }
+    },
+    "proxy_truth_occupancy_4500_5400": {
+     "AID02109": {
+      "shk": {
+       "o_mean": 6.194,
+       "o_max": 12.546,
+       "v_mean": 68.25,
+       "q_sum": 565
+      },
+      "noi": {
+       "o_mean": 5.835,
+       "o_max": 10.913,
+       "v_mean": 69.23,
+       "q_sum": 525
+      }
+     },
+     "AID02111": {
+      "shk": {
+       "o_mean": 1.812,
+       "o_max": 2.784,
+       "v_mean": 67.87,
+       "q_sum": 159
+      },
+      "noi": {
+       "o_mean": 2.028,
+       "o_max": 3.814,
+       "v_mean": 68.22,
+       "q_sum": 157
+      }
+     }
+    },
+    "trigger": {
+     "trigger_log": "absent",
+     "seed": 4406
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)",
+    "realised_upper_delta_pct": 6.67
+   }
+  }
+ ],
+ "det": [
+  {
+   "seed": 4401,
+   "scenario": "DET",
+   "evt": {
+    "sensor_fault_det": "AID02109:stuck:4500:5400",
+    "sensor_fault_noi": null,
+    "routes_file_det": "proxy.rou.xml",
+    "stuck_fault_check": {
+     "twin_log": "twin_log.parquet",
+     "last_valid_pre_4500_t": 4470.0,
+     "last_valid_pre_4500": {
+      "q": 16,
+      "v": 73.25080373689022,
+      "o": 6.453399001397108
+     },
+     "window_ticks": 30,
+     "window_all_valid": true,
+     "window_q_unique": 1,
+     "window_v_unique": 1,
+     "window_o_unique": 1,
+     "window_constant": true,
+     "window_equals_last_valid": true,
+     "t4500_already_frozen": true,
+     "noi_window_o_std": 2.9199,
+     "noi_window_o_nunique": 28,
+     "noi_window_q_std": 5.4262,
+     "noi_window_valid_ticks": 28,
+     "proxy_truth_o_nunique": 30,
+     "proxy_truth_o_std": 2.3969
+    },
+    "halting": {
+     "ktb_w3_max_4500_5700": 0,
+     "ktb_n1_max_4500_5700": 0
+    },
+    "trigger": {
+     "seed": 4401,
+     "trigger_log": "trigger_log.parquet",
+     "n_ticks": 41,
+     "B_max": 2.4707,
+     "B_max_t": 5520.0,
+     "B_mean": 0.1906,
+     "B_ge_3_times": [],
+     "n_B_ge_3": 0,
+     "longest_streak_B_ge_3": 0,
+     "signature_present": false,
+     "streak_max_logged": 0,
+     "n_missing_intervals": 3,
+     "missing_interval_times": [
+      5190.0,
+      5580.0,
+      5640.0
+     ],
+     "masked_any": false,
+     "alarm_times_logged": [],
+     "residuals": {
+      "n": 38,
+      "n_missing": 3,
+      "mean_r_Uo": 0.5288,
+      "mean_r_Do": -0.0769,
+      "mean_r_Uv": 0.21,
+      "mean_r_Dv": -0.0145,
+      "mean_occ_term": 0.3028,
+      "mean_speed_term": -0.1122,
+      "mean_B_recon": 0.1906,
+      "max_abs_r_Uo": 1.5686,
+      "max_B_recon": 2.4707,
+      "min_B_recon": -2.7583
+     },
+     "streak_resets": [],
+     "noi_B_max_same_seed": 4.0825
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)"
+   },
+   "conv": {
+    "sensor_fault_det": "AID02109:stuck:4500:5400",
+    "sensor_fault_noi": null,
+    "routes_file_det": "proxy.rou.xml",
+    "stuck_fault_check": {
+     "twin_log": "twin_log.parquet",
+     "last_valid_pre_4500_t": 4470.0,
+     "last_valid_pre_4500": {
+      "q": 16,
+      "v": 73.25080373689022,
+      "o": 6.453399001397108
+     },
+     "window_ticks": 30,
+     "window_all_valid": true,
+     "window_q_unique": 1,
+     "window_v_unique": 1,
+     "window_o_unique": 1,
+     "window_constant": true,
+     "window_equals_last_valid": true,
+     "t4500_already_frozen": true,
+     "noi_window_o_std": 2.9199,
+     "noi_window_o_nunique": 28,
+     "noi_window_q_std": 5.4262,
+     "noi_window_valid_ticks": 28,
+     "proxy_truth_o_nunique": 30,
+     "proxy_truth_o_std": 2.3969
+    },
+    "halting": {
+     "ktb_w3_max_4500_5700": 0,
+     "ktb_n1_max_4500_5700": 0
+    },
+    "trigger": {
+     "trigger_log": "absent",
+     "seed": 4401
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)"
+   }
+  },
+  {
+   "seed": 4402,
+   "scenario": "DET",
+   "evt": {
+    "sensor_fault_det": "AID02109:stuck:4500:5400",
+    "sensor_fault_noi": null,
+    "routes_file_det": "proxy.rou.xml",
+    "stuck_fault_check": {
+     "twin_log": "twin_log.parquet",
+     "last_valid_pre_4500_t": 4470.0,
+     "last_valid_pre_4500": {
+      "q": 20,
+      "v": 69.39167610830003,
+      "o": 2.0865533399468545
+     },
+     "window_ticks": 30,
+     "window_all_valid": true,
+     "window_q_unique": 1,
+     "window_v_unique": 1,
+     "window_o_unique": 1,
+     "window_constant": true,
+     "window_equals_last_valid": true,
+     "t4500_already_frozen": true,
+     "noi_window_o_std": 1.8749,
+     "noi_window_o_nunique": 30,
+     "noi_window_q_std": 4.1963,
+     "noi_window_valid_ticks": 30,
+     "proxy_truth_o_nunique": 30,
+     "proxy_truth_o_std": 1.4714
+    },
+    "halting": {
+     "ktb_w3_max_4500_5700": 0,
+     "ktb_n1_max_4500_5700": 0
+    },
+    "trigger": {
+     "seed": 4402,
+     "trigger_log": "trigger_log.parquet",
+     "n_ticks": 41,
+     "B_max": 2.3085,
+     "B_max_t": 5580.0,
+     "B_mean": -0.3082,
+     "B_ge_3_times": [],
+     "n_B_ge_3": 0,
+     "longest_streak_B_ge_3": 0,
+     "signature_present": false,
+     "streak_max_logged": 0,
+     "n_missing_intervals": 2,
+     "missing_interval_times": [
+      4740.0,
+      5190.0
+     ],
+     "masked_any": false,
+     "alarm_times_logged": [],
+     "residuals": {
+      "n": 39,
+      "n_missing": 2,
+      "mean_r_Uo": -0.6616,
+      "mean_r_Do": 0.0285,
+      "mean_r_Uv": -0.1948,
+      "mean_r_Dv": -0.1212,
+      "mean_occ_term": -0.345,
+      "mean_speed_term": 0.0368,
+      "mean_B_recon": -0.3082,
+      "max_abs_r_Uo": 2.1397,
+      "max_B_recon": 2.3085,
+      "min_B_recon": -2.5429
+     },
+     "streak_resets": [],
+     "noi_B_max_same_seed": 2.804
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)"
+   },
+   "conv": {
+    "sensor_fault_det": "AID02109:stuck:4500:5400",
+    "sensor_fault_noi": null,
+    "routes_file_det": "proxy.rou.xml",
+    "stuck_fault_check": {
+     "twin_log": "twin_log.parquet",
+     "last_valid_pre_4500_t": 4470.0,
+     "last_valid_pre_4500": {
+      "q": 20,
+      "v": 69.39167610830003,
+      "o": 2.0865533399468545
+     },
+     "window_ticks": 30,
+     "window_all_valid": true,
+     "window_q_unique": 1,
+     "window_v_unique": 1,
+     "window_o_unique": 1,
+     "window_constant": true,
+     "window_equals_last_valid": true,
+     "t4500_already_frozen": true,
+     "noi_window_o_std": 1.8749,
+     "noi_window_o_nunique": 30,
+     "noi_window_q_std": 4.1963,
+     "noi_window_valid_ticks": 30,
+     "proxy_truth_o_nunique": 30,
+     "proxy_truth_o_std": 1.4714
+    },
+    "halting": {
+     "ktb_w3_max_4500_5700": 0,
+     "ktb_n1_max_4500_5700": 0
+    },
+    "trigger": {
+     "trigger_log": "absent",
+     "seed": 4402
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)"
+   }
+  },
+  {
+   "seed": 4403,
+   "scenario": "DET",
+   "evt": {
+    "sensor_fault_det": "AID02109:stuck:4500:5400",
+    "sensor_fault_noi": null,
+    "routes_file_det": "proxy.rou.xml",
+    "stuck_fault_check": {
+     "twin_log": "twin_log.parquet",
+     "last_valid_pre_4500_t": 4470.0,
+     "last_valid_pre_4500": {
+      "q": 13,
+      "v": 73.587292769203,
+      "o": 3.9073882426204922
+     },
+     "window_ticks": 30,
+     "window_all_valid": true,
+     "window_q_unique": 1,
+     "window_v_unique": 1,
+     "window_o_unique": 1,
+     "window_constant": true,
+     "window_equals_last_valid": true,
+     "t4500_already_frozen": true,
+     "noi_window_o_std": 2.1767,
+     "noi_window_o_nunique": 29,
+     "noi_window_q_std": 3.5397,
+     "noi_window_valid_ticks": 29,
+     "proxy_truth_o_nunique": 30,
+     "proxy_truth_o_std": 1.5498
+    },
+    "halting": {
+     "ktb_w3_max_4500_5700": 0,
+     "ktb_n1_max_4500_5700": 0
+    },
+    "trigger": {
+     "seed": 4403,
+     "trigger_log": "trigger_log.parquet",
+     "n_ticks": 41,
+     "B_max": 2.6081,
+     "B_max_t": 4770.0,
+     "B_mean": -0.1534,
+     "B_ge_3_times": [],
+     "n_B_ge_3": 0,
+     "longest_streak_B_ge_3": 0,
+     "signature_present": false,
+     "streak_max_logged": 0,
+     "n_missing_intervals": 2,
+     "missing_interval_times": [
+      5190.0,
+      5550.0
+     ],
+     "masked_any": false,
+     "alarm_times_logged": [],
+     "residuals": {
+      "n": 39,
+      "n_missing": 2,
+      "mean_r_Uo": -0.1947,
+      "mean_r_Do": -0.1166,
+      "mean_r_Uv": 0.2539,
+      "mean_r_Dv": 0.0251,
+      "mean_occ_term": -0.039,
+      "mean_speed_term": -0.1144,
+      "mean_B_recon": -0.1534,
+      "max_abs_r_Uo": 3.2927,
+      "max_B_recon": 2.6081,
+      "min_B_recon": -3.6199
+     },
+     "streak_resets": [],
+     "noi_B_max_same_seed": 2.7098
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)"
+   },
+   "conv": {
+    "sensor_fault_det": "AID02109:stuck:4500:5400",
+    "sensor_fault_noi": null,
+    "routes_file_det": "proxy.rou.xml",
+    "stuck_fault_check": {
+     "twin_log": "twin_log.parquet",
+     "last_valid_pre_4500_t": 4470.0,
+     "last_valid_pre_4500": {
+      "q": 13,
+      "v": 73.587292769203,
+      "o": 3.9073882426204922
+     },
+     "window_ticks": 30,
+     "window_all_valid": true,
+     "window_q_unique": 1,
+     "window_v_unique": 1,
+     "window_o_unique": 1,
+     "window_constant": true,
+     "window_equals_last_valid": true,
+     "t4500_already_frozen": true,
+     "noi_window_o_std": 2.1767,
+     "noi_window_o_nunique": 29,
+     "noi_window_q_std": 3.5397,
+     "noi_window_valid_ticks": 29,
+     "proxy_truth_o_nunique": 30,
+     "proxy_truth_o_std": 1.5498
+    },
+    "halting": {
+     "ktb_w3_max_4500_5700": 0,
+     "ktb_n1_max_4500_5700": 0
+    },
+    "trigger": {
+     "trigger_log": "absent",
+     "seed": 4403
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)"
+   }
+  },
+  {
+   "seed": 4404,
+   "scenario": "DET",
+   "evt": {
+    "sensor_fault_det": "AID02109:stuck:4500:5400",
+    "sensor_fault_noi": null,
+    "routes_file_det": "proxy.rou.xml",
+    "stuck_fault_check": {
+     "twin_log": "twin_log.parquet",
+     "last_valid_pre_4500_t": 4470.0,
+     "last_valid_pre_4500": {
+      "q": 20,
+      "v": 67.59606707552541,
+      "o": 6.702487970211604
+     },
+     "window_ticks": 30,
+     "window_all_valid": true,
+     "window_q_unique": 1,
+     "window_v_unique": 1,
+     "window_o_unique": 1,
+     "window_constant": true,
+     "window_equals_last_valid": true,
+     "t4500_already_frozen": true,
+     "noi_window_o_std": 2.0648,
+     "noi_window_o_nunique": 30,
+     "noi_window_q_std": 3.3598,
+     "noi_window_valid_ticks": 30,
+     "proxy_truth_o_nunique": 30,
+     "proxy_truth_o_std": 1.4864
+    },
+    "halting": {
+     "ktb_w3_max_4500_5700": 0,
+     "ktb_n1_max_4500_5700": 0
+    },
+    "trigger": {
+     "seed": 4404,
+     "trigger_log": "trigger_log.parquet",
+     "n_ticks": 41,
+     "B_max": 2.2795,
+     "B_max_t": 5490.0,
+     "B_mean": 0.4181,
+     "B_ge_3_times": [],
+     "n_B_ge_3": 0,
+     "longest_streak_B_ge_3": 0,
+     "signature_present": false,
+     "streak_max_logged": 0,
+     "n_missing_intervals": 2,
+     "missing_interval_times": [
+      4980.0,
+      5580.0
+     ],
+     "masked_any": false,
+     "alarm_times_logged": [],
+     "residuals": {
+      "n": 39,
+      "n_missing": 2,
+      "mean_r_Uo": 0.5836,
+      "mean_r_Do": 0.1614,
+      "mean_r_Uv": -0.5123,
+      "mean_r_Dv": -0.0983,
+      "mean_occ_term": 0.2111,
+      "mean_speed_term": 0.207,
+      "mean_B_recon": 0.4181,
+      "max_abs_r_Uo": 2.0073,
+      "max_B_recon": 2.2795,
+      "min_B_recon": -2.3064
+     },
+     "streak_resets": [],
+     "noi_B_max_same_seed": 2.4048
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)"
+   },
+   "conv": {
+    "sensor_fault_det": "AID02109:stuck:4500:5400",
+    "sensor_fault_noi": null,
+    "routes_file_det": "proxy.rou.xml",
+    "stuck_fault_check": {
+     "twin_log": "twin_log.parquet",
+     "last_valid_pre_4500_t": 4470.0,
+     "last_valid_pre_4500": {
+      "q": 20,
+      "v": 67.59606707552541,
+      "o": 6.702487970211604
+     },
+     "window_ticks": 30,
+     "window_all_valid": true,
+     "window_q_unique": 1,
+     "window_v_unique": 1,
+     "window_o_unique": 1,
+     "window_constant": true,
+     "window_equals_last_valid": true,
+     "t4500_already_frozen": true,
+     "noi_window_o_std": 2.0648,
+     "noi_window_o_nunique": 30,
+     "noi_window_q_std": 3.3598,
+     "noi_window_valid_ticks": 30,
+     "proxy_truth_o_nunique": 30,
+     "proxy_truth_o_std": 1.4864
+    },
+    "halting": {
+     "ktb_w3_max_4500_5700": 0,
+     "ktb_n1_max_4500_5700": 0
+    },
+    "trigger": {
+     "trigger_log": "absent",
+     "seed": 4404
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)"
+   }
+  },
+  {
+   "seed": 4405,
+   "scenario": "DET",
+   "evt": {
+    "sensor_fault_det": "AID02109:stuck:4500:5400",
+    "sensor_fault_noi": null,
+    "routes_file_det": "proxy.rou.xml",
+    "stuck_fault_check": {
+     "twin_log": "twin_log.parquet",
+     "last_valid_pre_4500_t": 4470.0,
+     "last_valid_pre_4500": {
+      "q": 17,
+      "v": 74.8981427244408,
+      "o": 2.920510260090859
+     },
+     "window_ticks": 30,
+     "window_all_valid": true,
+     "window_q_unique": 1,
+     "window_v_unique": 1,
+     "window_o_unique": 1,
+     "window_constant": true,
+     "window_equals_last_valid": true,
+     "t4500_already_frozen": true,
+     "noi_window_o_std": 2.5423,
+     "noi_window_o_nunique": 28,
+     "noi_window_q_std": 3.3484,
+     "noi_window_valid_ticks": 28,
+     "proxy_truth_o_nunique": 30,
+     "proxy_truth_o_std": 1.7253
+    },
+    "halting": {
+     "ktb_w3_max_4500_5700": 0,
+     "ktb_n1_max_4500_5700": 0
+    },
+    "trigger": {
+     "seed": 4405,
+     "trigger_log": "trigger_log.parquet",
+     "n_ticks": 41,
+     "B_max": 2.1098,
+     "B_max_t": 5580.0,
+     "B_mean": -0.2677,
+     "B_ge_3_times": [],
+     "n_B_ge_3": 0,
+     "longest_streak_B_ge_3": 0,
+     "signature_present": false,
+     "streak_max_logged": 0,
+     "n_missing_intervals": 5,
+     "missing_interval_times": [
+      5070.0,
+      5160.0,
+      5460.0,
+      5490.0,
+      5670.0
+     ],
+     "masked_any": false,
+     "alarm_times_logged": [],
+     "residuals": {
+      "n": 36,
+      "n_missing": 5,
+      "mean_r_Uo": -0.356,
+      "mean_r_Do": -0.1088,
+      "mean_r_Uv": 0.2851,
+      "mean_r_Dv": -0.0031,
+      "mean_occ_term": -0.1236,
+      "mean_speed_term": -0.1441,
+      "mean_B_recon": -0.2677,
+      "max_abs_r_Uo": 1.9782,
+      "max_B_recon": 2.1098,
+      "min_B_recon": -1.5017
+     },
+     "streak_resets": [],
+     "noi_B_max_same_seed": 3.9351
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)"
+   },
+   "conv": {
+    "sensor_fault_det": "AID02109:stuck:4500:5400",
+    "sensor_fault_noi": null,
+    "routes_file_det": "proxy.rou.xml",
+    "stuck_fault_check": {
+     "twin_log": "twin_log.parquet",
+     "last_valid_pre_4500_t": 4470.0,
+     "last_valid_pre_4500": {
+      "q": 17,
+      "v": 74.8981427244408,
+      "o": 2.920510260090859
+     },
+     "window_ticks": 30,
+     "window_all_valid": true,
+     "window_q_unique": 1,
+     "window_v_unique": 1,
+     "window_o_unique": 1,
+     "window_constant": true,
+     "window_equals_last_valid": true,
+     "t4500_already_frozen": true,
+     "noi_window_o_std": 2.5423,
+     "noi_window_o_nunique": 28,
+     "noi_window_q_std": 3.3484,
+     "noi_window_valid_ticks": 28,
+     "proxy_truth_o_nunique": 30,
+     "proxy_truth_o_std": 1.7253
+    },
+    "halting": {
+     "ktb_w3_max_4500_5700": 0,
+     "ktb_n1_max_4500_5700": 0
+    },
+    "trigger": {
+     "trigger_log": "absent",
+     "seed": 4405
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)"
+   }
+  },
+  {
+   "seed": 4406,
+   "scenario": "DET",
+   "evt": {
+    "sensor_fault_det": "AID02109:stuck:4500:5400",
+    "sensor_fault_noi": null,
+    "routes_file_det": "proxy.rou.xml",
+    "stuck_fault_check": {
+     "twin_log": "twin_log.parquet",
+     "last_valid_pre_4500_t": 4470.0,
+     "last_valid_pre_4500": {
+      "q": 20,
+      "v": 68.69833427286959,
+      "o": 6.333902870729492
+     },
+     "window_ticks": 30,
+     "window_all_valid": true,
+     "window_q_unique": 1,
+     "window_v_unique": 1,
+     "window_o_unique": 1,
+     "window_constant": true,
+     "window_equals_last_valid": true,
+     "t4500_already_frozen": true,
+     "noi_window_o_std": 2.8855,
+     "noi_window_o_nunique": 28,
+     "noi_window_q_std": 3.8723,
+     "noi_window_valid_ticks": 28,
+     "proxy_truth_o_nunique": 30,
+     "proxy_truth_o_std": 2.0276
+    },
+    "halting": {
+     "ktb_w3_max_4500_5700": 0,
+     "ktb_n1_max_4500_5700": 0
+    },
+    "trigger": {
+     "seed": 4406,
+     "trigger_log": "trigger_log.parquet",
+     "n_ticks": 41,
+     "B_max": 2.8155,
+     "B_max_t": 4980.0,
+     "B_mean": 0.4193,
+     "B_ge_3_times": [],
+     "n_B_ge_3": 0,
+     "longest_streak_B_ge_3": 0,
+     "signature_present": false,
+     "streak_max_logged": 0,
+     "n_missing_intervals": 2,
+     "missing_interval_times": [
+      5550.0,
+      5580.0
+     ],
+     "masked_any": false,
+     "alarm_times_logged": [],
+     "residuals": {
+      "n": 39,
+      "n_missing": 2,
+      "mean_r_Uo": 0.4048,
+      "mean_r_Do": -0.0035,
+      "mean_r_Uv": -0.3473,
+      "mean_r_Dv": 0.083,
+      "mean_occ_term": 0.2042,
+      "mean_speed_term": 0.2152,
+      "mean_B_recon": 0.4193,
+      "max_abs_r_Uo": 2.3659,
+      "max_B_recon": 2.8155,
+      "min_B_recon": -2.6559
+     },
+     "streak_resets": [],
+     "noi_B_max_same_seed": 2.5602
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)"
+   },
+   "conv": {
+    "sensor_fault_det": "AID02109:stuck:4500:5400",
+    "sensor_fault_noi": null,
+    "routes_file_det": "proxy.rou.xml",
+    "stuck_fault_check": {
+     "twin_log": "twin_log.parquet",
+     "last_valid_pre_4500_t": 4470.0,
+     "last_valid_pre_4500": {
+      "q": 20,
+      "v": 68.69833427286959,
+      "o": 6.333902870729492
+     },
+     "window_ticks": 30,
+     "window_all_valid": true,
+     "window_q_unique": 1,
+     "window_v_unique": 1,
+     "window_o_unique": 1,
+     "window_constant": true,
+     "window_equals_last_valid": true,
+     "t4500_already_frozen": true,
+     "noi_window_o_std": 2.8855,
+     "noi_window_o_nunique": 28,
+     "noi_window_q_std": 3.8723,
+     "noi_window_valid_ticks": 28,
+     "proxy_truth_o_nunique": 30,
+     "proxy_truth_o_std": 2.0276
+    },
+    "halting": {
+     "ktb_w3_max_4500_5700": 0,
+     "ktb_n1_max_4500_5700": 0
+    },
+    "trigger": {
+     "trigger_log": "absent",
+     "seed": 4406
+    },
+    "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)"
+   }
+  }
+ ],
+ "inc_reference": [
+  {
+   "seed": 4401,
+   "trigger_log": "trigger_log.parquet",
+   "n_ticks": 41,
+   "B_max": 7.1028,
+   "B_max_t": 5010.0,
+   "B_mean": 1.8844,
+   "B_ge_3_times": [
+    4620.0,
+    4860.0,
+    4890.0,
+    4920.0,
+    4950.0,
+    4980.0,
+    5010.0
+   ],
+   "n_B_ge_3": 7,
+   "longest_streak_B_ge_3": 6,
+   "signature_present": true,
+   "streak_max_logged": 6,
+   "n_missing_intervals": 3,
+   "missing_interval_times": [
+    5040.0,
+    5460.0,
+    5550.0
+   ],
+   "masked_any": false,
+   "alarm_times_logged": [
+    4890.0,
+    4920.0,
+    4950.0,
+    4980.0,
+    5010.0
+   ],
+   "residuals": {
+    "n": 38,
+    "n_missing": 3,
+    "mean_r_Uo": 1.4771,
+    "mean_r_Do": 0.1307,
+    "mean_r_Uv": -1.0061,
+    "mean_r_Dv": -0.1733,
+    "mean_occ_term": 0.6732,
+    "mean_speed_term": 0.4164,
+    "mean_B_recon": 1.0896,
+    "max_abs_r_Uo": 3.7494,
+    "max_B_recon": 2.8546,
+    "min_B_recon": -1.603
+   },
+   "streak_resets": [
+    {
+     "t": 4650.0,
+     "streak_before": 1,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    },
+    {
+     "t": 5040.0,
+     "streak_before": 6,
+     "streak_after": 0,
+     "reason": "missing_interval:obs_invalid"
+    }
+   ],
+   "alarms_from_twin_stats": [
+    4890.0,
+    4920.0,
+    4950.0,
+    4980.0,
+    5010.0
+   ],
+   "n_alarms": 5,
+   "downweight": {
+    "AID02111": 5.0,
+    "AID02109": 5.0
+   },
+   "halting": {
+    "ktb_w3_max": 4,
+    "ktb_n1_max": 131,
+    "ktb_n1_mean": 25.878
+   }
+  },
+  {
+   "seed": 4402,
+   "trigger_log": "trigger_log.parquet",
+   "n_ticks": 41,
+   "B_max": 6.6755,
+   "B_max_t": 5010.0,
+   "B_mean": 1.6486,
+   "B_ge_3_times": [
+    4860.0,
+    4950.0,
+    4980.0,
+    5010.0,
+    5070.0
+   ],
+   "n_B_ge_3": 5,
+   "longest_streak_B_ge_3": 3,
+   "signature_present": true,
+   "streak_max_logged": 3,
+   "n_missing_intervals": 2,
+   "missing_interval_times": [
+    5040.0,
+    5280.0
+   ],
+   "masked_any": false,
+   "alarm_times_logged": [
+    4980.0,
+    5010.0
+   ],
+   "residuals": {
+    "n": 39,
+    "n_missing": 2,
+    "mean_r_Uo": 1.5126,
+    "mean_r_Do": 0.0762,
+    "mean_r_Uv": -0.9929,
+    "mean_r_Dv": -0.2126,
+    "mean_occ_term": 0.7182,
+    "mean_speed_term": 0.3901,
+    "mean_B_recon": 1.1083,
+    "max_abs_r_Uo": 4.2944,
+    "max_B_recon": 3.0141,
+    "min_B_recon": -0.4934
+   },
+   "streak_resets": [
+    {
+     "t": 4890.0,
+     "streak_before": 1,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    },
+    {
+     "t": 5040.0,
+     "streak_before": 3,
+     "streak_after": 0,
+     "reason": "missing_interval:obs_invalid"
+    },
+    {
+     "t": 5100.0,
+     "streak_before": 1,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    }
+   ],
+   "alarms_from_twin_stats": [
+    4980.0,
+    5010.0
+   ],
+   "n_alarms": 2,
+   "downweight": {
+    "AID02111": 5.0,
+    "AID02109": 5.0
+   },
+   "halting": {
+    "ktb_w3_max": 10,
+    "ktb_n1_max": 106,
+    "ktb_n1_mean": 19.732
+   }
+  },
+  {
+   "seed": 4403,
+   "trigger_log": "trigger_log.parquet",
+   "n_ticks": 41,
+   "B_max": 6.794,
+   "B_max_t": 5010.0,
+   "B_mean": 2.0983,
+   "B_ge_3_times": [
+    4800.0,
+    4860.0,
+    4890.0,
+    4920.0,
+    4950.0,
+    4980.0,
+    5010.0,
+    5070.0
+   ],
+   "n_B_ge_3": 8,
+   "longest_streak_B_ge_3": 6,
+   "signature_present": true,
+   "streak_max_logged": 6,
+   "n_missing_intervals": 1,
+   "missing_interval_times": [
+    5040.0
+   ],
+   "masked_any": false,
+   "alarm_times_logged": [
+    4890.0,
+    4920.0,
+    4950.0,
+    4980.0,
+    5010.0
+   ],
+   "residuals": {
+    "n": 40,
+    "n_missing": 1,
+    "mean_r_Uo": 1.6384,
+    "mean_r_Do": 0.0504,
+    "mean_r_Uv": -1.0824,
+    "mean_r_Dv": -0.1533,
+    "mean_occ_term": 0.794,
+    "mean_speed_term": 0.4645,
+    "mean_B_recon": 1.2585,
+    "max_abs_r_Uo": 4.072,
+    "max_B_recon": 3.0939,
+    "min_B_recon": -0.6697
+   },
+   "streak_resets": [
+    {
+     "t": 4830.0,
+     "streak_before": 1,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    },
+    {
+     "t": 5040.0,
+     "streak_before": 6,
+     "streak_after": 0,
+     "reason": "missing_interval:obs_invalid"
+    },
+    {
+     "t": 5100.0,
+     "streak_before": 1,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    }
+   ],
+   "alarms_from_twin_stats": [
+    4890.0,
+    4920.0,
+    4950.0,
+    4980.0,
+    5010.0
+   ],
+   "n_alarms": 5,
+   "downweight": {
+    "AID02111": 5.0,
+    "AID02109": 5.0
+   },
+   "halting": {
+    "ktb_w3_max": 16,
+    "ktb_n1_max": 143,
+    "ktb_n1_mean": 24.585
+   }
+  },
+  {
+   "seed": 4404,
+   "trigger_log": "trigger_log.parquet",
+   "n_ticks": 41,
+   "B_max": 9.4778,
+   "B_max_t": 5040.0,
+   "B_mean": 2.3286,
+   "B_ge_3_times": [
+    4860.0,
+    4890.0,
+    4920.0,
+    4980.0,
+    5010.0,
+    5040.0,
+    5220.0,
+    5250.0,
+    5370.0
+   ],
+   "n_B_ge_3": 9,
+   "longest_streak_B_ge_3": 3,
+   "signature_present": true,
+   "streak_max_logged": 3,
+   "n_missing_intervals": 4,
+   "missing_interval_times": [
+    4650.0,
+    4830.0,
+    4950.0,
+    5610.0
+   ],
+   "masked_any": false,
+   "alarm_times_logged": [
+    4890.0,
+    4920.0,
+    5010.0,
+    5040.0,
+    5250.0
+   ],
+   "residuals": {
+    "n": 37,
+    "n_missing": 4,
+    "mean_r_Uo": 1.7484,
+    "mean_r_Do": 0.0389,
+    "mean_r_Uv": -1.1398,
+    "mean_r_Dv": -0.1676,
+    "mean_occ_term": 0.8548,
+    "mean_speed_term": 0.4861,
+    "mean_B_recon": 1.3409,
+    "max_abs_r_Uo": 4.2442,
+    "max_B_recon": 3.102,
+    "min_B_recon": -0.9534
+   },
+   "streak_resets": [
+    {
+     "t": 4950.0,
+     "streak_before": 3,
+     "streak_after": 0,
+     "reason": "missing_interval:obs_invalid"
+    },
+    {
+     "t": 5070.0,
+     "streak_before": 3,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    },
+    {
+     "t": 5280.0,
+     "streak_before": 2,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    },
+    {
+     "t": 5400.0,
+     "streak_before": 1,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    }
+   ],
+   "alarms_from_twin_stats": [
+    4890.0,
+    4920.0,
+    5010.0,
+    5040.0,
+    5250.0
+   ],
+   "n_alarms": 5,
+   "downweight": {
+    "AID02111": 5.0,
+    "AID02109": 5.0
+   },
+   "halting": {
+    "ktb_w3_max": 15,
+    "ktb_n1_max": 143,
+    "ktb_n1_mean": 30.634
+   }
+  },
+  {
+   "seed": 4405,
+   "trigger_log": "trigger_log.parquet",
+   "n_ticks": 41,
+   "B_max": 11.1618,
+   "B_max_t": 5010.0,
+   "B_mean": 2.2701,
+   "B_ge_3_times": [
+    4770.0,
+    4890.0,
+    4920.0,
+    4950.0,
+    4980.0,
+    5010.0,
+    5040.0,
+    5070.0,
+    5400.0
+   ],
+   "n_B_ge_3": 9,
+   "longest_streak_B_ge_3": 7,
+   "signature_present": true,
+   "streak_max_logged": 7,
+   "n_missing_intervals": 1,
+   "missing_interval_times": [
+    5190.0
+   ],
+   "masked_any": false,
+   "alarm_times_logged": [
+    4920.0,
+    4950.0,
+    4980.0,
+    5010.0,
+    5040.0,
+    5070.0
+   ],
+   "residuals": {
+    "n": 40,
+    "n_missing": 1,
+    "mean_r_Uo": 1.54,
+    "mean_r_Do": 0.1558,
+    "mean_r_Uv": -1.0995,
+    "mean_r_Dv": -0.1906,
+    "mean_occ_term": 0.6921,
+    "mean_speed_term": 0.4545,
+    "mean_B_recon": 1.1465,
+    "max_abs_r_Uo": 4.1639,
+    "max_B_recon": 3.0427,
+    "min_B_recon": -1.6304
+   },
+   "streak_resets": [
+    {
+     "t": 4800.0,
+     "streak_before": 1,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    },
+    {
+     "t": 5100.0,
+     "streak_before": 7,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    },
+    {
+     "t": 5430.0,
+     "streak_before": 1,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    }
+   ],
+   "alarms_from_twin_stats": [
+    4920.0,
+    4950.0,
+    4980.0,
+    5010.0,
+    5040.0,
+    5070.0
+   ],
+   "n_alarms": 6,
+   "downweight": {
+    "AID02109": 5.0,
+    "AID02111": 5.0
+   },
+   "halting": {
+    "ktb_w3_max": 0,
+    "ktb_n1_max": 133,
+    "ktb_n1_mean": 26.878
+   }
+  },
+  {
+   "seed": 4406,
+   "trigger_log": "trigger_log.parquet",
+   "n_ticks": 41,
+   "B_max": 16.2755,
+   "B_max_t": 5160.0,
+   "B_mean": 2.5141,
+   "B_ge_3_times": [
+    4860.0,
+    4890.0,
+    4950.0,
+    4980.0,
+    5010.0,
+    5040.0,
+    5070.0,
+    5100.0,
+    5160.0,
+    5280.0,
+    5430.0
+   ],
+   "n_B_ge_3": 11,
+   "longest_streak_B_ge_3": 6,
+   "signature_present": true,
+   "streak_max_logged": 6,
+   "n_missing_intervals": 3,
+   "missing_interval_times": [
+    4710.0,
+    4830.0,
+    5130.0
+   ],
+   "masked_any": false,
+   "alarm_times_logged": [
+    4890.0,
+    4980.0,
+    5010.0,
+    5040.0,
+    5070.0,
+    5100.0
+   ],
+   "residuals": {
+    "n": 38,
+    "n_missing": 3,
+    "mean_r_Uo": 1.5968,
+    "mean_r_Do": 0.1648,
+    "mean_r_Uv": -1.0281,
+    "mean_r_Dv": -0.2587,
+    "mean_occ_term": 0.716,
+    "mean_speed_term": 0.3847,
+    "mean_B_recon": 1.1007,
+    "max_abs_r_Uo": 4.7657,
+    "max_B_recon": 3.4456,
+    "min_B_recon": -1.2013
+   },
+   "streak_resets": [
+    {
+     "t": 4920.0,
+     "streak_before": 2,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    },
+    {
+     "t": 5130.0,
+     "streak_before": 6,
+     "streak_after": 0,
+     "reason": "missing_interval:obs_invalid"
+    },
+    {
+     "t": 5190.0,
+     "streak_before": 1,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    },
+    {
+     "t": 5310.0,
+     "streak_before": 1,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    },
+    {
+     "t": 5460.0,
+     "streak_before": 1,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    }
+   ],
+   "alarms_from_twin_stats": [
+    4890.0,
+    4980.0,
+    5010.0,
+    5040.0,
+    5070.0,
+    5100.0
+   ],
+   "n_alarms": 6,
+   "downweight": {
+    "AID02111": 5.0,
+    "AID02109": 5.0
+   },
+   "halting": {
+    "ktb_w3_max": 3,
+    "ktb_n1_max": 74,
+    "ktb_n1_mean": 20.439
+   }
+  }
+ ],
+ "noi_reference": [
+  {
+   "seed": 4401,
+   "trigger_log": "trigger_log.parquet",
+   "n_ticks": 41,
+   "B_max": 4.0825,
+   "B_max_t": 5100.0,
+   "B_mean": 0.3664,
+   "B_ge_3_times": [
+    5100.0
+   ],
+   "n_B_ge_3": 1,
+   "longest_streak_B_ge_3": 1,
+   "signature_present": false,
+   "streak_max_logged": 1,
+   "n_missing_intervals": 5,
+   "missing_interval_times": [
+    5250.0,
+    5310.0,
+    5520.0,
+    5580.0,
+    5670.0
+   ],
+   "masked_any": false,
+   "alarm_times_logged": [],
+   "residuals": {
+    "n": 36,
+    "n_missing": 5,
+    "mean_r_Uo": 0.4119,
+    "mean_r_Do": 0.1075,
+    "mean_r_Uv": -0.3729,
+    "mean_r_Dv": 0.0556,
+    "mean_occ_term": 0.1522,
+    "mean_speed_term": 0.2143,
+    "mean_B_recon": 0.3664,
+    "max_abs_r_Uo": 3.3734,
+    "max_B_recon": 4.0825,
+    "min_B_recon": -2.4658
+   },
+   "streak_resets": [
+    {
+     "t": 5130.0,
+     "streak_before": 1,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    }
+   ]
+  },
+  {
+   "seed": 4402,
+   "trigger_log": "trigger_log.parquet",
+   "n_ticks": 41,
+   "B_max": 2.804,
+   "B_max_t": 4950.0,
+   "B_mean": 0.1422,
+   "B_ge_3_times": [],
+   "n_B_ge_3": 0,
+   "longest_streak_B_ge_3": 0,
+   "signature_present": false,
+   "streak_max_logged": 0,
+   "n_missing_intervals": 2,
+   "missing_interval_times": [
+    4830.0,
+    5520.0
+   ],
+   "masked_any": false,
+   "alarm_times_logged": [],
+   "residuals": {
+    "n": 39,
+    "n_missing": 2,
+    "mean_r_Uo": 0.3188,
+    "mean_r_Do": 0.3331,
+    "mean_r_Uv": -0.4617,
+    "mean_r_Dv": -0.1631,
+    "mean_occ_term": -0.0071,
+    "mean_speed_term": 0.1493,
+    "mean_B_recon": 0.1422,
+    "max_abs_r_Uo": 2.2538,
+    "max_B_recon": 2.804,
+    "min_B_recon": -2.5433
+   },
+   "streak_resets": []
+  },
+  {
+   "seed": 4403,
+   "trigger_log": "trigger_log.parquet",
+   "n_ticks": 41,
+   "B_max": 2.7098,
+   "B_max_t": 4770.0,
+   "B_mean": 0.1655,
+   "B_ge_3_times": [],
+   "n_B_ge_3": 0,
+   "longest_streak_B_ge_3": 0,
+   "signature_present": false,
+   "streak_max_logged": 0,
+   "n_missing_intervals": 4,
+   "missing_interval_times": [
+    4830.0,
+    5130.0,
+    5370.0,
+    5610.0
+   ],
+   "masked_any": false,
+   "alarm_times_logged": [],
+   "residuals": {
+    "n": 37,
+    "n_missing": 4,
+    "mean_r_Uo": 0.3137,
+    "mean_r_Do": 0.0901,
+    "mean_r_Uv": -0.1726,
+    "mean_r_Dv": -0.0652,
+    "mean_occ_term": 0.1118,
+    "mean_speed_term": 0.0537,
+    "mean_B_recon": 0.1655,
+    "max_abs_r_Uo": 2.1074,
+    "max_B_recon": 2.7098,
+    "min_B_recon": -1.6968
+   },
+   "streak_resets": []
+  },
+  {
+   "seed": 4404,
+   "trigger_log": "trigger_log.parquet",
+   "n_ticks": 41,
+   "B_max": 2.4048,
+   "B_max_t": 5700.0,
+   "B_mean": 0.3505,
+   "B_ge_3_times": [],
+   "n_B_ge_3": 0,
+   "longest_streak_B_ge_3": 0,
+   "signature_present": false,
+   "streak_max_logged": 0,
+   "n_missing_intervals": 6,
+   "missing_interval_times": [
+    5100.0,
+    5160.0,
+    5280.0,
+    5490.0,
+    5550.0,
+    5640.0
+   ],
+   "masked_any": false,
+   "alarm_times_logged": [],
+   "residuals": {
+    "n": 35,
+    "n_missing": 6,
+    "mean_r_Uo": 0.4871,
+    "mean_r_Do": 0.0237,
+    "mean_r_Uv": -0.5081,
+    "mean_r_Dv": -0.2704,
+    "mean_occ_term": 0.2317,
+    "mean_speed_term": 0.1188,
+    "mean_B_recon": 0.3505,
+    "max_abs_r_Uo": 2.1939,
+    "max_B_recon": 2.4048,
+    "min_B_recon": -2.7946
+   },
+   "streak_resets": []
+  },
+  {
+   "seed": 4405,
+   "trigger_log": "trigger_log.parquet",
+   "n_ticks": 41,
+   "B_max": 3.9351,
+   "B_max_t": 5340.0,
+   "B_mean": 0.2665,
+   "B_ge_3_times": [
+    5340.0
+   ],
+   "n_B_ge_3": 1,
+   "longest_streak_B_ge_3": 1,
+   "signature_present": false,
+   "streak_max_logged": 1,
+   "n_missing_intervals": 3,
+   "missing_interval_times": [
+    4830.0,
+    5010.0,
+    5460.0
+   ],
+   "masked_any": false,
+   "alarm_times_logged": [],
+   "residuals": {
+    "n": 38,
+    "n_missing": 3,
+    "mean_r_Uo": 0.4361,
+    "mean_r_Do": 0.1503,
+    "mean_r_Uv": -0.4588,
+    "mean_r_Dv": -0.2117,
+    "mean_occ_term": 0.1429,
+    "mean_speed_term": 0.1236,
+    "mean_B_recon": 0.2665,
+    "max_abs_r_Uo": 2.7628,
+    "max_B_recon": 3.9351,
+    "min_B_recon": -2.3586
+   },
+   "streak_resets": [
+    {
+     "t": 5370.0,
+     "streak_before": 1,
+     "streak_after": 0,
+     "reason": "B_below_threshold"
+    }
+   ]
+  },
+  {
+   "seed": 4406,
+   "trigger_log": "trigger_log.parquet",
+   "n_ticks": 41,
+   "B_max": 2.5602,
+   "B_max_t": 4860.0,
+   "B_mean": 0.4148,
+   "B_ge_3_times": [],
+   "n_B_ge_3": 0,
+   "longest_streak_B_ge_3": 0,
+   "signature_present": false,
+   "streak_max_logged": 0,
+   "n_missing_intervals": 5,
+   "missing_interval_times": [
+    4650.0,
+    4710.0,
+    5160.0,
+    5280.0,
+    5490.0
+   ],
+   "masked_any": false,
+   "alarm_times_logged": [],
+   "residuals": {
+    "n": 36,
+    "n_missing": 5,
+    "mean_r_Uo": 0.2502,
+    "mean_r_Do": -0.0595,
+    "mean_r_Uv": -0.3584,
+    "mean_r_Dv": 0.1614,
+    "mean_occ_term": 0.1549,
+    "mean_speed_term": 0.2599,
+    "mean_B_recon": 0.4148,
+    "max_abs_r_Uo": 2.646,
+    "max_B_recon": 2.5602,
+    "min_B_recon": -2.2443
+   },
+   "streak_resets": []
+  }
+ ],
+ "residual_reconstruction_validation": {
+  "runs": 18,
+  "ticks_checked": 3888,
+  "max_abs_B_difference": 0.0,
+  "note": "Recomputed B equals trigger_log.parquet B at every tick of the 18 SHK/DET/NOI EVT runs (downweight empty), so the residual decomposition above is exact for them. The INC runs are excluded: they set event.downweight = 5.0 on both pair detectors once the fault hypothesis is adopted, which shrinks the logged B by 5x."
+ },
+ "conclusions": {
+  "SHK": {
+   "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)",
+   "evidence": {
+    "routes_file": "proxy_shock.rou.xml in all 6 EVT and 6 CONV run_info.json",
+    "scheduled_UPPER_delta_pct": [
+     29.06,
+     29.06,
+     29.06,
+     29.06,
+     29.06,
+     29.06
+    ],
+    "realised_AID02105_delta_pct": [
+     5.5,
+     6.35,
+     7.03,
+     4.7,
+     7.43,
+     6.67
+    ],
+    "realised_AID07105_delta_pct": [
+     5.32,
+     5.42,
+     6.7,
+     5.11,
+     5.85,
+     7.91
+    ],
+    "realised_entry_flow_vph": [
+     2932.0,
+     2956.0,
+     2996.0,
+     2964.0,
+     2968.0,
+     3000.0
+    ],
+    "noi_entry_flow_vph": [
+     2784.0,
+     2804.0,
+     2808.0,
+     2820.0,
+     2804.0,
+     2780.0
+    ],
+    "realised_over_scheduled_ratio": [
+     0.189,
+     0.219,
+     0.242,
+     0.162,
+     0.256,
+     0.23
+    ],
+    "B_max_per_seed": [
+     2.9743,
+     3.1607,
+     3.265,
+     3.2471,
+     2.6263,
+     2.9463
+    ],
+    "n_B_ge_3_per_seed": [
+     0,
+     2,
+     2,
+     1,
+     0,
+     0
+    ],
+    "signature_present_per_seed": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "halting_ktb_n1_max": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "note": "The +30 % demand shock is present in the route file the Proxy loaded (scheduled UPPER departures +29.1 % in [4500, 5400)), but the realised flow past the corridor entry (AID07105 on tko_in) and the upper branch (AID02105 on ktb_w1) rises only ~+5-7 %: the shared entry is already at capacity in the paired NOI control (2784-2820 veh/h vs 2932-3000 veh/h under the shock, i.e. ~+5 %), so the extra vehicles queue and are released over the following ~30 min (the SHK-NOI gap at AID07105 stays positive to 7200 and the full-run totals converge on the scheduled totals: +91 realised vs +74 scheduled). No halting appears on ktb_n1/ktb_w3 (max 0 in all 6 seeds, against 74-143 in the INC runs) and B never reaches 3 at two consecutive ticks, so the trigger was never exposed to a +30 % shock at the detectors. In 3 of 6 seeds there are isolated single-tick B >= 3 excursions (max 3.27); the NOI control has the same kind of excursion (up to 4.08 in seed 4401) and the trigger requires two consecutive ticks, so these are not a bottleneck signature."
+  },
+  "DET": {
+   "verdict": "injected, no bottleneck signature (trigger limitation at this magnitude)",
+   "evidence": {
+    "sensor_fault": "AID02109:stuck:4500:5400 in all 6 EVT and 6 CONV run_info.json",
+    "stuck_constant_and_equal_to_last_valid_pre_4500": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "B_max_per_seed": [
+     2.4707,
+     2.3085,
+     2.6081,
+     2.2795,
+     2.1098,
+     2.8155
+    ],
+    "n_B_ge_3_per_seed": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "signature_present_per_seed": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "max_abs_r_Uo_per_seed": [
+     1.5686,
+     2.1397,
+     3.2927,
+     2.0073,
+     1.9782,
+     2.3659
+    ],
+    "max_abs_r_Uo_per_seed_NOI_control": [
+     3.3734,
+     2.2538,
+     2.1074,
+     2.1939,
+     2.7628,
+     2.646
+    ]
+   },
+   "note": "The fault is realised exactly as specified (constant, valid, equal to the last valid pre-4500 reading, while the paired NOI run varies), and it is applied to emitted observations only (Proxy truth at AID02109 still varies). The frozen reading is a plausible value, so the fault does not dominate the residual: the mean r_U^o over the window is within +-0.7 sigma_o in every seed, and the single-tick extremes (|r_U^o| = 1.6-3.3) are inside the paired NOI control's own range (2.1-3.4) on the same detector. B is half the *difference* of the two detectors' occupancy residuals plus a speed term whose stuck component has the opposite sign, so B never reaches 3 at two consecutive ticks. The sensor fault therefore does not create a bottleneck signature the corrected G4 rule could see."
+  },
+  "INC_reference": {
+   "B_max_per_seed": [
+    7.1028,
+    6.6755,
+    6.794,
+    9.4778,
+    11.1618,
+    16.2755
+   ],
+   "n_B_ge_3_per_seed": [
+    7,
+    5,
+    8,
+    9,
+    9,
+    11
+   ],
+   "n_alarms_per_seed": [
+    5,
+    2,
+    5,
+    5,
+    6,
+    6
+   ],
+   "note": "The INC EVT runs show B up to 16.3, 5-11 ticks with B >= 3, streaks of 3-7 consecutive ticks and 2-6 alarms; the same code path does fire when a real bottleneck exists. Their trigger_log B is computed with event.downweight = 5.0 on both pair detectors once the fault hypothesis is adopted, so the logged B after adoption is 5x smaller than the raw residuals."
+  },
+  "NOI_reference": {
+   "B_max_per_seed": [
+    4.0825,
+    2.804,
+    2.7098,
+    2.4048,
+    3.9351,
+    2.5602
+   ],
+   "n_B_ge_3_per_seed": [
+    1,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   "note": "NOI EVT runs are the false-alarm control: 0-1 isolated ticks with B >= 3 (up to 4.08), never two consecutive, no alarm."
+  }
+ }
+}

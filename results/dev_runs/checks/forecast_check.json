@@ -1,0 +1,658 @@
+{
+  "timestamp": "2026-10-05 21:32:36",
+  "part1_independent_replay": {
+    "cases": [
+      {
+        "run": "evt_inc_4401",
+        "issue_t": 4800,
+        "target_t_5min": 5100.0,
+        "target_t_15min": 5700.0,
+        "snapshot": {
+          "loaded_simulation_time": 4800.0,
+          "network_vehicles": 294,
+          "ktb_w3": {
+            "all": 15,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 23,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          }
+        },
+        "step_300s": {
+          "simulation_time": 5100.0,
+          "network_vehicles": 327,
+          "ktb_w3": {
+            "all": 7,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 33,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "step_900s": {
+          "simulation_time": 5700.0,
+          "network_vehicles": 281,
+          "ktb_w3": {
+            "all": 9,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 25,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "scorer_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "our_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "edge_ids_match": true
+      },
+      {
+        "run": "evt_inc_4401",
+        "issue_t": 5100,
+        "target_t_5min": 5400.0,
+        "target_t_15min": 6000.0,
+        "snapshot": {
+          "loaded_simulation_time": 5100.0,
+          "network_vehicles": 326,
+          "ktb_w3": {
+            "all": 7,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 30,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          }
+        },
+        "step_300s": {
+          "simulation_time": 5400.0,
+          "network_vehicles": 319,
+          "ktb_w3": {
+            "all": 9,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 19,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "step_900s": {
+          "simulation_time": 6000.0,
+          "network_vehicles": 336,
+          "ktb_w3": {
+            "all": 9,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 40,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "scorer_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "our_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "edge_ids_match": true
+      },
+      {
+        "run": "evt_inc_4401",
+        "issue_t": 5400,
+        "target_t_5min": 5700.0,
+        "target_t_15min": 6300.0,
+        "snapshot": {
+          "loaded_simulation_time": 5400.0,
+          "network_vehicles": 320,
+          "ktb_w3": {
+            "all": 8,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 19,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          }
+        },
+        "step_300s": {
+          "simulation_time": 5700.0,
+          "network_vehicles": 268,
+          "ktb_w3": {
+            "all": 8,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 25,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "step_900s": {
+          "simulation_time": 6300.0,
+          "network_vehicles": 307,
+          "ktb_w3": {
+            "all": 16,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 44,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "scorer_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "our_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "edge_ids_match": true
+      },
+      {
+        "run": "conv_inc_4403",
+        "issue_t": 4800,
+        "target_t_5min": 5100.0,
+        "target_t_15min": 5700.0,
+        "snapshot": {
+          "loaded_simulation_time": 4800.0,
+          "network_vehicles": 287,
+          "ktb_w3": {
+            "all": 11,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 34,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          }
+        },
+        "step_300s": {
+          "simulation_time": 5100.0,
+          "network_vehicles": 335,
+          "ktb_w3": {
+            "all": 5,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 30,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "step_900s": {
+          "simulation_time": 5700.0,
+          "network_vehicles": 286,
+          "ktb_w3": {
+            "all": 5,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 25,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "scorer_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "our_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "edge_ids_match": true
+      },
+      {
+        "run": "conv_inc_4403",
+        "issue_t": 5100,
+        "target_t_5min": 5400.0,
+        "target_t_15min": 6000.0,
+        "snapshot": {
+          "loaded_simulation_time": 5100.0,
+          "network_vehicles": 335,
+          "ktb_w3": {
+            "all": 6,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 31,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          }
+        },
+        "step_300s": {
+          "simulation_time": 5400.0,
+          "network_vehicles": 330,
+          "ktb_w3": {
+            "all": 16,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 21,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "step_900s": {
+          "simulation_time": 6000.0,
+          "network_vehicles": 331,
+          "ktb_w3": {
+            "all": 16,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 23,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "scorer_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "our_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "edge_ids_match": true
+      },
+      {
+        "run": "conv_inc_4403",
+        "issue_t": 5400,
+        "target_t_5min": 5700.0,
+        "target_t_15min": 6300.0,
+        "snapshot": {
+          "loaded_simulation_time": 5400.0,
+          "network_vehicles": 330,
+          "ktb_w3": {
+            "all": 11,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 26,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          }
+        },
+        "step_300s": {
+          "simulation_time": 5700.0,
+          "network_vehicles": 283,
+          "ktb_w3": {
+            "all": 4,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 24,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "step_900s": {
+          "simulation_time": 6300.0,
+          "network_vehicles": 315,
+          "ktb_w3": {
+            "all": 14,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 33,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "scorer_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "our_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "edge_ids_match": true
+      },
+      {
+        "run": "evt_inc_4406",
+        "issue_t": 4800,
+        "target_t_5min": 5100.0,
+        "target_t_15min": 5700.0,
+        "snapshot": {
+          "loaded_simulation_time": 4800.0,
+          "network_vehicles": 298,
+          "ktb_w3": {
+            "all": 11,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 40,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          }
+        },
+        "step_300s": {
+          "simulation_time": 5100.0,
+          "network_vehicles": 332,
+          "ktb_w3": {
+            "all": 11,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 27,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "step_900s": {
+          "simulation_time": 5700.0,
+          "network_vehicles": 290,
+          "ktb_w3": {
+            "all": 6,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 33,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "scorer_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "our_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "edge_ids_match": true
+      },
+      {
+        "run": "evt_inc_4406",
+        "issue_t": 5100,
+        "target_t_5min": 5400.0,
+        "target_t_15min": 6000.0,
+        "snapshot": {
+          "loaded_simulation_time": 5100.0,
+          "network_vehicles": 334,
+          "ktb_w3": {
+            "all": 11,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 30,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          }
+        },
+        "step_300s": {
+          "simulation_time": 5400.0,
+          "network_vehicles": 350,
+          "ktb_w3": {
+            "all": 11,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 27,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "step_900s": {
+          "simulation_time": 6000.0,
+          "network_vehicles": 324,
+          "ktb_w3": {
+            "all": 11,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 41,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "scorer_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "our_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "edge_ids_match": true
+      },
+      {
+        "run": "evt_inc_4406",
+        "issue_t": 5400,
+        "target_t_5min": 5700.0,
+        "target_t_15min": 6300.0,
+        "snapshot": {
+          "loaded_simulation_time": 5400.0,
+          "network_vehicles": 346,
+          "ktb_w3": {
+            "all": 4,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 39,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          }
+        },
+        "step_300s": {
+          "simulation_time": 5700.0,
+          "network_vehicles": 294,
+          "ktb_w3": {
+            "all": 7,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 32,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "step_900s": {
+          "simulation_time": 6300.0,
+          "network_vehicles": 326,
+          "ktb_w3": {
+            "all": 14,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "ktb_n1": {
+            "all": 31,
+            "halted_v_lt_01": 0,
+            "getLastStepHaltingNumber": 0
+          },
+          "halting_sum_speed_lt_0_1": 0,
+          "halting_sum_getLastStepHaltingNumber": 0,
+          "saved_pred": 0,
+          "pred_match": true
+        },
+        "scorer_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "our_edge_ids": [
+          "ktb_w3",
+          "ktb_n1"
+        ],
+        "edge_ids_match": true
+      }
+    ],
+    "all_match": true,
+    "scorer_edge_ids": [
+      "ktb_w3",
+      "ktb_n1"
+    ],
+    "edges_verified": [
+      "ktb_w3",
+      "ktb_n1"
+    ]
+  },
+  "part2_reconciliation": {
+    "runs_checked": 48,
+    "total_cells_checked": 768,
+    "total_truth_evaluated_cells": 720,
+    "total_beyond_horizon_cells": 48,
+    "counts_per_arm_scenario": {
+      "evt_inc": {
+        "5min": 48,
+        "15min": 42,
+        "15min_beyond_horizon": 6
+      },
+      "evt_noi": {
+        "5min": 48,
+        "15min": 42,
+        "15min_beyond_horizon": 6
+      },
+      "evt_shk": {
+        "5min": 48,
+        "15min": 42,
+        "15min_beyond_horizon": 6
+      },
+      "evt_det": {
+        "5min": 48,
+        "15min": 42,
+        "15min_beyond_horizon": 6
+      },
+      "conv_inc": {
+        "5min": 48,
+        "15min": 42,
+        "15min_beyond_horizon": 6
+      },
+      "conv_noi": {
+        "5min": 48,
+        "15min": 42,
+        "15min_beyond_horizon": 6
+      },
+      "conv_shk": {
+        "5min": 48,
+        "15min": 42,
+        "15min_beyond_horizon": 6
+      },
+      "conv_det": {
+        "5min": 48,
+        "15min": 42,
+        "15min_beyond_horizon": 6
+      }
+    },
+    "plan_counts_match": true,
+    "mismatches": {
+      "err": [],
+      "target_t": [],
+      "truth": []
+    },
+    "pass": true
+  },
+  "overall_pass": true,
+  "conclusion": "The zero queue predictions (pred = 0 across all 48 runs and all issue times) are a REAL PROPERTY OF THE TWIN STATE, NOT AN INSTRUMENT ARTEFACT.\n\nEvidence from the independent check:\n1. Instrument correctness: The scorer and frozen replay correctly target the key edges 'ktb_w3' and 'ktb_n1', which are identical to the Proxy halting truth measurement and cover the incident and spillback corridor. The halting metric getLastStepHaltingNumber faithfully reflects vehicle speeds (< 0.1 m/s), matching individual vehicle inspection.\n2. Twin simulation state: In all development runs, the Twin simulated network had free-flowing traffic on 'ktb_w3' and 'ktb_n1' with vehicle speeds in the range of 15-22 m/s. In CONV runs, the Twin operates purely nominally without event awareness or lane closures. In EVT runs, the online hypothesis test did not adopt any incident hypothesis (replacement_log was empty across all 48 runs), leaving all 3 lanes open and nominal capacity intact.\n3. Frozen replay dynamics: Starting from an unqueued snapshot with all lanes open and inserting nominal demand forward for 300 s and 900 s preserves free-flow conditions, yielding strictly 0 halted vehicles at both forecast horizons."
+}
