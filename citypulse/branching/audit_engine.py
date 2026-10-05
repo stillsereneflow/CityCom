@@ -234,6 +234,23 @@ def build_proxy_resampled_routes(
     return orig_future_ids, len(vehicles)
 
 
+def resolve_twin_job_overrides(job: Dict[str, Any], meta: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """Extract and validate Twin branch overrides with baseline defaults preserved."""
+    hyp_pos = float(job.get("hyp_pos", 755.3)) if job.get("hyp_pos") is not None else 755.3
+    hyp_clear_time = float(job["hyp_clear_time"]) if job.get("hyp_clear_time") is not None else None
+    meta = meta or {}
+    job_factor = job.get("branch_factor")
+    if job_factor is not None:
+        branch_factor = float(job_factor)
+    else:
+        branch_factor = float(meta.get("twin_base_factor") or 0.85)
+    return {
+        "hyp_pos": hyp_pos,
+        "hyp_clear_time": hyp_clear_time,
+        "branch_factor": branch_factor,
+    }
+
+
 def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
     """Execute one Twin audit branch in a new process."""
     import libsumo as tc
@@ -245,6 +262,11 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
     seed = int(job["seed"])
     action = str(job["action"])
     horizon = int(job.get("horizon", HORIZON_STEPS))
+    variant = str(job.get("variant", "B"))
+
+    hyp_pos = float(job.get("hyp_pos", 755.3)) if job.get("hyp_pos") is not None else 755.3
+    hyp_clear_time = float(job["hyp_clear_time"]) if job.get("hyp_clear_time") is not None else None
+    job_branch_factor = job.get("branch_factor")
 
     cmd = twin_cmd(r, ["--load-state", state_path])
     try:
@@ -255,7 +277,7 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
         cs = ControlState.from_dict(meta["control_state"])
         cs.apply(tc)
 
-        # Apply H_G5 point blockage: ktb_n1 lanes 0-1 blocked at 755.3 m
+        # Apply H_G5 point blockage: ktb_n1 lanes 0-1 blocked at hyp_pos
         if "hyp_route" not in tc.route.getIDList():
             tc.route.add("hyp_route", ["ktb_n1"])
         for ln in (0, 1):
@@ -265,13 +287,13 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
                 "hyp_route",
                 typeID="t_car",
                 departLane=str(ln),
-                departPos=str(755.3 - 1),
+                departPos=str(hyp_pos - 1),
                 departSpeed="0",
             )
             tc.vehicle.setStop(
                 vid,
                 "ktb_n1",
-                pos=755.3,
+                pos=hyp_pos,
                 laneIndex=ln,
                 duration=3600.0,
             )
@@ -280,7 +302,10 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
         # Twin future demand: D_T(r) = 900000 + 1000 * seed + r
         d_seed = D_T_seed(seed, r)
         cand_path = meta.get("demand_path")
-        base_factor = meta.get("twin_base_factor") or 0.85
+        if job_branch_factor is not None:
+            base_factor = float(job_branch_factor)
+        else:
+            base_factor = meta.get("twin_base_factor") or 0.85
         stream = TwinDemandStream(
             seed=d_seed,
             path=cand_path,
@@ -296,9 +321,35 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
             act.apply(tc, action)
 
         total_veh_steps = 0
+        blocker_stops: Dict[str, Dict[str, Any]] = {}
+        actual_clear_time: Optional[float] = None
+
         for k in range(1, horizon + 1):
             stream.insert_due(tc, t0 + k)
             tc.simulationStep()
+            t = tc.simulation.getTime()
+
+            # Record actual blocker placement (edge, lane, pos, time stopped)
+            if len(blocker_stops) < 2:
+                for ln in (0, 1):
+                    vid = f"hyp_blocker_{ln}"
+                    if vid not in blocker_stops and vid in tc.vehicle.getIDList() and tc.vehicle.isStopped(vid):
+                        blocker_stops[vid] = {
+                            "edge": tc.vehicle.getRoadID(vid),
+                            "lane": tc.vehicle.getLaneIndex(vid),
+                            "pos": round(tc.vehicle.getLanePosition(vid), 4),
+                            "time_stopped": t,
+                        }
+
+            # Handle clearance override at absolute simulation time
+            if hyp_clear_time is not None and t >= hyp_clear_time:
+                for ln in (0, 1):
+                    vid = f"hyp_blocker_{ln}"
+                    if vid in tc.vehicle.getIDList() and tc.vehicle.isStopped(vid):
+                        tc.vehicle.resume(vid)
+                if actual_clear_time is None:
+                    actual_clear_time = t
+
             act.step(tc)
             n_run = tc.vehicle.getIDCount()
             n_pend = len(tc.simulation.getPendingVehicles())
@@ -306,6 +357,10 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
 
         digest, n_veh = veh_digest(tc)
         J = total_veh_steps / 3600.0
+
+        b0 = blocker_stops.get("hyp_blocker_0", {})
+        b1 = blocker_stops.get("hyp_blocker_1", {})
+
         return {
             "world": "twin",
             "seed": seed,
@@ -316,6 +371,18 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
             "n_vehicles": n_veh,
             "wall_s": time.time() - t_wall0,
             "status": "ok",
+            "variant": variant,
+            "hyp_pos": hyp_pos,
+            "hyp_clear_time": hyp_clear_time,
+            "branch_factor": base_factor,
+            "blocker_edge": "ktb_n1",
+            "blocker_lane_0": 0,
+            "blocker_pos_0": b0.get("pos"),
+            "blocker_t_stop_0": b0.get("time_stopped"),
+            "blocker_lane_1": 1,
+            "blocker_pos_1": b1.get("pos"),
+            "blocker_t_stop_1": b1.get("time_stopped"),
+            "actual_clear_time": actual_clear_time,
         }
     except Exception as e:
         return {
@@ -329,6 +396,10 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
             "reason": type(e).__name__,
             "status": "error",
             "wall_s": time.time() - t_wall0,
+            "variant": variant,
+            "hyp_pos": hyp_pos,
+            "hyp_clear_time": hyp_clear_time,
+            "branch_factor": job_branch_factor,
         }
     finally:
         try:

@@ -1,0 +1,151 @@
+{
+  "D300": {
+    "label": "truth-assisted offline positive control",
+    "target_pos": 755.3,
+    "target_clear_time": 5400.0,
+    "target_branch_factor": 0.85,
+    "n_runs": 240,
+    "edge": "ktb_n1",
+    "lane_0": {
+      "mean_pos": 755.2869625000001,
+      "min_pos": 755.2633,
+      "max_pos": 755.2996,
+      "mean_t_stop": 5105.833333333333,
+      "min_t_stop": 5103.0,
+      "max_t_stop": 5117.0
+    },
+    "lane_1": {
+      "mean_pos": 755.29202875,
+      "min_pos": 755.2649,
+      "max_pos": 755.2999,
+      "mean_t_stop": 5104.070833333333,
+      "min_t_stop": 5103.0,
+      "max_t_stop": 5105.0
+    },
+    "clearance": {
+      "expected": 5400.0,
+      "n_cleared": 240,
+      "actual_clear_times": [
+        5400.0
+      ]
+    }
+  },
+  "D600": {
+    "label": "sensitivity",
+    "target_pos": 755.3,
+    "target_clear_time": 5700.0,
+    "target_branch_factor": 0.85,
+    "n_runs": 240,
+    "edge": "ktb_n1",
+    "lane_0": {
+      "mean_pos": 755.2869625000001,
+      "min_pos": 755.2633,
+      "max_pos": 755.2996,
+      "mean_t_stop": 5105.833333333333,
+      "min_t_stop": 5103.0,
+      "max_t_stop": 5117.0
+    },
+    "lane_1": {
+      "mean_pos": 755.29202875,
+      "min_pos": 755.2649,
+      "max_pos": 755.2999,
+      "mean_t_stop": 5104.070833333333,
+      "min_t_stop": 5103.0,
+      "max_t_stop": 5105.0
+    },
+    "clearance": {
+      "expected": 5700.0,
+      "n_cleared": 240,
+      "actual_clear_times": [
+        5700.0
+      ]
+    }
+  },
+  "P456": {
+    "label": "sensitivity",
+    "target_pos": 456.0,
+    "target_clear_time": null,
+    "target_branch_factor": 0.85,
+    "n_runs": 240,
+    "edge": "ktb_n1",
+    "lane_0": {
+      "mean_pos": 455.98934083333336,
+      "min_pos": 455.9571,
+      "max_pos": 455.9999,
+      "mean_t_stop": 5110.908333333334,
+      "min_t_stop": 5103.0,
+      "max_t_stop": 5129.0
+    },
+    "lane_1": {
+      "mean_pos": 455.99077416666665,
+      "min_pos": 455.9635,
+      "max_pos": 455.9999,
+      "mean_t_stop": 5105.041666666667,
+      "min_t_stop": 5103.0,
+      "max_t_stop": 5110.0
+    },
+    "clearance": {
+      "expected": null,
+      "n_cleared": 0,
+      "actual_clear_times": []
+    }
+  },
+  "P900": {
+    "label": "truth-assisted offline positive control",
+    "target_pos": 900.0,
+    "target_clear_time": null,
+    "target_branch_factor": 0.85,
+    "n_runs": 240,
+    "edge": "ktb_n1",
+    "lane_0": {
+      "mean_pos": 899.9892308333333,
+      "min_pos": 899.966,
+      "max_pos": 899.9998,
+      "mean_t_stop": 5106.7,
+      "min_t_stop": 5103.0,
+      "max_t_stop": 5111.0
+    },
+    "lane_1": {
+      "mean_pos": 899.9917345833334,
+      "min_pos": 899.9649,
+      "max_pos": 899.9999,
+      "mean_t_stop": 5104.070833333333,
+      "min_t_stop": 5103.0,
+      "max_t_stop": 5105.0
+    },
+    "clearance": {
+      "expected": null,
+      "n_cleared": 0,
+      "actual_clear_times": []
+    }
+  },
+  "F100": {
+    "label": "sensitivity (the Twin's demand belief)",
+    "target_pos": 755.3,
+    "target_clear_time": null,
+    "target_branch_factor": 1.0,
+    "n_runs": 240,
+    "edge": "ktb_n1",
+    "lane_0": {
+      "mean_pos": 755.2869625000001,
+      "min_pos": 755.2633,
+      "max_pos": 755.2996,
+      "mean_t_stop": 5105.833333333333,
+      "min_t_stop": 5103.0,
+      "max_t_stop": 5117.0
+    },
+    "lane_1": {
+      "mean_pos": 755.29202875,
+      "min_pos": 755.2649,
+      "max_pos": 755.2999,
+      "mean_t_stop": 5104.070833333333,
+      "min_t_stop": 5103.0,
+      "max_t_stop": 5105.0
+    },
+    "clearance": {
+      "expected": null,
+      "n_cleared": 0,
+      "actual_clear_times": []
+    }
+  }
+}

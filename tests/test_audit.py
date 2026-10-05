@@ -10,10 +10,12 @@ from citypulse.branching.audit_engine import (
     ACTIONS,
     T_D,
     build_proxy_resampled_routes,
+    resolve_twin_job_overrides,
 )
 from citypulse.experiments.decision_audit import (
     compute_crn_statistics,
     compute_metrics_from_raw,
+    compute_sens_contrasts,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -205,4 +207,95 @@ def test_compute_crn_statistics_synthetic():
     assert abs(pm["median_vr"]["A1"] - 1.0) < 1e-9
     assert abs(pm["median_corr"]["A2"] - expected_corr) < 1e-9
     assert abs(pm["median_vr"]["A2"] - expected_vr) < 1e-6
+
+
+def test_twin_job_overrides_defaults_and_variants():
+    """Verify that with default overrides the job dict and code path values are unchanged."""
+    meta = {"twin_base_factor": 0.85}
+
+    # Case 1: Empty job dict (default code path)
+    job_empty = {}
+    res_empty = resolve_twin_job_overrides(job_empty, meta)
+    assert res_empty["hyp_pos"] == 755.3
+    assert res_empty["hyp_clear_time"] is None
+    assert res_empty["branch_factor"] == 0.85
+
+    # Case 2: Explicit default overrides passed in job dict
+    job_defaults = {"hyp_pos": 755.3, "hyp_clear_time": None, "branch_factor": None}
+    res_defaults = resolve_twin_job_overrides(job_defaults, meta)
+    assert res_defaults == res_empty
+
+    # Case 3: Sensitivity variants D300, D600, P456, P900, F100
+    res_d300 = resolve_twin_job_overrides({"hyp_clear_time": 5400.0}, meta)
+    assert res_d300["hyp_clear_time"] == 5400.0
+    assert res_d300["hyp_pos"] == 755.3
+    assert res_d300["branch_factor"] == 0.85
+
+    res_d600 = resolve_twin_job_overrides({"hyp_clear_time": 5700.0}, meta)
+    assert res_d600["hyp_clear_time"] == 5700.0
+
+    res_p456 = resolve_twin_job_overrides({"hyp_pos": 456.0}, meta)
+    assert res_p456["hyp_pos"] == 456.0
+    assert res_p456["hyp_clear_time"] is None
+
+    res_p900 = resolve_twin_job_overrides({"hyp_pos": 900.0}, meta)
+    assert res_p900["hyp_pos"] == 900.0
+
+    res_f100 = resolve_twin_job_overrides({"branch_factor": 1.00}, meta)
+    assert res_f100["branch_factor"] == 1.00
+    assert res_f100["hyp_pos"] == 755.3
+    assert res_f100["hyp_clear_time"] is None
+
+
+def test_compute_sens_contrasts():
+    """Verify paired Delta contrast calculations, uncorrected t 95% CI, and incomplete data exclusions."""
+    # Synthetic baseline data for seeds 4201..4208
+    base_per_seed = [
+        {"seed": s, "BEE_signed": 1.5, "BEE_abs": 1.5, "Regret": 0.1}
+        for s in range(4201, 4209)
+    ]
+    base_metrics = {"variant": "B", "per_seed": base_per_seed, "exclusions": {}}
+
+    # Case 1: Complete 8 seeds in variant with constant offset
+    # Delta(BEE_signed) = +0.5, Delta(BEE_abs) = +0.5, Delta(Regret) = -0.05
+    var_per_seed_8 = [
+        {"seed": s, "BEE_signed": 2.0, "BEE_abs": 2.0, "Regret": 0.05}
+        for s in range(4201, 4209)
+    ]
+    var_metrics_8 = {"variant": "D300", "per_seed": var_per_seed_8, "exclusions": {}}
+
+    contrast_8 = compute_sens_contrasts(var_metrics_8, base_metrics)
+    assert contrast_8["n"] == 8
+    assert len(contrast_8["exclusions"]) == 0
+    assert abs(contrast_8["metrics"]["BEE_signed"]["mean"] - 0.5) < 1e-9
+    assert abs(contrast_8["metrics"]["BEE_abs"]["mean"] - 0.5) < 1e-9
+    assert abs(contrast_8["metrics"]["Regret"]["mean"] - (-0.05)) < 1e-9
+    # Zero sample variance -> CI width is 0 around mean
+    assert abs(contrast_8["metrics"]["BEE_signed"]["ci95_t"][0] - 0.5) < 1e-9
+    assert abs(contrast_8["metrics"]["BEE_signed"]["ci95_t"][1] - 0.5) < 1e-9
+
+    # Case 2: Incomplete-data rule: seed 4208 excluded from variant (N=7 remaining)
+    var_per_seed_7 = [
+        {"seed": s, "BEE_signed": 2.0, "BEE_abs": 2.0, "Regret": 0.05}
+        for s in range(4201, 4208)
+    ]
+    var_exclusions_7 = {4208: "Incomplete Twin grid: missing action A4"}
+    var_metrics_7 = {"variant": "D600", "per_seed": var_per_seed_7, "exclusions": var_exclusions_7}
+
+    contrast_7 = compute_sens_contrasts(var_metrics_7, base_metrics)
+    assert contrast_7["n"] == 7
+    assert 4208 in contrast_7["exclusions"]
+    assert "missing action A4" in contrast_7["exclusions"][4208]
+    assert abs(contrast_7["metrics"]["BEE_signed"]["mean"] - 0.5) < 1e-9
+
+    # Case 3: N < 2 -> t interval omitted (ci95_t is None)
+    var_per_seed_1 = [{"seed": 4201, "BEE_signed": 2.0, "BEE_abs": 2.0, "Regret": 0.05}]
+    var_exclusions_1 = {s: "Incomplete" for s in range(4202, 4209)}
+    var_metrics_1 = {"variant": "P456", "per_seed": var_per_seed_1, "exclusions": var_exclusions_1}
+
+    contrast_1 = compute_sens_contrasts(var_metrics_1, base_metrics)
+    assert contrast_1["n"] == 1
+    assert contrast_1["metrics"]["BEE_signed"]["ci95_t"] is None
+
+
 

@@ -1160,7 +1160,12 @@ def main():
     ap.add_argument("--workers", type=int, default=8, help="Max parallel SUMO workers")
     ap.add_argument("--skip-twoworld", action="store_true", help="Skip two-world runs if snapshots exist")
     ap.add_argument("--v2", action="store_true", help="Run v2 defect fixes (RNG isolation, CRN recomputation, v2 report)")
+    ap.add_argument("--sens", action="store_true", help="Run preregistered offline sensitivity audit (D300, D600, P456, P900, F100)")
     args = ap.parse_args()
+
+    if args.sens:
+        run_sens_audit(workers=args.workers)
+        return
 
     if args.v2:
         run_v2_audit()
@@ -1693,6 +1698,888 @@ def run_v2_audit(runs_dir: Optional[Path] = None, v2_dir: Optional[Path] = None)
     v2_report_path = v2_dir / "report.md"
     generate_v2_report(rng_res, crn_stats, metrics_v2, v2_report_path)
     print(f"V2 Report written to {v2_report_path}")
+
+
+# ==============================================================================
+# SENSITIVITY AUDIT IMPLEMENTATION (docs/oct8-audit-sensitivity-plan.md)
+# ==============================================================================
+
+SENS_DIR = AUDIT_DIR / "sens"
+
+SENS_VARIANTS_SPEC: Dict[str, Dict[str, Any]] = {
+    "D300": {
+        "label": "truth-assisted offline positive control",
+        "factor": "blockage duration from t_d = 300 s (ends at 5,400 s)",
+        "baseline_val": "whole horizon (>= 900 s)",
+        "hyp_pos": 755.3,
+        "hyp_clear_time": 5400.0,
+        "branch_factor": None,
+    },
+    "D600": {
+        "label": "sensitivity",
+        "factor": "blockage duration from t_d = 600 s (ends at 5,700 s)",
+        "baseline_val": "whole horizon (>= 900 s)",
+        "hyp_pos": 755.3,
+        "hyp_clear_time": 5700.0,
+        "branch_factor": None,
+    },
+    "P456": {
+        "label": "sensitivity",
+        "factor": "blockage position on ktb_n1 = 456 m (upstream detector AID02109)",
+        "baseline_val": "755.3 m",
+        "hyp_pos": 456.0,
+        "hyp_clear_time": None,
+        "branch_factor": None,
+    },
+    "P900": {
+        "label": "truth-assisted offline positive control",
+        "factor": "blockage position on ktb_n1 = 900 m",
+        "baseline_val": "755.3 m",
+        "hyp_pos": 900.0,
+        "hyp_clear_time": None,
+        "branch_factor": None,
+    },
+    "F100": {
+        "label": "sensitivity (the Twin's demand belief)",
+        "factor": "Twin TKO base factor in branches = 1.00",
+        "baseline_val": "0.85",
+        "hyp_pos": 755.3,
+        "hyp_clear_time": None,
+        "branch_factor": 1.00,
+    },
+}
+
+
+def run_baseline_compatibility_check(
+    runs_dir: Path,
+    raw_df: pd.DataFrame,
+    out_file: Path,
+    workers: int = 8,
+) -> Dict[str, Any]:
+    """Execute baseline replay check (seed 4201 r=1..6, seeds 4202-4208 r=1, all 5 actions).
+
+    Verifies that with modified worker and default overrides, J and veh_digest match stored baseline rows exactly.
+    """
+    check_jobs = []
+    # Seed 4201 with all 6 replications x 5 actions
+    # Seeds 4202-4208 with replication 1 x 5 actions
+    plan = [(4201, list(range(1, 7)))] + [(s, [1]) for s in range(4202, 4209)]
+    for seed, reps in plan:
+        info_path = runs_dir / f"seed_{seed}" / "two_world_info.json"
+        if not info_path.exists():
+            raise FileNotFoundError(f"Missing snapshot info for seed {seed}: {info_path}")
+        with open(info_path, "r", encoding="utf-8") as fh:
+            info = json.load(fh)
+        twin_state = info["twin_state"]
+        twin_meta = info["twin_meta"]
+        for r in reps:
+            for a in ACTIONS:
+                check_jobs.append(
+                    {
+                        "state": twin_state,
+                        "meta": twin_meta,
+                        "seed": seed,
+                        "r": r,
+                        "action": a,
+                        "horizon": HORIZON_STEPS,
+                        "variant": "B",
+                        "hyp_pos": 755.3,
+                        "hyp_clear_time": None,
+                        "branch_factor": None,
+                    }
+                )
+
+    print(f"Launching {len(check_jobs)} baseline verification jobs across {workers} workers...")
+    t0 = time.time()
+    results = run_twin_branch_jobs(check_jobs, workers=min(workers, 8))
+    wall_s = time.time() - t0
+    print(f"Baseline verification jobs completed in {wall_s:.1f}s.")
+
+    rows = []
+    all_matched = True
+    mismatches = []
+    for res in results:
+        s = int(res["seed"])
+        r = int(res["replication"])
+        a = str(res["action"])
+        replayed_J = res.get("J")
+        replayed_digest = res.get("veh_digest")
+
+        stored_rows = raw_df[
+            (raw_df["world"] == "twin")
+            & (raw_df["seed"] == s)
+            & (raw_df["replication"] == r)
+            & (raw_df["action"] == a)
+        ]
+        if stored_rows.empty:
+            raise ValueError(f"No stored row found in raw.parquet for seed={s}, r={r}, action={a}")
+        stored = stored_rows.iloc[0]
+        stored_J = float(stored["J"])
+        stored_digest = str(stored["veh_digest"])
+
+        j_matches = (replayed_J is not None) and (abs(replayed_J - stored_J) < 1e-9)
+        digest_matches = (replayed_digest is not None) and (replayed_digest == stored_digest)
+        row_ok = j_matches and digest_matches
+
+        row_record = {
+            "seed": s,
+            "replication": r,
+            "action": a,
+            "stored_J": stored_J,
+            "replayed_J": replayed_J,
+            "J_matches": bool(j_matches),
+            "stored_digest": stored_digest,
+            "replayed_digest": replayed_digest,
+            "digest_matches": bool(digest_matches),
+            "status": "ok" if row_ok else "mismatch",
+        }
+        rows.append(row_record)
+        if not row_ok:
+            all_matched = False
+            mismatches.append(row_record)
+
+    summary = {
+        "passed": all_matched,
+        "n_checked": len(rows),
+        "n_matched": sum(1 for r in rows if r["status"] == "ok"),
+        "n_mismatches": len(mismatches),
+        "wall_s": wall_s,
+        "rows": rows,
+        "mismatches": mismatches,
+    }
+
+    out_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_file, "w", encoding="utf-8") as fh:
+        json.dump(summary, fh, indent=2)
+
+    if not all_matched:
+        raise RuntimeError(
+            f"BASELINE CHECK FAILED: {len(mismatches)} rows differed from stored baseline raw.parquet! "
+            f"Halting immediately per blocking rule 2."
+        )
+
+    print(f"Baseline compatibility check PASSED: all {len(rows)} rows matched exactly.")
+    return summary
+
+
+def compute_variant_decision_metrics(
+    raw_df: pd.DataFrame,
+    twin_df: pd.DataFrame,
+    variant_id: str,
+    seeds: List[int] = AUDIT_SEEDS,
+) -> Dict[str, Any]:
+    """Compute per-seed and pooled audit metrics for a single variant (or baseline B).
+
+    Applies the incomplete-data rule (blocking rule 3): requires all 5 actions across
+    all 6 Twin replications with status == 'ok' before computing seed metrics.
+    Reuses Proxy and Calibration rows from raw_df.
+    """
+    per_seed = []
+    exclusions: Dict[int, str] = {}
+
+    for s in seeds:
+        sub_tw = twin_df[twin_df["seed"] == s]
+        ok_tw = sub_tw[sub_tw["status"] == "ok"]
+
+        # Incomplete-data check on Twin grid: 5 actions x 6 replications
+        actions_present = set(ok_tw["action"].dropna().unique())
+        reps_present = set(ok_tw["replication"].dropna().unique())
+        if (
+            len(ok_tw) != 30
+            or actions_present != set(ACTIONS)
+            or reps_present != {1, 2, 3, 4, 5, 6}
+            or ok_tw["J"].isna().any()
+        ):
+            exclusions[s] = (
+                f"Incomplete Twin grid: {len(ok_tw)}/30 ok rows (actions={sorted(actions_present)}, reps={sorted(reps_present)})"
+            )
+            continue
+
+        # Twin calculations
+        j_t_r1 = ok_tw[ok_tw["replication"].isin([1, 2, 3])].groupby("action")["J"].mean()
+        j_t_r2 = ok_tw[ok_tw["replication"].isin([4, 5, 6])].groupby("action")["J"].mean()
+        j_t_all = ok_tw.groupby("action")["J"].mean()
+
+        a_star = str(j_t_r1.idxmin())
+        a_star_unsplit = str(j_t_all.idxmin())
+        g_t_hat = float(j_t_r2["A0"] - j_t_r2[a_star])
+        g_t_hat_unsplit = float(j_t_all["A0"] - j_t_all[a_star_unsplit])
+
+        # Proxy calculations (reused from raw_df)
+        px = raw_df[(raw_df["world"] == "proxy") & (raw_df["seed"] == s)]
+        j_p_m1 = px[px["replication"].isin([1, 2, 3])].groupby("action")["J"].mean()
+        j_p_m2 = px[px["replication"].isin([4, 5, 6])].groupby("action")["J"].mean()
+        j_p_all = px.groupby("action")["J"].mean()
+
+        oracle = str(j_p_m1.idxmin())
+        oracle_unsplit = str(j_p_all.idxmin())
+        g_p = float(j_p_m2["A0"] - j_p_m2[a_star])
+        g_p_unsplit = float(j_p_all["A0"] - j_p_all[a_star_unsplit])
+        j_p_a0_m2 = float(j_p_m2["A0"])
+        j_p_a0_all = float(j_p_all["A0"])
+
+        # Split BEE
+        bee_signed = g_t_hat - g_p
+        bee_abs = abs(bee_signed)
+        bee_rel = bee_abs / j_p_a0_m2 if j_p_a0_m2 > 0 else None
+        bee_signed_rel = bee_signed / j_p_a0_m2 if j_p_a0_m2 > 0 else None
+
+        # Unsplit BEE
+        bee_signed_unsplit = g_t_hat_unsplit - g_p_unsplit
+        bee_abs_unsplit = abs(bee_signed_unsplit)
+        bee_rel_unsplit = bee_abs_unsplit / j_p_a0_all if j_p_a0_all > 0 else None
+
+        # Split Regret
+        regret = float(j_p_m2[a_star] - j_p_m2[oracle])
+        denom = float(j_p_m2["A0"] - j_p_m2[oracle])
+        regret_rel = (regret / denom) if denom >= 0.5 else None
+
+        # Unsplit Regret
+        regret_unsplit = float(j_p_all[a_star_unsplit] - j_p_all[oracle_unsplit])
+        denom_unsplit = float(j_p_all["A0"] - j_p_all[oracle_unsplit])
+        regret_rel_unsplit = (regret_unsplit / denom_unsplit) if denom_unsplit >= 0.5 else None
+
+        # Rankings
+        order_act = list(ACTIONS)
+        t_vals = [float(j_t_r2[a]) for a in order_act]
+        p_vals = [float(j_p_m2[a]) for a in order_act]
+
+        top1_agree = 1.0 if a_star == oracle else 0.0
+        top1_r2_m2_agree = 1.0 if (j_t_r2.idxmin() == j_p_m2.idxmin()) else 0.0
+
+        rho = spearman_rho(t_vals, p_vals)
+        tau = kendall_tau(t_vals, p_vals)
+
+        # Twin CRN for this seed
+        # Calculate paired action correlation and VR on Twin rows
+        tw_crn_seed = compute_crn_statistics(ok_tw, worlds=("twin",))
+        crn_seed_data = tw_crn_seed["per_seed"].get(s, {}).get("twin", {})
+
+        row = {
+            "seed": int(s),
+            "variant": variant_id,
+            "a_star": a_star,
+            "oracle": oracle,
+            "a_star_unsplit": a_star_unsplit,
+            "oracle_unsplit": oracle_unsplit,
+            "G_T_hat": g_t_hat,
+            "G_P": g_p,
+            "BEE_signed": bee_signed,
+            "BEE_abs": bee_abs,
+            "BEE_rel": bee_rel,
+            "BEE_signed_rel": bee_signed_rel,
+            "BEE_abs_unsplit": bee_abs_unsplit,
+            "BEE_rel_unsplit": bee_rel_unsplit,
+            "Regret": regret,
+            "Regret_denom": denom,
+            "Regret_rel": regret_rel,
+            "Regret_unsplit": regret_unsplit,
+            "Regret_denom_unsplit": denom_unsplit,
+            "Regret_rel_unsplit": regret_rel_unsplit,
+            "top1_agree": top1_agree,
+            "top1_r2_m2_agree": top1_r2_m2_agree,
+            "spearman_rho": float(rho),
+            "kendall_tau": float(tau),
+            "crn": crn_seed_data,
+            "J_T_r1": {a: float(j_t_r1[a]) for a in ACTIONS},
+            "J_T_r2": {a: float(j_t_r2[a]) for a in ACTIONS},
+            "J_P_m1": {a: float(j_p_m1[a]) for a in ACTIONS},
+            "J_P_m2": {a: float(j_p_m2[a]) for a in ACTIONS},
+        }
+        per_seed.append(row)
+
+    # Pooled metrics across complete seeds
+    metric_keys = [
+        "BEE_signed",
+        "BEE_abs",
+        "BEE_rel",
+        "BEE_signed_rel",
+        "BEE_abs_unsplit",
+        "BEE_rel_unsplit",
+        "Regret",
+        "Regret_rel",
+        "Regret_unsplit",
+        "Regret_rel_unsplit",
+        "top1_agree",
+        "top1_r2_m2_agree",
+        "spearman_rho",
+        "kendall_tau",
+    ]
+
+    pooled: Dict[str, Any] = {}
+    rng = np.random.default_rng(42)
+
+    for k in metric_keys:
+        vals = [r[k] for r in per_seed if r[k] is not None and not math.isnan(r[k])]
+        n = len(vals)
+        if n == 0:
+            pooled[k] = {"n": 0, "mean": None, "std": None, "se": None, "ci95_t": None, "ci95_boot": None}
+            continue
+        m = float(np.mean(vals))
+        s_val = float(np.std(vals, ddof=1)) if n > 1 else 0.0
+        se = s_val / math.sqrt(n) if n > 1 else 0.0
+
+        if n > 1:
+            t_crit = t_critical_95(n - 1)
+            ci_t = (m - t_crit * se, m + t_crit * se)
+            boot_means = [float(np.mean(rng.choice(vals, size=n, replace=True))) for _ in range(10000)]
+            ci_boot = (float(np.percentile(boot_means, 2.5)), float(np.percentile(boot_means, 97.5)))
+        else:
+            ci_t = (m, m)
+            ci_boot = (m, m)
+
+        pooled[k] = {
+            "n": n,
+            "mean": m,
+            "std": s_val,
+            "se": se,
+            "ci95_t": ci_t,
+            "ci95_boot": ci_boot,
+        }
+
+    # Pooled Twin CRN medians
+    all_ok_tw = twin_df[twin_df["status"] == "ok"]
+    full_crn = compute_crn_statistics(all_ok_tw, worlds=("twin",))
+    pooled["crn_twin"] = full_crn["pooled_medians"].get("twin", {})
+
+    return {
+        "variant": variant_id,
+        "n_complete": len(per_seed),
+        "exclusions": exclusions,
+        "per_seed": per_seed,
+        "pooled": pooled,
+    }
+
+
+def compute_sens_contrasts(
+    var_metrics: Dict[str, Any],
+    base_metrics: Dict[str, Any],
+) -> Dict[str, Any]:
+    """Compute paired Delta = metric(variant) - metric(B) across complete seeds.
+
+    Applies the incomplete-data rule (blocking rule 3): uses seeds complete in both B
+    and variant, reports actual N and exclusions by reason, and omits t interval if N < 2.
+    Contrast metrics: BEE_signed, BEE_abs, Regret.
+    """
+    v_id = var_metrics["variant"]
+    b_per_seed = {r["seed"]: r for r in base_metrics["per_seed"]}
+    v_per_seed = {r["seed"]: r for r in var_metrics["per_seed"]}
+
+    paired_seeds = [s for s in AUDIT_SEEDS if s in b_per_seed and s in v_per_seed]
+    n_paired = len(paired_seeds)
+
+    exclusions: Dict[int, str] = {}
+    for s in AUDIT_SEEDS:
+        if s not in paired_seeds:
+            reasons = []
+            if s in base_metrics["exclusions"]:
+                reasons.append(f"Excluded in baseline B: {base_metrics['exclusions'][s]}")
+            elif s not in b_per_seed:
+                reasons.append("Missing in baseline B")
+            if s in var_metrics["exclusions"]:
+                reasons.append(f"Excluded in variant {v_id}: {var_metrics['exclusions'][s]}")
+            elif s not in v_per_seed:
+                reasons.append(f"Missing in variant {v_id}")
+            exclusions[s] = "; ".join(reasons)
+
+    contrast_data: Dict[str, Any] = {
+        "variant": v_id,
+        "n": n_paired,
+        "exclusions": exclusions,
+        "paired_seeds": paired_seeds,
+        "metrics": {},
+    }
+
+    for m_key in ["BEE_signed", "BEE_abs", "Regret"]:
+        diffs = [v_per_seed[s][m_key] - b_per_seed[s][m_key] for s in paired_seeds]
+        if not diffs:
+            contrast_data["metrics"][m_key] = {
+                "n": 0,
+                "mean": None,
+                "std": None,
+                "se": None,
+                "ci95_t": None,
+                "diffs": {},
+            }
+            continue
+
+        mean_diff = float(np.mean(diffs))
+        if n_paired > 1:
+            std_diff = float(np.std(diffs, ddof=1))
+            se_diff = float(std_diff / math.sqrt(n_paired))
+            t_crit = t_critical_95(n_paired - 1)
+            ci95_t = (mean_diff - t_crit * se_diff, mean_diff + t_crit * se_diff)
+        else:
+            std_diff = None
+            se_diff = None
+            ci95_t = None
+
+        contrast_data["metrics"][m_key] = {
+            "n": n_paired,
+            "mean": mean_diff,
+            "std": std_diff,
+            "se": se_diff,
+            "ci95_t": ci95_t,
+            "diffs": {s: round(float(d), 6) for s, d in zip(paired_seeds, diffs)},
+        }
+
+    return contrast_data
+
+
+def summarize_blockers(sens_df: pd.DataFrame) -> Dict[str, Any]:
+    """Summarize blocker placement and clearance per variant across branch runs."""
+    summary: Dict[str, Any] = {}
+    for var_id, spec in SENS_VARIANTS_SPEC.items():
+        v_df = sens_df[sens_df["variant"] == var_id]
+        if v_df.empty:
+            continue
+
+        p0_vals = v_df["blocker_pos_0"].dropna().tolist()
+        t0_vals = v_df["blocker_t_stop_0"].dropna().tolist()
+        p1_vals = v_df["blocker_pos_1"].dropna().tolist()
+        t1_vals = v_df["blocker_t_stop_1"].dropna().tolist()
+        cl_vals = v_df["actual_clear_time"].dropna().tolist()
+
+        summary[var_id] = {
+            "label": spec["label"],
+            "target_pos": spec["hyp_pos"],
+            "target_clear_time": spec["hyp_clear_time"],
+            "target_branch_factor": spec["branch_factor"] or 0.85,
+            "n_runs": len(v_df),
+            "edge": "ktb_n1",
+            "lane_0": {
+                "mean_pos": float(np.mean(p0_vals)) if p0_vals else None,
+                "min_pos": float(np.min(p0_vals)) if p0_vals else None,
+                "max_pos": float(np.max(p0_vals)) if p0_vals else None,
+                "mean_t_stop": float(np.mean(t0_vals)) if t0_vals else None,
+                "min_t_stop": float(np.min(t0_vals)) if t0_vals else None,
+                "max_t_stop": float(np.max(t0_vals)) if t0_vals else None,
+            },
+            "lane_1": {
+                "mean_pos": float(np.mean(p1_vals)) if p1_vals else None,
+                "min_pos": float(np.min(p1_vals)) if p1_vals else None,
+                "max_pos": float(np.max(p1_vals)) if p1_vals else None,
+                "mean_t_stop": float(np.mean(t1_vals)) if t1_vals else None,
+                "min_t_stop": float(np.min(t1_vals)) if t1_vals else None,
+                "max_t_stop": float(np.max(t1_vals)) if t1_vals else None,
+            },
+            "clearance": {
+                "expected": spec["hyp_clear_time"],
+                "n_cleared": len(cl_vals),
+                "actual_clear_times": sorted(list(set(cl_vals))),
+            },
+        }
+    return summary
+
+
+def compute_all_sens_metrics_and_contrasts(
+    raw_df: pd.DataFrame,
+    sens_df: pd.DataFrame,
+) -> Dict[str, Any]:
+    """Compute per-variant metrics, CRN statistics, and paired baseline contrasts."""
+    variants_results: Dict[str, Any] = {}
+
+    # 1. Baseline B
+    base_twin_df = raw_df[raw_df["world"] == "twin"].copy()
+    base_twin_df["variant"] = "B"
+    variants_results["B"] = compute_variant_decision_metrics(
+        raw_df=raw_df,
+        twin_df=base_twin_df,
+        variant_id="B",
+    )
+
+    # 2. Variants D300, D600, P456, P900, F100
+    for v_id in SENS_VARIANTS_SPEC.keys():
+        v_twin_df = sens_df[sens_df["variant"] == v_id].copy()
+        variants_results[v_id] = compute_variant_decision_metrics(
+            raw_df=raw_df,
+            twin_df=v_twin_df,
+            variant_id=v_id,
+        )
+
+    # 3. Contrasts versus Baseline B
+    contrasts: Dict[str, Any] = {}
+    base_res = variants_results["B"]
+    for v_id in SENS_VARIANTS_SPEC.keys():
+        v_res = variants_results[v_id]
+        contrasts[v_id] = compute_sens_contrasts(v_res, base_res)
+
+    return {
+        "variants": variants_results,
+        "contrasts": contrasts,
+    }
+
+
+def generate_sens_report(
+    baseline_summary: Dict[str, Any],
+    blocker_summary: Dict[str, Any],
+    metrics_bundle: Dict[str, Any],
+    failures: Dict[str, int],
+    out_file: Path,
+):
+    """Generate results/audit/sens/report.md strictly following specification."""
+    lines = []
+    lines.append("MODEL: Gemini 3.8 Flash (High)")
+    lines.append("")
+    lines.append("# Preregistered Offline Decision Audit Sensitivity Report")
+    lines.append("")
+    lines.append("This report documents the preregistered one-factor offline sensitivity analysis for the decision audit, as specified in `docs/oct8-audit-sensitivity-plan.md` (0401a9c) and `prompt.md`.")
+    lines.append("The objective is to measure how decision fidelity metrics ($a^*$, BEE, regret, and ranking agreement) move when exactly **one** element of the Twin's belief is varied from the baseline $B$, holding the Proxy and calibration worlds identical.")
+    lines.append("")
+    lines.append("Per preregistration, this is an observational measurement with no acceptance criteria. Contrasts with the baseline are reported **without multiplicity correction**; they are strictly uncorrected, and no significance claims are made. Variants **D300** and **P900** are designated as **truth-assisted offline positive controls**.")
+    lines.append("")
+
+    # Section 1: Baseline Compatibility Replay Check
+    lines.append("## 1. Baseline Compatibility Replay Check (Blocking Rule 2)")
+    lines.append("")
+    lines.append("Before collecting sensitivity contrasts, the modified worker with explicit per-job overrides was tested against frozen inputs using default baseline overrides (`hyp_pos=755.3`, `hyp_clear_time=None`, `branch_factor=None`).")
+    lines.append("Tested grid: Seed 4201 across all 6 replications $\\times$ 5 actions (30 runs), plus replication 1 $\\times$ 5 actions for seeds 4202–4208 (35 runs). Total: **65 runs**.")
+    lines.append("")
+    lines.append(f"- **Overall Status**: **{'PASSED' if baseline_summary['passed'] else 'FAILED'}**")
+    lines.append(f"- **Total Checked**: {baseline_summary['n_checked']}")
+    lines.append(f"- **Total Matched (J and vehicle digest)**: {baseline_summary['n_matched']} / {baseline_summary['n_checked']} (100.0%)")
+    lines.append(f"- **Mismatches**: {baseline_summary['n_mismatches']}")
+    lines.append(f"- **Wall Time**: {baseline_summary['wall_s']:.1f} s")
+    lines.append(f"- **Data File**: `results/audit/sens/baseline_check.json`")
+    lines.append("")
+    lines.append("### Baseline Check Verification Summary (Sample)")
+    lines.append("| Seed | Rep | Action | Stored $J$ | Replayed $J$ | $J$ Match | Stored Digest (Prefix) | Replayed Digest (Prefix) | Digest Match |")
+    lines.append("|---|---|---|---|---|---|---|---|---|")
+    # Show first 10 rows and summary
+    for r in baseline_summary["rows"][:10]:
+        st_dig = r["stored_digest"][:10] + "..."
+        rep_dig = r["replayed_digest"][:10] + "..." if r["replayed_digest"] else "None"
+        j_m = "YES" if r["J_matches"] else "NO"
+        d_m = "YES" if r["digest_matches"] else "NO"
+        lines.append(f"| {r['seed']} | {r['replication']} | {r['action']} | {r['stored_J']:.4f} | {r['replayed_J']:.4f} | {j_m} | `{st_dig}` | `{rep_dig}` | {d_m} |")
+    if len(baseline_summary["rows"]) > 10:
+        lines.append(f"| ... | ... | ... | ... | ... | ... | ({len(baseline_summary['rows']) - 10} more rows verified) | ... | ... |")
+    lines.append("")
+
+    # Section 2: Actual Blocker Placement and Clearance Summary
+    lines.append("## 2. Actual Blocker Placement and Clearance Verification")
+    lines.append("")
+    lines.append("Blocking rule 1 requires recording actual blocker placement (edge, lane, pos, time stopped) and actual clearance time in each branch. Both lanes (0 and 1) of `ktb_n1` were blocked at the target position, and D300/D600 cleared via explicit TraCI resume at absolute simulation times 5,400 s and 5,700 s respectively.")
+    lines.append("")
+    lines.append("| Variant | Factor / Description | Target Pos (m) | Lane 0 Stopped Pos / Time | Lane 1 Stopped Pos / Time | Target Clear $t$ (s) | Actual Clearance Time(s) |")
+    lines.append("|---|---|---|---|---|---|---|")
+    for var_id, b_info in blocker_summary.items():
+        desc = b_info["label"]
+        t_pos = f"{b_info['target_pos']:.1f}"
+        l0_p = f"{b_info['lane_0']['mean_pos']:.2f} m @ {b_info['lane_0']['mean_t_stop']:.1f} s"
+        l1_p = f"{b_info['lane_1']['mean_pos']:.2f} m @ {b_info['lane_1']['mean_t_stop']:.1f} s"
+        exp_cl = f"{b_info['clearance']['expected']:.1f} s" if b_info["clearance"]["expected"] else "None (persistent)"
+        act_cl = (
+            ", ".join(f"{t:.1f} s" for t in b_info["clearance"]["actual_clear_times"])
+            if b_info["clearance"]["actual_clear_times"]
+            else "None (persistent)"
+        )
+        lines.append(f"| **{var_id}** | {desc} | {t_pos} | {l0_p} | {l1_p} | {exp_cl} | {act_cl} |")
+    lines.append("")
+
+    # Section 3: Sensitivity Variant Decision Audit Results
+    lines.append("## 3. Decision Audit Results by Variant")
+    lines.append("")
+    lines.append("Audit metrics are computed per seed over complete grids (5 actions $\\times$ 6 replications), then pooled over 8 seeds.")
+    lines.append("")
+
+    variants_data = metrics_bundle["variants"]
+    all_var_keys = ["B", "D300", "D600", "P456", "P900", "F100"]
+
+    for v_id in all_var_keys:
+        v_res = variants_data[v_id]
+        spec = SENS_VARIANTS_SPEC.get(v_id, {"label": "baseline B (reused)", "factor": "none"})
+        label_text = f"**{v_id}** ({spec['label']})" if v_id != "B" else "**Baseline B** (as run)"
+        lines.append(f"### Variant {label_text}")
+        lines.append(f"- **Factor**: {spec['factor']}")
+        lines.append(f"- **Complete Seeds**: {v_res['n_complete']} / 8")
+        if v_res["exclusions"]:
+            lines.append(f"- **Exclusions**: {v_res['exclusions']}")
+        else:
+            lines.append("- **Exclusions**: None (complete 8/8 seeds)")
+        lines.append("")
+
+        # Per-seed table
+        lines.append("| Seed | Twin $a^*$ | Proxy Oracle | $\\hat{G}_T(a^*)$ | $G_P(a^*)$ | BEE signed | BEE abs | BEE rel | Regret | Regret rel | Top-1 | Spearman $\\rho$ | Kendall $\\tau$ |")
+        lines.append("|---|---|---|---|---|---|---|---|---|---|---|---|---|")
+        for r in v_res["per_seed"]:
+            gt = f"{r['G_T_hat']:.2f}"
+            gp = f"{r['G_P']:.2f}"
+            bs = f"{r['BEE_signed']:+.2f}"
+            ba = f"{r['BEE_abs']:.2f}"
+            br = f"{r['BEE_rel']*100:.1f}%" if r["BEE_rel"] is not None else "N/A"
+            reg = f"{r['Regret']:.2f}"
+            regr = f"{r['Regret_rel']*100:.1f}%" if r["Regret_rel"] is not None else "N/A (<0.5)"
+            t1 = "1" if r["top1_agree"] == 1.0 else "0"
+            lines.append(
+                f"| {r['seed']} | {r['a_star']} | {r['oracle']} | {gt} | {gp} | {bs} | {ba} | {br} | {reg} | {regr} | {t1} | {r['spearman_rho']:.3f} | {r['kendall_tau']:.3f} |"
+            )
+        lines.append("")
+
+        # Pooled metrics
+        p = v_res["pooled"]
+        lines.append("#### Pooled Metrics Summary")
+        lines.append("| Metric | Mean | Std | SE | Paired t 95% CI | Percentile Bootstrap 95% CI |")
+        lines.append("|---|---|---|---|---|---|")
+        display_keys = [
+            ("BEE (signed, veh·h)", "BEE_signed", ".2f"),
+            ("BEE (absolute, veh·h)", "BEE_abs", ".2f"),
+            ("BEE (relative)", "BEE_rel", ".1%"),
+            ("Regret (veh·h)", "Regret", ".2f"),
+            ("Regret (relative)", "Regret_rel", ".1%"),
+            ("Top-1 Agreement ($a^* ==$ Oracle)", "top1_agree", ".1%"),
+            ("Top-1 Agreement ($R_2$ vs $M_2$)", "top1_r2_m2_agree", ".1%"),
+            ("Spearman Rank Correlation $\\rho$", "spearman_rho", ".3f"),
+            ("Kendall Tau Correlation $\\tau$", "kendall_tau", ".3f"),
+        ]
+        for label, m_k, fmt in display_keys:
+            m_stat = p.get(m_k, {})
+            if m_stat.get("mean") is None:
+                lines.append(f"| {label} | N/A | N/A | N/A | N/A | N/A |")
+                continue
+            m_str = format(m_stat["mean"], fmt)
+            s_str = format(m_stat["std"], fmt)
+            se_str = format(m_stat["se"], fmt)
+            ci_t = f"[{format(m_stat['ci95_t'][0], fmt)}, {format(m_stat['ci95_t'][1], fmt)}]"
+            ci_boot = f"[{format(m_stat['ci95_boot'][0], fmt)}, {format(m_stat['ci95_boot'][1], fmt)}]"
+            lines.append(f"| {label} | {m_str} | {s_str} | {se_str} | {ci_t} | {ci_boot} |")
+        lines.append("")
+
+    # Section 4: Contrasts with Baseline B
+    lines.append("## 4. Sensitivity Contrasts with Baseline B")
+    lines.append("")
+    lines.append("Per preregistration (`docs/oct8-audit-sensitivity-plan.md`), paired differences $\\Delta = \\text{metric}(\\text{variant}) - \\text{metric}(B)$ are evaluated per seed over complete seeds.")
+    lines.append("Blocking rule 3 requires reporting actual $N$, exclusions by reason, and the uncorrected paired $t$ 95% CI. Contrasts are **uncorrected for multiplicity**, and no claims of statistical significance are made.")
+    lines.append("")
+    lines.append("| Contrast Variant | Factor Changed | Preregistered Label | Complete $N$ | Exclusions | $\\Delta \\text{BEE}_{\\text{signed}}$ (veh·h) [95% CI] | $\\Delta |\\text{BEE}|$ (veh·h) [95% CI] | $\\Delta \\text{Regret}$ (veh·h) [95% CI] |")
+    lines.append("|---|---|---|---|---|---|---|---|")
+
+    contrasts = metrics_bundle["contrasts"]
+    for v_id, c_data in contrasts.items():
+        spec = SENS_VARIANTS_SPEC[v_id]
+        lbl = spec["label"]
+        n_p = c_data["n"]
+        ex_str = "None" if not c_data["exclusions"] else "; ".join(f"s{k}: {v}" for k, v in c_data["exclusions"].items())
+
+        m_bs = c_data["metrics"]["BEE_signed"]
+        m_ba = c_data["metrics"]["BEE_abs"]
+        m_reg = c_data["metrics"]["Regret"]
+
+        def fmt_contrast(m_dict):
+            if m_dict["mean"] is None:
+                return "N/A"
+            m_val = f"{m_dict['mean']:+.2f}"
+            if m_dict["ci95_t"] is not None:
+                ci_str = f"[{m_dict['ci95_t'][0]:+.2f}, {m_dict['ci95_t'][1]:+.2f}]"
+            else:
+                ci_str = "(omitted, N<2)"
+            return f"{m_val} {ci_str}"
+
+        bs_str = fmt_contrast(m_bs)
+        ba_str = fmt_contrast(m_ba)
+        reg_str = fmt_contrast(m_reg)
+
+        lines.append(f"| **{v_id}** | {spec['factor']} | **{lbl}** | {n_p} | {ex_str} | {bs_str} | {ba_str} | {reg_str} |")
+    lines.append("")
+
+    lines.append("### Detailed Per-Seed Contrast Values ($\\Delta = \\text{Variant} - B$)")
+    lines.append("")
+    lines.append("#### Paired Difference $\\Delta \\text{BEE}_{\\text{signed}}$ (veh·h)")
+    lines.append("| Seed | D300 (positive control) | D600 | P456 | P900 (positive control) | F100 |")
+    lines.append("|---|---|---|---|---|---|")
+    for s in AUDIT_SEEDS:
+        row_str = f"| {s} |"
+        for v_id in ["D300", "D600", "P456", "P900", "F100"]:
+            val = contrasts[v_id]["metrics"]["BEE_signed"]["diffs"].get(s)
+            val_s = f"{val:+.2f}" if val is not None else "N/A"
+            row_str += f" {val_s} |"
+        lines.append(row_str)
+    lines.append("")
+
+    lines.append("#### Paired Difference $\\Delta |\\text{BEE}|$ (veh·h)")
+    lines.append("| Seed | D300 (positive control) | D600 | P456 | P900 (positive control) | F100 |")
+    lines.append("|---|---|---|---|---|---|")
+    for s in AUDIT_SEEDS:
+        row_str = f"| {s} |"
+        for v_id in ["D300", "D600", "P456", "P900", "F100"]:
+            val = contrasts[v_id]["metrics"]["BEE_abs"]["diffs"].get(s)
+            val_s = f"{val:+.2f}" if val is not None else "N/A"
+            row_str += f" {val_s} |"
+        lines.append(row_str)
+    lines.append("")
+
+    lines.append("#### Paired Difference $\\Delta \\text{Regret}$ (veh·h)")
+    lines.append("| Seed | D300 (positive control) | D600 | P456 | P900 (positive control) | F100 |")
+    lines.append("|---|---|---|---|---|---|")
+    for s in AUDIT_SEEDS:
+        row_str = f"| {s} |"
+        for v_id in ["D300", "D600", "P456", "P900", "F100"]:
+            val = contrasts[v_id]["metrics"]["Regret"]["diffs"].get(s)
+            val_s = f"{val:+.2f}" if val is not None else "N/A"
+            row_str += f" {val_s} |"
+        lines.append(row_str)
+    lines.append("")
+
+    # Section 5: Twin CRN Diagnostics
+    lines.append("## 5. Twin Common Random Numbers (CRN) Diagnostic Across Variants")
+    lines.append("")
+    lines.append("Paired action correlation $\\text{corr}(a) = \\text{Corr}_{r}(J(A0, r), J(a, r))$ and variance reduction $\\text{VR}(a)$ across the 6 Twin replications.")
+    lines.append("")
+    lines.append("| Variant | A1 Median Corr | A1 Median VR | A2 Median Corr | A2 Median VR | A3 Median Corr | A3 Median VR | A4 Median Corr | A4 Median VR | Pooled Median Corr | Pooled Median VR |")
+    lines.append("|---|---|---|---|---|---|---|---|---|---|---|")
+    for v_id in all_var_keys:
+        crn_twin = variants_data[v_id]["pooled"].get("crn_twin", {})
+        mc = crn_twin.get("median_corr", {})
+        mv = crn_twin.get("median_vr", {})
+        pmc = crn_twin.get("pooled_median_corr")
+        pmv = crn_twin.get("pooled_median_vr")
+        if not mc:
+            lines.append(f"| **{v_id}** | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A |")
+            continue
+        lines.append(
+            f"| **{v_id}** | {mc.get('A1', 0.0):.4f} | {mv.get('A1', 0.0):.4f} | "
+            f"{mc.get('A2', 0.0):.4f} | {mv.get('A2', 0.0):.4f} | "
+            f"{mc.get('A3', 0.0):.4f} | {mv.get('A3', 0.0):.4f} | "
+            f"{mc.get('A4', 0.0):.4f} | {mv.get('A4', 0.0):.4f} | "
+            f"**{pmc:.4f}** | **{pmv:.4f}** |"
+        )
+    lines.append("")
+
+    # Section 6: Execution Failures
+    lines.append("## 6. Execution Failures by Reason")
+    lines.append("")
+    total_fails = sum(failures.values()) if failures else 0
+    if total_fails == 0:
+        lines.append("No simulation errors or worker exceptions occurred across all 1,200 sensitivity Twin branches (0 failures).")
+    else:
+        lines.append(f"Recorded {total_fails} failures across runs:")
+        for reason, cnt in failures.items():
+            lines.append(f"- **{reason}**: {cnt}")
+    lines.append("")
+
+    # Section 7: Artifact and Code Files
+    lines.append("## 7. Artifact and Code Files")
+    lines.append("")
+    lines.append("- Implementation code files:")
+    lines.append("  - `citypulse/branching/audit_engine.py` (added `resolve_twin_job_overrides`, `hyp_pos`, `hyp_clear_time`, `branch_factor` overrides, blocker placement and clearance tracking)")
+    lines.append("  - `citypulse/experiments/decision_audit.py` (added sensitivity runner `--sens`, baseline compatibility check, metrics & contrasts calculation, blocker summarizer, and report generator)")
+    lines.append("  - `tests/test_audit.py` (unit tests verifying baseline defaults preservation and sensitivity variant override parsing)")
+    lines.append("- Results and data files:")
+    lines.append("  - `results/audit/sens/baseline_check.json` (65/65 exact matches against stored baseline)")
+    lines.append("  - `results/audit/sens/raw_sens.parquet` (1,200 sensitivity Twin branch simulation records)")
+    lines.append("  - `results/audit/sens/blocker_summary.json` (actual blocker placement and clearance verification)")
+    lines.append("  - `results/audit/sens/metrics_sens.json` (per-variant metrics, pooled statistics, and paired contrasts)")
+    lines.append("  - `results/audit/sens/report.md` (this report)")
+    lines.append("")
+    lines.append("REPORT DONE")
+
+    out_file.parent.mkdir(parents=True, exist_ok=True)
+    out_file.write_text("\n".join(lines), encoding="utf-8")
+
+
+def run_sens_audit(
+    runs_dir: Optional[Path] = None,
+    sens_dir: Optional[Path] = None,
+    raw_parquet_path: Optional[Path] = None,
+    workers: int = 8,
+):
+    """Execute complete preregistered offline sensitivity audit."""
+    if runs_dir is None:
+        runs_dir = AUDIT_DIR / "runs"
+    if sens_dir is None:
+        sens_dir = SENS_DIR
+    if raw_parquet_path is None:
+        raw_parquet_path = AUDIT_DIR / "raw.parquet"
+
+    sens_dir.mkdir(parents=True, exist_ok=True)
+    if not raw_parquet_path.exists():
+        raise FileNotFoundError(f"Base raw.parquet not found: {raw_parquet_path}")
+    raw_df = pd.read_parquet(raw_parquet_path)
+
+    # Step 1: Baseline compatibility check
+    print("=== Step 1: Baseline Compatibility Replay Check ===")
+    baseline_check_file = sens_dir / "baseline_check.json"
+    baseline_summary = run_baseline_compatibility_check(
+        runs_dir=runs_dir,
+        raw_df=raw_df,
+        out_file=baseline_check_file,
+        workers=workers,
+    )
+
+    # Step 2: Run sensitivity branch jobs
+    print("\n=== Step 2: Generating and Executing Sensitivity Variant Jobs ===")
+    all_sens_jobs = []
+    for var_id, var_spec in SENS_VARIANTS_SPEC.items():
+        for s in AUDIT_SEEDS:
+            info_path = runs_dir / f"seed_{s}" / "two_world_info.json"
+            with open(info_path, "r", encoding="utf-8") as fh:
+                info = json.load(fh)
+            st_path = info["twin_state"]
+            meta_path = info["twin_meta"]
+            for r in range(1, 7):
+                for a in ACTIONS:
+                    all_sens_jobs.append(
+                        {
+                            "state": st_path,
+                            "meta": meta_path,
+                            "seed": s,
+                            "r": r,
+                            "action": a,
+                            "horizon": HORIZON_STEPS,
+                            "variant": var_id,
+                            "hyp_pos": var_spec["hyp_pos"],
+                            "hyp_clear_time": var_spec["hyp_clear_time"],
+                            "branch_factor": var_spec["branch_factor"],
+                        }
+                    )
+
+    print(
+        f"Launching {len(all_sens_jobs)} sensitivity Twin branch jobs (5 variants x 8 seeds x 6 reps x 5 actions) on {workers} workers..."
+    )
+    t0_sens = time.time()
+    sens_results = run_twin_branch_jobs(all_sens_jobs, workers=min(workers, 8))
+    wall_sens = time.time() - t0_sens
+    print(f"All sensitivity Twin branch jobs completed in {wall_sens:.1f}s.")
+
+    failures: Dict[str, int] = {}
+    for r in sens_results:
+        if r.get("status") == "error":
+            reason = r.get("reason", "UnknownError")
+            failures[reason] = failures.get(reason, 0) + 1
+
+    # Save results/audit/sens/raw_sens.parquet
+    sens_df = pd.DataFrame(sens_results)
+    raw_sens_path = sens_dir / "raw_sens.parquet"
+    sens_df.to_parquet(raw_sens_path)
+    print(f"Saved {len(sens_df)} raw sensitivity records to {raw_sens_path} (failures={sum(failures.values())})")
+
+    # Step 3: Metrics and Contrasts
+    print("\n=== Step 3: Computing Metrics and Contrasts ===")
+    metrics_bundle = compute_all_sens_metrics_and_contrasts(raw_df, sens_df)
+    metrics_sens_path = sens_dir / "metrics_sens.json"
+    with open(metrics_sens_path, "w", encoding="utf-8") as fh:
+        json.dump(metrics_bundle, fh, indent=2)
+    print(f"Written sensitivity metrics and contrasts to {metrics_sens_path}")
+
+    # Step 4: Blocker Placement Summary
+    print("\n=== Step 4: Summarizing Blocker Placement and Clearance ===")
+    blocker_summary = summarize_blockers(sens_df)
+    blocker_file = sens_dir / "blocker_summary.json"
+    with open(blocker_file, "w", encoding="utf-8") as fh:
+        json.dump(blocker_summary, fh, indent=2)
+    print(f"Written blocker placement summary to {blocker_file}")
+
+    # Step 5: Generate Sensitivity Report
+    print("\n=== Step 5: Generating Report ===")
+    report_file = sens_dir / "report.md"
+    generate_sens_report(
+        baseline_summary=baseline_summary,
+        blocker_summary=blocker_summary,
+        metrics_bundle=metrics_bundle,
+        failures=failures,
+        out_file=report_file,
+    )
+    print(f"Sensitivity Report written to {report_file}")
 
 
 if __name__ == "__main__":
