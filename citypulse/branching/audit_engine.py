@@ -467,9 +467,11 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
             if pending_release_check:
                 for vid in pending_release_check:
                     ev = release_evidence[vid]
-                    ev["stopped_after"] = bool(vid in tc.vehicle.getIDList() and tc.vehicle.isStopped(vid))
+                    present_after = vid in tc.vehicle.getIDList()
+                    ev["stopped_after"] = bool(present_after and tc.vehicle.isStopped(vid))
                     ev["checked_at"] = t
-                    ev["released"] = not ev["stopped_after"]
+                    # a blocker missing at clearance, or whose resume() raised, is a failed release
+                    ev["released"] = bool(ev["resumed"] and present_after and not ev["stopped_after"])
                 failed = [v for v in pending_release_check if not release_evidence[v]["released"]]
                 pending_release_check = []
                 if failed:
@@ -537,9 +539,7 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
                                 ev["error"] = f"{type(exc).__name__}: {exc}"
                         else:
                             ev["released"] = True
-                    else:
-                        ev["released"] = True
-                    if ev["resumed"]:
+                    if ev["resumed"] or not ev["present"] or "error" in ev:
                         pending_release_check.append(vid)
                 if any(ev["resumed"] for ev in release_evidence.values()):
                     actual_clear_time = t
