@@ -1,0 +1,83 @@
+{
+ "tag": "after",
+ "when": "2026-10-05T16:43:22",
+ "run": "evt_inc_4101",
+ "snapshot": "event_snapshot_4350.xml.gz",
+ "t_on": 4410.0,
+ "t_eval": 5010.0,
+ "hypothesis": "inc_ktb_n1_k2_s1",
+ "params": {
+  "edge": "ktb_n1",
+  "lanes_closed": [
+   0,
+   1
+  ],
+  "n_lanes": 3,
+  "pos": 755.0,
+  "pos_kind": "fixed",
+  "speed_factor": 1.0
+ },
+ "wall_s": 2.569657325744629,
+ "jobs": {
+  "asrun": {
+   "sha256": "5ae84965b702cc722499971a807c0bba94e9e9c89f175f3b9e203e9d197c5acd",
+   "fields": [
+    "applied",
+    "intervals",
+    "lifted",
+    "n_vehicles",
+    "restriction_present",
+    "t_end",
+    "t_on",
+    "t_snap",
+    "veh_digest"
+   ],
+   "veh_digest": "fb87651a3d729078d04652ad50671efd0a9e641dd986dc0308d73ce13c7ab014",
+   "n_vehicles": 359,
+   "restriction_present": true,
+   "n_intervals": 20,
+   "logL": -71.24284910528651,
+   "n_O": 165
+  },
+  "noevent": {
+   "sha256": "ab780e8b246f7fab42f621bc096f074e8a3a9145ce44c52a07e01c634b043483",
+   "fields": [
+    "applied",
+    "intervals",
+    "lifted",
+    "n_vehicles",
+    "restriction_present",
+    "t_end",
+    "t_on",
+    "t_snap",
+    "veh_digest"
+   ],
+   "veh_digest": "522660ba3df8e65ff3ada4cc43b07c55dfb07ae7a2807a78d6d6ef03a7f0a032",
+   "n_vehicles": 322,
+   "restriction_present": false,
+   "n_intervals": 20,
+   "logL": null,
+   "n_O": null
+  },
+  "collect_eq_on": {
+   "sha256": "5ae84965b702cc722499971a807c0bba94e9e9c89f175f3b9e203e9d197c5acd",
+   "fields": [
+    "applied",
+    "intervals",
+    "lifted",
+    "n_vehicles",
+    "restriction_present",
+    "t_end",
+    "t_on",
+    "t_snap",
+    "veh_digest"
+   ],
+   "veh_digest": "fb87651a3d729078d04652ad50671efd0a9e641dd986dc0308d73ce13c7ab014",
+   "n_vehicles": 359,
+   "restriction_present": true,
+   "n_intervals": 20,
+   "logL": -71.24284910528651,
+   "n_O": 165
+  }
+ }
+}

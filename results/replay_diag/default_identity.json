@@ -1,0 +1,48 @@
+{
+ "check": "default_identity",
+ "passed": true,
+ "snapshot": "event_snapshot_4350.xml.gz",
+ "run": "evt_inc_4101",
+ "t_on": 4410.0,
+ "t_eval": 5010.0,
+ "hypothesis": "inc_ktb_n1_k2_s1",
+ "jobs": {
+  "asrun": {
+   "sha256_before": "5ae84965b702cc722499971a807c0bba94e9e9c89f175f3b9e203e9d197c5acd",
+   "sha256_after": "5ae84965b702cc722499971a807c0bba94e9e9c89f175f3b9e203e9d197c5acd",
+   "sha256_identical": true,
+   "veh_digest_identical": true,
+   "logL_before": -71.24284910528651,
+   "logL_after": -71.24284910528651,
+   "logL_identical": true,
+   "n_intervals_identical": true,
+   "restriction_present_before": true,
+   "restriction_present_after": true
+  },
+  "collect_eq_on": {
+   "sha256_before": "5ae84965b702cc722499971a807c0bba94e9e9c89f175f3b9e203e9d197c5acd",
+   "sha256_after": "5ae84965b702cc722499971a807c0bba94e9e9c89f175f3b9e203e9d197c5acd",
+   "sha256_identical": true,
+   "veh_digest_identical": true,
+   "logL_before": -71.24284910528651,
+   "logL_after": -71.24284910528651,
+   "logL_identical": true,
+   "n_intervals_identical": true,
+   "restriction_present_before": true,
+   "restriction_present_after": true
+  },
+  "noevent": {
+   "sha256_before": "ab780e8b246f7fab42f621bc096f074e8a3a9145ce44c52a07e01c634b043483",
+   "sha256_after": "ab780e8b246f7fab42f621bc096f074e8a3a9145ce44c52a07e01c634b043483",
+   "sha256_identical": true,
+   "veh_digest_identical": true,
+   "logL_before": null,
+   "logL_after": null,
+   "logL_identical": true,
+   "n_intervals_identical": true,
+   "restriction_present_before": false,
+   "restriction_present_after": false
+  }
+ },
+ "note": "same probe code, run before and after the engine change; only citypulse/branching/engine.py and citypulse/twin/event.py differ. sha256 covers the replay's behavioural output (t_snap, t_on, t_end, intervals, n_vehicles, veh_digest, restriction_present, applied, lifted); the new metadata keys collect_from/blockers are excluded because they cannot change a replay."
+}

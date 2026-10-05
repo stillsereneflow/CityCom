@@ -1,0 +1,160 @@
+{
+ "check": "noi_rerun_stream_identity",
+ "passed": true,
+ "streams": {
+  "evt_noi_4101": {
+   "run": "evt_noi_4101",
+   "rows_stored": 3360,
+   "rows_rerun": 3360,
+   "columns_equal": true,
+   "columns": {
+    "t": {
+     "identical": true
+    },
+    "detector": {
+     "identical": true
+    },
+    "obs_valid": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "obs_q": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "obs_v": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "obs_o": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "twin_q": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "twin_v": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "twin_o": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    }
+   },
+   "identical": true,
+   "label": "matched stream"
+  },
+  "evt_noi_4102": {
+   "run": "evt_noi_4102",
+   "rows_stored": 3360,
+   "rows_rerun": 3360,
+   "columns_equal": true,
+   "columns": {
+    "t": {
+     "identical": true
+    },
+    "detector": {
+     "identical": true
+    },
+    "obs_valid": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "obs_q": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "obs_v": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "obs_o": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "twin_q": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "twin_v": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "twin_o": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    }
+   },
+   "identical": true,
+   "label": "matched stream"
+  },
+  "evt_noi_4103": {
+   "run": "evt_noi_4103",
+   "rows_stored": 3360,
+   "rows_rerun": 3360,
+   "columns_equal": true,
+   "columns": {
+    "t": {
+     "identical": true
+    },
+    "detector": {
+     "identical": true
+    },
+    "obs_valid": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "obs_q": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "obs_v": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "obs_o": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "twin_q": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "twin_v": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    },
+    "twin_o": {
+     "identical": true,
+     "max_abs_diff": 0.0,
+     "nan_pattern_equal": true
+    }
+   },
+   "identical": true,
+   "label": "matched stream"
+  }
+ },
+ "note": "the re-run's twin_log.parquet is compared row for row with the stored one; on a mismatch the re-run's stream is used for both its snapshots and its observations and the results are labelled 'rerun control' (caution b)"
+}

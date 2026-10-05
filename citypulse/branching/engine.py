@@ -145,8 +145,13 @@ SCORE_VCLASSES = ("passenger", "bus", "truck", "trailer", "delivery")
 def _apply_spec_at(tc, cs, stream, spec):
     """Apply one event-pilot hypothesis to a running replay (incident or demand family).
 
-    Incident: lanes 0..k-1 of the edge are disallowed and the remaining lanes' max speed is scaled by
-    ``speed_factor`` (the state file keeps neither, so both are recorded in the control state).
+    Incident, R_E (default): lanes 0..k-1 of the edge are disallowed and the remaining lanes' max speed
+    is scaled by ``speed_factor`` (the state file keeps neither, so both are recorded in the control
+    state).
+    Incident, R_P (``spec["representation"] == "R_P"``, the oct10-replay-diagnosis representation): one
+    stopped blocker vehicle per closed lane at ``pos`` -- the audit's H_G5 point blockage
+    (``citypulse/branching/audit_engine.py`` ``_twin_audit_worker``: a vehicle inserted at pos - 1 and
+    stopped at pos) -- and no lane is disallowed. The remaining lanes' max speed is scaled as in R_E.
     Demand: the entry's multiplier is set to the hypothesis level ``factor`` (an absolute demand level,
     the spec's "write the MAP f into m"), not a factor on the Twin's current estimate.
     """
@@ -156,10 +161,13 @@ def _apply_spec_at(tc, cs, stream, spec):
     if kind == "incident":
         edge = spec["edge"]
         closed = list(spec.get("lanes_closed") or [])
-        for ln in closed:
-            lane = f"{edge}_{ln}"
-            tc.lane.setDisallowed(lane, list(SCORE_VCLASSES))
-            cs.lane_disallow[lane] = list(SCORE_VCLASSES)
+        if spec.get("representation", "R_E") == "R_P":
+            _place_blockers(tc, edge, closed, float(spec["pos"]))
+        else:
+            for ln in closed:
+                lane = f"{edge}_{ln}"
+                tc.lane.setDisallowed(lane, list(SCORE_VCLASSES))
+                cs.lane_disallow[lane] = list(SCORE_VCLASSES)
         s = float(spec.get("speed_factor", 1.0))
         n = int(spec.get("n_lanes") or 0)
         if s != 1.0 and n > 0:
@@ -174,6 +182,24 @@ def _apply_spec_at(tc, cs, stream, spec):
         # the hypothesis is an absolute demand level f (the spec's "write the MAP f into m"), not a
         # factor on the Twin's current estimate
         stream.m[spec["entry"]] = float(spec["factor"])
+
+
+def _place_blockers(tc, edge, lanes, pos):
+    """R_P: one Twin-owned stopped vehicle per closed lane at ``pos`` (point blockage, no lane closure).
+
+    The blocker is added with ``departPos = pos - 1`` and ``departSpeed = 0`` and stopped at ``pos``,
+    exactly as the audit's H_G5 does; SUMO inserts it at the first step at which that position is free.
+    """
+    if "hyp_route" not in tc.route.getIDList():
+        tc.route.add("hyp_route", [edge])
+    for ln in lanes:
+        vid = f"hyp_blocker_{ln}"
+        if vid in tc.vehicle.getIDList():
+            continue
+        tc.vehicle.add(vid, "hyp_route", typeID="t_car", departLane=str(ln),
+                       departPos=str(pos - 1), departSpeed="0")
+        tc.vehicle.setStop(vid, edge, pos=pos, laneIndex=ln, duration=3600.0)
+        tc.vehicle.setLaneChangeMode(vid, 0)
 
 
 def _lift_spec_at(tc, cs, spec):
@@ -212,7 +238,12 @@ def veh_digest(tc):
 
 
 def _score_worker(job):
-    """One hypothesis in its own SUMO process: load the snapshot, restore, replay [t_on, t_end]."""
+    """One hypothesis in its own SUMO process: load the snapshot, restore, replay [t_on, t_end].
+
+    ``t_on`` is when the hypothesis is applied; ``collect_from`` (default ``t_on``, so the default is
+    unchanged) is the first instant whose detector intervals are kept -- the scoring window start. The
+    two are separate so a hypothesis's intervention onset can differ from interval collection.
+    """
     import libsumo as tc  # one libsumo instance per process
     from citypulse.control.actions import ActionExecutor
     from citypulse.sim import ControlState, twin_cmd, detector_loops, read_detectors
@@ -239,8 +270,11 @@ def _score_worker(job):
         loops = detector_loops()
         dets = list(job.get("detectors") or [])
         t_on, t_end = float(job["t_on"]), float(job["t_end"])
+        collect_from = float(job["collect_from"]) if job.get("collect_from") is not None else t_on
         t_lift = job.get("t_lift")
         apply_spec, lift_spec = job.get("apply"), job.get("lift")
+        want_blockers = bool(apply_spec and apply_spec.get("kind") == "incident"
+                             and apply_spec.get("representation", "R_E") == "R_P")
         applied = lifted = False
         if apply_spec is not None and t_on <= t0 + 1e-9:
             _apply_spec_at(tc, cs, stream, apply_spec)
@@ -250,6 +284,7 @@ def _score_worker(job):
             lifted = True
         t_setup = time.time() - t_wall0
         intervals = {d: {} for d in dets}
+        blockers = {}
         while tc.simulation.getTime() < t_end - 1e-9:
             t_next = tc.simulation.getTime() + 1
             if not applied and apply_spec is not None and t_next > t_on:
@@ -262,15 +297,37 @@ def _score_worker(job):
             tc.simulationStep()
             act.step(tc)
             t = tc.simulation.getTime()
-            if t > t_on + 1e-9 and abs(t - round(t / 30.0) * 30.0) < 1e-6:
+            if want_blockers:
+                # record the actual R_P placement: edge, lane, position and the step it stopped
+                for ln in apply_spec.get("lanes_closed") or []:
+                    vid = f"hyp_blocker_{ln}"
+                    if (vid not in blockers and vid in tc.vehicle.getIDList()
+                            and tc.vehicle.isStopped(vid)):
+                        blockers[vid] = {"edge": tc.vehicle.getRoadID(vid),
+                                         "lane": int(tc.vehicle.getLaneIndex(vid)),
+                                         "pos": float(tc.vehicle.getLanePosition(vid)),
+                                         "t_stopped": float(t)}
+            if t > collect_from + 1e-9 and abs(t - round(t / 30.0) * 30.0) < 1e-6:
                 own = read_detectors(tc, loops)
                 for d in dets:
                     row = own.get(d)
                     if row is not None:
                         intervals[d][float(t)] = {"q": row["q"], "v": row["v"], "o": row["o"]}
         digest, n_veh = veh_digest(tc)
+        if want_blockers:
+            # the blocker must still be stopped at the requested point at the end of the replay
+            for vid, b in blockers.items():
+                if vid in tc.vehicle.getIDList():
+                    b["pos_at_end"] = float(tc.vehicle.getLanePosition(vid))
+                    b["lane_at_end"] = int(tc.vehicle.getLaneIndex(vid))
+                    b["stopped_at_end"] = bool(tc.vehicle.isStopped(vid))
+                else:
+                    b["pos_at_end"] = None
+                    b["lane_at_end"] = None
+                    b["stopped_at_end"] = False
         return {"tag": job.get("tag"), "t_snap": float(t0), "t_on": t_on, "t_end": float(t_end),
-                "intervals": intervals, "n_vehicles": n_veh, "veh_digest": digest,
+                "collect_from": collect_from, "intervals": intervals, "n_vehicles": n_veh,
+                "veh_digest": digest, "blockers": blockers,
                 "restriction_present": restriction_present(tc, apply_spec),
                 "applied": applied, "lifted": lifted, "setup_s": t_setup,
                 "wall_s": time.time() - t_wall0}
@@ -285,8 +342,10 @@ def score_replays(state, meta, jobs, workers=8, seed=2, compliance=None):
     """Replay one snapshot once per job in parallel subprocesses (<= workers, default 8).
 
     Every job is ``{tag, t_on, t_end, detectors, apply, lift, t_lift}``; ``apply`` is applied at
-    ``t_on`` and ``lift`` at ``t_lift`` (both optional). Returns ``(results, wall_s)`` with one result
-    per job, in job order.
+    ``t_on`` and ``lift`` at ``t_lift`` (both optional). ``collect_from`` (optional, default ``t_on``)
+    is the first instant whose detector intervals are kept, so a hypothesis's intervention onset can
+    differ from the scoring window start. Returns ``(results, wall_s)`` with one result per job, in job
+    order.
     """
     full = []
     for j in jobs:

@@ -476,29 +476,42 @@ class Evaluation:
 
 
 def evaluate(hyps, dets, times, obs_hist, replays, sigma, t_on, t_end, anchor=None, weights=None,
-             beta=BETA):
-    """Identical-support residuals -> logL -> beta posterior -> h*, gap vs the demand family, EVR."""
+             beta=BETA, support=None, excluded=None):
+    """Identical-support residuals -> logL -> beta posterior -> h*, gap vs the demand family, EVR.
+
+    With ``support`` -- an explicit list of (detector, block, channel, times) triples -- the library's
+    own intersection is not recomputed, so a caller can score several libraries on one preregistered
+    set O; ``excluded`` then carries that set's exclusions by reason. Both default to None, which keeps
+    the library-internal support rule of the online method exactly as it was.
+    """
     complete, partial = candidate_blocks(dets, times, t_on, t_end)
-    excluded = Counter()
-    if partial:
-        excluded["partial_block"] = len(partial) * len(dets) * len(CHANNELS)
-    cand = [(det, b, x, ts) for det in dets for b, ts in sorted(complete.items()) for x in CHANNELS]
-    support, table = [], {}
-    for det, b, x, ts in cand:
-        reason = None
-        for hyp in hyps:
-            val, why = block_residual(hyp, det, ts, x, obs_hist, replays, sigma, anchor, weights)
-            if val is None:
-                reason = why
-                break
-        if reason is not None:
-            excluded[reason] += 1
-        else:
-            support.append((det, b, x, ts))
+    explicit = support is not None
+    if not explicit:
+        excluded = Counter()
+        if partial:
+            excluded["partial_block"] = len(partial) * len(dets) * len(CHANNELS)
+        cand = [(det, b, x, ts) for det in dets for b, ts in sorted(complete.items())
+                for x in CHANNELS]
+        support = []
+        for det, b, x, ts in cand:
+            reason = None
+            for hyp in hyps:
+                val, why = block_residual(hyp, det, ts, x, obs_hist, replays, sigma, anchor, weights)
+                if val is None:
+                    reason = why
+                    break
+            if reason is not None:
+                excluded[reason] += 1
+            else:
+                support.append((det, b, x, ts))
+    table = {}
     for det, b, x, ts in support:
         for hyp in hyps:
-            table[(hyp.id, det, b, x)] = block_residual(
-                hyp, det, ts, x, obs_hist, replays, sigma, anchor, weights)[0]
+            r = block_residual(hyp, det, ts, x, obs_hist, replays, sigma, anchor, weights)[0]
+            if explicit and r is None:
+                raise ValueError(f"the explicit support has no residual for {hyp.id!r} on "
+                                 f"({det}, block {b}, {x})")
+            table[(hyp.id, det, b, x)] = r
     logL, sse = {}, {}
     for hyp in hyps:
         ll, ss = 0.0, 0.0
@@ -525,7 +538,8 @@ def evaluate(hyps, dets, times, obs_hist, replays, sigma, t_on, t_end, anchor=No
         gap, evr = None, None
     family_post = {f: sum(post[h.id] for h in hyps if h.family == f) for f in FAMILIES}
     return Evaluation(t=float(t_end), hyps=list(hyps), logL=logL, log_post=log_post, post=post,
-                      sse=sse, support=support, excluded=dict(excluded), h_star=h_star, gap_vs_demand=gap,
+                      sse=sse, support=support, excluded=dict(excluded or {}), h_star=h_star,
+                      gap_vs_demand=gap,
                       evr=evr, family_post=family_post, n_partial_blocks=len(partial))
 
 

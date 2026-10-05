@@ -1,0 +1,231 @@
+{
+ "check": "R_P_qualification",
+ "passed": true,
+ "run": "evt_inc_4101",
+ "eval_id": "inc_4101_t5010",
+ "snapshot": "event_snapshot_4350.xml.gz",
+ "t_on": 4410.0,
+ "t_eval": 5010.0,
+ "hypothesis": "inc_ktb_n1_k2_s1",
+ "hypothesis_params": {
+  "edge": "ktb_n1",
+  "lanes_closed": [
+   0,
+   1
+  ],
+  "n_lanes": 3,
+  "pos": 755.0,
+  "pos_kind": "fixed",
+  "speed_factor": 1.0
+ },
+ "hypothesis_900m_params": {
+  "edge": "ktb_n1",
+  "lanes_closed": [
+   0,
+   1
+  ],
+  "n_lanes": 3,
+  "pos": 900.0,
+  "pos_kind": "fixed",
+  "speed_factor": 1.0
+ },
+ "wall_s": 3.6594598293304443,
+ "blocker_placement": {
+  "rp_755": {
+   "requested": {
+    "edge": "ktb_n1",
+    "lanes": [
+     0,
+     1
+    ],
+    "pos": 755.0,
+    "t_on": 4410.0
+   },
+   "recorded": {
+    "hyp_blocker_1": {
+     "edge": "ktb_n1",
+     "lane": 1,
+     "pos": 754.9695081264226,
+     "t_stopped": 4414.0,
+     "pos_at_end": 754.9695081264226,
+     "lane_at_end": 1,
+     "stopped_at_end": true
+    },
+    "hyp_blocker_0": {
+     "edge": "ktb_n1",
+     "lane": 0,
+     "pos": 754.9951558166032,
+     "t_stopped": 4428.0,
+     "pos_at_end": 754.9951558166032,
+     "lane_at_end": 0,
+     "stopped_at_end": true
+    }
+   },
+   "per_lane": {
+    "hyp_blocker_0": {
+     "requested_lane": 0,
+     "requested_pos": 755.0,
+     "recorded": {
+      "edge": "ktb_n1",
+      "lane": 0,
+      "pos": 754.9951558166032,
+      "t_stopped": 4428.0,
+      "pos_at_end": 754.9951558166032,
+      "lane_at_end": 0,
+      "stopped_at_end": true
+     },
+     "lane_matches": true,
+     "edge_matches": true,
+     "pos_matches": true,
+     "stop_time_recorded": true,
+     "stop_time_requested": 4410.0,
+     "stop_delay_s": 18.0,
+     "stop_after_onset": true,
+     "stopped_at_end": true,
+     "lane_at_end_matches": true,
+     "pos_at_end_matches": true
+    },
+    "hyp_blocker_1": {
+     "requested_lane": 1,
+     "requested_pos": 755.0,
+     "recorded": {
+      "edge": "ktb_n1",
+      "lane": 1,
+      "pos": 754.9695081264226,
+      "t_stopped": 4414.0,
+      "pos_at_end": 754.9695081264226,
+      "lane_at_end": 1,
+      "stopped_at_end": true
+     },
+     "lane_matches": true,
+     "edge_matches": true,
+     "pos_matches": true,
+     "stop_time_recorded": true,
+     "stop_time_requested": 4410.0,
+     "stop_delay_s": 4.0,
+     "stop_after_onset": true,
+     "stopped_at_end": true,
+     "lane_at_end_matches": true,
+     "pos_at_end_matches": true
+    }
+   },
+   "ok": true,
+   "max_stop_delay_s": 18.0
+  },
+  "rp_900": {
+   "requested": {
+    "edge": "ktb_n1",
+    "lanes": [
+     0,
+     1
+    ],
+    "pos": 900.0,
+    "t_on": 4410.0
+   },
+   "recorded": {
+    "hyp_blocker_1": {
+     "edge": "ktb_n1",
+     "lane": 1,
+     "pos": 899.9695081264226,
+     "t_stopped": 4414.0,
+     "pos_at_end": 899.9695081264226,
+     "lane_at_end": 1,
+     "stopped_at_end": true
+    },
+    "hyp_blocker_0": {
+     "edge": "ktb_n1",
+     "lane": 0,
+     "pos": 899.9999922446384,
+     "t_stopped": 4415.0,
+     "pos_at_end": 899.9999922446384,
+     "lane_at_end": 0,
+     "stopped_at_end": true
+    }
+   },
+   "per_lane": {
+    "hyp_blocker_0": {
+     "requested_lane": 0,
+     "requested_pos": 900.0,
+     "recorded": {
+      "edge": "ktb_n1",
+      "lane": 0,
+      "pos": 899.9999922446384,
+      "t_stopped": 4415.0,
+      "pos_at_end": 899.9999922446384,
+      "lane_at_end": 0,
+      "stopped_at_end": true
+     },
+     "lane_matches": true,
+     "edge_matches": true,
+     "pos_matches": true,
+     "stop_time_recorded": true,
+     "stop_time_requested": 4410.0,
+     "stop_delay_s": 5.0,
+     "stop_after_onset": true,
+     "stopped_at_end": true,
+     "lane_at_end_matches": true,
+     "pos_at_end_matches": true
+    },
+    "hyp_blocker_1": {
+     "requested_lane": 1,
+     "requested_pos": 900.0,
+     "recorded": {
+      "edge": "ktb_n1",
+      "lane": 1,
+      "pos": 899.9695081264226,
+      "t_stopped": 4414.0,
+      "pos_at_end": 899.9695081264226,
+      "lane_at_end": 1,
+      "stopped_at_end": true
+     },
+     "lane_matches": true,
+     "edge_matches": true,
+     "pos_matches": true,
+     "stop_time_recorded": true,
+     "stop_time_requested": 4410.0,
+     "stop_delay_s": 4.0,
+     "stop_after_onset": true,
+     "stopped_at_end": true,
+     "lane_at_end_matches": true,
+     "pos_at_end_matches": true
+    }
+   },
+   "ok": true,
+   "max_stop_delay_s": 5.0
+  }
+ },
+ "determinism": {
+  "rp_755": {
+   "veh_digest_equal": true,
+   "intervals_equal": true,
+   "n_vehicles_equal": true,
+   "logL_run1": -36.48321971546804,
+   "logL_run2": -36.48321971546804,
+   "logL_equal": true,
+   "passed": true
+  },
+  "rp_900": {
+   "veh_digest_equal": true,
+   "intervals_equal": true,
+   "n_vehicles_equal": true,
+   "logL_run1": -23.449213488871475,
+   "logL_run2": -23.449213488871475,
+   "logL_equal": true,
+   "passed": true
+  }
+ },
+ "replays_differ": {
+  "veh_digest_755": "3ec769e4ddc4cbf430fa0d424a04d5ab799eed00030234b6cf1351841fa632a9",
+  "veh_digest_900": "c175c4bc99f20b0745229370fc190f230c3a76d28b051596672886f65a9a32a4",
+  "veh_digest_differs": true,
+  "intervals_differ": true,
+  "n_vehicles_755": 397,
+  "n_vehicles_900": 403,
+  "logL_755": -36.48321971546804,
+  "logL_900": -23.449213488871475,
+  "n_detectors": 14,
+  "passed": true
+ },
+ "restriction_present_rp_755": false,
+ "note": "R_P: one stopped blocker per closed lane at pos (audit H_G5), no lane disallowed. The recorded stop time is the first 1-s step at which the blocker reports isStopped at the requested position; SUMO inserts a mid-run vehicle at the first step at which departPos = pos - 1 is free, so it can lag the requested onset (the recorded delays are reported per lane and are not a placement mismatch)."
+}
