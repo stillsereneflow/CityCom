@@ -1,6 +1,6 @@
 # CityCom handoff: where the work stands and what comes next
 
-Last updated: 2026-10-05 19:30 (end of the session that ran the offline audit, sensitivities and replay diagnosis).
+Last updated: 2026-10-05 21:40 (session 2: replay diagnosis verified and reviewed; missing-queue test preregistered and dispatched).
 
 **When the user says "resume" (or anything like "continue", "pick up where we left off"), read this file, then do "On resume" below, then carry on with the queue.**
 
@@ -31,7 +31,8 @@ This is the 12th China Postgraduate Smart City competition entry 《城脉·涟�
 2. `oct5-normal-assim-plan.md` and `na300-qualification-plan.md`: normal-mode assimilation. NA failed; NA-300 is NOT QUALIFIED.
 3. `oct6-event-pilot-plan.md`, then `oct6-audit-and-pilot2-plan.md`: the event-engine pilots, and the preregistered offline decision audit.
 4. **`decision-2026-10-05-roadmap.md`**: the current scope and the day-by-day plan to the freeze. **Read this one.**
-5. `oct8-audit-sensitivity-plan.md` (done) and `oct10-replay-diagnosis-plan.md` (run finished, **not yet verified**).
+5. `oct8-audit-sensitivity-plan.md` (done) and `oct10-replay-diagnosis-plan.md` (done, verified, 3b5e575; corrections in `results/replay_diag/corrections.md`).
+6. **`oct11-missing-queue-plan.md`** (rev 2, Codex accepted, 302152e): 2 × 2 test, Twin state (C = restart without blockers, H = restart with R_P blockers from 4,500 s) × future duration (persistent, clears 5,400), fresh seeds 4301–4304. Classification order is fixed in the plan. Roadmap revision appended to `decision-2026-10-05-roadmap.md` (9c8cf08).
 
 Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/step1-notes/notes.md`.
 
@@ -49,6 +50,11 @@ Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/s
 - The other one-factor variants stay within about 0.15 veh·h of the baseline.
 - **Working hypothesis, not yet tested:** the conventional Twin at t_d lacks the queue the Proxy has built since 4,500 s. The persistent-blockage belief compensates, so the baseline's good ranking may be "right for the wrong reason". This needs a test before any claim.
 
+**Replay diagnosis** (verified from `raw.parquet`, β = 0.25; Codex reviewed, agy-pro second opinion):
+- Would-adopt INC/NOI: V0 0/13, VP 0, VT 1, VPT 6, VPL 3, VPTL 5, VNF 0, VPTLNF 5; NOI 0/9 everywhere.
+- Ruling: keep R_E and the alarm − 600 s onset through the freeze; R_P is a diagnosed alternative. An R_P successor needs its own preregistration plus `_lift_spec_at` / `restriction_present` changes.
+- Fixed-A3 R₂ gains: Twin baseline 6.76, Twin D300 0.18, Proxy 5.13. Proxy `ktb_n1` halting at 5,100 s on 4201–4208: 8–30 vehicles.
+
 **Event engine:**
 - **Pilots 1 and 2:** no natural incident adoption, since the MAP is always a fault or demand hypothesis.
 - **Forced adoption** verified the replacement, clearance and RECOVERY mechanics, but clearance came early in 3/3 runs.
@@ -56,15 +62,12 @@ Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/s
 
 ## On resume (do these first, in order)
 
-1. **List the run directory** `C:/Users/chenq/.claude/runs/D--CityCom/` and handle every dispatch without a `merged` marker, as the global CLAUDE.md §11 describes. At handoff time the only one is:
-   - `20261005-1614-dsh-replaydiag`: **exit 0, not yet verified.**
-     - Run the provider check, using the *system* Python (the venv lacks the zstandard backend): `python C:/Users/chenq/.claude/skills/fleet-dispatch/dsh_provider.py <run dir>`.
-     - Read `D:/CityCom-astra/results/replay_diag/report.md`. Check the gates in `qualify_rp.json` and `reproduce_v0.json`.
-     - Recompute the would-adopt counts from `raw.parquet` / `per_eval.json`.
-     - Run the full test suite.
-     - Commit dsh's uncommitted files in the worktree: `citypulse/branching/engine.py`, `citypulse/twin/event.py`, `citypulse/experiments/replay_diag.py`, `tests/test_replay_diag.py`, plus the results with `git add -f` (`results/` is gitignored).
-     - Then create `merged`.
-2. **Take the replay diagnosis and the sensitivity results to Codex** for a read-only review, including how to test the "missing queue" hypothesis. Then continue with the queue.
+1. **List the run directory** `C:/Users/chenq/.claude/runs/D--CityCom/` and handle every dispatch without a `merged` marker, as the global CLAUDE.md §11 describes. At handoff time, two were running (launched 2026-10-05 21:48, detached):
+   - `20261005-2130-agyflash-mqstates` (agy-flash): two-world runs on 4301–4304 (Twin snapshots 4,440 and 5,100), C/H restart replays, gates G1–G3 (`results/missing_queue/gates.json`), `queue_td.parquet`. New files `citypulse/experiments/mq_replay.py`, `tests/test_mq_replay.py`.
+   - `20261005-2130-dsh-mqworker` (dsh): `audit_engine.py` changes (`reuse_blockers`, verified clearance, `queue_trace`), compat check (`results/missing_queue/compat_check.json`), grid runner `citypulse/experiments/missing_queue.py` + tests. It does **not** run the 4301–4304 grid.
+   - Verify each yourself: gates and Q numbers recomputed from the state files; compat check re-run on a few rows; the dsh provider check (system Python: `python C:/Users/chenq/.claude/skills/fleet-dispatch/dsh_provider.py <run dir>`); full suite. Watch for files touched outside each worker's allowed set (listed in each `prompt.md`). Commit with `git add -f` for `results/`, then create `merged`.
+2. If all gates pass: dispatch the pilot (`missing_queue.py pilot --seed 4301`), check it, then the grid and `analyze` (to dsh, with agy-flash taking a piece). Verify the classification yourself from `raw.parquet` and `queue_td.parquet`, then take it to Codex read-only. If a gate fails: stop, report, and take it to Codex; do not change the protocol without a revised preregistration.
+3. Then write the preregistration for the fresh INC/NOI/SHK/DET development runs (unchanged method) and get Codex's review.
 
 ## Queue (from `decision-2026-10-05-roadmap.md`)
 
@@ -72,7 +75,8 @@ Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/s
 |---|---|---|
 | Oct 6–7 | RNG isolation and paired CRN | done (d9d078b) |
 | Oct 8–9 | One-factor audit sensitivities | done (a61e2bc) |
-| Oct 10–12 | Matched-observation replay diagnosis | run finished; verify, then Codex review |
+| Oct 10–12 | Matched-observation replay diagnosis | done (3b5e575, 302152e) |
+| Oct 5–14 | Missing-queue test (`oct11-missing-queue-plan.md`) | preregistered; states + worker dispatched |
 | Oct 13–15 | Fresh INC/NOI/SHK/DET development runs (natural adoption, false adoption, premature clearance, forecasts, exclusions; DEGRADED exercised live) | not started; needs a preregistration first |
 | Oct 16 | **Design freeze** | |
 | Oct 16–18 | Frozen audit on fresh test seeds | |
@@ -82,7 +86,8 @@ Seeds already used:
 - 1001–1003, 3001–3004: development / evaluation;
 - 4001–4003, 4101–4103: pilots;
 - 4201–4208: audit;
-- 5001–5008: NA-300.
+- 5001–5008: NA-300;
+- 4301–4304: missing-queue test.
 
 **6001–6008 are reserved for E\* and untouched.** Pick fresh ranges for anything new, and check that no result uses them.
 
