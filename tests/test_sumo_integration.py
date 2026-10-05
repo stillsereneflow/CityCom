@@ -22,11 +22,12 @@ def test_init_signals_resets_last_loaded_program(tmp_path):
     tc = traci.getConnection("t_init")
     tls = control["tls_plan"][0]
     before = tc.trafficlight.getProgram(tls)
+    progs = [l.programID for l in tc.trafficlight.getAllProgramLogics(tls)]
     init_signals(tc)
     after = tc.trafficlight.getProgram(tls)
     tc.close()
     assert before == "P_inc"     # SUMO activates the last loaded program
-    assert after == "0"
+    assert after == ("webster" if "webster" in progs else "0")
 
 
 def test_new_process_load_keeps_vehicles_but_not_lane_closures(tmp_path):
