@@ -2,6 +2,7 @@
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -10,7 +11,10 @@ from citypulse.branching.audit_engine import (
     T_D,
     build_proxy_resampled_routes,
 )
-from citypulse.experiments.decision_audit import compute_metrics_from_raw
+from citypulse.experiments.decision_audit import (
+    compute_crn_statistics,
+    compute_metrics_from_raw,
+)
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PROXY_ROU = REPO_ROOT / "scenarios" / "kwuntong" / "blite" / "synth5" / "proxy.rou.xml"
@@ -158,3 +162,47 @@ def test_split_regret_denominator():
     per_seed_small, _ = compute_metrics_from_raw(df_small)
     assert abs(per_seed_small[0]["Regret_denom"] - 0.3) < 1e-9
     assert per_seed_small[0]["Regret_rel"] is None
+
+
+def test_compute_crn_statistics_synthetic():
+    """Verify that compute_crn_statistics returns analytically expected correlation and VR on synthetic data."""
+    # Synthetic dataset with M=6 replications
+    # A0: base values with variance 350.0
+    # A1: identical to A0 minus 5.0 (perfect correlation 1.0, VR 1.0)
+    # A2: A0 + offset with known variance
+    reps = list(range(1, 7))
+    records = []
+    j_a0 = [10.0, 20.0, 30.0, 40.0, 50.0, 60.0]
+    j_a1 = [5.0, 15.0, 25.0, 35.0, 45.0, 55.0]
+    j_a2 = [12.0, 18.0, 32.0, 38.0, 52.0, 58.0]
+
+    for r, v0, v1, v2 in zip(reps, j_a0, j_a1, j_a2):
+        records.append({"world": "proxy", "seed": 4201, "replication": r, "action": "A0", "J": v0})
+        records.append({"world": "proxy", "seed": 4201, "replication": r, "action": "A1", "J": v1})
+        records.append({"world": "proxy", "seed": 4201, "replication": r, "action": "A2", "J": v2})
+
+    df = pd.DataFrame(records)
+    stats = compute_crn_statistics(df, worlds=("proxy",), actions=("A1", "A2"), ref_action="A0")
+
+    s4201 = stats["per_seed"][4201]["proxy"]
+    # Action A1: perfectly correlated, zero difference variance -> corr = 1.0, VR = 1.0
+    assert abs(s4201["corr"]["A1"] - 1.0) < 1e-9
+    assert abs(s4201["vr"]["A1"] - 1.0) < 1e-9
+
+    # Action A2: analytical checks
+    # diff = [2, -2, 2, -2, 2, -2] -> Var(diff, ddof=1) = 4.8
+    # Var(A0) = 350.0, Var(A2) = 330.8 -> Var(A0) + Var(A2) = 680.8
+    # VR = 1 - 4.8 / 680.8 = 0.99294947...
+    expected_vr = 1.0 - (4.8 / 680.8)
+    assert abs(s4201["vr"]["A2"] - expected_vr) < 1e-6
+    # corr = 0.99334458...
+    expected_corr = float(np.corrcoef(j_a0, j_a2)[0, 1])
+    assert abs(s4201["corr"]["A2"] - expected_corr) < 1e-9
+
+    # Pooled medians
+    pm = stats["pooled_medians"]["proxy"]
+    assert abs(pm["median_corr"]["A1"] - 1.0) < 1e-9
+    assert abs(pm["median_vr"]["A1"] - 1.0) < 1e-9
+    assert abs(pm["median_corr"]["A2"] - expected_corr) < 1e-9
+    assert abs(pm["median_vr"]["A2"] - expected_vr) < 1e-6
+
