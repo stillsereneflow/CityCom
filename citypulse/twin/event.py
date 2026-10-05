@@ -1,13 +1,20 @@
 """Event-aware assimilation, pure logic (docs/oct6-event-pilot-plan.md, "Event-aware assimilation").
 
+Pilot 2 (part B of docs/oct6-audit-and-pilot2-plan.md) adds three things here, each behind an explicit
+switch so pilot-1 behaviour is unchanged: ``build_hypotheses(grid="pilot2")`` (k in {1, ...,
+min(2, n_lanes - 1)} x s in {0.6, 1.0} -- 10 incident hypotheses and a 20-hypothesis library, family
+mass still 1/3), ``EventStateMachine(degraded_exit="scheduled")`` (DEGRADED leaves at entry + 900 s
+exactly, on the tick, not at the next evaluation) and ``forced_adoption`` (the labelled integration
+test that treats a fixed incident hypothesis as h* at the first evaluation).
+
 No SUMO, no traci, no Proxy import (tests/test_firewall.py). The service owns the snapshot ring, the
 subprocess replays (``citypulse.branching.engine.score_replays``), the live state replacement and the
 logs; this module owns:
 
 * the corrected G4 trigger (B on AID02109/AID02111, two timestamps exactly 30 s apart, a missing
   interval resets the streak);
-* the 16-hypothesis library (6 incident, 4 demand, 6 detector fault; family priors 1/3, uniform
-  inside a family);
+* the hypothesis library (6 incident in the pilot-1 grid, 10 in the pilot-2 grid, 4 demand, 6 detector
+  fault; family priors 1/3, uniform inside a family);
 * the identical-support set O (120-s blocks whose four intervals are valid in the observations and
   non-null under every hypothesis) and the exclusions by reason;
 * the block-mean standardised residuals of the observation against the hypothesis's prediction (the
@@ -25,6 +32,7 @@ from __future__ import annotations
 
 import json
 import math
+import re
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
@@ -51,6 +59,12 @@ SUSPECTED_PERIOD = 60.0
 DEGRADED_PERIOD = 120.0
 EVENT_PERIOD = 60.0
 DEGRADED_MAX = 900.0             # > 15 min in DEGRADED -> NORMAL ("unexplained anomaly")
+# How the DEGRADED bound is enforced. "eval": at the next evaluation past 15 min (pilot 1, unchanged).
+# "scheduled": on the 30-s tick at entry + 900 s exactly, independent of evaluations (part B of
+# docs/oct6-audit-and-pilot2-plan.md resolves the pilot-1 conflict: DEGRADED <= 15 min).
+DEGRADED_EXIT_EVAL = "eval"
+DEGRADED_EXIT_SCHEDULED = "scheduled"
+DEGRADED_EXITS = (DEGRADED_EXIT_EVAL, DEGRADED_EXIT_SCHEDULED)
 RECOVERY_MIN = 180.0             # >= 180 s in RECOVERY, and >= 3 min of B < 1.5
 RECOVERY_RAMP = 300.0            # kappa ramps 0 -> kappa over 5 min
 DEGRADED_KAPPA = 0.25            # kappa/4
@@ -82,6 +96,14 @@ INCIDENT_LANE_COUNTS = {"ktb_n1": 3, "ktb_w3": 3, "ktb_n2": 2}
 SEVERITIES_3LANE = ((1, 1.0), (2, 0.6))   # (lanes closed from lane 0, remaining-lane speed factor)
 SEVERITIES_2LANE = ((1, 1.0), (1, 0.6))   # no edge is ever fully closed
 VCLASSES = ("passenger", "bus", "truck", "trailer", "delivery")
+
+# Incident grids. "pilot1" is docs/oct6-event-pilot-plan.md: 2 severities per 3-lane edge and 2 per
+# 2-lane edge, 6 incident hypotheses. "pilot2" is part B of docs/oct6-audit-and-pilot2-plan.md:
+# k in {1, ..., min(2, n_lanes - 1)} x s in {0.6, 1.0}, i.e. 4 + 4 + 2 = 10 incident hypotheses and a
+# 20-hypothesis library (family mass still 1/3, uniform inside the family).
+EVENT_GRIDS = ("pilot1", "pilot2")
+GRID_PILOT1 = "pilot1"
+GRID_PILOT2 = "pilot2"
 
 
 # ---------------------------------------------------------------------------------------- helpers
@@ -206,23 +228,30 @@ class Hypothesis:
         return {"id": self.id, "family": self.family, "params": dict(self.params), "prior": self.prior}
 
 
-def build_hypotheses(midpoints=None, lane_counts=None, t_on=None):
-    """The 16-hypothesis library (spec table), family priors 1/3, uniform within a family."""
+def build_hypotheses(midpoints=None, lane_counts=None, t_on=None, grid=GRID_PILOT1):
+    """The hypothesis library (spec table), family priors 1/3, uniform within a family.
+
+    ``grid`` selects the incident grid only: ``"pilot1"`` is the 16-hypothesis library of
+    docs/oct6-event-pilot-plan.md (6 incident), ``"pilot2"`` the 20-hypothesis library of part B of
+    docs/oct6-audit-and-pilot2-plan.md (10 incident). Demand and detector-fault families are identical.
+    """
+    if grid not in EVENT_GRIDS:
+        raise ValueError(f"unknown event grid {grid!r}; expected one of {EVENT_GRIDS}")
     midpoints = dict(midpoints or {})
     lanes = dict(INCIDENT_LANE_COUNTS)
     lanes.update(lane_counts or {})
-    hyps = []
+    incident = []
     for edge, pos in INCIDENT_LOCATIONS:
         n = int(lanes[edge])
-        severities = SEVERITIES_3LANE if n >= 3 else SEVERITIES_2LANE
-        for k, s in severities:
+        for k, s in incident_severities(n, grid):
             p = midpoints.get(edge) if pos is None else pos
-            hyps.append(Hypothesis(
-                f"inc_{edge}_k{k}_s{s:g}", "incident",
-                {"edge": edge, "lanes_closed": list(range(k)), "n_lanes": n,
-                 "pos": None if p is None else round(float(p), 1),
-                 "pos_kind": "mid" if pos is None else "fixed", "speed_factor": float(s)},
-                FAMILY_PRIOR["incident"] / 6.0))
+            incident.append((f"inc_{edge}_k{k}_s{s:g}",
+                             {"edge": edge, "lanes_closed": list(range(k)), "n_lanes": n,
+                              "pos": None if p is None else round(float(p), 1),
+                              "pos_kind": "mid" if pos is None else "fixed",
+                              "speed_factor": float(s)}))
+    hyps = [Hypothesis(hid, "incident", params, FAMILY_PRIOR["incident"] / len(incident))
+            for hid, params in incident]
     for f in DEMAND_FACTORS:
         hyps.append(Hypothesis(f"dem_f{f:g}", "demand",
                                {"entry": BASE_FACTOR_ENTRY, "factor": float(f), "t_on": t_on},
@@ -236,6 +265,43 @@ def build_hypotheses(midpoints=None, lane_counts=None, t_on=None):
     return hyps
 
 
+def incident_severities(n_lanes, grid=GRID_PILOT1):
+    """The (lanes closed from lane 0, remaining-lane speed factor) grid of one edge.
+
+    pilot1: the plan's two severities per location ((1, 1.0) and (2, 0.6) on a 3-lane edge; the two
+    2-lane variants so no edge is fully closed). pilot2: k in {1, ..., min(2, n_lanes - 1)} crossed
+    with s in {0.6, 1.0} -- 4 combinations on a 3-lane edge, 2 on a 2-lane edge, no edge fully closed.
+    """
+    n = int(n_lanes)
+    if grid == GRID_PILOT2:
+        return tuple((k, s) for k in range(1, min(2, n - 1) + 1) for s in (0.6, 1.0))
+    return SEVERITIES_3LANE if n >= 3 else SEVERITIES_2LANE
+
+
+_SEV_RE = re.compile(r"^(?P<head>.*_s)(?P<val>[0-9]*\.?[0-9]+)$")
+
+
+def normalise_hyp_id(hid):
+    """`inc_ktb_n1_k2_s1.0` -> `inc_ktb_n1_k2_s1`: ids format the severity with %g."""
+    m = _SEV_RE.match(str(hid))
+    if not m:
+        return str(hid)
+    try:
+        return m.group("head") + f"{float(m.group('val')):g}"
+    except ValueError:
+        return str(hid)
+
+
+def find_hypothesis(hyps, hid):
+    """The hypothesis with this id, tolerating a `_s1.0` / `_s1` spelling difference."""
+    want = normalise_hyp_id(hid)
+    for h in hyps:
+        if h.id == want:
+            return h
+    raise KeyError(f"unknown hypothesis {hid!r} (normalised {want!r}); known ids: "
+                   f"{[h.id for h in hyps]}")
+
+
 def entries_through(cands, segments=CANDIDATE_SEGMENTS):
     """Entry edges whose candidate routes pass any candidate segment (the regional-freeze set)."""
     segs = set(segments)
@@ -244,6 +310,29 @@ def entries_through(cands, segments=CANDIDATE_SEGMENTS):
         if segs.intersection(edges):
             out.add(edges[0])
     return sorted(out)
+
+
+def restriction_record(hyp, base_speeds=None):
+    """The live restriction record of an adopted incident hypothesis: what the clearance replays lift.
+
+    ``base_speeds`` is {lane: max speed} read from the live Twin *before* the restriction is applied;
+    only the lanes the spec scales (the open ones, when speed_factor != 1) are kept. Without this
+    record ``EventRuntime.lift_spec`` is empty and every H_clear(tau_c) replay is identical to the
+    active one, so P_clear can never leave its 0.5 prior and clearance can never fire.
+    """
+    p = dict(hyp.params)
+    lanes_closed = list(p.get("lanes_closed") or [])
+    base = {}
+    if float(p.get("speed_factor", 1.0)) != 1.0:
+        for ln in range(int(p.get("n_lanes") or 0)):
+            if ln in lanes_closed:
+                continue
+            lane = f"{p['edge']}_{ln}"
+            if base_speeds and base_speeds.get(lane) is not None:
+                base[lane] = float(base_speeds[lane])
+    return {"edge": p["edge"], "lanes_closed": lanes_closed, "n_lanes": int(p.get("n_lanes") or 0),
+            "speed_factor": float(p.get("speed_factor", 1.0)), "pos": p.get("pos"),
+            "hypothesis": hyp.id, "base_speed": base}
 
 
 # ------------------------------------------------------- residuals, identical support, posterior
@@ -366,6 +455,7 @@ class Evaluation:
     family_post: dict
     n_partial_blocks: int = 0
     adopted: bool = False
+    forced: bool = False
     wall_s: float | None = None
 
     def hyp(self, hid):
@@ -381,7 +471,7 @@ class Evaluation:
         return {"t": float(self.t), "state": state, "t_on": None if t_on is None else float(t_on),
                 "hypotheses": self.rows(), "h_star": self.h_star,
                 "gap_vs_demand": self.gap_vs_demand, "evr": self.evr, "adopted": bool(self.adopted),
-                "excluded": dict(self.excluded), "p_clear": None,
+                "forced": bool(self.forced), "excluded": dict(self.excluded), "p_clear": None,
                 "wall_s": self.wall_s if wall_s is None else wall_s}
 
 
@@ -425,9 +515,14 @@ def evaluate(hyps, dets, times, obs_hist, replays, sigma, t_on, t_end, anchor=No
     post = {k: math.exp(v) for k, v in log_post.items()}
     h_star = max(hyps, key=lambda h: (log_post[h.id], -hyps.index(h))).id
     demand = [h.id for h in hyps if h.family == "demand"]
-    gap = log_post[h_star] - max(log_post[d] for d in demand)
-    best_demand_sse = min(sse[d] for d in demand)
-    evr = None if best_demand_sse <= 0 else 1.0 - sse[h_star] / best_demand_sse
+    if demand:
+        gap = log_post[h_star] - max(log_post[d] for d in demand)
+        best_demand_sse = min(sse[d] for d in demand)
+        evr = None if best_demand_sse <= 0 else 1.0 - sse[h_star] / best_demand_sse
+    else:
+        # the clearance library is active + H_clear(tau_c) only (no demand family): the adoption gap
+        # and the EVR are undefined there, and clearance_analysis reads logL and the support only
+        gap, evr = None, None
     family_post = {f: sum(post[h.id] for h in hyps if h.family == f) for f in FAMILIES}
     return Evaluation(t=float(t_end), hyps=list(hyps), logL=logL, log_post=log_post, post=post,
                       sse=sse, support=support, excluded=dict(excluded), h_star=h_star, gap_vs_demand=gap,
@@ -435,8 +530,31 @@ def evaluate(hyps, dets, times, obs_hist, replays, sigma, t_on, t_end, anchor=No
 
 
 def adoption_decision(ev, tau=TAU_LR):
-    """h* in the incident family and log P(h*) - log max_demand P > ln 10."""
+    """h* in the incident family and log P(h*) - log max_demand P > ln 10.
+
+    A library without a demand family (the clearance one) has no defined gap: no adoption.
+    """
+    if ev.gap_vs_demand is None:
+        return False
     return bool(ev.hyp(ev.h_star).family == "incident" and ev.gap_vs_demand > tau)
+
+
+def forced_adoption(ev, forced_id, tau=TAU_LR):
+    """The labelled forced-adoption integration test (part B, "Integration coverage, all required").
+
+    Treat ``forced_id`` as h* and the adoption threshold as met, so the downstream path (live
+    replacement, EVENT_ASSIMILATION, clearance evaluation, RECOVERY, exit) is exercised when no
+    natural adoption occurs. It is an integration test only and never evidence of inference: the
+    evaluation keeps its own logL/posterior rows and is flagged ``forced``.
+    """
+    hyp = find_hypothesis(ev.hyps, forced_id)
+    if hyp.family != "incident":
+        raise ValueError(f"--event-force-hstar: {forced_id!r} is not an incident hypothesis")
+    ev.h_star = hyp.id
+    ev.gap_vs_demand = max(float(ev.gap_vs_demand), float(tau) + 1e-9)
+    ev.adopted = True
+    ev.forced = True
+    return True
 
 
 def demand_map(ev):
@@ -496,7 +614,8 @@ class EventStateMachine:
 
     def __init__(self, onset_lag=PROVISIONAL_ONSET, delta=DELTA_S, suspected_period=SUSPECTED_PERIOD,
                  degraded_period=DEGRADED_PERIOD, event_period=EVENT_PERIOD, degraded_max=DEGRADED_MAX,
-                 recovery_min=RECOVERY_MIN, recovery_ramp=RECOVERY_RAMP):
+                 recovery_min=RECOVERY_MIN, recovery_ramp=RECOVERY_RAMP,
+                 degraded_exit=DEGRADED_EXIT_EVAL):
         self.state = NORMAL
         self.t_state = None
         self.t_on = None
@@ -523,6 +642,9 @@ class EventStateMachine:
         self.degraded_max = float(degraded_max)
         self.recovery_min = float(recovery_min)
         self.recovery_ramp = float(recovery_ramp)
+        if degraded_exit not in DEGRADED_EXITS:
+            raise ValueError(f"unknown degraded_exit {degraded_exit!r}; expected {DEGRADED_EXITS}")
+        self.degraded_exit = degraded_exit
         self.transitions = []
 
     # -- bookkeeping
@@ -621,13 +743,34 @@ class EventStateMachine:
                 out["adopt"] = ev.h_star
                 out["transitions"].append(self._go(t, EVENT, f"adopted_{ev.h_star}"))
                 return out
-            if self.t_state is not None and (t - self.t_state) > self.degraded_max:
+            if (self.degraded_exit == DEGRADED_EXIT_EVAL and self.t_state is not None
+                    and (t - self.t_state) > self.degraded_max):
                 out["unfreeze"] = True
                 self.frozen = False
                 out["log_unexplained"] = {"t": t, "seconds": t - self.t_state}
                 self.unexplained.append(out["log_unexplained"])
                 out["transitions"].append(self._go(t, NORMAL, "unexplained_anomaly"))
             return out
+        return out
+
+    # -- DEGRADED bound, scheduled independently of evaluations (pilot 2)
+    def degraded_tick(self, t):
+        """Leave DEGRADED at exactly entry + degraded_max, whether or not an evaluation is due.
+
+        Only active with ``degraded_exit="scheduled"`` (the pilot-2 variant); with the pilot-1 default
+        this is inert and the bound is still applied inside ``on_hypotheses``.
+        """
+        t = float(t)
+        out = {"transitions": [], "unfreeze": False, "log_unexplained": None}
+        if (self.degraded_exit != DEGRADED_EXIT_SCHEDULED or self.state != DEGRADED
+                or self.t_state is None):
+            return out
+        if t - self.t_state >= self.degraded_max - 1e-9:
+            out["unfreeze"] = True
+            self.frozen = False
+            out["log_unexplained"] = {"t": t, "seconds": t - self.t_state}
+            self.unexplained.append(out["log_unexplained"])
+            out["transitions"].append(self._go(t, NORMAL, "unexplained_anomaly"))
         return out
 
     # -- clearance evaluation (EVENT_ASSIMILATION)

@@ -16,6 +16,12 @@ freeze of the frozen entries' m (NA-300 ticks log `frozen`, or `degraded_slow` i
 decisions are pure and live in citypulse.twin.event; the replays are citypulse.branching.engine
 .score_replays. With --event off (default) none of this exists and the loop is unchanged.
 
+Pilot 2 (docs/oct6-audit-and-pilot2-plan.md part B, --event-grid pilot2) changes the incident grid to
+10 hypotheses (20 in the library) and moves the DEGRADED bound onto the 30-s tick at entry + 900 s.
+--event-force-hstar <incident id> is the labelled forced-adoption integration test: at the first
+evaluation of the run (its first episode) that hypothesis is treated as h* with the threshold met.
+With --event-grid pilot1 (default) and no --event-force-hstar the behaviour is the pilot-1 one.
+
 Snapshots (--snapshot-times) are written *after* that timestamp's assimilation tick, so the meta's
 `m` is the multiplier the online Twin has actually been running with since that instant (F2).
 """
@@ -124,7 +130,8 @@ class EventRuntime:
     replays, SUMO restarts) and the four event logs. Inert unless --event on.
     """
 
-    def __init__(self, out, sigma, stream, workers=8, seed=2, demand_seed=202, demand_path=None):
+    def __init__(self, out, sigma, stream, workers=8, seed=2, demand_seed=202, demand_path=None,
+                 grid=evmod.GRID_PILOT1, force_hstar=None):
         self.out = Path(out)
         self.ring_dir = self.out / "ring"
         self.ring_dir.mkdir(parents=True, exist_ok=True)
@@ -134,9 +141,15 @@ class EventRuntime:
         self.seed = int(seed)
         self.demand_seed = int(demand_seed)
         self.demand_path = str(demand_path) if demand_path else None
+        self.grid = grid
+        self.force_hstar = force_hstar
         self.trigger = evmod.TriggerRule()
-        self.sm = evmod.EventStateMachine()
-        self.hyps = evmod.build_hypotheses()
+        # pilot 2: the DEGRADED bound is scheduled on the tick at entry + 900 s, not at the next
+        # evaluation (part B, "Specification conflict resolved"); pilot 1 keeps the eval-driven bound.
+        self.sm = evmod.EventStateMachine(
+            degraded_exit=(evmod.DEGRADED_EXIT_SCHEDULED if grid == evmod.GRID_PILOT2
+                           else evmod.DEGRADED_EXIT_EVAL))
+        self.hyps = evmod.build_hypotheses(grid=grid)
         self.lane_counts, self.midpoints, self.freeze_entries = {}, {}, []
         self.obs_hist = {}                 # detector -> t -> ObsItem
         self.msg_times = deque()
@@ -146,6 +159,7 @@ class EventRuntime:
         self.n_eval = 0
         self.anchor, self.anchor_t_on = None, None
         self.episode_snap = None            # pinned S(t_on - delta) of the current episode
+        self.n_forced = 0
 
     # ------------------------------------------------------------------ startup / geometry
     def init_twin(self, tc):
@@ -156,10 +170,19 @@ class EventRuntime:
             self.lane_counts[edge] = len(ids)
             if ids:
                 self.midpoints[edge] = 0.5 * tc.lane.getLength(sorted(ids)[0])
-        self.hyps = evmod.build_hypotheses(midpoints=self.midpoints, lane_counts=self.lane_counts)
+        self.hyps = evmod.build_hypotheses(midpoints=self.midpoints, lane_counts=self.lane_counts,
+                                           grid=self.grid)
+        if self.force_hstar is not None:
+            # fail at startup, not mid-run: the forced id must exist in the final library
+            h = evmod.find_hypothesis(self.hyps, self.force_hstar)
+            if h.family != "incident":
+                raise ValueError(f"--event-force-hstar {self.force_hstar!r} is not an incident "
+                                 f"hypothesis (family {h.family!r})")
+            self.force_hstar = h.id
         self.freeze_entries = evmod.entries_through(self.stream.cands)
         return {"lane_counts": self.lane_counts, "midpoints": self.midpoints,
-                "freeze_entries": self.freeze_entries}
+                "freeze_entries": self.freeze_entries, "grid": self.grid,
+                "n_hypotheses": len(self.hyps), "force_hstar": self.force_hstar}
 
     # ------------------------------------------------------------------ observations
     def note(self, t, msg_obs):
@@ -269,6 +292,20 @@ class EventRuntime:
         return {"edge": r.get("edge"), "lanes_closed": list(r.get("lanes_closed") or []),
                 "base_speed": dict(r.get("base_speed") or {})}
 
+    def restriction_of(self, hyp, tc):
+        """The live restriction record of an adopted incident hypothesis (event.restriction_record).
+
+        It is what the clearance replays lift: the closed lanes and the pre-restriction max speed of
+        every lane the spec scales. The base speeds are read from the live Twin *before* the
+        replacement closes it, which is also before any restriction is applied to it. Without this
+        record ``lift_spec`` is empty and every H_clear(tau_c) replay is identical to the active one,
+        so P_clear could never leave its prior.
+        """
+        p = dict(hyp.params)
+        base = {f"{p['edge']}_{ln}": float(tc.lane.getMaxSpeed(f"{p['edge']}_{ln}"))
+                for ln in range(int(p.get("n_lanes") or 0))}
+        return evmod.restriction_record(hyp, base)
+
     # ------------------------------------------------------------------ 30-s tick
     def step(self, t, msg_obs, own, tc, cs, act):
         """One SensorMsg tick: trigger, RECOVERY checks, and the state-machine evaluation when due."""
@@ -289,6 +326,9 @@ class EventRuntime:
                 self.pin_episode(tr.t)
         if self.sm.state == evmod.RECOVERY and int(round(t)) % 60 == 0:
             self._log_transitions(self.sm.recovery_tick(t, o_u, o_d, row["B"])["transitions"])
+        deg = self.sm.degraded_tick(t)          # pilot 2: DEGRADED bound on the tick, not on an eval
+        if deg["transitions"]:
+            self._log_transitions(deg["transitions"])
         if self.sm.due(t):
             tc = self.evaluate(t, tc, cs, act)
         return tc
@@ -325,6 +365,13 @@ class EventRuntime:
                             weights=self.sm.downweight)
         ev.wall_s = wall
         adopted = evmod.adoption_decision(ev)
+        if not adopted and self.force_hstar is not None and self.n_forced == 0 \
+                and st_before == evmod.SUSPECTED and self.sm.n_eval == 0:
+            # labelled forced-adoption integration test: at the FIRST evaluation of the run (the first
+            # evaluation of its first episode), treat the fixed hypothesis as h* and the threshold as
+            # met (part B); it is an integration test, never inference
+            adopted = evmod.forced_adoption(ev, self.force_hstar)
+            self.n_forced += 1
         ev.adopted = adopted
         out = self.sm.on_hypotheses(t, ev, adopted=adopted)
         self._log_transitions(out["transitions"])
@@ -336,8 +383,12 @@ class EventRuntime:
         if out["adopt"]:
             h = next(h for h in self.hyps if h.id == out["adopt"])
             r = next(r for r in res if r["tag"] == h.id)
+            # record the live restriction BEFORE the replacement restarts SUMO: the clearance
+            # replays lift exactly this record (event.py EventStateMachine.restriction)
+            if h.family == "incident":
+                self.sm.restriction = self.restriction_of(h, tc)
             tc = self.replace_live(tc, cs, act, st_path, mt_path, t_on, t, apply_spec=self.spec_of(h))
-            self.log_replacement(t, h, r, tc, "adoption", st_path)
+            self.log_replacement(t, h, r, tc, "adoption", st_path, forced=bool(ev.forced))
         return tc
 
     def evaluate_clearance(self, t, tc, cs, act, st_path, mt_path, dets):
@@ -438,10 +489,11 @@ class EventRuntime:
             act.step(tc)
         return tc
 
-    def log_replacement(self, t, hyp, res, tc, kind, st_path):
+    def log_replacement(self, t, hyp, res, tc, kind, st_path, forced=False):
         digest, n_veh = veh_digest(tc)
         present = restriction_present(tc, self.spec_of(hyp)) if hyp.family == "incident" else False
-        row = {"t": float(t), "kind": kind, "snapshot": Path(st_path).name, "hypothesis": hyp.id,
+        row = {"t": float(t), "kind": kind, "forced": bool(forced), "snapshot": Path(st_path).name,
+               "hypothesis": hyp.id,
                "family": hyp.family, "params": dict(hyp.params),
                "n_vehicles_after_replay": None if res is None else int(res["n_vehicles"]),
                "n_vehicles_live": int(n_veh),
@@ -481,12 +533,16 @@ class EventRuntime:
                 "false_alarms": self.sm.false_alarms, "unexplained": self.sm.unexplained,
                 "transitions": list(self.state_rows), "freeze_entries": self.freeze_entries,
                 "lane_counts": self.lane_counts, "midpoints": self.midpoints,
-                "n_replacements": len(self.replacement_rows)}
+                "n_replacements": len(self.replacement_rows),
+                "t_adopt": self.sm.t_adopt, "t_recovery": self.sm.t_recovery,
+                "grid": self.grid, "n_hypotheses": len(self.hyps),
+                "force_hstar": self.force_hstar, "n_forced_adoptions": self.n_forced,
+                "degraded_exit": self.sm.degraded_exit}
 
 
 def run(endpoint, out: Path, seed, demand_seed, snapshot_times=(), demand_path=None, assim="off",
         sigma_json=None, boundary_detector=BOUNDARY_DETECTOR, twin_base_factor=1.0, event="off",
-        event_sigma=None, event_workers=8):
+        event_sigma=None, event_workers=8, event_grid=evmod.GRID_PILOT1, event_force_hstar=None):
     out.mkdir(parents=True, exist_ok=True)
     loops = detector_loops()
     stream = TwinDemandStream(seed=demand_seed, path=demand_path, base_factor=twin_base_factor)
@@ -496,7 +552,8 @@ def run(endpoint, out: Path, seed, demand_seed, snapshot_times=(), demand_path=N
     ev = None
     if event_on:
         ev = EventRuntime(out, load_event_sigma(event_sigma), stream, workers=event_workers, seed=seed,
-                          demand_seed=demand_seed, demand_path=demand_path)
+                          demand_seed=demand_seed, demand_path=demand_path, grid=event_grid,
+                          force_hstar=event_force_hstar)
     n_intervals = ASSIM_INTERVALS.get(assim, 2)
     assim_period = ASSIM_PERIODS.get(assim, ASSIM_PERIOD)
     assimilator = (NormalAssimilator(n_intervals=n_intervals, m_max=ASSIM_M_MAX.get(assim, 1.8))
@@ -611,11 +668,17 @@ def main():
                     help="event-aware assimilation (default off: byte-identical behaviour)")
     ap.add_argument("--event-sigma", default=None, help="sigma_event.json (per-detector q/v/o MAD)")
     ap.add_argument("--event-workers", type=int, default=8, help="max parallel scoring replays")
+    ap.add_argument("--event-grid", default=evmod.GRID_PILOT1, choices=list(evmod.EVENT_GRIDS),
+                    help="incident hypothesis grid: pilot1 (16 hypotheses, default) or pilot2 (20)")
+    ap.add_argument("--event-force-hstar", default=None,
+                    help="pilot-2 labelled integration test: at the first evaluation treat this "
+                         "incident hypothesis as h* and the adoption threshold as met")
     a = ap.parse_args()
     print(json.dumps(run(a.endpoint, Path(a.out), a.seed, a.demand_seed, set(a.snapshot_times),
                          demand_path=a.demand_path, assim=a.assim, sigma_json=a.sigma_json,
                          boundary_detector=a.boundary_detector, twin_base_factor=a.twin_base_factor,
-                         event=a.event, event_sigma=a.event_sigma, event_workers=a.event_workers)))
+                         event=a.event, event_sigma=a.event_sigma, event_workers=a.event_workers,
+                         event_grid=a.event_grid, event_force_hstar=a.event_force_hstar)))
 
 
 if __name__ == "__main__":

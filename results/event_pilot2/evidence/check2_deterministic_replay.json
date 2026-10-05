@@ -1,0 +1,34 @@
+{
+ "check": "2",
+ "name": "deterministic_replay",
+ "label": "direct",
+ "run": "results/event_pilot2/runs/evt_inc_4101",
+ "snapshot": "event_snapshot_4350.xml.gz",
+ "t_on": 4410.0,
+ "t_end": 5010.0,
+ "hypothesis": "inc_ktb_n1_k2_s1",
+ "params": {
+  "edge": "ktb_n1",
+  "lanes_closed": [
+   0,
+   1
+  ],
+  "n_lanes": 3,
+  "pos": 755.0,
+  "pos_kind": "fixed",
+  "speed_factor": 1.0
+ },
+ "logL_run1": -71.24284910528651,
+ "logL_run2": -71.24284910528651,
+ "logL_identical": true,
+ "n_O": 165,
+ "n_O_run2": 165,
+ "digest_run1": "fb87651a3d729078d04652ad50671efd0a9e641dd986dc0308d73ce13c7ab014",
+ "digest_run2": "fb87651a3d729078d04652ad50671efd0a9e641dd986dc0308d73ce13c7ab014",
+ "digest_identical": true,
+ "interval_tables_identical": true,
+ "n_vehicles": 359,
+ "wall_s": 3.368567943572998,
+ "note": "logL of one hypothesis over its own support (no demand family offline): the check is that two independent SUMO processes reproduce it exactly, with the observations substituted from the run's twin_log.parquet (what the Proxy sent)",
+ "passed": true
+}

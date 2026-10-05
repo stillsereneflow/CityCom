@@ -1,0 +1,245 @@
+{
+ "check": "6",
+ "name": "threshold_respecting_adoption",
+ "label": "unit (rule) + direct (audit of every adopted row on disk)",
+ "rule": "natural adoption requires h* in the incident family and gap > ln 10 = 2.302585",
+ "tau_lr": 2.302585092994046,
+ "natural_adoptions": [
+  {
+   "run": "evtforce_inc_4101",
+   "t": 6450.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "inc_ktb_n2_k1_s1",
+   "family": "incident",
+   "gap_vs_demand": 8.456032369382612,
+   "adopted": true,
+   "forced": false
+  }
+ ],
+ "forced_adoptions": [
+  {
+   "run": "evtforce_inc_4101",
+   "t": 5010.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "inc_ktb_n1_k2_s1",
+   "family": "incident",
+   "gap_vs_demand": 2.302585093994046,
+   "adopted": true,
+   "forced": true
+  },
+  {
+   "run": "evtforce_inc_4102",
+   "t": 4890.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "inc_ktb_n1_k2_s1",
+   "family": "incident",
+   "gap_vs_demand": 2.302585093994046,
+   "adopted": true,
+   "forced": true
+  },
+  {
+   "run": "evtforce_inc_4103",
+   "t": 4860.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "inc_ktb_n1_k2_s1",
+   "family": "incident",
+   "gap_vs_demand": 2.302585093994046,
+   "adopted": true,
+   "forced": true
+  }
+ ],
+ "rows": [
+  {
+   "run": "evt_inc_4101",
+   "t": 5010.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "flt_AID02111_zero",
+   "family": "fault",
+   "gap_vs_demand": 2.123705387838914,
+   "adopted": false,
+   "forced": false
+  },
+  {
+   "run": "evt_inc_4101",
+   "t": 5040.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "dem_f1.15",
+   "family": "demand",
+   "gap_vs_demand": 0.0,
+   "adopted": false,
+   "forced": false
+  },
+  {
+   "run": "evt_inc_4101",
+   "t": 5100.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "dem_f1.15",
+   "family": "demand",
+   "gap_vs_demand": 0.0,
+   "adopted": false,
+   "forced": false
+  },
+  {
+   "run": "evt_inc_4101",
+   "t": 5160.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "flt_AID02109_noise",
+   "family": "fault",
+   "gap_vs_demand": 7.5367690412568,
+   "adopted": false,
+   "forced": false
+  },
+  {
+   "run": "evt_inc_4102",
+   "t": 4890.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "flt_AID02111_zero",
+   "family": "fault",
+   "gap_vs_demand": 2.235352409121134,
+   "adopted": false,
+   "forced": false
+  },
+  {
+   "run": "evt_inc_4102",
+   "t": 4920.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "dem_f1.15",
+   "family": "demand",
+   "gap_vs_demand": 0.0,
+   "adopted": false,
+   "forced": false
+  },
+  {
+   "run": "evt_inc_4102",
+   "t": 4980.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "dem_f1.15",
+   "family": "demand",
+   "gap_vs_demand": 0.0,
+   "adopted": false,
+   "forced": false
+  },
+  {
+   "run": "evt_inc_4102",
+   "t": 5040.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "flt_AID02109_noise",
+   "family": "fault",
+   "gap_vs_demand": 8.427426367416953,
+   "adopted": false,
+   "forced": false
+  },
+  {
+   "run": "evt_inc_4103",
+   "t": 4860.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "flt_AID02111_stuck",
+   "family": "fault",
+   "gap_vs_demand": 0.11406716666860817,
+   "adopted": false,
+   "forced": false
+  },
+  {
+   "run": "evt_inc_4103",
+   "t": 4890.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "flt_AID02111_stuck",
+   "family": "fault",
+   "gap_vs_demand": 0.23939284451288323,
+   "adopted": false,
+   "forced": false
+  },
+  {
+   "run": "evt_inc_4103",
+   "t": 4920.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "dem_f1.3",
+   "family": "demand",
+   "gap_vs_demand": 0.0,
+   "adopted": false,
+   "forced": false
+  },
+  {
+   "run": "evt_inc_4103",
+   "t": 4980.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "dem_f1.3",
+   "family": "demand",
+   "gap_vs_demand": 0.0,
+   "adopted": false,
+   "forced": false
+  },
+  {
+   "run": "evt_inc_4103",
+   "t": 5040.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "flt_AID02109_noise",
+   "family": "fault",
+   "gap_vs_demand": 1.5460705472574823,
+   "adopted": false,
+   "forced": false
+  },
+  {
+   "run": "evtforce_inc_4101",
+   "t": 5010.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "inc_ktb_n1_k2_s1",
+   "family": "incident",
+   "gap_vs_demand": 2.302585093994046,
+   "adopted": true,
+   "forced": true
+  },
+  {
+   "run": "evtforce_inc_4101",
+   "t": 6420.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "flt_AID02111_noise",
+   "family": "fault",
+   "gap_vs_demand": 18.46654217768328,
+   "adopted": false,
+   "forced": false
+  },
+  {
+   "run": "evtforce_inc_4101",
+   "t": 6450.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "inc_ktb_n2_k1_s1",
+   "family": "incident",
+   "gap_vs_demand": 8.456032369382612,
+   "adopted": true,
+   "forced": false
+  },
+  {
+   "run": "evtforce_inc_4102",
+   "t": 4890.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "inc_ktb_n1_k2_s1",
+   "family": "incident",
+   "gap_vs_demand": 2.302585093994046,
+   "adopted": true,
+   "forced": true
+  },
+  {
+   "run": "evtforce_inc_4102",
+   "t": 5880.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "flt_AID02109_noise",
+   "family": "fault",
+   "gap_vs_demand": 55.4189316551491,
+   "adopted": false,
+   "forced": false
+  },
+  {
+   "run": "evtforce_inc_4103",
+   "t": 4860.0,
+   "state": "SUSPECTED_EVENT",
+   "h_star": "inc_ktb_n1_k2_s1",
+   "family": "incident",
+   "gap_vs_demand": 2.302585093994046,
+   "adopted": true,
+   "forced": true
+  }
+ ],
+ "violations": [],
+ "passed": true
+}

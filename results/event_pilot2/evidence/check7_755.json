@@ -1,0 +1,166 @@
+{
+ "check": "7",
+ "name": "successful_state_replacement",
+ "label": "live (forced-adoption runs, in-run replacement) + direct (mechanics, this script)",
+ "hypothesis": "inc_ktb_n1_k2_s1",
+ "params": {
+  "edge": "ktb_n1",
+  "lanes_closed": [
+   0,
+   1
+  ],
+  "n_lanes": 3,
+  "pos": 755.0,
+  "pos_kind": "fixed",
+  "speed_factor": 1.0
+ },
+ "location": {
+  "edge": "ktb_n1",
+  "pos": 755.0,
+  "pos_kind": "fixed"
+ },
+ "run": "results/event_pilot2/runs/evt_inc_4101",
+ "snapshot": "event_snapshot_4350.xml.gz",
+ "snapshot_meta": "event_snapshot_4350.json",
+ "t_on": 4410.0,
+ "t_end": 5010.0,
+ "replay_endpoint": {
+  "veh_digest": "fb87651a3d729078d04652ad50671efd0a9e641dd986dc0308d73ce13c7ab014",
+  "n_vehicles": 359,
+  "restriction_present_replay": true,
+  "wall_s": 1.3280601501464844
+ },
+ "live_twin": {
+  "veh_digest": "fb87651a3d729078d04652ad50671efd0a9e641dd986dc0308d73ce13c7ab014",
+  "n_vehicles": 359,
+  "restriction_present_live": true,
+  "lane_disallow_live": {
+   "ktb_n1_0": [
+    "passenger",
+    "bus",
+    "delivery",
+    "truck",
+    "trailer"
+   ],
+   "ktb_n1_1": [
+    "passenger",
+    "bus",
+    "delivery",
+    "truck",
+    "trailer"
+   ]
+  },
+  "open_lane_maxspeed_live": {
+   "ktb_n1_2": 22.22
+  },
+  "t_end_live": 5010.0,
+  "applied": true
+ },
+ "vehicles_match": true,
+ "lane_disallow_present_live": true,
+ "in_run_replacements": [
+  {
+   "t": 5010.0,
+   "kind": "adoption",
+   "forced": true,
+   "snapshot": "event_snapshot_4350.xml.gz",
+   "hypothesis": "inc_ktb_n1_k2_s1",
+   "family": "incident",
+   "params": {
+    "edge": "ktb_n1",
+    "lanes_closed": [
+     0,
+     1
+    ],
+    "n_lanes": 3,
+    "pos": 755.0,
+    "pos_kind": "fixed",
+    "speed_factor": 1.0
+   },
+   "n_vehicles_after_replay": 359,
+   "n_vehicles_live": 359,
+   "veh_digest_replay": "fb87651a3d729078d04652ad50671efd0a9e641dd986dc0308d73ce13c7ab014",
+   "veh_digest_live": "fb87651a3d729078d04652ad50671efd0a9e641dd986dc0308d73ce13c7ab014",
+   "vehicles_match": true,
+   "restriction_present_live": true,
+   "restriction_present_replay": true
+  },
+  {
+   "t": 5130.0,
+   "kind": "clearance",
+   "forced": false,
+   "snapshot": "event_snapshot_4350.xml.gz",
+   "hypothesis": "inc_ktb_n1_k2_s1",
+   "family": "incident",
+   "params": {
+    "edge": "ktb_n1",
+    "lanes_closed": [
+     0,
+     1
+    ],
+    "n_lanes": 3,
+    "pos": 755.0,
+    "pos_kind": "fixed",
+    "speed_factor": 1.0
+   },
+   "n_vehicles_after_replay": 390,
+   "n_vehicles_live": 390,
+   "veh_digest_replay": "3d180d7e25b5d5b84fd3eeb0122363f6abcc7f315c96b5b0189ca0f18d2db28a",
+   "veh_digest_live": "3d180d7e25b5d5b84fd3eeb0122363f6abcc7f315c96b5b0189ca0f18d2db28a",
+   "vehicles_match": true,
+   "restriction_present_live": false,
+   "restriction_present_replay": false
+  },
+  {
+   "t": 6450.0,
+   "kind": "adoption",
+   "forced": false,
+   "snapshot": "event_snapshot_5790.xml.gz",
+   "hypothesis": "inc_ktb_n2_k1_s1",
+   "family": "incident",
+   "params": {
+    "edge": "ktb_n2",
+    "lanes_closed": [
+     0
+    ],
+    "n_lanes": 2,
+    "pos": 997.5,
+    "pos_kind": "mid",
+    "speed_factor": 1.0
+   },
+   "n_vehicles_after_replay": 424,
+   "n_vehicles_live": 424,
+   "veh_digest_replay": "37c68a0b7728648a245f71b2a89b1bc27fad59480919115a02db72f30dcb5613",
+   "veh_digest_live": "37c68a0b7728648a245f71b2a89b1bc27fad59480919115a02db72f30dcb5613",
+   "vehicles_match": true,
+   "restriction_present_live": true,
+   "restriction_present_replay": true
+  },
+  {
+   "t": 6570.0,
+   "kind": "clearance",
+   "forced": false,
+   "snapshot": "event_snapshot_5790.xml.gz",
+   "hypothesis": "inc_ktb_n2_k1_s1",
+   "family": "incident",
+   "params": {
+    "edge": "ktb_n2",
+    "lanes_closed": [
+     0
+    ],
+    "n_lanes": 2,
+    "pos": 997.5,
+    "pos_kind": "mid",
+    "speed_factor": 1.0
+   },
+   "n_vehicles_after_replay": 400,
+   "n_vehicles_live": 400,
+   "veh_digest_replay": "5e11ba33e920647c8477470f38fedba3751ccab0cf2429cffb2c7627db856641",
+   "veh_digest_live": "5e11ba33e920647c8477470f38fedba3751ccab0cf2429cffb2c7627db856641",
+   "vehicles_match": true,
+   "restriction_present_live": false,
+   "restriction_present_replay": false
+  }
+ ],
+ "passed": true
+}

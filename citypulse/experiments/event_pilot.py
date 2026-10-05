@@ -43,6 +43,26 @@ RUNS_DIR = REPO_ROOT / "results/event_pilot/runs"
 IMPL_DIR = REPO_ROOT / "results/event_pilot/impl"
 REPORT_FILE = REPO_ROOT / "results/event_pilot/report.md"
 
+# ------------------------------------------------------------------ pilot 2 (docs/oct6-audit-and-pilot2-plan.md part B)
+# Development only. Same scenario, same CONV arguments, same seeds policy; the only method change is
+# the incident grid (k in {1, .., min(2, n_lanes - 1)} x s in {0.6, 1.0} = 10 incident hypotheses,
+# 20 in the library) plus the scheduled DEGRADED exit. Fresh development seeds 4101-4103.
+PILOT2_DIR = REPO_ROOT / "results/event_pilot2"
+PILOT2_RUNS_DIR = PILOT2_DIR / "runs"
+PILOT2_EVIDENCE_DIR = PILOT2_DIR / "evidence"
+PILOT2_REPORT_FILE = PILOT2_DIR / "report.md"
+PILOT2_SEEDS = [4101, 4102, 4103]
+PILOT2_GRID = "pilot2"
+PILOT2_FORCE_HSTAR = "inc_ktb_n1_k2_s1.0"      # the forced-adoption integration hypothesis
+PILOT2_ARMS = ("evt", "conv")                  # INC: both arms; NOI: EVT only
+PILOT2_FORCED_PREFIX = "evtforce"
+PILOT2_PORTS = {                              # endpoint per run name (no overlap with pilot 1 / audit)
+    "evt_inc_4101": 6101, "evt_inc_4102": 6102, "evt_inc_4103": 6103,
+    "conv_inc_4101": 6104, "conv_inc_4102": 6105, "conv_inc_4103": 6106,
+    "evt_noi_4101": 6107, "evt_noi_4102": 6108, "evt_noi_4103": 6109,
+    "evtforce_inc_4101": 6110, "evtforce_inc_4102": 6111, "evtforce_inc_4103": 6112,
+}
+
 # Sigma values for G4 bottleneck index from biased-OL development runs (ol_4001..4003, t >= 900s)
 # Computed: 1.4826 * MAD of (obs - twin)
 G4_SIGMA = {
@@ -168,9 +188,15 @@ def verify_default_off_identity() -> Dict[str, Any]:
 # ==============================================================================
 
 def run_two_world(run_name: str, scenario: str, seed: int, arm: str = "conv",
-                  port: int = 5600, event_sigma: Optional[str] = None) -> Dict[str, Any]:
-    """Execute a single two-world simulation (CONV or EVT)."""
-    run_dir = RUNS_DIR / run_name
+                  port: int = 5600, event_sigma: Optional[str] = None,
+                  runs_dir: Optional[Path] = None, grid: Optional[str] = None,
+                  force_hstar: Optional[str] = None) -> Dict[str, Any]:
+    """Execute a single two-world simulation (CONV or EVT).
+
+    ``runs_dir`` (default ``RUNS_DIR``) redirects the output; ``grid`` and ``force_hstar`` are the
+    pilot-2 switches (``--event-grid``, ``--event-force-hstar``) and are only passed to the EVT arm.
+    """
+    run_dir = (Path(runs_dir) if runs_dir is not None else RUNS_DIR) / run_name
     twin_dir = run_dir / "twin"
     proxy_dir = run_dir / "proxy"
     twin_dir.mkdir(parents=True, exist_ok=True)
@@ -201,6 +227,10 @@ def run_two_world(run_name: str, scenario: str, seed: int, arm: str = "conv",
         if event_sigma:
             targs.extend(["--event-sigma", str(event_sigma)])
         targs.extend(["--event-workers", "4"])
+        if grid:
+            targs.extend(["--event-grid", str(grid)])
+        if force_hstar:
+            targs.extend(["--event-force-hstar", str(force_hstar)])
 
     # Proxy arguments
     routes_file = SHOCK_ROU if scenario == "SHK" else PROXY_ROU
@@ -243,6 +273,12 @@ def run_two_world(run_name: str, scenario: str, seed: int, arm: str = "conv",
         "sensor_fault": "AID02109:stuck:4500:5400" if scenario == "DET" else None,
         "incident": (scenario == "INC"),
     }
+    if grid or force_hstar or runs_dir is not None:
+        # pilot-2 keys only: a pilot-1 re-run keeps its original run_info.json byte for byte
+        info["event_grid"] = grid
+        info["event_force_hstar"] = force_hstar
+        info["event_sigma"] = str(event_sigma) if (arm.lower() == "evt" and event_sigma) else None
+        info["runs_dir"] = str(run_dir.parent)
     with open(run_dir / "run_info.json", "w") as f:
         json.dump(info, f, indent=1)
 
@@ -731,8 +767,149 @@ def assemble_report(conv_results: Dict[str, Any], evt_results: Optional[Dict[str
 
 
 # ==============================================================================
+# Pilot 2 (docs/oct6-audit-and-pilot2-plan.md part B): runs, forecasts, checks
+# ==============================================================================
+
+def pilot2_run_specs(forced: bool = False) -> List[Tuple[str, str, int, str, int, Optional[str], Optional[str]]]:
+    """(run_name, scenario, seed, arm, port, grid, force_hstar) for the pilot-2 run set.
+
+    INC x seeds 4101-4103: EVT (pilot-2 grid) and CONV (forecasts). NOI x the same seeds: EVT only,
+    as the false-adoption check. ``forced`` adds the labelled forced-adoption integration runs
+    (INC, EVT, ``--event-force-hstar``), which are kept in their own section of the report.
+    """
+    specs = []
+    for seed in PILOT2_SEEDS:
+        for scen, arm in (("INC", "evt"), ("INC", "conv"), ("NOI", "evt")):
+            name = f"{arm}_{scen.lower()}_{seed}"
+            specs.append((name, scen, seed, arm, PILOT2_PORTS[name],
+                          PILOT2_GRID if arm == "evt" else None, None))
+    if forced:
+        for seed in PILOT2_SEEDS:
+            name = f"{PILOT2_FORCED_PREFIX}_inc_{seed}"
+            specs.append((name, "INC", seed, "evt", PILOT2_PORTS[name], PILOT2_GRID,
+                          PILOT2_FORCE_HSTAR))
+    return specs
+
+
+def pilot2_one(spec: Tuple[str, str, int, str, int, Optional[str], Optional[str]]) -> Dict[str, Any]:
+    name, scen, seed, arm, port, grid, force = spec
+    return run_two_world(name, scen, seed, arm, port, str(IMPL_DIR / "sigma_event.json"),
+                         runs_dir=PILOT2_RUNS_DIR, grid=grid, force_hstar=force)
+
+
+def run_pilot2(parallel: int = 3, forced: bool = False, force_only: bool = False) -> List[Dict[str, Any]]:
+    """Run the pilot-2 set (or only the forced-adoption integration runs), skipping completed runs."""
+    specs = pilot2_run_specs(forced=forced or force_only)
+    if force_only:
+        specs = [s for s in specs if s[0].startswith(PILOT2_FORCED_PREFIX)]
+    todo = [s for s in specs if not (PILOT2_RUNS_DIR / s[0] / "run_info.json").exists()]
+    print(f"pilot2: {len(todo)} of {len(specs)} runs to launch: {[s[0] for s in todo]}")
+    if not todo:
+        return []
+    PILOT2_RUNS_DIR.mkdir(parents=True, exist_ok=True)
+    with mp.Pool(processes=max(1, min(int(parallel), len(todo)))) as pool:
+        return pool.map(pilot2_one, todo)
+
+
+def evaluate_queue_forecasts_many(run_dirs: List[Path], workers: int = 3) -> Dict[str, Any]:
+    """The pilot-1 forecast scoring, applied to the pilot-2 run dirs (3 run dirs at a time)."""
+    dirs = [Path(d) for d in run_dirs]
+    if workers <= 1 or len(dirs) <= 1:
+        return {d.name: evaluate_queue_forecasts(d) for d in dirs}
+    with mp.Pool(processes=max(1, min(int(workers), len(dirs)))) as pool:
+        res = pool.map(evaluate_queue_forecasts, dirs)
+    return {d.name: r for d, r in zip(dirs, res)}
+
+
+def pilot2_alarms(run_dir: Path) -> Dict[str, Any]:
+    """The corrected G4 rule applied offline to a run's twin_log.parquet (the pilot-1 function)."""
+    return compute_g4_alarms(Path(run_dir) / "twin" / "twin_log.parquet")
+
+
+def pilot2_event_summary(run_dir: Path) -> Dict[str, Any]:
+    """Everything the pilot-2 report reads out of one EVT run's artefacts."""
+    run_dir = Path(run_dir)
+    stats_path = run_dir / "twin/twin_stats.json"
+    stats = json.loads(stats_path.read_text(encoding="utf-8")) if stats_path.exists() else {}
+    ev = stats.get("event") or {}
+    rows = []
+    log_path = run_dir / "twin/event_log.jsonl"
+    if log_path.exists():
+        rows = [json.loads(l) for l in log_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    reps = []
+    rep_path = run_dir / "twin/replacement_log.jsonl"
+    if rep_path.exists():
+        reps = [json.loads(l) for l in rep_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    return {
+        "run_dir": str(run_dir),
+        "state": ev.get("state"), "n_eval": ev.get("n_eval"), "n_alarms": ev.get("n_alarms"),
+        "alarms": ev.get("alarms"), "transitions": ev.get("transitions"),
+        "false_alarms": ev.get("false_alarms"), "unexplained": ev.get("unexplained"),
+        "downweight": ev.get("downweight"), "active_hyp": ev.get("active_hyp"),
+        "t_adopt": ev.get("t_adopt"), "n_replacements": ev.get("n_replacements"),
+        "grid": ev.get("grid"), "n_hypotheses": ev.get("n_hypotheses"),
+        "force_hstar": ev.get("force_hstar"), "n_forced_adoptions": ev.get("n_forced_adoptions"),
+        "degraded_exit": ev.get("degraded_exit"),
+        "event_rows": rows, "replacement_rows": reps,
+    }
+
+
+def degraded_durations(transitions: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Every DEGRADED spell in a state trace: entry, exit and duration (check 10, live)."""
+    out, t_enter = [], None
+    for tr in transitions or []:
+        if tr["to"] == "DEGRADED":
+            t_enter = float(tr["t"])
+        elif tr["from"] == "DEGRADED" and t_enter is not None:
+            out.append({"enter": t_enter, "exit": float(tr["t"]), "duration_s": float(tr["t"]) - t_enter,
+                        "reason": tr["reason"]})
+            t_enter = None
+    if t_enter is not None:
+        out.append({"enter": t_enter, "exit": None, "duration_s": None, "reason": "still_degraded"})
+    return out
+
+
+# ==============================================================================
 # CLI Entrypoint
 # ==============================================================================
+
+def main_pilot2(parallel: int = 3, forced: bool = False, force_only: bool = False,
+                forecasts: bool = True, alarms: bool = True) -> Dict[str, Any]:
+    """The pilot-2 variant: runs (part B), then queue forecasts and offline G4 alarms per run."""
+    PILOT2_DIR.mkdir(parents=True, exist_ok=True)
+    infos = run_pilot2(parallel=parallel, forced=forced, force_only=force_only)
+    names = [s[0] for s in pilot2_run_specs(forced=forced or force_only)]
+    if force_only:
+        names = [n for n in names if n.startswith(PILOT2_FORCED_PREFIX)]
+    run_dirs = [PILOT2_RUNS_DIR / n for n in names if (PILOT2_RUNS_DIR / n / "run_info.json").exists()]
+    if forecasts:
+        missing = [d for d in run_dirs if not (d / "queue_forecasts.json").exists()]
+        print(f"pilot2: scoring queue forecasts for {len(missing)} runs")
+        evaluate_queue_forecasts_many(missing, workers=max(1, int(parallel)))
+    summary_path = PILOT2_DIR / "runs_summary.json"
+    summary = {}
+    if summary_path.exists():          # merge: a forced-only pass must not drop the 9 pilot-2 runs
+        try:
+            summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        except ValueError:
+            summary = {}
+    for d in run_dirs:
+        row = {"run_info": json.loads((d / "run_info.json").read_text(encoding="utf-8"))}
+        if alarms and (d / "twin/twin_log.parquet").exists():
+            row["alarms"] = {k: v for k, v in pilot2_alarms(d).items() if k != "records"}
+        qf = d / "queue_forecasts.json"
+        if qf.exists():
+            q = json.loads(qf.read_text(encoding="utf-8"))
+            row["queue_forecasts"] = {"summary_5min": q["summary_5min"],
+                                      "summary_15min": q["summary_15min"], "forecasts": q["forecasts"]}
+        if (d / "twin/twin_stats.json").exists():
+            row["event"] = pilot2_event_summary(d)
+        summary[d.name] = row
+    summary_path.write_text(json.dumps(summary, indent=1, default=str), encoding="utf-8")
+    print(f"pilot2: wrote {summary_path} ({len(summary)} runs); "
+          f"launched {len(infos)}")
+    return summary
+
 
 def main():
     ap = argparse.ArgumentParser(description="Oct 6 Event Pilot Runner")
@@ -741,7 +918,15 @@ def main():
     ap.add_argument("--report", action="store_true", help="Assemble report from existing runs")
     ap.add_argument("--all", action="store_true", help="Run Part 1, wait for EVENT_READY, run Part 2, and report")
     ap.add_argument("--parallel", type=int, default=4, help="Parallel simulation runs (max 8)")
+    ap.add_argument("--pilot2", action="store_true",
+                    help="pilot-2 variant (docs/oct6-audit-and-pilot2-plan.md part B): runs, forecasts, alarms")
+    ap.add_argument("--pilot2-forced", action="store_true", help="pilot 2 plus the forced-adoption runs")
+    ap.add_argument("--pilot2-force-only", action="store_true", help="only the forced-adoption runs")
     a = ap.parse_args()
+
+    if a.pilot2 or a.pilot2_forced or a.pilot2_force_only:
+        main_pilot2(parallel=a.parallel, forced=a.pilot2_forced, force_only=a.pilot2_force_only)
+        return
 
     # 1. Run unit test & identity check
     print("Running sensor fault unit test...")

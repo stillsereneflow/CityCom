@@ -1,0 +1,40 @@
+{
+ "check": "9",
+ "name": "non_incident_rejection",
+ "label": "direct (NOI EVT runs)",
+ "note": "pilot 2 runs NOI only (part B, 'Runs'); SHK and DET were pilot-1 controls and are not re-run here, so no SHK/DET adoption count is claimed for pilot 2",
+ "runs": {
+  "evt_noi_4101": {
+   "n_alarms": 0,
+   "n_eval": 0,
+   "n_replacements": 0,
+   "n_adopted": 0,
+   "false_alarms": [],
+   "unexplained": [],
+   "state": "NORMAL",
+   "transitions": []
+  },
+  "evt_noi_4102": {
+   "n_alarms": 0,
+   "n_eval": 0,
+   "n_replacements": 0,
+   "n_adopted": 0,
+   "false_alarms": [],
+   "unexplained": [],
+   "state": "NORMAL",
+   "transitions": []
+  },
+  "evt_noi_4103": {
+   "n_alarms": 0,
+   "n_eval": 0,
+   "n_replacements": 0,
+   "n_adopted": 0,
+   "false_alarms": [],
+   "unexplained": [],
+   "state": "NORMAL",
+   "transitions": []
+  }
+ },
+ "violations": [],
+ "passed": true
+}

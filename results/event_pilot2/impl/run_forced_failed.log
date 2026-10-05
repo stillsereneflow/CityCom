@@ -1,0 +1,78 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 683, in <module>
+    main()
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 675, in main
+    print(json.dumps(run(a.endpoint, Path(a.out), a.seed, a.demand_seed, set(a.snapshot_times),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 631, in run
+    tc = ev.step(float(msg["t"]), msg["obs"], own, tc, cs, act)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 333, in step
+    tc = self.evaluate(t, tc, cs, act)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 354, in evaluate
+    return self.evaluate_clearance(t, tc, cs, act, st_path, mt_path, dets)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 415, in evaluate_clearance
+    ev = evmod.evaluate(hyps, dets, self._times(res, dets), self.obs_hist, replays, self.sigma,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\event.py", line 518, in evaluate
+    gap = log_post[h_star] - max(log_post[d] for d in demand)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: max() iterable argument is empty
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 683, in <module>
+    main()
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 675, in main
+    print(json.dumps(run(a.endpoint, Path(a.out), a.seed, a.demand_seed, set(a.snapshot_times),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 631, in run
+    tc = ev.step(float(msg["t"]), msg["obs"], own, tc, cs, act)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 333, in step
+    tc = self.evaluate(t, tc, cs, act)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 354, in evaluate
+    return self.evaluate_clearance(t, tc, cs, act, st_path, mt_path, dets)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 415, in evaluate_clearance
+    ev = evmod.evaluate(hyps, dets, self._times(res, dets), self.obs_hist, replays, self.sigma,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\event.py", line 518, in evaluate
+    gap = log_post[h_star] - max(log_post[d] for d in demand)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: max() iterable argument is empty
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 683, in <module>
+    main()
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 675, in main
+    print(json.dumps(run(a.endpoint, Path(a.out), a.seed, a.demand_seed, set(a.snapshot_times),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 631, in run
+    tc = ev.step(float(msg["t"]), msg["obs"], own, tc, cs, act)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 333, in step
+    tc = self.evaluate(t, tc, cs, act)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 354, in evaluate
+    return self.evaluate_clearance(t, tc, cs, act, st_path, mt_path, dets)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\service.py", line 415, in evaluate_clearance
+    ev = evmod.evaluate(hyps, dets, self._times(res, dets), self.obs_hist, replays, self.sigma,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CityCom-astra\citypulse\twin\event.py", line 518, in evaluate
+    gap = log_post[h_star] - max(log_post[d] for d in demand)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: max() iterable argument is empty
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).

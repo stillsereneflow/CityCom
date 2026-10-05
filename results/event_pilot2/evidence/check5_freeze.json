@@ -1,0 +1,284 @@
+{
+ "check": "5",
+ "name": "exact_regional_freeze",
+ "label": "direct (assim_log.parquet + twin_state_*.json + state_trace) + unit",
+ "rule": "while SUSPECTED_EVENT or EVENT_ASSIMILATION the frozen entry's m is held exactly (reason `frozen`); DEGRADED's slow rule is the only frozen-state update and is logged as `degraded_slow`",
+ "runs": {
+  "evt_inc_4101": {
+   "frozen_ticks": 1,
+   "frozen_m_values": [
+    1.1818022504203671
+   ],
+   "frozen_m_spread": 0.0,
+   "degraded_slow_ticks": 0,
+   "degraded_slow_m_values": [],
+   "snapshots_during_freeze": {
+    "5100": {
+     "state": "SUSPECTED_EVENT",
+     "m": 1.1818022504203671
+    }
+   },
+   "transitions": [
+    {
+     "t": 5010.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 5010.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02111_zero"
+    },
+    {
+     "t": 5040.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 5160.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02109_noise"
+    }
+   ]
+  },
+  "evt_inc_4102": {
+   "frozen_ticks": 0,
+   "frozen_m_values": [],
+   "frozen_m_spread": null,
+   "degraded_slow_ticks": 0,
+   "degraded_slow_m_values": [],
+   "snapshots_during_freeze": {},
+   "transitions": [
+    {
+     "t": 4890.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 4890.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02111_zero"
+    },
+    {
+     "t": 4920.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 5040.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02109_noise"
+    }
+   ]
+  },
+  "evt_inc_4103": {
+   "frozen_ticks": 0,
+   "frozen_m_values": [],
+   "frozen_m_spread": null,
+   "degraded_slow_ticks": 0,
+   "degraded_slow_m_values": [],
+   "snapshots_during_freeze": {},
+   "transitions": [
+    {
+     "t": 4860.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 4860.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02111_stuck"
+    },
+    {
+     "t": 4890.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 4890.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02111_stuck"
+    },
+    {
+     "t": 4920.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 5040.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02109_noise"
+    }
+   ]
+  },
+  "evtforce_inc_4101": {
+   "frozen_ticks": 1,
+   "frozen_m_values": [
+    1.1818022504203671
+   ],
+   "frozen_m_spread": 0.0,
+   "degraded_slow_ticks": 0,
+   "degraded_slow_m_values": [],
+   "snapshots_during_freeze": {
+    "5100": {
+     "state": "EVENT_ASSIMILATION",
+     "m": 1.1818022504203671
+    }
+   },
+   "transitions": [
+    {
+     "t": 5010.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 5010.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "EVENT_ASSIMILATION",
+     "reason": "adopted_inc_ktb_n1_k2_s1"
+    },
+    {
+     "t": 5130.0,
+     "from": "EVENT_ASSIMILATION",
+     "to": "RECOVERY",
+     "reason": "cleared_two_consecutive"
+    },
+    {
+     "t": 6240.0,
+     "from": "RECOVERY",
+     "to": "NORMAL",
+     "reason": "recovery_complete"
+    },
+    {
+     "t": 6420.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 6420.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02111_noise"
+    },
+    {
+     "t": 6450.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 6450.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "EVENT_ASSIMILATION",
+     "reason": "adopted_inc_ktb_n2_k1_s1"
+    },
+    {
+     "t": 6570.0,
+     "from": "EVENT_ASSIMILATION",
+     "to": "RECOVERY",
+     "reason": "cleared_two_consecutive"
+    }
+   ]
+  },
+  "evtforce_inc_4102": {
+   "frozen_ticks": 1,
+   "frozen_m_values": [
+    1.1213784202743533
+   ],
+   "frozen_m_spread": 0.0,
+   "degraded_slow_ticks": 0,
+   "degraded_slow_m_values": [],
+   "snapshots_during_freeze": {
+    "5100": {
+     "state": "EVENT_ASSIMILATION",
+     "m": 1.1213784202743533
+    }
+   },
+   "transitions": [
+    {
+     "t": 4890.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 4890.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "EVENT_ASSIMILATION",
+     "reason": "adopted_inc_ktb_n1_k2_s1"
+    },
+    {
+     "t": 5190.0,
+     "from": "EVENT_ASSIMILATION",
+     "to": "RECOVERY",
+     "reason": "cleared_two_consecutive"
+    },
+    {
+     "t": 5880.0,
+     "from": "RECOVERY",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 5880.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "NORMAL",
+     "reason": "detector_fault_AID02109_noise"
+    }
+   ]
+  },
+  "evtforce_inc_4103": {
+   "frozen_ticks": 1,
+   "frozen_m_values": [
+    1.17243347639485
+   ],
+   "frozen_m_spread": 0.0,
+   "degraded_slow_ticks": 0,
+   "degraded_slow_m_values": [],
+   "snapshots_during_freeze": {
+    "5100": {
+     "state": "EVENT_ASSIMILATION",
+     "m": 1.17243347639485
+    }
+   },
+   "transitions": [
+    {
+     "t": 4860.0,
+     "from": "NORMAL",
+     "to": "SUSPECTED_EVENT",
+     "reason": "trigger_alarm"
+    },
+    {
+     "t": 4860.0,
+     "from": "SUSPECTED_EVENT",
+     "to": "EVENT_ASSIMILATION",
+     "reason": "adopted_inc_ktb_n1_k2_s1"
+    },
+    {
+     "t": 5340.0,
+     "from": "EVENT_ASSIMILATION",
+     "to": "RECOVERY",
+     "reason": "cleared_two_consecutive"
+    }
+   ]
+  }
+ },
+ "violations": [],
+ "passed": true
+}

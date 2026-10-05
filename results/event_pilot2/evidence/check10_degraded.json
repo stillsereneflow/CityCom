@@ -1,0 +1,46 @@
+{
+ "check": "10",
+ "name": "bounded_unresolved_handling",
+ "label": "unit (scheduled exit at entry + 900 s; no DEGRADED spell occurred in any pilot-2 run, so it was not exercised live)",
+ "rule": "DEGRADED leaves at exactly entry + 900 s on the 30-s tick (pilot 2); <= 15 min",
+ "runs": {
+  "evt_inc_4101": {
+   "spells": [],
+   "max_duration_s": null,
+   "degraded_exit": "scheduled"
+  },
+  "evt_inc_4102": {
+   "spells": [],
+   "max_duration_s": null,
+   "degraded_exit": "scheduled"
+  },
+  "evt_inc_4103": {
+   "spells": [],
+   "max_duration_s": null,
+   "degraded_exit": "scheduled"
+  },
+  "evtforce_inc_4101": {
+   "spells": [],
+   "max_duration_s": null,
+   "degraded_exit": "scheduled"
+  },
+  "evtforce_inc_4102": {
+   "spells": [],
+   "max_duration_s": null,
+   "degraded_exit": "scheduled"
+  },
+  "evtforce_inc_4103": {
+   "spells": [],
+   "max_duration_s": null,
+   "degraded_exit": "scheduled"
+  }
+ },
+ "violations": [],
+ "live_exercised": false,
+ "unit_tests": [
+  "tests/test_event.py::test_degraded_exit_is_scheduled_at_exactly_entry_plus_900_and_needs_no_evaluation",
+  "tests/test_event.py::test_degraded_tick_is_inert_in_the_pilot1_mode",
+  "tests/test_event.py::test_degraded_still_adopts_just_before_the_scheduled_exit"
+ ],
+ "passed": true
+}

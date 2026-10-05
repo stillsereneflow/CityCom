@@ -1,0 +1,335 @@
+{
+ "check": "8",
+ "name": "clearance_rules",
+ "label": "live (forced-adoption runs' event/state/replacement logs) + unit",
+ "rule": "two consecutive p_clear > 0.7 -> lift the restriction, replay from S(tau_c - delta), mask the pair, RECOVERY >= 180 s, exit on the unmasked B < 1.5 for 3 min and both ends o < 15%",
+ "runs": {
+  "evtforce_inc_4101": {
+   "adopted_at": 5010.0,
+   "adoption_reason": "adopted_inc_ktb_n1_k2_s1",
+   "clearance_evaluations": [
+    {
+     "t": 5070.0,
+     "p_clear": 0.9573018831498891,
+     "tau_c_best": 300.0
+    },
+    {
+     "t": 5130.0,
+     "p_clear": 0.9843215239553125,
+     "tau_c_best": 180.0
+    },
+    {
+     "t": 6510.0,
+     "p_clear": 0.9923823559501399,
+     "tau_c_best": 240.0
+    },
+    {
+     "t": 6570.0,
+     "p_clear": 0.999993398425013,
+     "tau_c_best": 240.0
+    }
+   ],
+   "recovery_spells": [
+    {
+     "recovery_enter": 5130.0,
+     "p_clear_last_two": [
+      0.9573018831498891,
+      0.9843215239553125
+     ],
+     "two_consecutive_above_0.7": true,
+     "recovery_exit": 6240.0,
+     "recovery_exit_reason": "recovery_complete",
+     "duration_s": 1110.0,
+     "duration_at_least_180": true,
+     "blockers": {
+      "ticks": 19,
+      "ticks_b_below_1.5": 10,
+      "ticks_b_at_or_above_1.5": 9,
+      "ticks_b_null": 0,
+      "ticks_o_u_below_15": 3,
+      "ticks_o_d_below_15": 12,
+      "ticks_both_o_below_15": 2
+     }
+    },
+    {
+     "recovery_enter": 6570.0,
+     "p_clear_last_two": [
+      0.9923823559501399,
+      0.999993398425013
+     ],
+     "two_consecutive_above_0.7": true,
+     "recovery_exit": null,
+     "recovery_exit_reason": null,
+     "duration_s": null,
+     "duration_at_least_180": true,
+     "blockers": {
+      "ticks": 11,
+      "ticks_b_below_1.5": 8,
+      "ticks_b_at_or_above_1.5": 2,
+      "ticks_b_null": 1,
+      "ticks_o_u_below_15": 11,
+      "ticks_o_d_below_15": 10,
+      "ticks_both_o_below_15": 10
+     }
+    }
+   ],
+   "recovery_enter": 5130.0,
+   "recovery_exit": 6240.0,
+   "recovery_exit_reason": "recovery_complete",
+   "two_consecutive_above_0.7_before_recovery": true,
+   "recovery_min_ok": true,
+   "clearance_replacements": [
+    {
+     "t": 5130.0,
+     "kind": "clearance",
+     "forced": false,
+     "snapshot": "event_snapshot_4350.xml.gz",
+     "hypothesis": "inc_ktb_n1_k2_s1",
+     "family": "incident",
+     "params": {
+      "edge": "ktb_n1",
+      "lanes_closed": [
+       0,
+       1
+      ],
+      "n_lanes": 3,
+      "pos": 755.0,
+      "pos_kind": "fixed",
+      "speed_factor": 1.0
+     },
+     "n_vehicles_after_replay": 390,
+     "n_vehicles_live": 390,
+     "veh_digest_replay": "3d180d7e25b5d5b84fd3eeb0122363f6abcc7f315c96b5b0189ca0f18d2db28a",
+     "veh_digest_live": "3d180d7e25b5d5b84fd3eeb0122363f6abcc7f315c96b5b0189ca0f18d2db28a",
+     "vehicles_match": true,
+     "restriction_present_live": false,
+     "restriction_present_replay": false
+    },
+    {
+     "t": 6570.0,
+     "kind": "clearance",
+     "forced": false,
+     "snapshot": "event_snapshot_5790.xml.gz",
+     "hypothesis": "inc_ktb_n2_k1_s1",
+     "family": "incident",
+     "params": {
+      "edge": "ktb_n2",
+      "lanes_closed": [
+       0
+      ],
+      "n_lanes": 2,
+      "pos": 997.5,
+      "pos_kind": "mid",
+      "speed_factor": 1.0
+     },
+     "n_vehicles_after_replay": 400,
+     "n_vehicles_live": 400,
+     "veh_digest_replay": "5e11ba33e920647c8477470f38fedba3751ccab0cf2429cffb2c7627db856641",
+     "veh_digest_live": "5e11ba33e920647c8477470f38fedba3751ccab0cf2429cffb2c7627db856641",
+     "vehicles_match": true,
+     "restriction_present_live": false,
+     "restriction_present_replay": false
+    }
+   ],
+   "n_evaluations": 7
+  },
+  "evtforce_inc_4102": {
+   "adopted_at": 4890.0,
+   "adoption_reason": "adopted_inc_ktb_n1_k2_s1",
+   "clearance_evaluations": [
+    {
+     "t": 4950.0,
+     "p_clear": 0.7747333997120387,
+     "tau_c_best": 180.0
+    },
+    {
+     "t": 5010.0,
+     "p_clear": 0.5622460145592615,
+     "tau_c_best": 60.0
+    },
+    {
+     "t": 5070.0,
+     "p_clear": 0.584862538157426,
+     "tau_c_best": 120.0
+    },
+    {
+     "t": 5130.0,
+     "p_clear": 0.8233998740740893,
+     "tau_c_best": 180.0
+    },
+    {
+     "t": 5190.0,
+     "p_clear": 0.825457395687292,
+     "tau_c_best": 240.0
+    }
+   ],
+   "recovery_spells": [
+    {
+     "recovery_enter": 5190.0,
+     "p_clear_last_two": [
+      0.8233998740740893,
+      0.825457395687292
+     ],
+     "two_consecutive_above_0.7": true,
+     "recovery_exit": 5880.0,
+     "recovery_exit_reason": "trigger_alarm",
+     "duration_s": 690.0,
+     "duration_at_least_180": true,
+     "blockers": {
+      "ticks": 12,
+      "ticks_b_below_1.5": 4,
+      "ticks_b_at_or_above_1.5": 7,
+      "ticks_b_null": 1,
+      "ticks_o_u_below_15": 2,
+      "ticks_o_d_below_15": 9,
+      "ticks_both_o_below_15": 2
+     }
+    }
+   ],
+   "recovery_enter": 5190.0,
+   "recovery_exit": 5880.0,
+   "recovery_exit_reason": "trigger_alarm",
+   "two_consecutive_above_0.7_before_recovery": true,
+   "recovery_min_ok": true,
+   "clearance_replacements": [
+    {
+     "t": 5190.0,
+     "kind": "clearance",
+     "forced": false,
+     "snapshot": "event_snapshot_4230.xml.gz",
+     "hypothesis": "inc_ktb_n1_k2_s1",
+     "family": "incident",
+     "params": {
+      "edge": "ktb_n1",
+      "lanes_closed": [
+       0,
+       1
+      ],
+      "n_lanes": 3,
+      "pos": 755.0,
+      "pos_kind": "fixed",
+      "speed_factor": 1.0
+     },
+     "n_vehicles_after_replay": 368,
+     "n_vehicles_live": 368,
+     "veh_digest_replay": "74810e8d6e154792f7e9c76743fddbb0c0afbec1a99c067de19fa47c2dda7799",
+     "veh_digest_live": "74810e8d6e154792f7e9c76743fddbb0c0afbec1a99c067de19fa47c2dda7799",
+     "vehicles_match": true,
+     "restriction_present_live": false,
+     "restriction_present_replay": false
+    }
+   ],
+   "n_evaluations": 7
+  },
+  "evtforce_inc_4103": {
+   "adopted_at": 4860.0,
+   "adoption_reason": "adopted_inc_ktb_n1_k2_s1",
+   "clearance_evaluations": [
+    {
+     "t": 4920.0,
+     "p_clear": 0.31854076076564336,
+     "tau_c_best": 60.0
+    },
+    {
+     "t": 4980.0,
+     "p_clear": 0.3828082931512489,
+     "tau_c_best": 120.0
+    },
+    {
+     "t": 5040.0,
+     "p_clear": 0.2416854040383661,
+     "tau_c_best": 60.0
+    },
+    {
+     "t": 5100.0,
+     "p_clear": 0.340846892936821,
+     "tau_c_best": 120.0
+    },
+    {
+     "t": 5160.0,
+     "p_clear": 0.2644961808596806,
+     "tau_c_best": 60.0
+    },
+    {
+     "t": 5220.0,
+     "p_clear": 0.35806894816539103,
+     "tau_c_best": 60.0
+    },
+    {
+     "t": 5280.0,
+     "p_clear": 0.9825630679339041,
+     "tau_c_best": 240.0
+    },
+    {
+     "t": 5340.0,
+     "p_clear": 0.982618642743243,
+     "tau_c_best": 300.0
+    }
+   ],
+   "recovery_spells": [
+    {
+     "recovery_enter": 5340.0,
+     "p_clear_last_two": [
+      0.9825630679339041,
+      0.982618642743243
+     ],
+     "two_consecutive_above_0.7": true,
+     "recovery_exit": null,
+     "recovery_exit_reason": null,
+     "duration_s": null,
+     "duration_at_least_180": true,
+     "blockers": {
+      "ticks": 32,
+      "ticks_b_below_1.5": 11,
+      "ticks_b_at_or_above_1.5": 17,
+      "ticks_b_null": 4,
+      "ticks_o_u_below_15": 19,
+      "ticks_o_d_below_15": 30,
+      "ticks_both_o_below_15": 18
+     }
+    }
+   ],
+   "recovery_enter": 5340.0,
+   "recovery_exit": null,
+   "recovery_exit_reason": null,
+   "two_consecutive_above_0.7_before_recovery": true,
+   "recovery_min_ok": true,
+   "clearance_replacements": [
+    {
+     "t": 5340.0,
+     "kind": "clearance",
+     "forced": false,
+     "snapshot": "event_snapshot_4200.xml.gz",
+     "hypothesis": "inc_ktb_n1_k2_s1",
+     "family": "incident",
+     "params": {
+      "edge": "ktb_n1",
+      "lanes_closed": [
+       0,
+       1
+      ],
+      "n_lanes": 3,
+      "pos": 755.0,
+      "pos_kind": "fixed",
+      "speed_factor": 1.0
+     },
+     "n_vehicles_after_replay": 367,
+     "n_vehicles_live": 367,
+     "veh_digest_replay": "e4b93518944989b779d52d225e06adc85e2becdb8ffd9746e6b6dba556350d60",
+     "veh_digest_live": "e4b93518944989b779d52d225e06adc85e2becdb8ffd9746e6b6dba556350d60",
+     "vehicles_match": true,
+     "restriction_present_live": false,
+     "restriction_present_replay": false
+    }
+   ],
+   "n_evaluations": 9
+  }
+ },
+ "violations": [],
+ "n_recovery_spells": 4,
+ "n_spells_exited_recovery_complete": 1,
+ "n_spells_still_in_recovery_at_horizon": 2,
+ "n_spells_left_by_new_trigger": 1,
+ "caveat": "the rules hold in every spell; the exit conditions were met inside the horizon in 1 of 4 spells (the others were still in RECOVERY at t = 7,200 s, or left it through a new trigger after unmasking, which the spec allows)",
+ "passed": true
+}

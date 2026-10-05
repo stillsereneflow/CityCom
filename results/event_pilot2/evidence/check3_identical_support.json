@@ -1,0 +1,241 @@
+{
+ "check": "3",
+ "name": "identical_scoring_support",
+ "label": "direct (event_log.jsonl) + unit (tests/test_event.py)",
+ "runs": {
+  "evt_inc_4101": {
+   "n_evaluations": 4,
+   "n_scored": 4,
+   "n_clearance_rows": 0,
+   "rows": [
+    {
+     "t": 5010.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      165
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    },
+    {
+     "t": 5040.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      135
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    },
+    {
+     "t": 5100.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      135
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    },
+    {
+     "t": 5160.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      174
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    }
+   ]
+  },
+  "evt_inc_4102": {
+   "n_evaluations": 4,
+   "n_scored": 4,
+   "n_clearance_rows": 0,
+   "rows": [
+    {
+     "t": 4890.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      177
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    },
+    {
+     "t": 4920.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      141
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    },
+    {
+     "t": 4980.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      141
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    },
+    {
+     "t": 5040.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      177
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    }
+   ]
+  },
+  "evt_inc_4103": {
+   "n_evaluations": 5,
+   "n_scored": 5,
+   "n_clearance_rows": 0,
+   "rows": [
+    {
+     "t": 4860.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      144
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    },
+    {
+     "t": 4890.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      177
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    },
+    {
+     "t": 4920.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      141
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    },
+    {
+     "t": 4980.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      141
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    },
+    {
+     "t": 5040.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      177
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    }
+   ]
+  },
+  "evt_noi_4101": {
+   "n_evaluations": 0,
+   "n_scored": 0,
+   "n_clearance_rows": 0,
+   "rows": []
+  },
+  "evt_noi_4102": {
+   "n_evaluations": 0,
+   "n_scored": 0,
+   "n_clearance_rows": 0,
+   "rows": []
+  },
+  "evt_noi_4103": {
+   "n_evaluations": 0,
+   "n_scored": 0,
+   "n_clearance_rows": 0,
+   "rows": []
+  },
+  "evtforce_inc_4101": {
+   "n_evaluations": 7,
+   "n_scored": 3,
+   "n_clearance_rows": 4,
+   "rows": [
+    {
+     "t": 5010.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      165
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    },
+    {
+     "t": 6420.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      123
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    },
+    {
+     "t": 6450.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      153
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    }
+   ]
+  },
+  "evtforce_inc_4102": {
+   "n_evaluations": 7,
+   "n_scored": 2,
+   "n_clearance_rows": 5,
+   "rows": [
+    {
+     "t": 4890.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      177
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    },
+    {
+     "t": 5880.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      141
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    }
+   ]
+  },
+  "evtforce_inc_4103": {
+   "n_evaluations": 9,
+   "n_scored": 1,
+   "n_clearance_rows": 8,
+   "rows": [
+    {
+     "t": 4860.0,
+     "state": "SUSPECTED_EVENT",
+     "n_O": [
+      144
+     ],
+     "n_hypotheses": 20,
+     "identical": true
+    }
+   ]
+  }
+ },
+ "violations": [],
+ "rule": "every hypothesis of an evaluation reports the same n_O (the intersection support O)",
+ "passed": true
+}

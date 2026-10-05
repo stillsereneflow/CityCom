@@ -88,6 +88,61 @@ def test_hypothesis_library_count_and_priors():
     assert len({h.id for h in hyps}) == 16
 
 
+# ------------------------------------------------- pilot 2: the widened incident grid (part B)
+def test_pilot2_grid_has_ten_incident_hypotheses_and_twenty_in_the_library():
+    hyps = ev.build_hypotheses(grid=ev.GRID_PILOT2)
+    assert len(hyps) == 20
+    fams = {f: [h for h in hyps if h.family == f] for f in ev.FAMILIES}
+    assert [len(fams[f]) for f in ev.FAMILIES] == [10, 4, 6]
+    for f, hs in fams.items():
+        assert sum(h.prior for h in hs) == pytest.approx(1.0 / 3.0)
+        assert all(h.prior == pytest.approx(1.0 / 3.0 / len(hs)) for h in hs)
+    assert len({h.id for h in hyps}) == 20
+
+
+def test_pilot2_severity_grid_is_k_x_s_with_no_edge_fully_closed():
+    # k in {1, ..., min(2, n_lanes - 1)} x s in {0.6, 1.0}
+    assert ev.incident_severities(3, ev.GRID_PILOT2) == ((1, 0.6), (1, 1.0), (2, 0.6), (2, 1.0))
+    assert ev.incident_severities(2, ev.GRID_PILOT2) == ((1, 0.6), (1, 1.0))
+    hyps = [h for h in ev.build_hypotheses(grid=ev.GRID_PILOT2,
+                                           midpoints={"ktb_w3": 100.0, "ktb_n2": 200.0})
+            if h.family == "incident"]
+    by_edge = {}
+    for h in hyps:
+        by_edge.setdefault(h.params["edge"], []).append(h.params)
+    assert {e: len(v) for e, v in by_edge.items()} == {"ktb_n1": 4, "ktb_w3": 4, "ktb_n2": 2}
+    # the pilot hypothesis location is the observed-detector midpoint, 755 m on ktb_n1
+    assert {p["pos"] for p in by_edge["ktb_n1"]} == {755.0}
+    assert all(p["pos_kind"] == "fixed" for p in by_edge["ktb_n1"])
+    assert sorted((len(p["lanes_closed"]), p["speed_factor"]) for p in by_edge["ktb_n1"]) == [
+        (1, 0.6), (1, 1.0), (2, 0.6), (2, 1.0)]
+    # 2-lane ktb_n2: only k = 1, so no edge is ever fully closed
+    assert sorted((len(p["lanes_closed"]), p["speed_factor"]) for p in by_edge["ktb_n2"]) == [
+        (1, 0.6), (1, 1.0)]
+    assert by_edge["ktb_w3"][0]["pos"] == 100.0 and by_edge["ktb_n2"][0]["pos"] == 200.0
+
+
+def test_pilot1_grid_is_reproducible_under_the_new_builder():
+    ids = [h.id for h in ev.build_hypotheses() if h.family == "incident"]
+    assert ids == ["inc_ktb_n1_k1_s1", "inc_ktb_n1_k2_s0.6", "inc_ktb_w3_k1_s1",
+                   "inc_ktb_w3_k2_s0.6", "inc_ktb_n2_k1_s1", "inc_ktb_n2_k1_s0.6"]
+    assert all(h.prior == pytest.approx(1.0 / 18.0)
+               for h in ev.build_hypotheses() if h.family == "incident")
+    with pytest.raises(ValueError):
+        ev.build_hypotheses(grid="pilot3")
+
+
+def test_find_hypothesis_tolerates_the_s1_0_spelling():
+    hyps = ev.build_hypotheses(grid=ev.GRID_PILOT2)
+    assert ev.normalise_hyp_id("inc_ktb_n1_k2_s1.0") == "inc_ktb_n1_k2_s1"
+    assert ev.normalise_hyp_id("inc_ktb_n1_k1_s0.60") == "inc_ktb_n1_k1_s0.6"
+    assert ev.normalise_hyp_id("dem_f1.15") == "dem_f1.15"
+    assert ev.find_hypothesis(hyps, "inc_ktb_n1_k2_s1.0").id == "inc_ktb_n1_k2_s1"
+    assert ev.find_hypothesis(hyps, "inc_ktb_n2_k1_s0.6").params["n_lanes"] == 2
+    with pytest.raises(KeyError):
+        ev.find_hypothesis(hyps, "inc_ktb_n1_k3_s1")
+
+
 def test_incident_library_geometry():
     hyps = [h for h in ev.build_hypotheses(midpoints={"ktb_w3": 100.0, "ktb_n2": 200.0})
             if h.family == "incident"]
@@ -358,8 +413,8 @@ def test_clearance_analysis_rows():
 
 
 # ------------------------------------------------------------------------------- state machine
-def fake_eval(h_star, family_post, log_post=None):
-    hyps = ev.build_hypotheses()
+def fake_eval(h_star, family_post, log_post=None, hyps=None):
+    hyps = list(hyps) if hyps is not None else ev.build_hypotheses()
     if h_star not in {h.id for h in hyps}:
         h_star = next(h.id for h in hyps if h.family == h_star)
     lp = dict(log_post or {h.id: math.log(h.prior) for h in hyps})
@@ -451,6 +506,133 @@ def test_degraded_bounds_at_15_minutes_and_can_still_adopt():
     out = sm2.on_hypotheses(t_deg + 960.0, evl, adopted=False)
     assert sm2.state == ev.NORMAL and out["unfreeze"] is True
     assert out["log_unexplained"] is not None and len(sm2.unexplained) == 1
+
+
+def test_degraded_exit_is_scheduled_at_exactly_entry_plus_900_and_needs_no_evaluation():
+    """Pilot 2 resolves the pilot-1 conflict: DEGRADED <= 15 min, on the tick, not on an eval."""
+    sm = ev.EventStateMachine(degraded_exit=ev.DEGRADED_EXIT_SCHEDULED)
+    sm.trigger(5000.0, alarm=True)
+    evl = fake_eval("incident", {"incident": 0.34, "demand": 0.33, "fault": 0.33})
+    for t in (5060.0, 5120.0, 5180.0):
+        sm.on_hypotheses(t, evl, adopted=False)
+    assert sm.state == ev.DEGRADED
+    t_deg = sm.t_state
+    assert t_deg == 5180.0
+    # the eval-driven bound is off in this mode: the next evaluation at +120 s changes nothing
+    assert sm.due(t_deg + 120.0) is True
+    assert sm.on_hypotheses(t_deg + 120.0, evl, adopted=False)["transitions"] == []
+    assert sm.state == ev.DEGRADED
+    # one tick before entry + 900 s: still DEGRADED, nothing logged
+    out = sm.degraded_tick(t_deg + 870.0)
+    assert out["transitions"] == [] and sm.state == ev.DEGRADED and sm.unexplained == []
+    # exactly at entry + 900 s -> NORMAL with the unexplained anomaly, on the tick
+    out = sm.degraded_tick(t_deg + 900.0)
+    assert sm.state == ev.NORMAL and out["unfreeze"] is True
+    assert out["transitions"][0].reason == "unexplained_anomaly"
+    assert out["log_unexplained"] == {"t": t_deg + 900.0, "seconds": 900.0}
+    assert len(sm.unexplained) == 1 and sm.frozen is False
+    assert sm.assim_mode() == "normal"
+    # a further tick is inert
+    assert sm.degraded_tick(t_deg + 930.0)["transitions"] == []
+
+
+def test_degraded_tick_is_inert_in_the_pilot1_mode():
+    sm = ev.EventStateMachine()                       # pilot-1 default: eval-driven bound
+    assert sm.degraded_exit == ev.DEGRADED_EXIT_EVAL
+    sm.trigger(5000.0, alarm=True)
+    evl = fake_eval("incident", {"incident": 0.34, "demand": 0.33, "fault": 0.33})
+    for t in (5060.0, 5120.0, 5180.0):
+        sm.on_hypotheses(t, evl, adopted=False)
+    t_deg = sm.t_state
+    assert sm.degraded_tick(t_deg + 900.0)["transitions"] == []
+    assert sm.state == ev.DEGRADED                       # still the old behaviour: exits at the eval
+    out = sm.on_hypotheses(t_deg + 960.0, evl, adopted=False)
+    assert sm.state == ev.NORMAL and out["transitions"][0].reason == "unexplained_anomaly"
+
+
+def test_degraded_still_adopts_just_before_the_scheduled_exit():
+    sm = ev.EventStateMachine(degraded_exit=ev.DEGRADED_EXIT_SCHEDULED)
+    sm.trigger(5000.0, alarm=True)
+    evl = fake_eval("incident", {"incident": 0.34, "demand": 0.33, "fault": 0.33})
+    for t in (5060.0, 5120.0, 5180.0):
+        sm.on_hypotheses(t, evl, adopted=False)
+    t_deg = sm.t_state
+    assert sm.degraded_tick(t_deg + 899.0)["transitions"] == []
+    out = sm.on_hypotheses(t_deg + 900.0, evl, adopted=True)
+    assert sm.state == ev.EVENT and out["adopt"] == evl.h_star
+
+
+def test_forced_adoption_marks_h_star_and_the_threshold():
+    """The labelled integration test: a fixed incident hypothesis as h*, threshold treated as met."""
+    hyps = ev.build_hypotheses(grid=ev.GRID_PILOT2)
+    evl = fake_eval("incident", {"incident": 0.34, "demand": 0.33, "fault": 0.33}, hyps=hyps)
+    natural = evl.h_star
+    assert ev.forced_adoption(evl, "inc_ktb_n1_k2_s1.0") is True
+    assert evl.h_star == "inc_ktb_n1_k2_s1" and evl.h_star != natural
+    assert evl.adopted is True and evl.forced is True
+    assert evl.gap_vs_demand >= ev.TAU_LR
+    assert ev.adoption_decision(evl) is True
+    assert evl.to_log_row(ev.SUSPECTED, 4290.0)["forced"] is True
+    with pytest.raises(ValueError):
+        ev.forced_adoption(evl, "dem_f1.15")           # not an incident hypothesis
+    with pytest.raises(KeyError):
+        ev.forced_adoption(evl, "inc_ktb_n1_k3_s1")
+
+
+def test_forced_adoption_drives_the_state_machine_into_event():
+    sm = ev.EventStateMachine(degraded_exit=ev.DEGRADED_EXIT_SCHEDULED)
+    sm.trigger(5000.0, alarm=True)
+    evl = fake_eval("incident", {"incident": 0.34, "demand": 0.33, "fault": 0.33},
+                    hyps=ev.build_hypotheses(grid=ev.GRID_PILOT2))
+    ev.forced_adoption(evl, "inc_ktb_n1_k2_s1.0")
+    out = sm.on_hypotheses(5060.0, evl, adopted=evl.adopted)
+    assert sm.state == ev.EVENT and sm.active_hyp == "inc_ktb_n1_k2_s1"
+    assert out["adopt"] == "inc_ktb_n1_k2_s1" and sm.t_adopt == 5060.0
+    assert sm.assim_mode() == "frozen"                 # the live restriction is in force
+
+
+def test_restriction_record_is_what_clearance_replays_lift():
+    """The live restriction must be recorded, or every H_clear replay equals the active one."""
+    hyps = ev.build_hypotheses(grid=ev.GRID_PILOT2)
+    hyp = ev.find_hypothesis(hyps, "inc_ktb_n1_k2_s0.6")      # 2 lanes closed, speed factor 0.6
+    base = {f"ktb_n1_{i}": 50.0 + i for i in range(3)}
+    rec = ev.restriction_record(hyp, base)
+    assert rec["edge"] == "ktb_n1" and rec["lanes_closed"] == [0, 1]
+    # only the open lane is scaled by the spec, so only it needs its base speed restored
+    assert rec["base_speed"] == {"ktb_n1_2": 52.0}
+    assert rec["hypothesis"] == "inc_ktb_n1_k2_s0.6"
+    # speed factor 1.0 scales nothing: the lift only re-allows the closed lanes
+    assert ev.restriction_record(ev.find_hypothesis(hyps, "inc_ktb_n1_k2_s1"), base)["base_speed"] == {}
+    # a fully specified record must round-trip through the state machine's restriction slot
+    sm = ev.EventStateMachine(degraded_exit=ev.DEGRADED_EXIT_SCHEDULED)
+    sm.trigger(5000.0, alarm=True)
+    evl = fake_eval("incident", {"incident": 0.9}, hyps=hyps)
+    ev.forced_adoption(evl, "inc_ktb_n1_k2_s0.6")
+    sm.on_hypotheses(5060.0, evl, adopted=True)
+    sm.restriction = rec
+    assert sm.restriction["lanes_closed"] == [0, 1]
+    assert sm.snapshot()["restriction"] == rec
+    sm.on_clearance(5120.0, 0.8)
+    sm.on_clearance(5180.0, 0.8)
+    assert sm.state == ev.RECOVERY and sm.restriction is None       # lifted on clearance
+
+
+def test_evaluate_without_a_demand_family_is_defined():
+    """The clearance library is active + H_clear only: no demand family, so no gap and no EVR."""
+    hyps = [ev.Hypothesis("active", "incident", {"edge": "ktb_n1"}, 0.5),
+            ev.Hypothesis("clear_60", "incident", {"edge": "ktb_n1"}, 0.1)]
+    times = [10.0, 20.0, 30.0, 40.0]
+    anchor = {d: {"q": 10, "v": 50.0, "o": 5.0} for d in DETS}
+    oh = obs_hist(times, q=10)
+    rp = replays_for(hyps, times, q=12)
+    evl = ev.evaluate(hyps, list(DETS), times, oh, rp, SIGMA, 0.0, 40.0, anchor=anchor)
+    assert evl.gap_vs_demand is None and evl.evr is None
+    assert evl.family_post["incident"] == pytest.approx(1.0)
+    assert evl.family_post["demand"] == 0.0 and evl.family_post["fault"] == 0.0
+    assert evl.h_star in {"active", "clear_60"}
+    res, row = ev.clearance_analysis(40.0, evl.logL["active"], [evl.logL["clear_60"]])
+    assert row["p_clear"] == pytest.approx(res["p_clear"]) and row["p_clear"] is not None
+    assert ev.adoption_decision(evl) is False          # h* is incident but the gap is undefined
 
 
 def test_clearance_needs_two_consecutive_evaluations_above_threshold():

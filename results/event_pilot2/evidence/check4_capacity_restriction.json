@@ -1,0 +1,36 @@
+{
+ "check": "4",
+ "name": "effective_capacity_restriction",
+ "label": "direct",
+ "run": "results/event_pilot2/runs/evt_inc_4101",
+ "snapshot": "event_snapshot_4350.xml.gz",
+ "t_on": 4410.0,
+ "t_end": 5010.0,
+ "hypothesis": "inc_ktb_n1_k2_s1",
+ "params": {
+  "edge": "ktb_n1",
+  "lanes_closed": [
+   0,
+   1
+  ],
+  "n_lanes": 3,
+  "pos": 755.0,
+  "pos_kind": "fixed",
+  "speed_factor": 1.0
+ },
+ "lanes_closed": [
+  "ktb_n1_0",
+  "ktb_n1_1"
+ ],
+ "restriction_present_replay": true,
+ "downstream_detector": "AID02111",
+ "incident_mean_q": 0.0,
+ "noevent_mean_q": 7.35,
+ "incident_intervals": 20,
+ "noevent_intervals": 20,
+ "flow_drops": true,
+ "drop_pct": -100.0,
+ "n_vehicles_incident": 359,
+ "n_vehicles_noevent": 322,
+ "passed": true
+}

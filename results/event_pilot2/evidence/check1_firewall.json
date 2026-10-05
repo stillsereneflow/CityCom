@@ -1,0 +1,152 @@
+{
+ "check": "1",
+ "name": "firewall_integrity",
+ "label": "direct (unit: tests/test_firewall.py)",
+ "twin_log_columns": {
+  "evt_inc_4101": [
+   "t",
+   "detector",
+   "obs_valid",
+   "obs_q",
+   "obs_v",
+   "obs_o",
+   "twin_q",
+   "twin_v",
+   "twin_o"
+  ],
+  "evt_inc_4102": [
+   "t",
+   "detector",
+   "obs_valid",
+   "obs_q",
+   "obs_v",
+   "obs_o",
+   "twin_q",
+   "twin_v",
+   "twin_o"
+  ],
+  "evt_inc_4103": [
+   "t",
+   "detector",
+   "obs_valid",
+   "obs_q",
+   "obs_v",
+   "obs_o",
+   "twin_q",
+   "twin_v",
+   "twin_o"
+  ],
+  "conv_inc_4101": [
+   "t",
+   "detector",
+   "obs_valid",
+   "obs_q",
+   "obs_v",
+   "obs_o",
+   "twin_q",
+   "twin_v",
+   "twin_o"
+  ],
+  "conv_inc_4102": [
+   "t",
+   "detector",
+   "obs_valid",
+   "obs_q",
+   "obs_v",
+   "obs_o",
+   "twin_q",
+   "twin_v",
+   "twin_o"
+  ],
+  "conv_inc_4103": [
+   "t",
+   "detector",
+   "obs_valid",
+   "obs_q",
+   "obs_v",
+   "obs_o",
+   "twin_q",
+   "twin_v",
+   "twin_o"
+  ],
+  "evt_noi_4101": [
+   "t",
+   "detector",
+   "obs_valid",
+   "obs_q",
+   "obs_v",
+   "obs_o",
+   "twin_q",
+   "twin_v",
+   "twin_o"
+  ],
+  "evt_noi_4102": [
+   "t",
+   "detector",
+   "obs_valid",
+   "obs_q",
+   "obs_v",
+   "obs_o",
+   "twin_q",
+   "twin_v",
+   "twin_o"
+  ],
+  "evt_noi_4103": [
+   "t",
+   "detector",
+   "obs_valid",
+   "obs_q",
+   "obs_v",
+   "obs_o",
+   "twin_q",
+   "twin_v",
+   "twin_o"
+  ],
+  "evtforce_inc_4101": [
+   "t",
+   "detector",
+   "obs_valid",
+   "obs_q",
+   "obs_v",
+   "obs_o",
+   "twin_q",
+   "twin_v",
+   "twin_o"
+  ],
+  "evtforce_inc_4102": [
+   "t",
+   "detector",
+   "obs_valid",
+   "obs_q",
+   "obs_v",
+   "obs_o",
+   "twin_q",
+   "twin_v",
+   "twin_o"
+  ],
+  "evtforce_inc_4103": [
+   "t",
+   "detector",
+   "obs_valid",
+   "obs_q",
+   "obs_v",
+   "obs_o",
+   "twin_q",
+   "twin_v",
+   "twin_o"
+  ]
+ },
+ "truth_or_proxy_columns_found": [],
+ "twin_modules_import_proxy": {
+  "citypulse/twin/event.py": false,
+  "citypulse/twin/service.py": false
+ },
+ "test_firewall": {
+  "returncode": 0,
+  "tail": [
+   "14 passed, 2 skipped in 6.26s"
+  ]
+ },
+ "n_runs_inspected": 12,
+ "passed": true
+}
