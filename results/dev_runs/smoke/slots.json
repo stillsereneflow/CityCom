@@ -1,0 +1,22 @@
+{
+  "summary": {
+    "complete": 2,
+    "complete_but_flagged": 0,
+    "incomplete": 0,
+    "permanently_failed": 0
+  },
+  "slots": {
+    "conv_noi_4401": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    },
+    "evt_noi_4401": {
+      "status": "complete",
+      "latest_attempt": 1,
+      "attempts_count": 1,
+      "reasons": []
+    }
+  }
+}

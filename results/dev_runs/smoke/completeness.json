@@ -1,0 +1,46 @@
+{
+  "summary": {
+    "complete": 2,
+    "complete_but_flagged": 0,
+    "incomplete": 0,
+    "permanently_failed": 0
+  },
+  "slots": {
+    "conv_noi_4401": {
+      "status": "complete",
+      "attempts": {
+        "attempt_1": {
+          "complete": true,
+          "flagged": false,
+          "reasons": [],
+          "flag_reasons": [],
+          "checks": {
+            "exit_codes": true,
+            "required_logs": true,
+            "snapshots": true,
+            "forecast_cells": true,
+            "detector_keys": true
+          }
+        }
+      }
+    },
+    "evt_noi_4401": {
+      "status": "complete",
+      "attempts": {
+        "attempt_1": {
+          "complete": true,
+          "flagged": false,
+          "reasons": [],
+          "flag_reasons": [],
+          "checks": {
+            "exit_codes": true,
+            "required_logs": true,
+            "snapshots": true,
+            "forecast_cells": true,
+            "detector_keys": true
+          }
+        }
+      }
+    }
+  }
+}

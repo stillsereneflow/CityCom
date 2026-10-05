@@ -1,0 +1,4800 @@
+{
+ "runs": {
+  "conv_inc_4101": {
+   "name": "conv_inc_4101",
+   "dir": "results\\event_pilot2\\runs\\conv_inc_4101",
+   "status": "not_declared",
+   "scenario": "INC",
+   "arm": "conv",
+   "seed": 4101,
+   "t_end": 7200.0,
+   "grid": null,
+   "force_hstar": null,
+   "run_forced": false,
+   "evaluations": {
+    "library": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "adoptions": [],
+   "exposure": null,
+   "clearance": [],
+   "recovery_spells": [],
+   "degraded_spells": [],
+   "non_incident": [],
+   "exclusions": [],
+   "forecast_cells": [
+    {
+     "run": "conv_inc_4101",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 4500.0,
+     "target_t": 4800.0,
+     "pred": 0.0,
+     "truth": 6.0,
+     "err": -6.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4101",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 4800.0,
+     "target_t": 5100.0,
+     "pred": 0.0,
+     "truth": 22.0,
+     "err": -22.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4101",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 5100.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 20.0,
+     "err": -20.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4101",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 5400.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 15.0,
+     "err": -15.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4101",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 5700.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4101",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 6000.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4101",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 6300.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4101",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 6600.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4101",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 4500.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 20.0,
+     "err": -20.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4101",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 4800.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 15.0,
+     "err": -15.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4101",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 5100.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4101",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 5400.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4101",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 5700.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4101",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 6000.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4101",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 6300.0,
+     "target_t": 7200.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    }
+   ],
+   "forecast_failures": [],
+   "defects": [],
+   "n_episodes": 0,
+   "natural_adoption": null,
+   "false_adoption": null
+  },
+  "conv_inc_4102": {
+   "name": "conv_inc_4102",
+   "dir": "results\\event_pilot2\\runs\\conv_inc_4102",
+   "status": "not_declared",
+   "scenario": "INC",
+   "arm": "conv",
+   "seed": 4102,
+   "t_end": 7200.0,
+   "grid": null,
+   "force_hstar": null,
+   "run_forced": false,
+   "evaluations": {
+    "library": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "adoptions": [],
+   "exposure": null,
+   "clearance": [],
+   "recovery_spells": [],
+   "degraded_spells": [],
+   "non_incident": [],
+   "exclusions": [],
+   "forecast_cells": [
+    {
+     "run": "conv_inc_4102",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 4500.0,
+     "target_t": 4800.0,
+     "pred": 0.0,
+     "truth": 4.0,
+     "err": -4.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4102",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 4800.0,
+     "target_t": 5100.0,
+     "pred": 0.0,
+     "truth": 19.0,
+     "err": -19.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4102",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 5100.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 56.0,
+     "err": -56.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4102",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 5400.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 112.0,
+     "err": -112.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4102",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 5700.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 2.0,
+     "err": -2.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4102",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 6000.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4102",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 6300.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4102",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 6600.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4102",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 4500.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 56.0,
+     "err": -56.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4102",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 4800.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 112.0,
+     "err": -112.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4102",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 5100.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 2.0,
+     "err": -2.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4102",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 5400.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4102",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 5700.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4102",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 6000.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4102",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 6300.0,
+     "target_t": 7200.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    }
+   ],
+   "forecast_failures": [],
+   "defects": [],
+   "n_episodes": 0,
+   "natural_adoption": null,
+   "false_adoption": null
+  },
+  "conv_inc_4103": {
+   "name": "conv_inc_4103",
+   "dir": "results\\event_pilot2\\runs\\conv_inc_4103",
+   "status": "not_declared",
+   "scenario": "INC",
+   "arm": "conv",
+   "seed": 4103,
+   "t_end": 7200.0,
+   "grid": null,
+   "force_hstar": null,
+   "run_forced": false,
+   "evaluations": {
+    "library": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "adoptions": [],
+   "exposure": null,
+   "clearance": [],
+   "recovery_spells": [],
+   "degraded_spells": [],
+   "non_incident": [],
+   "exclusions": [],
+   "forecast_cells": [
+    {
+     "run": "conv_inc_4103",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 4500.0,
+     "target_t": 4800.0,
+     "pred": 0.0,
+     "truth": 19.0,
+     "err": -19.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4103",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 4800.0,
+     "target_t": 5100.0,
+     "pred": 0.0,
+     "truth": 6.0,
+     "err": -6.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4103",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 5100.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 14.0,
+     "err": -14.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4103",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 5400.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 139.0,
+     "err": -139.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4103",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 5700.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 28.0,
+     "err": -28.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4103",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 6000.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4103",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 6300.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4103",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 6600.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4103",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 4500.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 14.0,
+     "err": -14.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4103",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 4800.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 139.0,
+     "err": -139.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4103",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 5100.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 28.0,
+     "err": -28.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4103",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 5400.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4103",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 5700.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4103",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 6000.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_inc_4103",
+     "scenario": "INC",
+     "arm": "conv",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 6300.0,
+     "target_t": 7200.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    }
+   ],
+   "forecast_failures": [],
+   "defects": [],
+   "n_episodes": 0,
+   "natural_adoption": null,
+   "false_adoption": null
+  },
+  "evt_inc_4101": {
+   "name": "evt_inc_4101",
+   "dir": "results\\event_pilot2\\runs\\evt_inc_4101",
+   "status": "not_declared",
+   "scenario": "INC",
+   "arm": "evt",
+   "seed": 4101,
+   "t_end": 7200.0,
+   "grid": "pilot2",
+   "force_hstar": null,
+   "run_forced": false,
+   "evaluations": {
+    "library": {
+     "attempted": 4,
+     "successful": 4,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "adoptions": [],
+   "exposure": {
+    "alarm_events": 2,
+    "alarm_ticks": 6,
+    "minutes": {
+     "SUSPECTED_EVENT": 2.0,
+     "DEGRADED": 0.0,
+     "EVENT_ASSIMILATION": 0.0,
+     "RECOVERY": 0.0
+    },
+    "library": {
+     "attempted": 4,
+     "successful": 4,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "clearance": [],
+   "recovery_spells": [],
+   "degraded_spells": [],
+   "non_incident": [],
+   "exclusions": [
+    {
+     "run": "evt_inc_4101",
+     "kind": "library",
+     "t": 5010.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 165,
+     "n_O_source": "logged",
+     "excluded": {
+      "obs_invalid": 45
+     },
+     "excluded_total": 45,
+     "error": null
+    },
+    {
+     "run": "evt_inc_4101",
+     "kind": "library",
+     "t": 5040.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 135,
+     "n_O_source": "logged",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 33
+     },
+     "excluded_total": 33,
+     "error": null
+    },
+    {
+     "run": "evt_inc_4101",
+     "kind": "library",
+     "t": 5100.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 135,
+     "n_O_source": "logged",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 33
+     },
+     "excluded_total": 33,
+     "error": null
+    },
+    {
+     "run": "evt_inc_4101",
+     "kind": "library",
+     "t": 5160.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 174,
+     "n_O_source": "logged",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 36
+     },
+     "excluded_total": 36,
+     "error": null
+    }
+   ],
+   "forecast_cells": [
+    {
+     "run": "evt_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 4500.0,
+     "target_t": 4800.0,
+     "pred": 0.0,
+     "truth": 6.0,
+     "err": -6.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 4800.0,
+     "target_t": 5100.0,
+     "pred": 0.0,
+     "truth": 22.0,
+     "err": -22.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 5100.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 20.0,
+     "err": -20.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 5400.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 15.0,
+     "err": -15.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 5700.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 6000.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 6300.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 6600.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 4500.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 20.0,
+     "err": -20.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 4800.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 15.0,
+     "err": -15.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 5100.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 5400.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 5700.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 6000.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 6300.0,
+     "target_t": 7200.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    }
+   ],
+   "forecast_failures": [],
+   "defects": [],
+   "n_episodes": 2,
+   "natural_adoption": {
+    "applicable": true,
+    "n": 0,
+    "n_forced": 0,
+    "any": false,
+    "first_t": null,
+    "delay_s": null,
+    "delay_censored_at": 2700.0,
+    "denominator_successful_library_evals": 4,
+    "rate": 0.0
+   },
+   "false_adoption": {
+    "applicable": false,
+    "n": null,
+    "denominator_successful_library_evals": 4,
+    "rate": null
+   }
+  },
+  "evt_inc_4102": {
+   "name": "evt_inc_4102",
+   "dir": "results\\event_pilot2\\runs\\evt_inc_4102",
+   "status": "not_declared",
+   "scenario": "INC",
+   "arm": "evt",
+   "seed": 4102,
+   "t_end": 7200.0,
+   "grid": "pilot2",
+   "force_hstar": null,
+   "run_forced": false,
+   "evaluations": {
+    "library": {
+     "attempted": 4,
+     "successful": 4,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "adoptions": [],
+   "exposure": {
+    "alarm_events": 2,
+    "alarm_ticks": 6,
+    "minutes": {
+     "SUSPECTED_EVENT": 2.0,
+     "DEGRADED": 0.0,
+     "EVENT_ASSIMILATION": 0.0,
+     "RECOVERY": 0.0
+    },
+    "library": {
+     "attempted": 4,
+     "successful": 4,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "clearance": [],
+   "recovery_spells": [],
+   "degraded_spells": [],
+   "non_incident": [],
+   "exclusions": [
+    {
+     "run": "evt_inc_4102",
+     "kind": "library",
+     "t": 4890.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 177,
+     "n_O_source": "logged",
+     "excluded": {
+      "obs_invalid": 33
+     },
+     "excluded_total": 33,
+     "error": null
+    },
+    {
+     "run": "evt_inc_4102",
+     "kind": "library",
+     "t": 4920.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 141,
+     "n_O_source": "logged",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 27
+     },
+     "excluded_total": 27,
+     "error": null
+    },
+    {
+     "run": "evt_inc_4102",
+     "kind": "library",
+     "t": 4980.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 141,
+     "n_O_source": "logged",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 27
+     },
+     "excluded_total": 27,
+     "error": null
+    },
+    {
+     "run": "evt_inc_4102",
+     "kind": "library",
+     "t": 5040.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 177,
+     "n_O_source": "logged",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 33
+     },
+     "excluded_total": 33,
+     "error": null
+    }
+   ],
+   "forecast_cells": [
+    {
+     "run": "evt_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 4500.0,
+     "target_t": 4800.0,
+     "pred": 0.0,
+     "truth": 4.0,
+     "err": -4.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 4800.0,
+     "target_t": 5100.0,
+     "pred": 0.0,
+     "truth": 19.0,
+     "err": -19.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 5100.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 56.0,
+     "err": -56.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 5400.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 112.0,
+     "err": -112.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 5700.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 2.0,
+     "err": -2.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 6000.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 6300.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 6600.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 4500.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 56.0,
+     "err": -56.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 4800.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 112.0,
+     "err": -112.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 5100.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 2.0,
+     "err": -2.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 5400.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 5700.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 6000.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 6300.0,
+     "target_t": 7200.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    }
+   ],
+   "forecast_failures": [],
+   "defects": [],
+   "n_episodes": 2,
+   "natural_adoption": {
+    "applicable": true,
+    "n": 0,
+    "n_forced": 0,
+    "any": false,
+    "first_t": null,
+    "delay_s": null,
+    "delay_censored_at": 2700.0,
+    "denominator_successful_library_evals": 4,
+    "rate": 0.0
+   },
+   "false_adoption": {
+    "applicable": false,
+    "n": null,
+    "denominator_successful_library_evals": 4,
+    "rate": null
+   }
+  },
+  "evt_inc_4103": {
+   "name": "evt_inc_4103",
+   "dir": "results\\event_pilot2\\runs\\evt_inc_4103",
+   "status": "not_declared",
+   "scenario": "INC",
+   "arm": "evt",
+   "seed": 4103,
+   "t_end": 7200.0,
+   "grid": "pilot2",
+   "force_hstar": null,
+   "run_forced": false,
+   "evaluations": {
+    "library": {
+     "attempted": 5,
+     "successful": 5,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "adoptions": [],
+   "exposure": {
+    "alarm_events": 3,
+    "alarm_ticks": 6,
+    "minutes": {
+     "SUSPECTED_EVENT": 2.0,
+     "DEGRADED": 0.0,
+     "EVENT_ASSIMILATION": 0.0,
+     "RECOVERY": 0.0
+    },
+    "library": {
+     "attempted": 5,
+     "successful": 5,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "clearance": [],
+   "recovery_spells": [],
+   "degraded_spells": [],
+   "non_incident": [],
+   "exclusions": [
+    {
+     "run": "evt_inc_4103",
+     "kind": "library",
+     "t": 4860.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 144,
+     "n_O_source": "logged",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 24
+     },
+     "excluded_total": 24,
+     "error": null
+    },
+    {
+     "run": "evt_inc_4103",
+     "kind": "library",
+     "t": 4890.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 177,
+     "n_O_source": "logged",
+     "excluded": {
+      "obs_invalid": 33
+     },
+     "excluded_total": 33,
+     "error": null
+    },
+    {
+     "run": "evt_inc_4103",
+     "kind": "library",
+     "t": 4920.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 141,
+     "n_O_source": "logged",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 27
+     },
+     "excluded_total": 27,
+     "error": null
+    },
+    {
+     "run": "evt_inc_4103",
+     "kind": "library",
+     "t": 4980.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 141,
+     "n_O_source": "logged",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 27
+     },
+     "excluded_total": 27,
+     "error": null
+    },
+    {
+     "run": "evt_inc_4103",
+     "kind": "library",
+     "t": 5040.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 177,
+     "n_O_source": "logged",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 33
+     },
+     "excluded_total": 33,
+     "error": null
+    }
+   ],
+   "forecast_cells": [
+    {
+     "run": "evt_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 4500.0,
+     "target_t": 4800.0,
+     "pred": 0.0,
+     "truth": 19.0,
+     "err": -19.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 4800.0,
+     "target_t": 5100.0,
+     "pred": 0.0,
+     "truth": 6.0,
+     "err": -6.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 5100.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 14.0,
+     "err": -14.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 5400.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 139.0,
+     "err": -139.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 5700.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 28.0,
+     "err": -28.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 6000.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 6300.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 6600.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 4500.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 14.0,
+     "err": -14.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 4800.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 139.0,
+     "err": -139.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 5100.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 28.0,
+     "err": -28.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 5400.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 5700.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 6000.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 6300.0,
+     "target_t": 7200.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    }
+   ],
+   "forecast_failures": [],
+   "defects": [],
+   "n_episodes": 3,
+   "natural_adoption": {
+    "applicable": true,
+    "n": 0,
+    "n_forced": 0,
+    "any": false,
+    "first_t": null,
+    "delay_s": null,
+    "delay_censored_at": 2700.0,
+    "denominator_successful_library_evals": 5,
+    "rate": 0.0
+   },
+   "false_adoption": {
+    "applicable": false,
+    "n": null,
+    "denominator_successful_library_evals": 5,
+    "rate": null
+   }
+  },
+  "evt_noi_4101": {
+   "name": "evt_noi_4101",
+   "dir": "results\\event_pilot2\\runs\\evt_noi_4101",
+   "status": "not_declared",
+   "scenario": "NOI",
+   "arm": "evt",
+   "seed": 4101,
+   "t_end": 7200.0,
+   "grid": "pilot2",
+   "force_hstar": null,
+   "run_forced": false,
+   "evaluations": {
+    "library": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "adoptions": [],
+   "exposure": {
+    "alarm_events": 0,
+    "alarm_ticks": 0,
+    "minutes": {
+     "SUSPECTED_EVENT": 0.0,
+     "DEGRADED": 0.0,
+     "EVENT_ASSIMILATION": 0.0,
+     "RECOVERY": 0.0
+    },
+    "library": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "clearance": [],
+   "recovery_spells": [],
+   "degraded_spells": [],
+   "non_incident": [],
+   "exclusions": [],
+   "forecast_cells": [
+    {
+     "run": "evt_noi_4101",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 4500.0,
+     "target_t": 4800.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4101",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 4800.0,
+     "target_t": 5100.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4101",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 5100.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4101",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 5400.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4101",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 5700.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4101",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 6000.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4101",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 6300.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4101",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 6600.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4101",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 4500.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4101",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 4800.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4101",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 5100.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4101",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 5400.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4101",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 5700.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4101",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 6000.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4101",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 6300.0,
+     "target_t": 7200.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    }
+   ],
+   "forecast_failures": [],
+   "defects": [],
+   "n_episodes": 0,
+   "natural_adoption": {
+    "applicable": false,
+    "n": null,
+    "n_forced": null,
+    "any": null,
+    "first_t": null,
+    "delay_s": null,
+    "delay_censored_at": null,
+    "denominator_successful_library_evals": 0,
+    "rate": null
+   },
+   "false_adoption": {
+    "applicable": true,
+    "n": 0,
+    "denominator_successful_library_evals": 0,
+    "rate": null
+   }
+  },
+  "evt_noi_4102": {
+   "name": "evt_noi_4102",
+   "dir": "results\\event_pilot2\\runs\\evt_noi_4102",
+   "status": "not_declared",
+   "scenario": "NOI",
+   "arm": "evt",
+   "seed": 4102,
+   "t_end": 7200.0,
+   "grid": "pilot2",
+   "force_hstar": null,
+   "run_forced": false,
+   "evaluations": {
+    "library": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "adoptions": [],
+   "exposure": {
+    "alarm_events": 0,
+    "alarm_ticks": 0,
+    "minutes": {
+     "SUSPECTED_EVENT": 0.0,
+     "DEGRADED": 0.0,
+     "EVENT_ASSIMILATION": 0.0,
+     "RECOVERY": 0.0
+    },
+    "library": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "clearance": [],
+   "recovery_spells": [],
+   "degraded_spells": [],
+   "non_incident": [],
+   "exclusions": [],
+   "forecast_cells": [
+    {
+     "run": "evt_noi_4102",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 4500.0,
+     "target_t": 4800.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4102",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 4800.0,
+     "target_t": 5100.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4102",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 5100.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4102",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 5400.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4102",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 5700.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4102",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 6000.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4102",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 6300.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4102",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 6600.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4102",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 4500.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4102",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 4800.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4102",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 5100.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4102",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 5400.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4102",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 5700.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4102",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 6000.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4102",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 6300.0,
+     "target_t": 7200.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    }
+   ],
+   "forecast_failures": [],
+   "defects": [],
+   "n_episodes": 0,
+   "natural_adoption": {
+    "applicable": false,
+    "n": null,
+    "n_forced": null,
+    "any": null,
+    "first_t": null,
+    "delay_s": null,
+    "delay_censored_at": null,
+    "denominator_successful_library_evals": 0,
+    "rate": null
+   },
+   "false_adoption": {
+    "applicable": true,
+    "n": 0,
+    "denominator_successful_library_evals": 0,
+    "rate": null
+   }
+  },
+  "evt_noi_4103": {
+   "name": "evt_noi_4103",
+   "dir": "results\\event_pilot2\\runs\\evt_noi_4103",
+   "status": "not_declared",
+   "scenario": "NOI",
+   "arm": "evt",
+   "seed": 4103,
+   "t_end": 7200.0,
+   "grid": "pilot2",
+   "force_hstar": null,
+   "run_forced": false,
+   "evaluations": {
+    "library": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "adoptions": [],
+   "exposure": {
+    "alarm_events": 0,
+    "alarm_ticks": 0,
+    "minutes": {
+     "SUSPECTED_EVENT": 0.0,
+     "DEGRADED": 0.0,
+     "EVENT_ASSIMILATION": 0.0,
+     "RECOVERY": 0.0
+    },
+    "library": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "clearance": [],
+   "recovery_spells": [],
+   "degraded_spells": [],
+   "non_incident": [],
+   "exclusions": [],
+   "forecast_cells": [
+    {
+     "run": "evt_noi_4103",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 4500.0,
+     "target_t": 4800.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4103",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 4800.0,
+     "target_t": 5100.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4103",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 5100.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4103",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 5400.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4103",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 5700.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4103",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 6000.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4103",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 6300.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4103",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 6600.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4103",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 4500.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4103",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 4800.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4103",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 5100.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4103",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 5400.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4103",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 5700.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4103",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 6000.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4103",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 6300.0,
+     "target_t": 7200.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    }
+   ],
+   "forecast_failures": [],
+   "defects": [],
+   "n_episodes": 0,
+   "natural_adoption": {
+    "applicable": false,
+    "n": null,
+    "n_forced": null,
+    "any": null,
+    "first_t": null,
+    "delay_s": null,
+    "delay_censored_at": null,
+    "denominator_successful_library_evals": 0,
+    "rate": null
+   },
+   "false_adoption": {
+    "applicable": true,
+    "n": 0,
+    "denominator_successful_library_evals": 0,
+    "rate": null
+   }
+  },
+  "evtforce_inc_4101": {
+   "name": "evtforce_inc_4101",
+   "dir": "results\\event_pilot2\\runs\\evtforce_inc_4101",
+   "status": "not_declared",
+   "scenario": "INC",
+   "arm": "evt",
+   "seed": 4101,
+   "t_end": 7200.0,
+   "grid": "pilot2",
+   "force_hstar": "inc_ktb_n1_k2_s1.0",
+   "run_forced": true,
+   "evaluations": {
+    "library": {
+     "attempted": 3,
+     "successful": 3,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 4,
+     "successful": 4,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "adoptions": [
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "seed": 4101,
+     "t": 5010.0,
+     "h_star": "inc_ktb_n1_k2_s1",
+     "family": "incident",
+     "edge": "ktb_n1",
+     "k": 2,
+     "s": 1.0,
+     "gap_vs_demand": 2.302585093994046,
+     "gap_gt_ln10": true,
+     "forced": true,
+     "natural": false,
+     "location_correct": true,
+     "exact_ks": true,
+     "episode_start": 5010.0,
+     "timing_class": "during_incident",
+     "run_forced": true
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "seed": 4101,
+     "t": 6450.0,
+     "h_star": "inc_ktb_n2_k1_s1",
+     "family": "incident",
+     "edge": "ktb_n2",
+     "k": 1,
+     "s": 1.0,
+     "gap_vs_demand": 8.456032369382612,
+     "gap_gt_ln10": true,
+     "forced": false,
+     "natural": true,
+     "location_correct": false,
+     "exact_ks": false,
+     "episode_start": 6450.0,
+     "timing_class": "post_clearance",
+     "run_forced": true
+    }
+   ],
+   "exposure": {
+    "alarm_events": 3,
+    "alarm_ticks": 7,
+    "minutes": {
+     "SUSPECTED_EVENT": 0.0,
+     "DEGRADED": 0.0,
+     "EVENT_ASSIMILATION": 4.0,
+     "RECOVERY": 29.0
+    },
+    "library": {
+     "attempted": 3,
+     "successful": 3,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 4,
+     "successful": 4,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "clearance": [
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "seed": 4101,
+     "episode_start": 5010.0,
+     "t_adopt": 5010.0,
+     "h_star": "inc_ktb_n1_k2_s1",
+     "timing_class": "during_incident",
+     "forced_adoption": true,
+     "run_forced": true,
+     "n_clearance_records": 2,
+     "n_clearance_failed": 0,
+     "t_dec": 5130.0,
+     "tau_c": 180.0,
+     "t_clr": 4950.0,
+     "p_clear": 0.9843215239553125,
+     "clearance_records": [
+      {
+       "t_dec": 5070.0,
+       "tau_c": 300.0,
+       "t_clr": 4770.0,
+       "p_clear": 0.9573018831498891,
+       "successful": true,
+       "decided": false,
+       "excluded": {
+        "partial_block": 42,
+        "obs_invalid": 45
+       }
+      },
+      {
+       "t_dec": 5130.0,
+       "tau_c": 180.0,
+       "t_clr": 4950.0,
+       "p_clear": 0.9843215239553125,
+       "successful": true,
+       "decided": true,
+       "excluded": {
+        "obs_invalid": 48
+       }
+      }
+     ],
+     "outcome": "cleared",
+     "labels_apply": false,
+     "premature_inference": true,
+     "premature_live_release": true,
+     "late": false
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "seed": 4101,
+     "episode_start": 6450.0,
+     "t_adopt": 6450.0,
+     "h_star": "inc_ktb_n2_k1_s1",
+     "timing_class": "post_clearance",
+     "forced_adoption": false,
+     "run_forced": true,
+     "n_clearance_records": 2,
+     "n_clearance_failed": 0,
+     "t_dec": 6570.0,
+     "tau_c": 240.0,
+     "t_clr": 6330.0,
+     "p_clear": 0.999993398425013,
+     "clearance_records": [
+      {
+       "t_dec": 6510.0,
+       "tau_c": 240.0,
+       "t_clr": 6270.0,
+       "p_clear": 0.9923823559501399,
+       "successful": true,
+       "decided": false,
+       "excluded": {
+        "partial_block": 42,
+        "obs_invalid": 57
+       }
+      },
+      {
+       "t_dec": 6570.0,
+       "tau_c": 240.0,
+       "t_clr": 6330.0,
+       "p_clear": 0.999993398425013,
+       "successful": true,
+       "decided": true,
+       "excluded": {
+        "obs_invalid": 60
+       }
+      }
+     ],
+     "outcome": "cleared",
+     "labels_apply": false
+    }
+   ],
+   "recovery_spells": [
+    {
+     "state": "RECOVERY",
+     "enter": 5130.0,
+     "exit": 6240.0,
+     "duration_s": 1110.0,
+     "exit_reason": "recovery_complete",
+     "censored": false,
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "spell_class": "completed"
+    },
+    {
+     "state": "RECOVERY",
+     "enter": 6570.0,
+     "exit": null,
+     "duration_s": 630.0,
+     "exit_reason": null,
+     "censored": true,
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "spell_class": "censored"
+    }
+   ],
+   "degraded_spells": [],
+   "non_incident": [],
+   "exclusions": [
+    {
+     "run": "evtforce_inc_4101",
+     "kind": "library",
+     "t": 5010.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 165,
+     "n_O_source": "logged",
+     "excluded": {
+      "obs_invalid": 45
+     },
+     "excluded_total": 45,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "kind": "clearance",
+     "t": 5070.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 165,
+     "n_O_source": "derived",
+     "excluded": {
+      "partial_block": 42,
+      "obs_invalid": 45
+     },
+     "excluded_total": 45,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "kind": "clearance",
+     "t": 5130.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 204,
+     "n_O_source": "derived",
+     "excluded": {
+      "obs_invalid": 48
+     },
+     "excluded_total": 48,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "kind": "library",
+     "t": 6420.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 123,
+     "n_O_source": "logged",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 45
+     },
+     "excluded_total": 45,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "kind": "library",
+     "t": 6450.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 153,
+     "n_O_source": "logged",
+     "excluded": {
+      "obs_invalid": 57
+     },
+     "excluded_total": 57,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "kind": "clearance",
+     "t": 6510.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 153,
+     "n_O_source": "derived",
+     "excluded": {
+      "partial_block": 42,
+      "obs_invalid": 57
+     },
+     "excluded_total": 57,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "kind": "clearance",
+     "t": 6570.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 192,
+     "n_O_source": "derived",
+     "excluded": {
+      "obs_invalid": 60
+     },
+     "excluded_total": 60,
+     "error": null
+    }
+   ],
+   "forecast_cells": [
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 4500.0,
+     "target_t": 4800.0,
+     "pred": 0.0,
+     "truth": 6.0,
+     "err": -6.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 4800.0,
+     "target_t": 5100.0,
+     "pred": 0.0,
+     "truth": 22.0,
+     "err": -22.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 5100.0,
+     "target_t": 5400.0,
+     "pred": 11.0,
+     "truth": 20.0,
+     "err": -9.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 5400.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 15.0,
+     "err": -15.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 5700.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 6000.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 6300.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "5min",
+     "mark": 6600.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 4500.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 20.0,
+     "err": -20.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 4800.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 15.0,
+     "err": -15.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 5100.0,
+     "target_t": 6000.0,
+     "pred": 11.0,
+     "truth": 0.0,
+     "err": 11.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 5400.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 5700.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 6000.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4101",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4101,
+     "horizon": "15min",
+     "mark": 6300.0,
+     "target_t": 7200.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    }
+   ],
+   "forecast_failures": [],
+   "defects": [],
+   "n_episodes": 3,
+   "natural_adoption": {
+    "applicable": true,
+    "n": 1,
+    "n_forced": 1,
+    "any": true,
+    "first_t": 6450.0,
+    "delay_s": 1950.0,
+    "delay_censored_at": null,
+    "denominator_successful_library_evals": 3,
+    "rate": 0.3333333333333333
+   },
+   "false_adoption": {
+    "applicable": false,
+    "n": null,
+    "denominator_successful_library_evals": 3,
+    "rate": null
+   }
+  },
+  "evtforce_inc_4102": {
+   "name": "evtforce_inc_4102",
+   "dir": "results\\event_pilot2\\runs\\evtforce_inc_4102",
+   "status": "not_declared",
+   "scenario": "INC",
+   "arm": "evt",
+   "seed": 4102,
+   "t_end": 7200.0,
+   "grid": "pilot2",
+   "force_hstar": "inc_ktb_n1_k2_s1.0",
+   "run_forced": true,
+   "evaluations": {
+    "library": {
+     "attempted": 2,
+     "successful": 2,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 5,
+     "successful": 5,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "adoptions": [
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "seed": 4102,
+     "t": 4890.0,
+     "h_star": "inc_ktb_n1_k2_s1",
+     "family": "incident",
+     "edge": "ktb_n1",
+     "k": 2,
+     "s": 1.0,
+     "gap_vs_demand": 2.302585093994046,
+     "gap_gt_ln10": true,
+     "forced": true,
+     "natural": false,
+     "location_correct": true,
+     "exact_ks": true,
+     "episode_start": 4890.0,
+     "timing_class": "during_incident",
+     "run_forced": true
+    }
+   ],
+   "exposure": {
+    "alarm_events": 2,
+    "alarm_ticks": 8,
+    "minutes": {
+     "SUSPECTED_EVENT": 0.0,
+     "DEGRADED": 0.0,
+     "EVENT_ASSIMILATION": 5.0,
+     "RECOVERY": 11.5
+    },
+    "library": {
+     "attempted": 2,
+     "successful": 2,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 5,
+     "successful": 5,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "clearance": [
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "seed": 4102,
+     "episode_start": 4890.0,
+     "t_adopt": 4890.0,
+     "h_star": "inc_ktb_n1_k2_s1",
+     "timing_class": "during_incident",
+     "forced_adoption": true,
+     "run_forced": true,
+     "n_clearance_records": 5,
+     "n_clearance_failed": 0,
+     "t_dec": 5190.0,
+     "tau_c": 240.0,
+     "t_clr": 4950.0,
+     "p_clear": 0.825457395687292,
+     "clearance_records": [
+      {
+       "t_dec": 4950.0,
+       "tau_c": 180.0,
+       "t_clr": 4770.0,
+       "p_clear": 0.7747333997120387,
+       "successful": true,
+       "decided": false,
+       "excluded": {
+        "partial_block": 42,
+        "obs_invalid": 33
+       }
+      },
+      {
+       "t_dec": 5010.0,
+       "tau_c": 60.0,
+       "t_clr": 4950.0,
+       "p_clear": 0.5622460145592615,
+       "successful": true,
+       "decided": false,
+       "excluded": {
+        "obs_invalid": 39
+       }
+      },
+      {
+       "t_dec": 5070.0,
+       "tau_c": 120.0,
+       "t_clr": 4950.0,
+       "p_clear": 0.584862538157426,
+       "successful": true,
+       "decided": false,
+       "excluded": {
+        "partial_block": 42,
+        "obs_invalid": 39
+       }
+      },
+      {
+       "t_dec": 5130.0,
+       "tau_c": 180.0,
+       "t_clr": 4950.0,
+       "p_clear": 0.8233998740740893,
+       "successful": true,
+       "decided": false,
+       "excluded": {
+        "obs_invalid": 54
+       }
+      },
+      {
+       "t_dec": 5190.0,
+       "tau_c": 240.0,
+       "t_clr": 4950.0,
+       "p_clear": 0.825457395687292,
+       "successful": true,
+       "decided": true,
+       "excluded": {
+        "partial_block": 42,
+        "obs_invalid": 54
+       }
+      }
+     ],
+     "outcome": "cleared",
+     "labels_apply": false,
+     "premature_inference": true,
+     "premature_live_release": true,
+     "late": false
+    }
+   ],
+   "recovery_spells": [
+    {
+     "state": "RECOVERY",
+     "enter": 5190.0,
+     "exit": 5880.0,
+     "duration_s": 690.0,
+     "exit_reason": "trigger_alarm",
+     "censored": false,
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "spell_class": "interrupted_by_trigger"
+    }
+   ],
+   "degraded_spells": [],
+   "non_incident": [],
+   "exclusions": [
+    {
+     "run": "evtforce_inc_4102",
+     "kind": "library",
+     "t": 4890.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 177,
+     "n_O_source": "logged",
+     "excluded": {
+      "obs_invalid": 33
+     },
+     "excluded_total": 33,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "kind": "clearance",
+     "t": 4950.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 177,
+     "n_O_source": "derived",
+     "excluded": {
+      "partial_block": 42,
+      "obs_invalid": 33
+     },
+     "excluded_total": 33,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "kind": "clearance",
+     "t": 5010.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 213,
+     "n_O_source": "derived",
+     "excluded": {
+      "obs_invalid": 39
+     },
+     "excluded_total": 39,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "kind": "clearance",
+     "t": 5070.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 213,
+     "n_O_source": "derived",
+     "excluded": {
+      "partial_block": 42,
+      "obs_invalid": 39
+     },
+     "excluded_total": 39,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "kind": "clearance",
+     "t": 5130.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 240,
+     "n_O_source": "derived",
+     "excluded": {
+      "obs_invalid": 54
+     },
+     "excluded_total": 54,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "kind": "clearance",
+     "t": 5190.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 240,
+     "n_O_source": "derived",
+     "excluded": {
+      "partial_block": 42,
+      "obs_invalid": 54
+     },
+     "excluded_total": 54,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "kind": "library",
+     "t": 5880.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 141,
+     "n_O_source": "logged",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 27
+     },
+     "excluded_total": 27,
+     "error": null
+    }
+   ],
+   "forecast_cells": [
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 4500.0,
+     "target_t": 4800.0,
+     "pred": 0.0,
+     "truth": 4.0,
+     "err": -4.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 4800.0,
+     "target_t": 5100.0,
+     "pred": 0.0,
+     "truth": 19.0,
+     "err": -19.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 5100.0,
+     "target_t": 5400.0,
+     "pred": 13.0,
+     "truth": 56.0,
+     "err": -43.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 5400.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 112.0,
+     "err": -112.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 5700.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 2.0,
+     "err": -2.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 6000.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 6300.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "5min",
+     "mark": 6600.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 4500.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 56.0,
+     "err": -56.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 4800.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 112.0,
+     "err": -112.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 5100.0,
+     "target_t": 6000.0,
+     "pred": 13.0,
+     "truth": 2.0,
+     "err": 11.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 5400.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 5700.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 6000.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4102",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4102,
+     "horizon": "15min",
+     "mark": 6300.0,
+     "target_t": 7200.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    }
+   ],
+   "forecast_failures": [],
+   "defects": [],
+   "n_episodes": 2,
+   "natural_adoption": {
+    "applicable": true,
+    "n": 0,
+    "n_forced": 1,
+    "any": false,
+    "first_t": null,
+    "delay_s": null,
+    "delay_censored_at": 2700.0,
+    "denominator_successful_library_evals": 2,
+    "rate": 0.0
+   },
+   "false_adoption": {
+    "applicable": false,
+    "n": null,
+    "denominator_successful_library_evals": 2,
+    "rate": null
+   }
+  },
+  "evtforce_inc_4103": {
+   "name": "evtforce_inc_4103",
+   "dir": "results\\event_pilot2\\runs\\evtforce_inc_4103",
+   "status": "not_declared",
+   "scenario": "INC",
+   "arm": "evt",
+   "seed": 4103,
+   "t_end": 7200.0,
+   "grid": "pilot2",
+   "force_hstar": "inc_ktb_n1_k2_s1.0",
+   "run_forced": true,
+   "evaluations": {
+    "library": {
+     "attempted": 1,
+     "successful": 1,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 8,
+     "successful": 8,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "adoptions": [
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "seed": 4103,
+     "t": 4860.0,
+     "h_star": "inc_ktb_n1_k2_s1",
+     "family": "incident",
+     "edge": "ktb_n1",
+     "k": 2,
+     "s": 1.0,
+     "gap_vs_demand": 2.302585093994046,
+     "gap_gt_ln10": true,
+     "forced": true,
+     "natural": false,
+     "location_correct": true,
+     "exact_ks": true,
+     "episode_start": 4860.0,
+     "timing_class": "during_incident",
+     "run_forced": true
+    }
+   ],
+   "exposure": {
+    "alarm_events": 1,
+    "alarm_ticks": 15,
+    "minutes": {
+     "SUSPECTED_EVENT": 0.0,
+     "DEGRADED": 0.0,
+     "EVENT_ASSIMILATION": 8.0,
+     "RECOVERY": 31.0
+    },
+    "library": {
+     "attempted": 1,
+     "successful": 1,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 8,
+     "successful": 8,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "clearance": [
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "seed": 4103,
+     "episode_start": 4860.0,
+     "t_adopt": 4860.0,
+     "h_star": "inc_ktb_n1_k2_s1",
+     "timing_class": "during_incident",
+     "forced_adoption": true,
+     "run_forced": true,
+     "n_clearance_records": 8,
+     "n_clearance_failed": 0,
+     "t_dec": 5340.0,
+     "tau_c": 300.0,
+     "t_clr": 5040.0,
+     "p_clear": 0.982618642743243,
+     "clearance_records": [
+      {
+       "t_dec": 4920.0,
+       "tau_c": 60.0,
+       "t_clr": 4860.0,
+       "p_clear": 0.31854076076564336,
+       "successful": true,
+       "decided": false,
+       "excluded": {
+        "partial_block": 84,
+        "obs_invalid": 33
+       }
+      },
+      {
+       "t_dec": 4980.0,
+       "tau_c": 120.0,
+       "t_clr": 4860.0,
+       "p_clear": 0.3828082931512489,
+       "successful": true,
+       "decided": false,
+       "excluded": {
+        "partial_block": 84,
+        "obs_invalid": 33
+       }
+      },
+      {
+       "t_dec": 5040.0,
+       "tau_c": 60.0,
+       "t_clr": 4980.0,
+       "p_clear": 0.2416854040383661,
+       "successful": true,
+       "decided": false,
+       "excluded": {
+        "partial_block": 84,
+        "obs_invalid": 39
+       }
+      },
+      {
+       "t_dec": 5100.0,
+       "tau_c": 120.0,
+       "t_clr": 4980.0,
+       "p_clear": 0.340846892936821,
+       "successful": true,
+       "decided": false,
+       "excluded": {
+        "partial_block": 84,
+        "obs_invalid": 39
+       }
+      },
+      {
+       "t_dec": 5160.0,
+       "tau_c": 60.0,
+       "t_clr": 5100.0,
+       "p_clear": 0.2644961808596806,
+       "successful": true,
+       "decided": false,
+       "excluded": {
+        "partial_block": 84,
+        "obs_invalid": 51
+       }
+      },
+      {
+       "t_dec": 5220.0,
+       "tau_c": 60.0,
+       "t_clr": 5160.0,
+       "p_clear": 0.35806894816539103,
+       "successful": true,
+       "decided": false,
+       "excluded": {
+        "partial_block": 84,
+        "obs_invalid": 51
+       }
+      },
+      {
+       "t_dec": 5280.0,
+       "tau_c": 240.0,
+       "t_clr": 5040.0,
+       "p_clear": 0.9825630679339041,
+       "successful": true,
+       "decided": false,
+       "excluded": {
+        "partial_block": 84,
+        "obs_invalid": 60
+       }
+      },
+      {
+       "t_dec": 5340.0,
+       "tau_c": 300.0,
+       "t_clr": 5040.0,
+       "p_clear": 0.982618642743243,
+       "successful": true,
+       "decided": true,
+       "excluded": {
+        "partial_block": 84,
+        "obs_invalid": 60
+       }
+      }
+     ],
+     "outcome": "cleared",
+     "labels_apply": false,
+     "premature_inference": true,
+     "premature_live_release": true,
+     "late": false
+    }
+   ],
+   "recovery_spells": [
+    {
+     "state": "RECOVERY",
+     "enter": 5340.0,
+     "exit": null,
+     "duration_s": 1860.0,
+     "exit_reason": null,
+     "censored": true,
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "spell_class": "censored"
+    }
+   ],
+   "degraded_spells": [],
+   "non_incident": [],
+   "exclusions": [
+    {
+     "run": "evtforce_inc_4103",
+     "kind": "library",
+     "t": 4860.0,
+     "state": "SUSPECTED_EVENT",
+     "successful": true,
+     "n_O": 144,
+     "n_O_source": "logged",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 24
+     },
+     "excluded_total": 24,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "kind": "clearance",
+     "t": 4920.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 177,
+     "n_O_source": "derived",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 33
+     },
+     "excluded_total": 33,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "kind": "clearance",
+     "t": 4980.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 177,
+     "n_O_source": "derived",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 33
+     },
+     "excluded_total": 33,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "kind": "clearance",
+     "t": 5040.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 213,
+     "n_O_source": "derived",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 39
+     },
+     "excluded_total": 39,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "kind": "clearance",
+     "t": 5100.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 213,
+     "n_O_source": "derived",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 39
+     },
+     "excluded_total": 39,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "kind": "clearance",
+     "t": 5160.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 243,
+     "n_O_source": "derived",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 51
+     },
+     "excluded_total": 51,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "kind": "clearance",
+     "t": 5220.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 243,
+     "n_O_source": "derived",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 51
+     },
+     "excluded_total": 51,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "kind": "clearance",
+     "t": 5280.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 276,
+     "n_O_source": "derived",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 60
+     },
+     "excluded_total": 60,
+     "error": null
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "kind": "clearance",
+     "t": 5340.0,
+     "state": "EVENT_ASSIMILATION",
+     "successful": true,
+     "n_O": 276,
+     "n_O_source": "derived",
+     "excluded": {
+      "partial_block": 84,
+      "obs_invalid": 60
+     },
+     "excluded_total": 60,
+     "error": null
+    }
+   ],
+   "forecast_cells": [
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 4500.0,
+     "target_t": 4800.0,
+     "pred": 0.0,
+     "truth": 19.0,
+     "err": -19.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 4800.0,
+     "target_t": 5100.0,
+     "pred": 0.0,
+     "truth": 6.0,
+     "err": -6.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 5100.0,
+     "target_t": 5400.0,
+     "pred": 15.0,
+     "truth": 14.0,
+     "err": 1.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 5400.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 139.0,
+     "err": -139.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 5700.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 28.0,
+     "err": -28.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 6000.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 6300.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "5min",
+     "mark": 6600.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 4500.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 14.0,
+     "err": -14.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 4800.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 139.0,
+     "err": -139.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 5100.0,
+     "target_t": 6000.0,
+     "pred": 15.0,
+     "truth": 28.0,
+     "err": -13.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 5400.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 5700.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 6000.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evtforce_inc_4103",
+     "scenario": "INC",
+     "arm": "evt",
+     "seed": 4103,
+     "horizon": "15min",
+     "mark": 6300.0,
+     "target_t": 7200.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    }
+   ],
+   "forecast_failures": [],
+   "defects": [],
+   "n_episodes": 1,
+   "natural_adoption": {
+    "applicable": true,
+    "n": 0,
+    "n_forced": 1,
+    "any": false,
+    "first_t": null,
+    "delay_s": null,
+    "delay_censored_at": 2700.0,
+    "denominator_successful_library_evals": 1,
+    "rate": 0.0
+   },
+   "false_adoption": {
+    "applicable": false,
+    "n": null,
+    "denominator_successful_library_evals": 1,
+    "rate": null
+   }
+  }
+ },
+ "pooled": {
+  "INC": {
+   "n_evt_runs": 6,
+   "minutes": {
+    "SUSPECTED_EVENT": 6.0,
+    "DEGRADED": 0.0,
+    "EVENT_ASSIMILATION": 17.0,
+    "RECOVERY": 71.5
+   },
+   "excluded_reasons": {},
+   "alarm_events": 13,
+   "library": {
+    "attempted": 19,
+    "successful": 19,
+    "failed": 0,
+    "failed_reasons": {}
+   },
+   "clearance": {
+    "attempted": 17,
+    "successful": 17,
+    "failed": 0,
+    "failed_reasons": {}
+   },
+   "natural_adoption": {
+    "n": 1,
+    "n_forced": 3,
+    "runs_with_adoption": 1,
+    "n_runs": 6,
+    "runs_censored": 5,
+    "denominator_successful_library_evals": 19,
+    "rate": 0.05263157894736842,
+    "timing_classes": {
+     "post_clearance": 1
+    },
+    "location_correct": 0,
+    "exact_ks": 0,
+    "ks_values": {
+     "k1_s1.0": 1
+    },
+    "from_forced_runs": 1
+   },
+   "false_adoption": {
+    "n": 1,
+    "runs_with_adoption": 0,
+    "n_runs": 6,
+    "denominator_successful_library_evals": 19,
+    "rate": 0.05263157894736842
+   },
+   "non_incident": {
+    "n_evals": 0,
+    "map_is_demand": 0,
+    "false_alarm_path": 0,
+    "returned_to_normal": 0,
+    "map_is_aid02109": 0,
+    "map_is_stuck": 0
+   },
+   "clearance_episodes": {
+    "n": 4,
+    "timing_classes": {
+     "during_incident": 3,
+     "post_clearance": 1
+    },
+    "outcomes": {
+     "cleared": 4
+    },
+    "labelled": 0,
+    "premature_inference": 3,
+    "premature_inference_labelled": 0,
+    "premature_inference_forced": 3,
+    "premature_live_release": 3,
+    "premature_live_release_labelled": 0,
+    "premature_live_release_forced": 3,
+    "late": 0,
+    "late_labelled": 0,
+    "late_forced": 0
+   },
+   "recovery_spells": {
+    "n": 4,
+    "classes": {
+     "censored": 2,
+     "completed": 1,
+     "interrupted_by_trigger": 1
+    },
+    "duration_s": {
+     "censored": [
+      630.0,
+      1860.0
+     ],
+     "completed": [
+      1110.0
+     ],
+     "interrupted_by_trigger": [
+      690.0
+     ]
+    }
+   },
+   "degraded_spells": {
+    "n": 0,
+    "classes": {},
+    "exit_at_entry_plus_900": 0,
+    "live_covered": false
+   },
+   "exclusions_library": {
+    "n_evals": 19,
+    "n_successful": 19,
+    "n_O": [
+     165,
+     135,
+     135,
+     174,
+     177,
+     141,
+     141,
+     177,
+     144,
+     177,
+     141,
+     141,
+     177,
+     165,
+     123,
+     153,
+     177,
+     141,
+     144
+    ],
+    "reasons": {
+     "obs_invalid": 642,
+     "partial_block": 1092
+    }
+   },
+   "exclusions_clearance": {
+    "n_evals": 17,
+    "n_successful": 17,
+    "n_O": [
+     165,
+     204,
+     153,
+     192,
+     177,
+     213,
+     213,
+     240,
+     240,
+     177,
+     177,
+     213,
+     213,
+     243,
+     243,
+     276,
+     276
+    ],
+    "reasons": {
+     "obs_invalid": 795,
+     "partial_block": 882
+    }
+   },
+   "n_runs": 9
+  },
+  "NOI": {
+   "n_evt_runs": 3,
+   "minutes": {
+    "SUSPECTED_EVENT": 0.0,
+    "DEGRADED": 0.0,
+    "EVENT_ASSIMILATION": 0.0,
+    "RECOVERY": 0.0
+   },
+   "excluded_reasons": {},
+   "alarm_events": 0,
+   "library": {
+    "attempted": 0,
+    "successful": 0,
+    "failed": 0,
+    "failed_reasons": {}
+   },
+   "clearance": {
+    "attempted": 0,
+    "successful": 0,
+    "failed": 0,
+    "failed_reasons": {}
+   },
+   "natural_adoption": {
+    "n": 0,
+    "n_forced": 0,
+    "runs_with_adoption": 0,
+    "n_runs": 3,
+    "runs_censored": 3,
+    "denominator_successful_library_evals": 0,
+    "rate": null,
+    "timing_classes": {},
+    "location_correct": 0,
+    "exact_ks": 0,
+    "ks_values": {},
+    "from_forced_runs": 0
+   },
+   "false_adoption": {
+    "n": 0,
+    "runs_with_adoption": 0,
+    "n_runs": 3,
+    "denominator_successful_library_evals": 0,
+    "rate": null
+   },
+   "non_incident": {
+    "n_evals": 0,
+    "map_is_demand": 0,
+    "false_alarm_path": 0,
+    "returned_to_normal": 0,
+    "map_is_aid02109": 0,
+    "map_is_stuck": 0
+   },
+   "clearance_episodes": {
+    "n": 0,
+    "timing_classes": {},
+    "outcomes": {},
+    "labelled": 0,
+    "premature_inference": 0,
+    "premature_inference_labelled": 0,
+    "premature_inference_forced": 0,
+    "premature_live_release": 0,
+    "premature_live_release_labelled": 0,
+    "premature_live_release_forced": 0,
+    "late": 0,
+    "late_labelled": 0,
+    "late_forced": 0
+   },
+   "recovery_spells": {
+    "n": 0,
+    "classes": {},
+    "duration_s": {}
+   },
+   "degraded_spells": {
+    "n": 0,
+    "classes": {},
+    "exit_at_entry_plus_900": 0,
+    "live_covered": false
+   },
+   "exclusions_library": {
+    "n_evals": 0,
+    "n_successful": 0,
+    "n_O": [],
+    "reasons": {}
+   },
+   "exclusions_clearance": {
+    "n_evals": 0,
+    "n_successful": 0,
+    "n_O": [],
+    "reasons": {}
+   },
+   "n_runs": 3
+  }
+ },
+ "forecasts": {
+  "arms": [
+   {
+    "arm": "conv",
+    "scenario": "INC",
+    "horizon": "15min",
+    "required_cells": 21,
+    "complete_cells": 21,
+    "failed_cells": 0,
+    "denominator_cells": 21,
+    "mae": 18.38095238095238,
+    "mean_signed_error": -18.38095238095238
+   },
+   {
+    "arm": "conv",
+    "scenario": "INC",
+    "horizon": "5min",
+    "required_cells": 24,
+    "complete_cells": 24,
+    "failed_cells": 0,
+    "denominator_cells": 24,
+    "mae": 19.25,
+    "mean_signed_error": -19.25
+   },
+   {
+    "arm": "evt",
+    "scenario": "INC",
+    "horizon": "15min",
+    "required_cells": 42,
+    "complete_cells": 42,
+    "failed_cells": 0,
+    "denominator_cells": 42,
+    "mae": 18.5,
+    "mean_signed_error": -17.452380952380953
+   },
+   {
+    "arm": "evt",
+    "scenario": "INC",
+    "horizon": "5min",
+    "required_cells": 48,
+    "complete_cells": 48,
+    "failed_cells": 0,
+    "denominator_cells": 48,
+    "mae": 18.479166666666668,
+    "mean_signed_error": -18.4375
+   },
+   {
+    "arm": "evt",
+    "scenario": "NOI",
+    "horizon": "15min",
+    "required_cells": 21,
+    "complete_cells": 21,
+    "failed_cells": 0,
+    "denominator_cells": 21,
+    "mae": 0.0,
+    "mean_signed_error": 0.0
+   },
+   {
+    "arm": "evt",
+    "scenario": "NOI",
+    "horizon": "5min",
+    "required_cells": 24,
+    "complete_cells": 24,
+    "failed_cells": 0,
+    "denominator_cells": 24,
+    "mae": 0.0,
+    "mean_signed_error": 0.0
+   }
+  ],
+  "pairs_per_seed": [
+   {
+    "scenario": "INC",
+    "horizon": "15min",
+    "seed": 4101,
+    "n_pairs": 7,
+    "mean_evt_minus_conv_abs_error": 1.5714285714285714
+   },
+   {
+    "scenario": "INC",
+    "horizon": "15min",
+    "seed": 4102,
+    "n_pairs": 7,
+    "mean_evt_minus_conv_abs_error": 1.2857142857142858
+   },
+   {
+    "scenario": "INC",
+    "horizon": "15min",
+    "seed": 4103,
+    "n_pairs": 7,
+    "mean_evt_minus_conv_abs_error": -2.142857142857143
+   },
+   {
+    "scenario": "INC",
+    "horizon": "5min",
+    "seed": 4101,
+    "n_pairs": 8,
+    "mean_evt_minus_conv_abs_error": -1.375
+   },
+   {
+    "scenario": "INC",
+    "horizon": "5min",
+    "seed": 4102,
+    "n_pairs": 8,
+    "mean_evt_minus_conv_abs_error": -1.625
+   },
+   {
+    "scenario": "INC",
+    "horizon": "5min",
+    "seed": 4103,
+    "n_pairs": 8,
+    "mean_evt_minus_conv_abs_error": -1.625
+   }
+  ],
+  "pairs_pooled": [
+   {
+    "scenario": "INC",
+    "horizon": "15min",
+    "n_pairs": 21,
+    "mean_evt_minus_conv_abs_error": 0.23809523809523808
+   },
+   {
+    "scenario": "INC",
+    "horizon": "5min",
+    "n_pairs": 24,
+    "mean_evt_minus_conv_abs_error": -1.5416666666666667
+   }
+  ]
+ },
+ "accounting": [
+  {
+   "slot": "conv_inc_4101",
+   "status": "not_declared",
+   "attempt": null,
+   "run_dir": "results\\event_pilot2\\runs\\conv_inc_4101",
+   "in_statistics": true,
+   "note": "no --slots: every run directory enters statistics"
+  },
+  {
+   "slot": "conv_inc_4102",
+   "status": "not_declared",
+   "attempt": null,
+   "run_dir": "results\\event_pilot2\\runs\\conv_inc_4102",
+   "in_statistics": true,
+   "note": "no --slots: every run directory enters statistics"
+  },
+  {
+   "slot": "conv_inc_4103",
+   "status": "not_declared",
+   "attempt": null,
+   "run_dir": "results\\event_pilot2\\runs\\conv_inc_4103",
+   "in_statistics": true,
+   "note": "no --slots: every run directory enters statistics"
+  },
+  {
+   "slot": "evt_inc_4101",
+   "status": "not_declared",
+   "attempt": null,
+   "run_dir": "results\\event_pilot2\\runs\\evt_inc_4101",
+   "in_statistics": true,
+   "note": "no --slots: every run directory enters statistics"
+  },
+  {
+   "slot": "evt_inc_4102",
+   "status": "not_declared",
+   "attempt": null,
+   "run_dir": "results\\event_pilot2\\runs\\evt_inc_4102",
+   "in_statistics": true,
+   "note": "no --slots: every run directory enters statistics"
+  },
+  {
+   "slot": "evt_inc_4103",
+   "status": "not_declared",
+   "attempt": null,
+   "run_dir": "results\\event_pilot2\\runs\\evt_inc_4103",
+   "in_statistics": true,
+   "note": "no --slots: every run directory enters statistics"
+  },
+  {
+   "slot": "evt_noi_4101",
+   "status": "not_declared",
+   "attempt": null,
+   "run_dir": "results\\event_pilot2\\runs\\evt_noi_4101",
+   "in_statistics": true,
+   "note": "no --slots: every run directory enters statistics"
+  },
+  {
+   "slot": "evt_noi_4102",
+   "status": "not_declared",
+   "attempt": null,
+   "run_dir": "results\\event_pilot2\\runs\\evt_noi_4102",
+   "in_statistics": true,
+   "note": "no --slots: every run directory enters statistics"
+  },
+  {
+   "slot": "evt_noi_4103",
+   "status": "not_declared",
+   "attempt": null,
+   "run_dir": "results\\event_pilot2\\runs\\evt_noi_4103",
+   "in_statistics": true,
+   "note": "no --slots: every run directory enters statistics"
+  },
+  {
+   "slot": "evtforce_inc_4101",
+   "status": "not_declared",
+   "attempt": null,
+   "run_dir": "results\\event_pilot2\\runs\\evtforce_inc_4101",
+   "in_statistics": true,
+   "note": "no --slots: every run directory enters statistics"
+  },
+  {
+   "slot": "evtforce_inc_4102",
+   "status": "not_declared",
+   "attempt": null,
+   "run_dir": "results\\event_pilot2\\runs\\evtforce_inc_4102",
+   "in_statistics": true,
+   "note": "no --slots: every run directory enters statistics"
+  },
+  {
+   "slot": "evtforce_inc_4103",
+   "status": "not_declared",
+   "attempt": null,
+   "run_dir": "results\\event_pilot2\\runs\\evtforce_inc_4103",
+   "in_statistics": true,
+   "note": "no --slots: every run directory enters statistics"
+  }
+ ],
+ "failures": [],
+ "definitions": {
+  "t_onset": 4500.0,
+  "t_clear": 5400.0,
+  "t_late": 6300.0,
+  "delay_censor_s": 2700.0,
+  "degraded_exit_s": 900.0,
+  "incident_edge": "ktb_n1",
+  "incident_ks": [
+   2,
+   1.0
+  ],
+  "marks_5min": [
+   4500.0,
+   4800.0,
+   5100.0,
+   5400.0,
+   5700.0,
+   6000.0,
+   6300.0,
+   6600.0
+  ],
+  "marks_15min": [
+   4500.0,
+   4800.0,
+   5100.0,
+   5400.0,
+   5700.0,
+   6000.0,
+   6300.0
+  ]
+ }
+}

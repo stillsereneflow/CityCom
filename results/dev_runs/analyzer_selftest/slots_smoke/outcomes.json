@@ -1,0 +1,761 @@
+{
+ "runs": {
+  "conv_noi_4401": {
+   "name": "conv_noi_4401",
+   "dir": "results\\dev_runs\\smoke\\conv_noi_4401\\attempt_1",
+   "status": "complete",
+   "scenario": "NOI",
+   "arm": "conv",
+   "seed": 4401,
+   "t_end": 7200.0,
+   "grid": null,
+   "force_hstar": null,
+   "run_forced": false,
+   "evaluations": {
+    "library": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "adoptions": [],
+   "exposure": null,
+   "clearance": [],
+   "recovery_spells": [],
+   "degraded_spells": [],
+   "non_incident": [],
+   "exclusions": [],
+   "forecast_cells": [
+    {
+     "run": "conv_noi_4401",
+     "scenario": "NOI",
+     "arm": "conv",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 4500.0,
+     "target_t": 4800.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_noi_4401",
+     "scenario": "NOI",
+     "arm": "conv",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 4800.0,
+     "target_t": 5100.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_noi_4401",
+     "scenario": "NOI",
+     "arm": "conv",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 5100.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_noi_4401",
+     "scenario": "NOI",
+     "arm": "conv",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 5400.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_noi_4401",
+     "scenario": "NOI",
+     "arm": "conv",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 5700.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_noi_4401",
+     "scenario": "NOI",
+     "arm": "conv",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 6000.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_noi_4401",
+     "scenario": "NOI",
+     "arm": "conv",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 6300.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_noi_4401",
+     "scenario": "NOI",
+     "arm": "conv",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 6600.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_noi_4401",
+     "scenario": "NOI",
+     "arm": "conv",
+     "seed": 4401,
+     "horizon": "15min",
+     "mark": 4500.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_noi_4401",
+     "scenario": "NOI",
+     "arm": "conv",
+     "seed": 4401,
+     "horizon": "15min",
+     "mark": 4800.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_noi_4401",
+     "scenario": "NOI",
+     "arm": "conv",
+     "seed": 4401,
+     "horizon": "15min",
+     "mark": 5100.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_noi_4401",
+     "scenario": "NOI",
+     "arm": "conv",
+     "seed": 4401,
+     "horizon": "15min",
+     "mark": 5400.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_noi_4401",
+     "scenario": "NOI",
+     "arm": "conv",
+     "seed": 4401,
+     "horizon": "15min",
+     "mark": 5700.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_noi_4401",
+     "scenario": "NOI",
+     "arm": "conv",
+     "seed": 4401,
+     "horizon": "15min",
+     "mark": 6000.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "conv_noi_4401",
+     "scenario": "NOI",
+     "arm": "conv",
+     "seed": 4401,
+     "horizon": "15min",
+     "mark": 6300.0,
+     "target_t": 7200.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    }
+   ],
+   "forecast_failures": [],
+   "defects": [],
+   "n_episodes": 0,
+   "natural_adoption": null,
+   "false_adoption": null
+  },
+  "evt_noi_4401": {
+   "name": "evt_noi_4401",
+   "dir": "results\\dev_runs\\smoke\\evt_noi_4401\\attempt_1",
+   "status": "complete",
+   "scenario": "NOI",
+   "arm": "evt",
+   "seed": 4401,
+   "t_end": 7200.0,
+   "grid": "pilot2",
+   "force_hstar": null,
+   "run_forced": false,
+   "evaluations": {
+    "library": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "adoptions": [],
+   "exposure": {
+    "alarm_events": 0,
+    "alarm_ticks": 0,
+    "minutes": {
+     "SUSPECTED_EVENT": 0.0,
+     "DEGRADED": 0.0,
+     "EVENT_ASSIMILATION": 0.0,
+     "RECOVERY": 0.0
+    },
+    "library": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    },
+    "clearance": {
+     "attempted": 0,
+     "successful": 0,
+     "failed": 0,
+     "failed_reasons": {}
+    }
+   },
+   "clearance": [],
+   "recovery_spells": [],
+   "degraded_spells": [],
+   "non_incident": [],
+   "exclusions": [],
+   "forecast_cells": [
+    {
+     "run": "evt_noi_4401",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 4500.0,
+     "target_t": 4800.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4401",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 4800.0,
+     "target_t": 5100.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4401",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 5100.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4401",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 5400.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4401",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 5700.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4401",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 6000.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4401",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 6300.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4401",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4401,
+     "horizon": "5min",
+     "mark": 6600.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4401",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4401,
+     "horizon": "15min",
+     "mark": 4500.0,
+     "target_t": 5400.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4401",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4401,
+     "horizon": "15min",
+     "mark": 4800.0,
+     "target_t": 5700.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4401",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4401,
+     "horizon": "15min",
+     "mark": 5100.0,
+     "target_t": 6000.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4401",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4401,
+     "horizon": "15min",
+     "mark": 5400.0,
+     "target_t": 6300.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4401",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4401,
+     "horizon": "15min",
+     "mark": 5700.0,
+     "target_t": 6600.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4401",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4401,
+     "horizon": "15min",
+     "mark": 6000.0,
+     "target_t": 6900.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    },
+    {
+     "run": "evt_noi_4401",
+     "scenario": "NOI",
+     "arm": "evt",
+     "seed": 4401,
+     "horizon": "15min",
+     "mark": 6300.0,
+     "target_t": 7200.0,
+     "pred": 0.0,
+     "truth": 0.0,
+     "err": 0.0,
+     "complete": true,
+     "problems": []
+    }
+   ],
+   "forecast_failures": [],
+   "defects": [],
+   "n_episodes": 0,
+   "natural_adoption": {
+    "applicable": false,
+    "n": null,
+    "n_forced": null,
+    "any": null,
+    "first_t": null,
+    "delay_s": null,
+    "delay_censored_at": null,
+    "denominator_successful_library_evals": 0,
+    "rate": null
+   },
+   "false_adoption": {
+    "applicable": true,
+    "n": 0,
+    "denominator_successful_library_evals": 0,
+    "rate": null
+   }
+  }
+ },
+ "pooled": {
+  "NOI": {
+   "n_evt_runs": 1,
+   "minutes": {
+    "SUSPECTED_EVENT": 0.0,
+    "DEGRADED": 0.0,
+    "EVENT_ASSIMILATION": 0.0,
+    "RECOVERY": 0.0
+   },
+   "excluded_reasons": {},
+   "alarm_events": 0,
+   "library": {
+    "attempted": 0,
+    "successful": 0,
+    "failed": 0,
+    "failed_reasons": {}
+   },
+   "clearance": {
+    "attempted": 0,
+    "successful": 0,
+    "failed": 0,
+    "failed_reasons": {}
+   },
+   "natural_adoption": {
+    "n": 0,
+    "n_forced": 0,
+    "runs_with_adoption": 0,
+    "n_runs": 1,
+    "runs_censored": 1,
+    "denominator_successful_library_evals": 0,
+    "rate": null,
+    "timing_classes": {},
+    "location_correct": 0,
+    "exact_ks": 0,
+    "ks_values": {},
+    "from_forced_runs": 0
+   },
+   "false_adoption": {
+    "n": 0,
+    "runs_with_adoption": 0,
+    "n_runs": 1,
+    "denominator_successful_library_evals": 0,
+    "rate": null
+   },
+   "non_incident": {
+    "n_evals": 0,
+    "map_is_demand": 0,
+    "false_alarm_path": 0,
+    "returned_to_normal": 0,
+    "map_is_aid02109": 0,
+    "map_is_stuck": 0
+   },
+   "clearance_episodes": {
+    "n": 0,
+    "timing_classes": {},
+    "outcomes": {},
+    "labelled": 0,
+    "premature_inference": 0,
+    "premature_inference_labelled": 0,
+    "premature_inference_forced": 0,
+    "premature_live_release": 0,
+    "premature_live_release_labelled": 0,
+    "premature_live_release_forced": 0,
+    "late": 0,
+    "late_labelled": 0,
+    "late_forced": 0
+   },
+   "recovery_spells": {
+    "n": 0,
+    "classes": {},
+    "duration_s": {}
+   },
+   "degraded_spells": {
+    "n": 0,
+    "classes": {},
+    "exit_at_entry_plus_900": 0,
+    "live_covered": false
+   },
+   "exclusions_library": {
+    "n_evals": 0,
+    "n_successful": 0,
+    "n_O": [],
+    "reasons": {}
+   },
+   "exclusions_clearance": {
+    "n_evals": 0,
+    "n_successful": 0,
+    "n_O": [],
+    "reasons": {}
+   },
+   "n_runs": 2
+  }
+ },
+ "forecasts": {
+  "arms": [
+   {
+    "arm": "conv",
+    "scenario": "NOI",
+    "horizon": "15min",
+    "required_cells": 7,
+    "complete_cells": 7,
+    "failed_cells": 0,
+    "denominator_cells": 7,
+    "mae": 0.0,
+    "mean_signed_error": 0.0
+   },
+   {
+    "arm": "conv",
+    "scenario": "NOI",
+    "horizon": "5min",
+    "required_cells": 8,
+    "complete_cells": 8,
+    "failed_cells": 0,
+    "denominator_cells": 8,
+    "mae": 0.0,
+    "mean_signed_error": 0.0
+   },
+   {
+    "arm": "evt",
+    "scenario": "NOI",
+    "horizon": "15min",
+    "required_cells": 7,
+    "complete_cells": 7,
+    "failed_cells": 0,
+    "denominator_cells": 7,
+    "mae": 0.0,
+    "mean_signed_error": 0.0
+   },
+   {
+    "arm": "evt",
+    "scenario": "NOI",
+    "horizon": "5min",
+    "required_cells": 8,
+    "complete_cells": 8,
+    "failed_cells": 0,
+    "denominator_cells": 8,
+    "mae": 0.0,
+    "mean_signed_error": 0.0
+   }
+  ],
+  "pairs_per_seed": [
+   {
+    "scenario": "NOI",
+    "horizon": "15min",
+    "seed": 4401,
+    "n_pairs": 7,
+    "mean_evt_minus_conv_abs_error": 0.0
+   },
+   {
+    "scenario": "NOI",
+    "horizon": "5min",
+    "seed": 4401,
+    "n_pairs": 8,
+    "mean_evt_minus_conv_abs_error": 0.0
+   }
+  ],
+  "pairs_pooled": [
+   {
+    "scenario": "NOI",
+    "horizon": "15min",
+    "n_pairs": 7,
+    "mean_evt_minus_conv_abs_error": 0.0
+   },
+   {
+    "scenario": "NOI",
+    "horizon": "5min",
+    "n_pairs": 8,
+    "mean_evt_minus_conv_abs_error": 0.0
+   }
+  ]
+ },
+ "accounting": [
+  {
+   "slot": "conv_noi_4401",
+   "status": "complete",
+   "attempt": 1,
+   "run_dir": "results\\dev_runs\\smoke\\conv_noi_4401\\attempt_1",
+   "in_statistics": true,
+   "note": ""
+  },
+  {
+   "slot": "evt_noi_4401",
+   "status": "complete",
+   "attempt": 1,
+   "run_dir": "results\\dev_runs\\smoke\\evt_noi_4401\\attempt_1",
+   "in_statistics": true,
+   "note": ""
+  }
+ ],
+ "failures": [],
+ "definitions": {
+  "t_onset": 4500.0,
+  "t_clear": 5400.0,
+  "t_late": 6300.0,
+  "delay_censor_s": 2700.0,
+  "degraded_exit_s": 900.0,
+  "incident_edge": "ktb_n1",
+  "incident_ks": [
+   2,
+   1.0
+  ],
+  "marks_5min": [
+   4500.0,
+   4800.0,
+   5100.0,
+   5400.0,
+   5700.0,
+   6000.0,
+   6300.0,
+   6600.0
+  ],
+  "marks_15min": [
+   4500.0,
+   4800.0,
+   5100.0,
+   5400.0,
+   5700.0,
+   6000.0,
+   6300.0
+  ]
+ }
+}
