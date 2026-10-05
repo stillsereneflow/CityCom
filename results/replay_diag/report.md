@@ -1,5 +1,7 @@
 MODEL: deepseek-v4.1-flash (DeepSeek Harness)
 
+> **Superseded in part (2026-10-05):** `corrections.md` in this directory corrects the pooled medians and three overstatements below, and states what may be claimed. Where they disagree, `corrections.md` holds.
+
 # Matched-observation replay diagnosis of event inference
 
 Binding spec: `docs/oct10-replay-diagnosis-plan.md` (revision 2, committed at `1774408`). Offline diagnostic only: nothing here is tuned and the online method is unchanged. Truth-assisted variants are offline positive controls; no inferential statistics.
