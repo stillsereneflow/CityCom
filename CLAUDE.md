@@ -1,5 +1,11 @@
 # CityCom project rules
 
+## Resuming work
+
+At the start of a session, and whenever the user says "resume", "continue" or similar: read `HANDOFF.md` in this directory and follow its "On resume" steps, then continue its queue without asking. Active code is in the worktree `D:/CityCom-astra` (branch `astra/step1`). Before ending a session, update `HANDOFF.md` (state, unmerged dispatches, next step) and commit it.
+
+**Model note (2026-10-05):** the decision-maker below is now codex `gpt-6.1-sol` via Route 1 (`-c openai_base_url="https://chatgpt.com/backend-api/codex" -m gpt-6.1-sol -c model_reasoning_effort=high`). The decision-only rule below still applies to it unchanged.
+
 ## GPT-6 Astra is the decision-maker, never the implementer
 
 GPT-6 Astra (codex, `codex exec -m gpt-6-astra`) is used **only for decisions and reviews**:
