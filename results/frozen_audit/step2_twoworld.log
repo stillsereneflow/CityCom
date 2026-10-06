@@ -1,0 +1,17 @@
+{"t_end": 7200.0, "wall_s": 59.50409173965454, "arrived": 1, "running": 401, "pending": 0, "teleports_total": null, "incident": {"edge": "ktb_n1", "lanes": [0, 1], "pos": 900.0, "t_start": 4500.0, "duration": 900.0}, "n_diverted": 0}
+{"messages": 240, "wall_s": 61.40192270278931, "arrived": 2, "running": 330, "pending": 0, "assim": "normal300", "twin_base_factor": 0.85}
+{"t_end": 7200.0, "wall_s": 60.07187628746033, "arrived": 1, "running": 400, "pending": 0, "teleports_total": null, "incident": {"edge": "ktb_n1", "lanes": [0, 1], "pos": 900.0, "t_start": 4500.0, "duration": 900.0}, "n_diverted": 0}
+{"messages": 240, "wall_s": 62.01122975349426, "arrived": 2, "running": 324, "pending": 0, "assim": "normal300", "twin_base_factor": 0.85}
+{"messages": 240, "wall_s": 62.07237505912781, "arrived": 2, "running": 332, "pending": 0, "assim": "normal300", "twin_base_factor": 0.85}
+{"t_end": 7200.0, "wall_s": 60.11431121826172, "arrived": 4, "running": 409, "pending": 0, "teleports_total": null, "incident": {"edge": "ktb_n1", "lanes": [0, 1], "pos": 900.0, "t_start": 4500.0, "duration": 900.0}, "n_diverted": 0}
+{"t_end": 7200.0, "wall_s": 60.37656593322754, "arrived": 2, "running": 396, "pending": 0, "teleports_total": null, "incident": {"edge": "ktb_n1", "lanes": [0, 1], "pos": 900.0, "t_start": 4500.0, "duration": 900.0}, "n_diverted": 0}
+{"messages": 240, "wall_s": 62.39370250701904, "arrived": 3, "running": 328, "pending": 0, "assim": "normal300", "twin_base_factor": 0.85}
+{"t_end": 7200.0, "wall_s": 60.47508668899536, "arrived": 1, "running": 402, "pending": 0, "teleports_total": null, "incident": {"edge": "ktb_n1", "lanes": [0, 1], "pos": 900.0, "t_start": 4500.0, "duration": 900.0}, "n_diverted": 0}
+{"messages": 240, "wall_s": 62.37272500991821, "arrived": 1, "running": 345, "pending": 0, "assim": "normal300", "twin_base_factor": 0.85}
+{"t_end": 7200.0, "wall_s": 60.457072734832764, "arrived": 4, "running": 395, "pending": 0, "teleports_total": null, "incident": {"edge": "ktb_n1", "lanes": [0, 1], "pos": 900.0, "t_start": 4500.0, "duration": 900.0}, "n_diverted": 0}
+{"messages": 240, "wall_s": 62.29605841636658, "arrived": 2, "running": 352, "pending": 0, "assim": "normal300", "twin_base_factor": 0.85}
+{"t_end": 7200.0, "wall_s": 60.741406202316284, "arrived": 0, "running": 402, "pending": 0, "teleports_total": null, "incident": {"edge": "ktb_n1", "lanes": [0, 1], "pos": 900.0, "t_start": 4500.0, "duration": 900.0}, "n_diverted": 0}
+{"messages": 240, "wall_s": 62.56560230255127, "arrived": 2, "running": 337, "pending": 0, "assim": "normal300", "twin_base_factor": 0.85}
+{"t_end": 7200.0, "wall_s": 60.889304399490356, "arrived": 2, "running": 411, "pending": 0, "teleports_total": null, "incident": {"edge": "ktb_n1", "lanes": [0, 1], "pos": 900.0, "t_start": 4500.0, "duration": 900.0}, "n_diverted": 0}
+{"messages": 240, "wall_s": 62.96144104003906, "arrived": 0, "running": 336, "pending": 0, "assim": "normal300", "twin_base_factor": 0.85}
+Twoworld complete for seeds [4501, 4502, 4503, 4504, 4505, 4506, 4507, 4508] in results\frozen_audit\runs

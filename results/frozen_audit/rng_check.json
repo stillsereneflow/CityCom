@@ -1,0 +1,255 @@
+{
+  "passed": true,
+  "seed": 4501,
+  "twin": {
+    "sumo_seed_only": {
+      "seed_1": {
+        "sumo_seed": 1,
+        "demand_r": 1,
+        "J": 104.82277777777777,
+        "digest": "131ade4ba773684c75596e043fd61d8bdac53df1cfe216d5d96d5e631d518b61",
+        "n_vehicles": 525
+      },
+      "seed_2": {
+        "sumo_seed": 2,
+        "demand_r": 1,
+        "J": 105.50138888888888,
+        "digest": "38e990eb101e4f75b1141ab0f69bd6271cb6b045a4a7c73447580749e949f644",
+        "n_vehicles": 528
+      },
+      "delta_J": 0.6786111111111097,
+      "differs": true
+    },
+    "demand_only": {
+      "demand_1": {
+        "sumo_seed": 1,
+        "demand_r": 1,
+        "J": 104.82277777777777,
+        "digest": "131ade4ba773684c75596e043fd61d8bdac53df1cfe216d5d96d5e631d518b61",
+        "n_vehicles": 525
+      },
+      "demand_2": {
+        "sumo_seed": 1,
+        "demand_r": 2,
+        "J": 103.1661111111111,
+        "digest": "e5db2a22ec5df2f90768d721edddcc24ae9361e4068284548fe54df2b7f84bfc",
+        "n_vehicles": 520
+      },
+      "delta_J": -1.6566666666666663,
+      "differs": true
+    },
+    "identical_inputs": {
+      "run_1": {
+        "sumo_seed": 1,
+        "demand_r": 1,
+        "J": 104.82277777777777,
+        "digest": "131ade4ba773684c75596e043fd61d8bdac53df1cfe216d5d96d5e631d518b61"
+      },
+      "run_2": {
+        "sumo_seed": 1,
+        "demand_r": 1,
+        "J": 104.82277777777777,
+        "digest": "131ade4ba773684c75596e043fd61d8bdac53df1cfe216d5d96d5e631d518b61"
+      },
+      "identical": true
+    }
+  },
+  "proxy": {
+    "sumo_seed_only": {
+      "seed_1": {
+        "sumo_seed": 1,
+        "demand_m": 1,
+        "J": 111.92388888888888,
+        "digest": "1a1878e84ec6272a822f2227c5751c284722d0bda2254607ca872aa64adbfe0e",
+        "n_vehicles": 434
+      },
+      "seed_2": {
+        "sumo_seed": 2,
+        "demand_m": 1,
+        "J": 112.26138888888889,
+        "digest": "e43fccbe8ff9e56d45c55a836197d276877b032cc95966ec46513143b4865edc",
+        "n_vehicles": 433
+      },
+      "delta_J": 0.3375000000000057,
+      "differs": true
+    },
+    "demand_only": {
+      "demand_1": {
+        "sumo_seed": 1,
+        "demand_m": 1,
+        "J": 111.92388888888888,
+        "digest": "1a1878e84ec6272a822f2227c5751c284722d0bda2254607ca872aa64adbfe0e",
+        "n_vehicles": 434
+      },
+      "demand_2": {
+        "sumo_seed": 1,
+        "demand_m": 2,
+        "J": 113.94833333333334,
+        "digest": "a270560b6aec1486a609a0b6200ae9172fa94d93d53f3e10b28cf46bc1ab25db",
+        "n_vehicles": 465
+      },
+      "delta_J": 2.0244444444444554,
+      "differs": true
+    },
+    "identical_inputs": {
+      "run_1": {
+        "sumo_seed": 1,
+        "demand_m": 1,
+        "J": 111.92388888888888,
+        "digest": "1a1878e84ec6272a822f2227c5751c284722d0bda2254607ca872aa64adbfe0e"
+      },
+      "run_2": {
+        "sumo_seed": 1,
+        "demand_m": 1,
+        "J": 111.92388888888888,
+        "digest": "1a1878e84ec6272a822f2227c5751c284722d0bda2254607ca872aa64adbfe0e"
+      },
+      "identical": true
+    }
+  },
+  "binding": {
+    "provenance_sha256": "fb6b0d66f8aa6f8707e6367edb6bd1aa65ecb6fa0ac0d7fd57ecca9d8ec8d843",
+    "fingerprint": {
+      "out_dir": "results\\frozen_audit",
+      "code": {
+        "citypulse/__init__.py": "83a2684c02c6b358cdff9014a1bca87eedc2449e8ca29349fb7b03a37752f55e",
+        "citypulse/branching/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "citypulse/branching/audit_engine.py": "0d17ac70ce3185906a956a5e77ffc5e0a27122338d79be3766cd5170e5330db0",
+        "citypulse/branching/engine.py": "647c432b0bcf495a1807a866566dd784c22cf00b0f21482c209736ca104aee0b",
+        "citypulse/bus/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "citypulse/bus/messages.py": "89000e8192f6c7d54a3e161073825a6fab3c8f8cefc58f7d02f43d69e3948d37",
+        "citypulse/config.py": "4b74106d3fdf53ef31e4577d34eef456c7de233e88794f1d98e11fa84891e2da",
+        "citypulse/control/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "citypulse/control/actions.py": "c5205a912addcfef1d5d815e99d1d9b8295facf89f7d86af543d6e4eecb7f6df",
+        "citypulse/demand/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "citypulse/demand/blite_demand.py": "581f8dd9b770936881d12e8e25c00856b01bfddf342b2dfbe3b4ec4a95660eca",
+        "citypulse/demand/bounded.py": "c250446c5258abcb9fab4bc2704cb8de1a59b9cd0564994119aa4c02ea17370b",
+        "citypulse/demand/bounded_gates.py": "8754a53dbc96eaeaba063273ca1bfe76c4f34a07e5c6726dae4e07a1e2cf012c",
+        "citypulse/demand/make_demand.py": "8b722ec52b368a927fc765680f1fdaa26bb2bf0ca365d817814ad73c703e91ff",
+        "citypulse/demand/synth_demand.py": "f5468490b1a1815addc9ae55f939cafcc96dd1443e49864a6c5460e559bbf3b3",
+        "citypulse/experiments/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "citypulse/experiments/astra_step1.py": "a283a330b030bbb5d891cbdb4b38b9d6a25b4d50ba71e7b6d7d18e786d7d376d",
+        "citypulse/experiments/astra_step1_check.py": "af38982855d9c9546b67c69de6c5b8acc2fc2c200e7c59140e7075ef312e2b40",
+        "citypulse/experiments/branch_benchmark.py": "031216f14176880904fec948c14c946311a960cf4179b00ddbd906f51b5b9aac",
+        "citypulse/experiments/decision_audit.py": "dcd3900e636c8d0f14711f792009e07bcc35311297875ecee4af938b23becf28",
+        "citypulse/experiments/dev_outcomes.py": "695207db4a090bb492801f28c23a36f83c72770251030968b8ac731724cfaf12",
+        "citypulse/experiments/dev_runs.py": "94ba0b1fb033a66252eb9539111d74788a40b0b2e0a1bc4054bbd4b7889a9a81",
+        "citypulse/experiments/event_pilot.py": "de7c7bcc071400b09ff9865214eb086ce8eadd62edfe9a17c19df021faa9be4c",
+        "citypulse/experiments/frozen_audit.py": "bea105d6b5585c2ccf33208c87cd1197f2e338971207dedc1f8f21388599309b",
+        "citypulse/experiments/frozen_audit_analyze.py": "dc6ccca99b17923df861df47180b713644c1b0e8f42f246dd3e49135a8e0a7ad",
+        "citypulse/experiments/make_figures.py": "84031ecbbe518894f07ef7b2a03da8b62b918f8cfb7e964cf19959460788c208",
+        "citypulse/experiments/missing_queue.py": "bb95e2a0d25c29a9efca484268c99686a1bb17f384190a3d81fca839d59db306",
+        "citypulse/experiments/mq_replay.py": "c78d8167194a1e65dc8c762df739ffbad991392d12a2492afdcf0cc9d5fef6c0",
+        "citypulse/experiments/net_diag.py": "be7f25c2678568379d4d3826b1dfe896927d1fe797224c3bed984d7b190451c5",
+        "citypulse/experiments/normal_assim_eval.py": "6695d1c3957537a7b3b67cbbba45ee5a4dce89b3699d14ccfd3dee7e9d7935ea",
+        "citypulse/experiments/obs_metrics.py": "6cd951e434d9543f9385a0aa825ae2180ca313733f2382a80aba19c489bf8634",
+        "citypulse/experiments/obs_score.py": "3bb19e9e07075bd219a1c65bdd4f00cc9c5205ee1279718086ce4b4207b610c3",
+        "citypulse/experiments/replay_diag.py": "f8e0a3d0357ec15157e0e53a85f75345b320060a04f5d48ee4714ff4b483b37a",
+        "citypulse/experiments/run_two_worlds.py": "a95b3f54a7b1c98d8d24200924ff925798e70ed02e32160815834ebda8f2f791",
+        "citypulse/experiments/snapshot_tests.py": "8246f140efd1de42684734aa270816beb948c47aa50e561a8cebc9fcf58f3298",
+        "citypulse/hkdata/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "citypulse/hkdata/obs_set.py": "985e3da79cc142cac7aebdaf22ff028f7b23c887318ad0e418533bbbfd839a6a",
+        "citypulse/hkdata/parse.py": "8577478608b20b94ba7c71ef9e56363a4aec2432b7f3886d42bb90c235821e6d",
+        "citypulse/hkdata/recorder.py": "7532a1ef22d079c88b92d46c7e6655ce5d8600d7a3fdb16623f4a73dc4a5f5b3",
+        "citypulse/hkdata/run_recorder.py": "5f710c2f9fb16af245893e2d0d3fda82fbbf71c0c8ceaa713cccecda6ed901aa",
+        "citypulse/network/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "citypulse/network/blite.py": "f90df07f7437d47977d69a2f421ddcb17b9aa2d085afc41dae422b17e252782d",
+        "citypulse/network/bounded.py": "7b600fa8feb63fd0890e34140b3d66d27c6bceda2016a72a1b9ca841630e87f5",
+        "citypulse/network/build_network.py": "23080c229902a10b4366d5a72f56304c18ed953359413e1b916e7bb3161e6739",
+        "citypulse/network/make_tls_plans.py": "0522b2943ed360b24a25cee3ce20a6ea0a6fb51598a6d3a0525c70addbabfa2a",
+        "citypulse/network/map_detectors.py": "bfdff073d6336ca482a8e3bb81d9d7a19d078cae64879b005b6724ebbf539d4e",
+        "citypulse/network/patch_network.py": "d760cc62b6683ae8e1bb631f94f22ac91ddac99c6827f3390aa15d1b5fa29302",
+        "citypulse/proxy/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "citypulse/proxy/incident.py": "9146fcf1263f7bdc77c5d2bfe8104f444bfa59accd3451dbe8b21c9aedea8f02",
+        "citypulse/proxy/sensors.py": "3e650f4a31ee99733d39bea3417e3240292fe28d48d75c17a2e36eb839ffa732",
+        "citypulse/proxy/service.py": "31a1c74c57dac57863e6d1281724dc5ee455686d1dcf45393f19838d06e4c161",
+        "citypulse/proxy/truth_blite.py": "c9752c75c5ca16060d952eabd5608afff64f1b0ff0bb24819b4a2e8fd8e3ef01",
+        "citypulse/proxy/truth_config.py": "c725dc09aa6ede5e4e6527c6de0ac27e353ebc161edd20e435174cc12a1bcbdd",
+        "citypulse/scenario.py": "1bd5c2da0e643f81201cb53e06cce3687bdb21b15438df32c798f378c75fd6aa",
+        "citypulse/scenario_blite.py": "482d2c1ec5ad7dd8f66998ba7e5a74742a17c43b4a8bd560ea4de92bc60002aa",
+        "citypulse/sim.py": "3fc165294bc186117bde4be390ea7db438dc8fc23bfa205ef1f2863f0ecde025",
+        "citypulse/twin/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "citypulse/twin/assim.py": "25b104cf25c0fdf5eb075df9f0a58317429d5aa37d8bd8f68d751e73b2b4661b",
+        "citypulse/twin/demand_stream.py": "84ec65294fe28f202a04aa268b406134924ee5197705abfca4d15f39ab5b8802",
+        "citypulse/twin/event.py": "051341f94731d523ff15b6b7eebd87c56fec846bdf44c315cbcd2abc11be1a98",
+        "citypulse/twin/service.py": "da76cbbda2960047e6a961a0ba2faeb6a5d3540ab35b4eb49576fe19abc90427"
+      },
+      "code_sha256": "ad0d9af4e936044b842fe673db7d64001b99922d30bbcc5f0f243e3fead572bb",
+      "assets": {
+        "docs/oct16-frozen-audit-plan.md": "c3409e2613a17532f12d434b6dc6f3adf6c86d367d01eecf8f7532245b33d77e",
+        "docs/oct6-audit-and-pilot2-plan.md": "dd5d48203ce762f19a6917026a5475015e3c9f4dc6c64aec49c3f7e44f4111fb",
+        "results/assim/na300/sigma300_dev.json": "c88de9c2c6235f0b460dd255b2c28796951b353f634db91d1482660aab1b9bef",
+        "results/event_pilot/impl/sigma_event.json": "64c8d1e70044da6346a6b058e3af6e3c0bd417438c531faf6f414a29cc3251f0",
+        "results/missing_queue/upstream_edges.json": "7b3ab35c9dc9bae95c54ccf60835e500dffb201ad2d278d999d514e9aec212e8",
+        "scenarios/kwuntong/blite/detector_map.json": "9c712fdaacc304437d27f3689d273b23bba469a5a6555eb6b20fad6470a16590",
+        "scenarios/kwuntong/blite/detectors5.add.xml": "2a45506ca311feb1be076afb774914e1c65ca1b66d46a465bcfdfaa3a65d78cf",
+        "scenarios/kwuntong/blite/net5.net.xml": "8ab6c9e8ef0cc4d03b690d8f8210aad8c7a88c384d782df673079830a6c012d8",
+        "scenarios/kwuntong/blite/synth5/proxy.rou.xml": "86a19d8f7a2a72fff1c864eee17f249e77b952525bcfa487588d1d5efc8bfa93",
+        "scenarios/kwuntong/blite/synth5/proxy_shock.rou.xml": "78926be5a23ef2133ca5b8944ef1446a758409d5ab02fafce090107ff61aff3f",
+        "scenarios/kwuntong/blite/synth5/tls_incident_synth.add.xml": "e7219af2140e3f63a863894d51bb75301ba19826c7efcf83052dc384527547e5",
+        "scenarios/kwuntong/blite/synth5/tls_webster_synth.add.xml": "e92e4d52fd72dd6657dcb715f89713967e7835544b96070c30c8e142bc2b6bac",
+        "scenarios/kwuntong/blite/synth5/twin_cand.rou.xml": "a449427a0cb47e6efe31d16a98365aa115d1f146fd2ad5af40355ed52dd4e212",
+        "scenarios/kwuntong/vtypes_proxy.add.xml": "39fff37f25ec8482253f89fd28dd7993edde2953189f93f34f8e106f6c9f9230",
+        "scenarios/kwuntong/vtypes_twin.add.xml": "d0183ca8397c3c4343b8350da85c481465730bc83877b219b180abf5f60c2b16"
+      },
+      "assets_sha256": "a18853e2b24c090207064d794a29be34a3589074a47bdcea54dd161c0717a27d",
+      "runtime_environment": {
+        "env": {
+          "CITYPULSE_NET": "blite",
+          "CITYPULSE_BLITE_REV": "5",
+          "CITYPULSE_REROUTE": "0",
+          "OPENBLAS_NUM_THREADS": "1",
+          "PYTHONDONTWRITEBYTECODE": "1"
+        },
+        "python_version": "3.12.13 (main, May 10 2026, 19:35:37) [MSC v.1944 64 bit (AMD64)]",
+        "python_executable": "D:\\CityCom\\.venv\\Scripts\\python.exe",
+        "platform": "Windows-11-10.0.26100-SP0",
+        "packages": {
+          "Pygments": "2.21.0",
+          "certifi": "2026.7.22",
+          "charset-normalizer": "3.5.2",
+          "colorama": "0.4.6",
+          "contourpy": "1.4.0",
+          "cycler": "0.12.1",
+          "eclipse-sumo": "1.27.1",
+          "fonttools": "4.66.1",
+          "idna": "3.20",
+          "iniconfig": "2.3.0",
+          "kiwisolver": "1.5.1",
+          "libsumo": "1.27.1",
+          "lxml": "6.1.3",
+          "matplotlib": "3.11.2",
+          "numpy": "2.5.3",
+          "packaging": "26.3",
+          "pandas": "3.0.6",
+          "pillow": "12.3.0",
+          "pluggy": "1.6.0",
+          "pyarrow": "23.0.1",
+          "pyparsing": "3.3.3",
+          "pyproj": "3.8.0",
+          "pytest": "9.1.1",
+          "python-dateutil": "2.9.0.post0",
+          "pyzmq": "27.2.0",
+          "requests": "2.34.2",
+          "rtree": "1.4.1",
+          "six": "1.17.0",
+          "sumo-data": "1.27.1",
+          "sumolib": "1.27.1",
+          "traci": "1.27.1",
+          "tzdata": "2026.4",
+          "urllib3": "2.8.0"
+        },
+        "libsumo_version": [
+          22,
+          "SUMO 1.27.1"
+        ]
+      },
+      "sha256": "b58f1711ab4ad7d5716fcddd80d784c77df0990ee1cca186c55c56c490177a78"
+    },
+    "snapshot_hashes": {
+      "twin_state": "cf845ecc8e3615bc0b8ecf4b47c573e1db1a7d41fe8cd50a9a805ef1e635ea3e",
+      "twin_meta": "64928f1c1a8b1675e5c4987b1d4ae3eca1c0c5cd821509394fa625a81139c9c4",
+      "proxy_state": "f3142fb64f190a2397887d6aaa4bee1f78253938fb5c6fa6164d384ad0711ce4"
+    }
+  }
+}

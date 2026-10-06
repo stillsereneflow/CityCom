@@ -1,0 +1,49 @@
+# Crosscheck Summary
+
+## Calibration
+- floor_abs: 0.3161 ¡À 0.1825
+
+## Belief B
+- BEE: 2.1618 ¡À 0.4242
+- BEE_abs: 2.1618 ¡À 0.4242
+- BEE_rel: 0.0189 ¡À 0.0037
+- Regret: -0.0335 ¡À 0.0793
+- Regret_rel: -0.0073 ¡À 0.0172
+- Top1: 0.8750
+- Spearman: 0.8250 ¡À 0.0866
+- Kendall: 0.6750 ¡À 0.1244
+- G_hat_T_A3: 7.0657 ¡À 0.4188
+- G_P_A3: 4.9039 ¡À 0.3349
+
+## Belief D300
+- BEE: -2.8699 ¡À 2.0445
+- BEE_abs: 2.8837 ¡À 2.0290
+- BEE_rel: -0.0249 ¡À 0.0177
+- Regret: 1.8044 ¡À 2.0868
+- Regret_rel: 0.3769 ¡À 0.4349
+- Top1: 0.6250
+- Spearman: -0.3500 ¡À 0.2791
+- Kendall: -0.2750 ¡À 0.2178
+- G_hat_T_A3: 0.2120 ¡À 0.3873
+- G_P_A3: 4.9039 ¡À 0.3349
+
+
+## Comparison with metrics.json
+- Calibration floor_abs ci95: mine=0.18253561733596504, theirs=0.18250659687417842
+- B BEE ci95: mine=0.42419034487815904, theirs=0.4241229048909778
+- B BEE_abs ci95: mine=0.42419034487815904, theirs=0.4241229048909778
+- B Regret ci95: mine=0.07929866898148032, theirs=0.0792860616666655
+- B Regret_rel ci95: mine=0.017168687228113533, theirs=0.017165957660926316
+- B Spearman ci95: mine=0.08655013771962299, theirs=0.08653637752859444
+- B Kendall ci95: mine=0.12442366241136428, theirs=0.12440388089040588
+- B G_hat_T_A3 ci95: mine=0.41878777862469463, theirs=0.4187211975655911
+- B G_P_A3 ci95: mine=0.33486563271338476, theirs=0.3348123940335146
+- D300 BEE ci95: mine=2.044495521229939, theirs=2.044170476698865
+- D300 BEE_abs ci95: mine=2.0289773378948266, theirs=2.028654760525246
+- D300 BEE_rel ci95: mine=0.01773548517786396, theirs=0.01773266549819083
+- D300 Regret ci95: mine=2.086824563734781, theirs=2.086492789512386
+- D300 Regret_rel ci95: mine=0.4349100356332872, theirs=0.43484089137392223
+- D300 Spearman ci95: mine=0.279115807378535, theirs=0.2790714320958397
+- D300 Kendall ci95: mine=0.21781307004434527, theirs=0.21777844098965743
+- D300 G_hat_T_A3 ci95: mine=0.3872602247558315, theirs=0.38719865611122395
+- D300 G_P_A3 ci95: mine=0.33486563271338476, theirs=0.3348123940335146

@@ -1,0 +1,2 @@
+compared 160 per-seed values; max abs diff 2.842e-14; mismatches 0
+ALL MATCH

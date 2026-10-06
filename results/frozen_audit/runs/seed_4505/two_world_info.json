@@ -1,0 +1,15 @@
+{
+  "seed": 4505,
+  "wall_s": 64.8,
+  "proxy_rc": 0,
+  "twin_rc": 0,
+  "alarm": {
+    "first_alarm_t": 4890.0,
+    "latency_s": 210.0,
+    "latency_ok": true,
+    "n_alarm_intervals": 22
+  },
+  "twin_state": "results\\frozen_audit\\runs\\seed_4505\\twin\\twin_state_5100.xml.gz",
+  "twin_meta": "results\\frozen_audit\\runs\\seed_4505\\twin\\twin_state_5100.json",
+  "proxy_state": "results\\frozen_audit\\runs\\seed_4505\\proxy\\proxy_state_5100.xml.gz"
+}
