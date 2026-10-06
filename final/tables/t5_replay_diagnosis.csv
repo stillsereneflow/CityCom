@@ -1,0 +1,9 @@
+variant,label (oct10 plan),would-adopt INC (of 13),would-adopt NOI (of 9),INC-only median gap (log posterior),INC MAP family (count)
+V0,base,0/13,0/9,-2.0522033494368994,incident 0/13; demand 6/13; fault 7/13
+VP,representation diagnostic,0/13,0/9,0.3675517101210837,incident 4/13; demand 2/13; fault 7/13
+VT,truth-assisted control (onset),1/13,0/9,-0.12628523095275046,incident 3/13; demand 4/13; fault 6/13
+VPT,truth-assisted control,6/13,0/9,2.0416187501280403,incident 11/13; demand 2/13; fault 0/13
+VPL,truth-assisted control (location),3/13,0/9,0.031079473499870502,incident 7/13; demand 4/13; fault 2/13
+VPTL,truth-assisted control,5/13,0/9,1.7051465135068273,incident 10/13; demand 2/13; fault 1/13
+VNF,competition diagnostic,0/13,0/9,-2.052203349436899,incident 1/13; demand 12/13; fault 0/13
+VPTLNF,truth-assisted control,5/13,0/9,1.7051465135068276,incident 10/13; demand 3/13; fault 0/13

@@ -1,5 +1,7 @@
 # 城脉·涟控 (CityPulse): D1–D4 prototype
 
+**Final evidence package (2026-10-06): `final/README.md`.** It contains the frozen test audit results, the exact allowed claims, figures, tables and demo. The design freeze record is `docs/freeze-2026-10-06.md`.
+
 The design is `deep-research-report2.md`. What has been run and measured is in `docs/d1-d4-validation.md`.
 
 Hidden "Proxy" SUMO world and an independent, structurally different "Twin" SUMO world on the Kwun Tong Road / Kwun Tong Bypass corridor (Hong Kong). The Twin receives only sparse, noisy detector observations over a ZeroMQ firewall. Snapshot branching evaluates candidate interventions in the Twin.

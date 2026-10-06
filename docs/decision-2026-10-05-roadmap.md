@@ -67,3 +67,7 @@ The replay diagnosis is done (3b5e575; corrections in `results/replay_diag/corre
 | Oct 15 | Natural adoption, clearance, forecast, exclusion and live DEGRADED coverage; reconcile claims, corrected audit records and the duration sensitivity. |
 | Oct 16 | Design freeze: R_E and the existing onset rule frozen; R_P successor requirements documented. |
 | Oct 16–18 | Frozen audit on untouched test seeds; results freeze Oct 18. |
+
+## Completion 2026-10-06
+
+The design freeze was moved forward to 2026-10-06 on the user's instruction (`docs/freeze-2026-10-06.md`). The frozen test audit ran once on seeds 4501–4508 (results `aa7de30`). It replicated the development audit's scenario-specific pattern: A3 8/8, oracle agreement 7/8, BEE +2.16 [1.74, 2.59], regret −0.03, Spearman 0.825. Final evidence package: `final/` (`FINAL_REPORT.md`, `CLAIMS.md`). No core experiment remains (Codex ruling `~/.claude/runs/D--CityCom/20261006-1450-codex-sol-finalresult/out.md`).

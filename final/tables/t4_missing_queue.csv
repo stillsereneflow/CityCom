@@ -1,0 +1,6 @@
+seed,Q_P (proxy),Q_C (conventional),Q_H (historical),e(C-D),e(H-D),delta_D = e(H-D) - e(C-D),duration contrast C (G_T(A3;-P) - G_T(A3;-D)),duration contrast H (G_T(A3;-P) - G_T(A3;-D)),classification
+4301,55.0,0.0,14.0,4.738518518518518,0.15416666666666856,-4.584351851851849,6.771296296296285,2.0832407407407203,study-level (see last row)
+4302,7.0,0.0,15.0,4.320000000000007,1.073981481481482,-3.2460185185185253,7.744907407407425,2.8075925925925844,study-level (see last row)
+4303,40.0,0.0,17.0,4.025370370370382,0.9650000000000176,-3.0603703703703644,6.035277777777779,2.99935185185187,study-level (see last row)
+4304,25.0,0.0,19.0,3.572592592592585,1.4031481481481336,-2.1694444444444514,7.46879629629629,1.3615740740740847,study-level (see last row)
+classification (all seeds),n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,"support (step 4 of the ordered rule): delta_D < 0 on 4/4 seeds, mean delta_D = -3.265 <= -1.0 veh.h"

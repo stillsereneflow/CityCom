@@ -50,11 +50,15 @@ def write_rng(out_dir: Path, rng: dict) -> None:
     (out_dir / "rng_check.json").write_text(json.dumps(rng, indent=2), encoding="utf-8")
 
 
-def test_seed_check_frozen_seeds_clean():
-    """Verify that preregistered test seeds 4501-4508 are untouched in results."""
+def test_seed_check_frozen_seeds_now_consumed():
+    """The frozen audit (2026-10-06) consumed seeds 4501-4508: the check must now report them as used.
+
+    Before collection this test asserted they were untouched (that check is recorded in
+    results/frozen_audit/seed_check.json); any re-collection needs fresh seeds.
+    """
     res = check_seeds(REPO_ROOT / "results", [4501, 4502, 4503, 4504, 4505, 4506, 4507, 4508])
-    assert res["passed"] is True
-    assert len(res["matches"]) == 0
+    assert res["passed"] is False
+    assert any("frozen_audit" in str(p) for p in res["matches"])
 
 
 def test_seed_check_detects_used_seed():
