@@ -1,6 +1,6 @@
 # CityCom handoff: where the work stands and what comes next
 
-Last updated: 2026-10-06 (PROJECT COMPLETE: design frozen 2026-10-06, frozen test audit run once, final evidence package in `D:/CityCom-astra/final/`).
+Last updated: 2026-10-06 (SUBMISSION PACKAGE COMPLETE: `D:/CityCom-astra/submission/`, commits c031a19 + 6e427b4; Codex READY after 2 rounds).
 
 **When the user says "resume" (or anything like "continue", "pick up where we left off"), read this file, then do "On resume" below, then carry on with the queue.**
 
@@ -36,7 +36,16 @@ This is the 12th China Postgraduate Smart City competition entry 《城脉·涟�
   - It replicates the development audit's scenario-specific pattern.
   - Verified by three independent implementations (analyzer, Claude, agy-pro); Codex final ruling: no defect, no core work missing.
 - **Allowed claims:** `final/CLAIMS.md` only. No post-freeze defects.
-- **Remaining (non-core):** turning the evidence package into the competition submission documents (Chinese write-up, slides, demo video) by 2026-10-25. No experiment is pending.
+- **Submission package (done):** `D:/CityCom-astra/submission/` (`README.md` index):
+  - 项目简表 and 作品说明书 (md/docx/pdf);
+  - 14-slide deck with speaker notes (pptx/pdf);
+  - 演讲稿 with 答辩预案;
+  - 3-min demo video (mp4 + srt + storyboard);
+  - anonymised source zip;
+  - checks: number whitelist and anonymity, both PASS.
+
+  Codex reviewed two rounds; the remaining blocker was fixed. agy-pro cross-checked every number: no number errors. Unredacted scan originals are kept outside the deliverables in `D:/CityCom/submission-internal/`.
+- **Remaining:** only the upload itself (by 2026-10-25 12:00) and live rehearsal. Any wording change must stay within `final/CLAIMS.md`; rebuild with `submission/tools/` and re-run `check_numbers.py` and `scan_anonymity.py`.
 
 ## Decision documents, in order (all in `D:/CityCom-astra/docs/`)
 
@@ -92,7 +101,7 @@ Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/s
 | Oct 6 | **Design freeze** (moved forward) | 7a6a5ed + Amendment A; collection commit dcec083 |
 | Oct 6 | Frozen audit on fresh test seeds | done, aa7de30 |
 | Oct 6 | **Results final**; evidence package | done, 4fe70e0 |
-| by Oct 25 | Submission documents from `final/` | not started (non-core) |
+| Oct 6 | Submission documents from `final/` | done (c031a19, 6e427b4) |
 
 Seeds already used:
 - 1001–1003, 3001–3004: development / evaluation;
