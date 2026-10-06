@@ -1,6 +1,6 @@
 # CityCom handoff: where the work stands and what comes next
 
-Last updated: 2026-10-06 (SUBMISSION PACKAGE COMPLETE: `D:/CityCom-astra/submission/`, commits c031a19 + 6e427b4; Codex READY after 2 rounds).
+Last updated: 2026-10-06 (RELEASED: tag `competition-submission-v1.0` in D:/CityCom-astra at 36d039b; Codex final review READY).
 
 **When the user says "resume" (or anything like "continue", "pick up where we left off"), read this file, then do "On resume" below, then carry on with the queue.**
 
@@ -45,6 +45,11 @@ This is the 12th China Postgraduate Smart City competition entry 《城脉·涟�
   - checks: number whitelist and anonymity, both PASS.
 
   Codex reviewed two rounds; the remaining blocker was fixed. agy-pro cross-checked every number: no number errors. Unredacted scan originals are kept outside the deliverables in `D:/CityCom/submission-internal/`.
+- **Release (immutable):** tag `competition-submission-v1.0` (annotated, local, not pushed) at commit 36d039b in D:/CityCom-astra.
+  - `release/competition-submission-v1.0.zip`, sha256 `c583b6b041331546876f35f604ea38bebfe112da504c4c2504edb36b114d3e5e` (also in `.zip.sha256`).
+  - The unpacked copy is in `release/competition-submission-v1.0/`, with per-file `SHA256SUMS.txt`. Files are set read-only; `release/.gitattributes` = `* -text`, so a checkout is byte-identical to the checksums.
+  - Final read-only Codex review returned READY; anonymity scan 0 identifying hits; number check only flags timing markers, citation years and one section number.
+  - Do not edit the release. Any change means a new version (v1.1) with new checksums and tag.
 - **Remaining:** only the upload itself (by 2026-10-25 12:00) and live rehearsal. Any wording change must stay within `final/CLAIMS.md`; rebuild with `submission/tools/` and re-run `check_numbers.py` and `scan_anonymity.py`.
 
 ## Decision documents, in order (all in `D:/CityCom-astra/docs/`)
