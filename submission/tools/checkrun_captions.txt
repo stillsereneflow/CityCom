@@ -1,0 +1,19 @@
+
+=== submission\video\captions.srt : 15 numbers, 0 not whitelisted ===
+              L3                10   ok   <- literal `10` in final/CLAIMS.md:7
+             L13                20   ok   <- literal `20` in final/CLAIMS.md:23
+             L18               0/6   ok   <- literal `0/6` in final/CLAIMS.md:27
+             L23                 0   ok   <- literal `0` in final/CLAIMS.md:14
+             L23                 4   ok   <- literal `4` in final/CLAIMS.md:9
+             L23                 5   ok   <- literal `5` in final/CLAIMS.md:27
+             L24                 3   ok   <- literal `3` in final/CLAIMS.md:9
+             L29             +3.08   ok   <- `+3.08` is 3.076 in final/tables/t1_frozen_per_seed.md:5 rounded to 2 dp
+             L29                 0   ok   <- literal `0` in final/CLAIMS.md:14
+             L33                 8   ok   <- literal `8` in final/CLAIMS.md:27
+             L34                 3   ok   <- literal `3` in final/CLAIMS.md:9
+             L34               8/8   ok   <- literal `8/8` in final/CLAIMS.md:9
+             L34               7/8   ok   <- literal `7/8` in final/CLAIMS.md:9
+             L38             +2.16   ok   <- literal `+2.16` in final/CLAIMS.md:19
+             L39             0.825   ok   <- literal `0.825` in final/CLAIMS.md:11
+
+TOTAL: 15 numbers in 1 file(s); 0 not whitelisted

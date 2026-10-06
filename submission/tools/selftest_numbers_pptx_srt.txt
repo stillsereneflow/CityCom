@@ -1,0 +1,14 @@
+
+=== submission\tools\selftest_numbers_synthetic.pptx : 6 numbers, 1 not whitelisted ===
+  slide 1 para 1            +2.162   ok   <- literal `+2.162` in final/CLAIMS.md:10
+  slide 1 para 1             1.738   ok   <- literal `1.738` in final/CLAIMS.md:10
+  slide 1 para 1             2.586   ok   <- literal `2.586` in final/CLAIMS.md:10
+  slide 1 para 1              4501   ok   <- literal `4501` in final/CLAIMS.md:7
+  slide 1 para 1              4508   ok   <- literal `4508` in final/CLAIMS.md:7
+  slide 1 notes para 1             98765   *** NOT WHITELISTED ***
+
+=== submission\tools\selftest_numbers_synthetic.srt : 2 numbers, 1 not whitelisted ===
+              L3             +2.16   ok   <- literal `+2.16` in final/CLAIMS.md:19
+              L7             54321   *** NOT WHITELISTED ***
+
+TOTAL: 8 numbers in 2 file(s); 2 not whitelisted

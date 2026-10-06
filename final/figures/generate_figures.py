@@ -150,7 +150,7 @@ def run(dpi=72, out_dir="final/figures"):
     ax.scatter(x_dev_dots + dev_j, dev_bee, color=CLR_TWIN_B, s=65, edgecolors=CLR_SURFACE, linewidths=2,
                zorder=4, label="Twin belief B BEE (per seed)")
     ax.scatter(x_dev_fl + dev_j, dev_floor, color=CLR_FLOOR, s=65, edgecolors=CLR_SURFACE, linewidths=2,
-               zorder=4, label="Calibration floor |floor_signed|")
+               zorder=4, label="Calibration discrepancy (empirical, not a bound)")
 
     ax.scatter(x_froz_dots + froz_j, froz_bee, color=CLR_TWIN_B, s=65, edgecolors=CLR_SURFACE, linewidths=2, zorder=4)
     ax.scatter(x_froz_fl + froz_j, froz_floor, color=CLR_FLOOR, s=65, edgecolors=CLR_SURFACE, linewidths=2, zorder=4)
@@ -172,9 +172,9 @@ def run(dpi=72, out_dir="final/figures"):
             ha="center", va="bottom", fontsize=8.2, color=CLR_TEXT_DARK, fontweight="semibold")
     ax.text(x_froz_bar - 0.06, froz_m + froz_ci + 0.08, f"Mean: {froz_m:.2f} veh·h\n[95% CI: {froz_m-froz_ci:.2f}, {froz_m+froz_ci:.2f}]",
             ha="center", va="bottom", fontsize=8.2, color=CLR_TEXT_DARK, fontweight="semibold")
-    ax.text(x_dev_fl + 0.08, dev_fl_m, f"Floor: {dev_fl_m:.2f}",
+    ax.text(x_dev_fl + 0.08, dev_fl_m, f"Calib. discrepancy: {dev_fl_m:.2f}",
             ha="left", va="center", fontsize=8.0, color=CLR_FLOOR, fontweight="semibold")
-    ax.text(x_froz_fl + 0.08, froz_fl_m, f"Floor: {froz_fl_m:.2f}",
+    ax.text(x_froz_fl + 0.08, froz_fl_m, f"Calib. discrepancy: {froz_fl_m:.2f}",
             ha="left", va="center", fontsize=8.0, color=CLR_FLOOR, fontweight="semibold")
 
     ax.set_xticks([1.02, 2.32])

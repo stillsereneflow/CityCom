@@ -1,0 +1,213 @@
+
+=== submission\02_作品说明书.md : 209 numbers, 3 not whitelisted ===
+             L11               1.1   ok   <- structural: section number
+             L23               1.2   ok   <- structural: section number
+             L25              1980   *** NOT WHITELISTED ***
+             L26              2005   *** NOT WHITELISTED ***
+             L28              2006   *** NOT WHITELISTED ***
+             L36               1.3   ok   <- structural: section number
+             L39                30   ok   <- literal `30` in final/CLAIMS.md:57
+             L51                 1   ok   <- literal `1` in final/CLAIMS.md:9
+             L60                20   ok   <- literal `20` in final/CLAIMS.md:23
+             L60                10   ok   <- literal `10` in final/CLAIMS.md:7
+             L60                 3   ok   <- literal `3` in final/CLAIMS.md:9
+             L60                 4   ok   <- literal `4` in final/CLAIMS.md:9
+             L60                 6   ok   <- literal `6` in final/CLAIMS.md:27
+             L61                 2   ok   <- literal `2` in final/FINAL_REPORT.md:16
+             L66               3/3   ok   <- literal `3/3` in final/CLAIMS.md:23
+             L66                 4   ok   <- literal `4` in final/CLAIMS.md:9
+             L66                 1   ok   <- literal `1` in final/CLAIMS.md:9
+             L67                 6   ok   <- literal `6` in final/CLAIMS.md:27
+             L67                13   ok   <- literal `13` in final/CLAIMS.md:27
+             L67                25   ok   <- literal `25` in final/CLAIMS.md:27
+             L67               0/6   ok   <- literal `0/6` in final/CLAIMS.md:27
+             L67                 5   ok   <- literal `5` in final/CLAIMS.md:27
+             L67                 8   ok   <- literal `8` in final/CLAIMS.md:27
+             L68              0/13   ok   <- literal `0/13` in final/CLAIMS.md:25
+             L68              6/13   ok   <- literal `6/13` in final/CLAIMS.md:25
+             L68                 9   ok   <- literal `9` in final/tables/README.md:13
+             L70                 1   ok   <- literal `1` in final/CLAIMS.md:9
+             L72                 2   ok   <- literal `2` in final/FINAL_REPORT.md:16
+             L74                 5   ok   <- literal `5` in final/CLAIMS.md:27
+             L74                15   ok   <- literal `15` in final/CLAIMS.md:3
+             L78                 0   ok   <- identifier `A0` in final/CLAIMS.md:14
+             L79                 1   ok   <- identifier `A1` in final/CLAIMS.md:14
+             L80                 2   ok   <- identifier `A2` in final/METHOD.md:27
+             L81                 3   ok   <- identifier `A3` in final/CLAIMS.md:9
+             L82                 4   ok   <- identifier `A4` in final/CLAIMS.md:9
+             L86                 8   ok   <- literal `8` in final/CLAIMS.md:27
+             L87               8/8   ok   <- literal `8/8` in final/CLAIMS.md:9
+             L87                 3   ok   <- identifier `A3` in final/CLAIMS.md:9
+             L87               7/8   ok   <- literal `7/8` in final/CLAIMS.md:9
+             L88             -0.03   ok   <- literal `-0.03` in final/CLAIMS.md:64
+             L88             -0.11   ok   <- literal `-0.11` in final/CLAIMS.md:64
+             L88              0.05   ok   <- literal `0.05` in final/CLAIMS.md:64
+             L89             0.825   ok   <- literal `0.825` in final/CLAIMS.md:11
+             L89             0.738   ok   <- literal `0.738` in final/CLAIMS.md:11
+             L89             0.912   ok   <- literal `0.912` in final/CLAIMS.md:11
+             L90             +2.16   ok   <- literal `+2.16` in final/CLAIMS.md:19
+             L90              1.74   ok   <- literal `1.74` in final/CLAIMS.md:64
+             L90              2.59   ok   <- literal `2.59` in final/CLAIMS.md:64
+             L92                 3   ok   <- literal `3` in final/CLAIMS.md:9
+             L94                 5   ok   <- literal `5` in final/CLAIMS.md:27
+            L109              1.27   ok   <- literal `1.27` in final/METHOD.md:9
+            L109                .1   ok   <- literal `.1` in final/METHOD.md:9
+            L110               222   ok   <- literal `222` in final/FINAL_REPORT.md:103
+            L112               3.6   ok   <- structural: section number
+            L118               3.1   ok   <- structural: section number
+            L124                30   ok   <- literal `30` in final/CLAIMS.md:57
+            L128               3.2   ok   <- structural: section number
+            L133              0.85   ok   <- literal `0.85` in final/METHOD.md:11
+            L134                 1   ok   <- identifier `ktb_n1` in final/CLAIMS.md:15
+            L134               900   ok   <- literal `900` in final/METHOD.md:12
+            L134                15   ok   <- literal `15` in final/CLAIMS.md:3
+            L135              0.35   ok   <- literal `0.35` in final/METHOD.md:31
+            L135              0.30   ok   <- literal `0.30` in final/METHOD.md:27
+            L136             14/21   ok   <- fraction `14/21` in final/METHOD.md:13
+            L136                 5   ok   <- literal `5` in final/CLAIMS.md:27
+            L138               3.3   ok   <- structural: section number
+            L140                30   ok   <- literal `30` in final/CLAIMS.md:57
+            L140                 3   ok   <- literal `3` in final/CLAIMS.md:9
+            L143               600   ok   <- literal `600` in final/METHOD.md:21
+            L144                60   ok   <- literal `60` in docs/freeze-2026-10-06.md:25
+            L145              0.25   ok   <- literal `0.25` in final/CLAIMS.md:33
+            L148                10   ok   <- literal `10` in final/CLAIMS.md:7
+            L149               0.6   ok   <- literal `0.6` in docs/freeze-2026-10-06.md:21
+            L151               900   ok   <- literal `900` in final/METHOD.md:12
+            L152               0.7   ok   <- literal `0.7` in docs/freeze-2026-10-06.md:22
+            L154               3.4   ok   <- structural: section number
+            L156             5,100   ok   <- literal `5,100` in final/CLAIMS.md:38
+            L156               900   ok   <- literal `900` in final/METHOD.md:12
+            L157             755.3   ok   <- literal `755.3` in final/tables/t6_frozen_validation.md:9
+            L158             5,400   ok   <- literal `5,400` in final/FINAL_REPORT.md:34
+            L158               300   ok   <- identifier `D300` in final/CLAIMS.md:14
+            L159                 6   ok   <- literal `6` in final/CLAIMS.md:27
+            L159                 1   ok   <- literal `1` in final/CLAIMS.md:9
+            L159                 3   ok   <- literal `3` in final/CLAIMS.md:9
+            L159                 4   ok   <- literal `4` in final/CLAIMS.md:9
+            L159                 6   ok   <- literal `6` in final/CLAIMS.md:27
+            L159                 6   ok   <- literal `6` in final/CLAIMS.md:27
+            L159                 1   ok   <- literal `1` in final/CLAIMS.md:9
+            L159                 3   ok   <- literal `3` in final/CLAIMS.md:9
+            L159                 4   ok   <- literal `4` in final/CLAIMS.md:9
+            L159                 6   ok   <- literal `6` in final/CLAIMS.md:27
+            L159                 6   ok   <- literal `6` in final/CLAIMS.md:27
+            L160                95   ok   <- literal `95` in final/CLAIMS.md:3
+            L162               3.5   ok   <- structural: section number
+            L164              2026   ok   <- identifier `2026-10-06` in final/CLAIMS.md:7
+            L164                10   ok   <- identifier `2026-10-06` in final/CLAIMS.md:7
+            L164                06   ok   <- identifier `2026-10-06` in final/CLAIMS.md:7
+            L164                 8   ok   <- literal `8` in final/CLAIMS.md:27
+            L164              4501   ok   <- literal `4501` in final/CLAIMS.md:7
+            L164              4508   ok   <- literal `4508` in final/CLAIMS.md:7
+            L165           960/960   ok   <- literal `960/960` in final/CLAIMS.md:8
+            L169                 1   ok   <- literal `1` in the whitelist corpus
+            L171                 1   ok   <- literal `1` in final/CLAIMS.md:9
+            L171                 8   ok   <- literal `8` in final/CLAIMS.md:27
+            L173              4501   ok   <- literal `4501` in final/CLAIMS.md:7
+            L173              4508   ok   <- literal `4508` in final/CLAIMS.md:7
+            L173              4201   ok   <- literal `4201` in final/CLAIMS.md:17
+            L173              4208   ok   <- literal `4208` in final/CLAIMS.md:17
+            L175                 3   ok   <- identifier `A3` in final/CLAIMS.md:9
+            L175               8/8   ok   <- literal `8/8` in final/CLAIMS.md:9
+            L175                 3   ok   <- identifier `A3` in final/CLAIMS.md:9
+            L175               8/8   ok   <- literal `8/8` in final/CLAIMS.md:9
+            L176               7/8   ok   <- literal `7/8` in final/CLAIMS.md:9
+            L176               7/8   ok   <- literal `7/8` in final/CLAIMS.md:9
+            L177             +2.16   ok   <- literal `+2.16` in final/CLAIMS.md:19
+            L177              1.74   ok   <- literal `1.74` in final/CLAIMS.md:64
+            L177              2.59   ok   <- literal `2.59` in final/CLAIMS.md:64
+            L177             +1.63   ok   <- literal `+1.63` in final/CLAIMS.md:17
+            L177              1.04   ok   <- literal `1.04` in final/CLAIMS.md:17
+            L177              2.22   ok   <- literal `2.22` in final/CLAIMS.md:17
+            L178             -0.03   ok   <- literal `-0.03` in final/CLAIMS.md:64
+            L178             -0.11   ok   <- literal `-0.11` in final/CLAIMS.md:64
+            L178              0.05   ok   <- literal `0.05` in final/CLAIMS.md:64
+            L178              0.03   ok   <- literal `0.03` in final/CLAIMS.md:17
+            L178             -0.04   ok   <- literal `-0.04` in final/CLAIMS.md:17
+            L178              0.10   ok   <- literal `0.10` in final/CLAIMS.md:17
+            L179             0.825   ok   <- literal `0.825` in final/CLAIMS.md:11
+            L179             0.850   ok   <- literal `0.850` in final/CLAIMS.md:17
+            L180              0.32   ok   <- literal `0.32` in final/CLAIMS.md:19
+            L180              0.13   ok   <- value 0.13 in docs/freeze-2026-10-06.md:8
+            L180              0.50   ok   <- value 0.5 in final/tables/README.md:37
+            L180              0.18   ok   <- literal `0.18` in final/CLAIMS.md:17
+            L180              0.08   ok   <- literal `0.08` in final/CLAIMS.md:17
+            L180              0.28   ok   <- literal `0.28` in final/CLAIMS.md:17
+            L181                 3   ok   <- identifier `A3` in final/CLAIMS.md:9
+            L181              7.07   ok   <- `7.07` is 7.066 in final/CLAIMS.md:13 rounded to 2 dp
+            L181              4.90   ok   <- `4.90` is 4.904 in final/CLAIMS.md:13 rounded to 2 dp
+            L181              6.76   ok   <- `6.76` is 6.757 in final/FINAL_REPORT.md:30 rounded to 2 dp
+            L181              5.13   ok   <- `5.13` is 5.126 in final/FINAL_REPORT.md:30 rounded to 2 dp
+            L182               300   ok   <- identifier `D300` in final/CLAIMS.md:14
+            L182             -2.87   ok   <- value -2.870 in final/CLAIMS.md:14
+            L182             -4.91   ok   <- `-4.91` is -4.914 in final/CLAIMS.md:14 rounded to 2 dp
+            L182             -0.83   ok   <- `-0.83` is -0.826 in final/CLAIMS.md:14 rounded to 2 dp
+            L182             -3.19   ok   <- literal `-3.19` in final/CLAIMS.md:17
+            L182             -5.47   ok   <- `-5.47` is -5.474 in final/FINAL_REPORT.md:31 rounded to 2 dp
+            L182             -0.90   ok   <- `-0.90` is -0.899 in final/FINAL_REPORT.md:31 rounded to 2 dp
+            L184                 3   ok   <- identifier `A3` in final/CLAIMS.md:9
+            L184               7/8   ok   <- literal `7/8` in final/CLAIMS.md:9
+            L184             +2.16   ok   <- literal `+2.16` in final/CLAIMS.md:19
+            L184             +1.63   ok   <- literal `+1.63` in final/CLAIMS.md:17
+            L184              0.32   ok   <- literal `0.32` in final/CLAIMS.md:19
+            L184              0.18   ok   <- literal `0.18` in final/CLAIMS.md:17
+            L186                 3   ok   <- literal `3` in the whitelist corpus
+            L188                 2   ok   <- literal `2` in final/FINAL_REPORT.md:16
+            L190               3.6   ok   <- structural: section number
+            L192                 7   ok   <- literal `7` in final/CLAIMS.md:15
+            L192                24   ok   <- literal `24` in final/CLAIMS.md:15
+            L192                 1   ok   <- identifier `ktb_n1` in final/CLAIMS.md:15
+            L192               161   ok   <- literal `161` in final/CLAIMS.md:15
+            L192               194   ok   <- literal `194` in final/CLAIMS.md:15
+            L192                 0   ok   <- literal `0` in final/CLAIMS.md:14
+            L192                26   ok   <- literal `26` in final/CLAIMS.md:15
+            L192                43   ok   <- literal `43` in final/CLAIMS.md:15
+            L194                 4   ok   <- literal `4` in final/CLAIMS.md:9
+            L194           720/720   ok   <- literal `720/720` in final/CLAIMS.md:21
+            L195                 3   ok   <- identifier `A3` in final/CLAIMS.md:9
+            L195              4.16   ok   <- literal `4.16` in final/CLAIMS.md:21
+            L195              0.90   ok   <- literal `0.90` in final/CLAIMS.md:21
+            L195                 4   ok   <- literal `4` in final/CLAIMS.md:9
+            L196               6.0   ok   <- literal `6.0` in final/CLAIMS.md:21
+            L196               7.7   ok   <- literal `7.7` in final/CLAIMS.md:21
+            L196               1.4   ok   <- literal `1.4` in final/CLAIMS.md:21
+            L196               3.0   ok   <- literal `3.0` in final/CLAIMS.md:21
+            L202                 4   ok   <- literal `4` in the whitelist corpus
+            L204                 3   ok   <- literal `3` in final/CLAIMS.md:9
+            L204                 3   ok   <- identifier `A3` in final/CLAIMS.md:9
+            L206               3.7   ok   <- structural: section number
+            L208                 8   ok   <- literal `8` in final/CLAIMS.md:27
+            L212                 4   ok   <- literal `4` in final/CLAIMS.md:9
+            L223                 1   ok   <- literal `1` in final/CLAIMS.md:9
+            L224                 2   ok   <- literal `2` in final/FINAL_REPORT.md:16
+            L225                 3   ok   <- literal `3` in final/CLAIMS.md:9
+            L233                 1   ok   <- structural: references section
+            L233              1980   ok   <- structural: references section
+            L233                25   ok   <- structural: references section
+            L233                 3   ok   <- structural: references section
+            L233               347   ok   <- structural: references section
+            L233               360   ok   <- structural: references section
+            L234                 2   ok   <- structural: references section
+            L234              2005   ok   <- structural: references section
+            L234                39   ok   <- structural: references section
+            L234               141   ok   <- structural: references section
+            L234               167   ok   <- structural: references section
+            L235                 3   ok   <- structural: references section
+            L235      2017/12/6398   ok   <- structural: references section
+            L236                 4   ok   <- structural: references section
+            L236              2006   ok   <- structural: references section
+            L236                52   ok   <- structural: references section
+            L236                 3   ok   <- structural: references section
+            L236               311   ok   <- structural: references section
+            L236               322   ok   <- structural: references section
+            L237                 5   ok   <- structural: references section
+            L238                 6   ok   <- structural: references section
+            L238                 4   ok   <- structural: references section
+            L239                 7   ok   <- structural: references section
+            L240                 8   ok   <- structural: references section
+            L240              2015   ok   <- structural: references section
+            L240                15   ok   <- structural: references section
+            L240               186   ok   <- structural: references section
+
+TOTAL: 209 numbers in 1 file(s); 3 not whitelisted

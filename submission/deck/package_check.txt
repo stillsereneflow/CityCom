@@ -1,0 +1,8 @@
+sections present: True
+  section: 开篇
+  section: 方法与系统
+  section: 审计协议与冻结结果
+  section: 局限与展望
+  slides per section: [42, 105, 105, 42]
+slides in sldIdLst: 14
+layouts: ['ppt/slideLayouts/slideLayout1.xml', 'ppt/slideLayouts/slideLayout2.xml', 'ppt/slideLayouts/slideLayout3.xml', 'ppt/slideLayouts/slideLayout4.xml']

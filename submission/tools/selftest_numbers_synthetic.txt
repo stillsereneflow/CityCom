@@ -1,0 +1,16 @@
+
+=== submission\tools\selftest_numbers_synthetic.md : 12 numbers, 4 not whitelisted ===
+              L3             +2.16   ok   <- literal `+2.16` in final/CLAIMS.md:19
+              L3              1.74   ok   <- literal `1.74` in final/CLAIMS.md:64
+              L3              2.59   ok   <- literal `2.59` in final/CLAIMS.md:64
+              L3              4501   ok   <- literal `4501` in final/CLAIMS.md:7
+              L3              4508   ok   <- literal `4508` in final/CLAIMS.md:7
+              L4               3.7   *** NOT WHITELISTED ***
+              L4            12.345   *** NOT WHITELISTED ***
+              L5              4321   *** NOT WHITELISTED ***
+              L5              88.8   *** NOT WHITELISTED ***
+              L6                 2   ok   <- literal `2` in final/FINAL_REPORT.md:16
+              L6              2026   ok   <- literal `2026` in final/CLAIMS.md:7
+              L6                12   ok   <- literal `12` in final/tables/t3_event_engine_coverage.md:14
+
+TOTAL: 12 numbers in 1 file(s); 4 not whitelisted

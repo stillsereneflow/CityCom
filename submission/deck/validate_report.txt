@@ -1,0 +1,290 @@
+file: submission\03_答辩PPT.pptx
+slide size: 13.33 x 7.50 in
+slides: 14
+core properties: author='' title='《城脉·涟控》' subject='' last_modified_by='' comments='' category=''
+
+=== slide 1 (layout: TITLE) ===
+  [PLACEHOLDER] Text 0 @(0.90,2.20) 11.53x1.10: 《城脉·涟控》
+  [PLACEHOLDER] Text 0 @(0.90,3.50) 11.53x0.80: 面向突发事件与模型失配的事件感知交通数字孪生
+  [TEXT_BOX] Text 2 @(0.90,4.42) 11.53x0.45: 实验室验证级原型 · 第十二届中国研究生智慧城市技术与创意设计大赛
+  [AUTO_SHAPE] Shape 3 @(0.90,5.25) 3.60x0.85: <empty>
+  [TEXT_BOX] Text 4 @(1.02,5.30) 3.36x0.75: 事件感知双模同化
+  [AUTO_SHAPE] Shape 5 @(4.86,5.25) 3.60x0.85: <empty>
+  [TEXT_BOX] Text 6 @(4.98,5.30) 3.36x0.75: 结构失配下的反事实管控
+  [AUTO_SHAPE] Shape 7 @(8.82,5.25) 3.60x0.85: <empty>
+  [TEXT_BOX] Text 8 @(8.94,5.30) 3.36x0.75: 决策保真度审计
+  [PLACEHOLDER] Slide Number Placeholder 0 @(11.83,6.95) 1.00x0.34: 1
+  <notes: 113 chars> '建议时长: 20秒\n各位评委老师好，很高兴有机会在这里进行汇报。我们今天展示的作品是《城脉·涟控》，这是一个专门面向突发'
+
+=== slide 2 (layout: CONTENT) ===
+  [PLACEHOLDER] Text 0 @(0.50,0.38) 12.33x0.85: 问题：需求同化可能掩盖事故失配
+  [AUTO_SHAPE] Shape 1 @(0.50,1.50) 12.33x0.95: <empty>
+  [TEXT_BOX] Text 2 @(0.70,1.55) 11.93x0.85: 稀疏观测下，需求变化与通行能力损失可能混淆
+  [AUTO_SHAPE] Shape 3 @(0.56,2.85) 2.75x1.75: <empty>
+  [TEXT_BOX] Text 4 @(0.69,2.90) 2.51x1.65: 通行能力骤降
+  [TEXT_BOX] Text 5 @(0.67,2.93) 0.50x0.34: 1
+  [AUTO_SHAPE] Shape 6 @(3.33,3.54) 0.36x0.36: <empty>
+  [AUTO_SHAPE] Shape 7 @(3.71,2.85) 2.75x1.75: <empty>
+  [TEXT_BOX] Text 8 @(3.83,2.90) 2.51x1.65: 下游流量下降
+  [TEXT_BOX] Text 9 @(3.81,2.93) 0.50x0.34: 2
+  [AUTO_SHAPE] Shape 10 @(6.49,3.54) 0.36x0.36: <empty>
+  [AUTO_SHAPE] Shape 11 @(6.87,2.85) 2.75x1.75: <empty>
+  [TEXT_BOX] Text 12 @(6.99,2.90) 2.51x1.65: 孪生可能压低需求
+  [TEXT_BOX] Text 13 @(6.96,2.93) 0.50x0.34: 3
+  [AUTO_SHAPE] Shape 14 @(9.63,3.54) 0.36x0.36: <empty>
+  [AUTO_SHAPE] Shape 15 @(10.02,2.85) 2.75x1.75: <empty>
+  [TEXT_BOX] Text 16 @(10.13,2.90) 2.51x1.65: 可能遗漏事故排队历史
+  [TEXT_BOX] Text 17 @(10.12,2.93) 0.50x0.34: 4
+  [TEXT_BOX] Text 18 @(0.50,5.05) 12.33x0.70: 因此动作选择与收益预测是否可信，需要分别审计
+  [PLACEHOLDER] Slide Number Placeholder 0 @(11.83,6.95) 1.00x0.34: 2
+  <notes: 195 chars> '建议时长: 45秒\n我们关注的问题是：常规数字孪生主要靠校正需求来保持同步。在稀疏观测下，需求变化与通行能力损失可能混淆'
+
+=== slide 3 (layout: CONTENT) ===
+  [PLACEHOLDER] Text 0 @(0.50,0.38) 12.33x0.85: 我们的思路：两个刻意不同的世界
+  [AUTO_SHAPE] Shape 1 @(0.50,1.50) 4.25x4.35: <empty>
+  [AUTO_SHAPE] Shape 2 @(0.50,1.50) 4.25x0.68: <empty>
+  [TEXT_BOX] Text 3 @(0.62,1.54) 4.01x0.60: 隐藏的现实世界（Proxy）
+  [TEXT_BOX] Text 4 @(0.70,2.35) 3.85x3.35: IDM 驾驶模型 | 路径文件需求 | 内含一起事故：ktb_n1 900 米处 | 两条车道封闭 15 分钟 | VMS 服从率真值 0.35
+  [AUTO_SHAPE] Shape 5 @(8.58,1.50) 4.25x4.35: <empty>
+  [AUTO_SHAPE] Shape 6 @(8.58,1.50) 4.25x0.68: <empty>
+  [TEXT_BOX] Text 7 @(8.70,1.54) 4.01x0.60: 数字孪生（Twin）
+  [TEXT_BOX] Text 8 @(8.78,2.35) 3.85x3.35: Krauss 驾驶模型 | 泊松稀疏化需求与常规同化 | VMS 服从率假设 0.30
+  [AUTO_SHAPE] Shape 9 @(5.00,1.50) 3.33x4.35: <empty>
+  [TEXT_BOX] Text 10 @(5.10,1.56) 3.13x0.55: 只有检测器消息
+  [AUTO_SHAPE] Shape 11 @(5.30,2.22) 2.73x0.36: <empty>
+  [TEXT_BOX] Text 12 @(5.12,2.75) 3.09x2.90: 14/21 个检测器 | 30 秒流量、速度、占有率 | 带噪声 | 5% 丢包
+  [AUTO_SHAPE] Shape 13 @(0.50,6.05) 12.33x0.75: <empty>
+  [TEXT_BOX] Text 14 @(0.70,6.10) 11.93x0.65: 路网几何与检测器取自香港运输署公开数据；需求为情景设定，不是标定复制品
+  [PLACEHOLDER] Slide Number Placeholder 0 @(11.83,6.95) 1.00x0.34: 3
+  <notes: 222 chars> '建议时长: 45秒\n为了严谨检验孪生在失配情况下的表现，我们构建了两个刻意不同的世界。左边是隐藏的代理世界，它使用特定的'
+
+=== slide 4 (layout: CONTENT) ===
+  [PLACEHOLDER] Text 0 @(0.50,0.38) 12.33x0.85: 三项创新与它们的检验
+  [AUTO_SHAPE] Shape 1 @(0.50,1.50) 3.91x4.90: <empty>
+  [AUTO_SHAPE] Shape 2 @(0.50,1.50) 3.91x0.85: <empty>
+  [TEXT_BOX] Text 3 @(0.62,1.56) 3.67x0.73: ① 事件感知双模同化
+  [TEXT_BOX] Text 4 @(0.72,2.50) 3.47x0.32: 做了什么
+  [TEXT_BOX] Text 5 @(0.72,2.82) 3.47x1.35: 20 个候选假设的回溯重放推断
+  [TEXT_BOX] Text 6 @(0.72,4.35) 3.47x0.32: 结果如何
+  [TEXT_BOX] Text 7 @(0.72,4.67) 3.47x1.50: 机制已验证，推断能力未达成
+  [AUTO_SHAPE] Shape 8 @(4.71,1.50) 3.91x4.90: <empty>
+  [AUTO_SHAPE] Shape 9 @(4.71,1.50) 3.91x0.85: <empty>
+  [TEXT_BOX] Text 10 @(4.83,1.56) 3.67x0.73: ② 结构失配下的反事实管控
+  [TEXT_BOX] Text 11 @(4.93,2.50) 3.47x0.32: 做了什么
+  [TEXT_BOX] Text 12 @(4.93,2.82) 3.47x1.35: 5 个动作在两个世界语义一致
+  [TEXT_BOX] Text 13 @(4.93,4.35) 3.47x0.32: 结果如何
+  [TEXT_BOX] Text 14 @(4.93,4.67) 3.47x1.50: 本场景中决策一致性得到复现
+  [AUTO_SHAPE] Shape 15 @(8.92,1.50) 3.91x4.90: <empty>
+  [AUTO_SHAPE] Shape 16 @(8.92,1.50) 3.91x0.85: <empty>
+  [TEXT_BOX] Text 17 @(9.04,1.56) 3.67x0.73: ③ 决策保真度审计
+  [TEXT_BOX] Text 18 @(9.14,2.50) 3.47x0.32: 做了什么
+  [TEXT_BOX] Text 19 @(9.14,2.82) 3.47x1.35: 预注册、冻结后只运行一次、三套独立实现复核
+  [TEXT_BOX] Text 20 @(9.14,4.35) 3.47x0.32: 结果如何
+  [TEXT_BOX] Text 21 @(9.14,4.67) 3.47x1.50: 本作品的主要证据
+  [PLACEHOLDER] Slide Number Placeholder 0 @(11.83,6.95) 1.00x0.34: 4
+  <notes: 199 chars> '建议时长: 40秒\n本项目包含三项创新，每项都附带了严格检验。\n其一，事件感知双模同化机制。我们利用 20 个假设进行并'
+
+=== slide 5 (layout: CONTENT) ===
+  [PLACEHOLDER] Text 0 @(0.50,0.38) 12.33x0.85: 事件感知引擎怎样工作
+  [AUTO_SHAPE] Shape 1 @(0.50,1.45) 5.40x0.58: <empty>
+  [TEXT_BOX] Text 2 @(0.66,1.49) 5.08x0.50: 1  触发：背离指数 ≥ 3，连续 2 次
+  [AUTO_SHAPE] Shape 3 @(3.06,2.04) 0.28x0.18: <empty>
+  [AUTO_SHAPE] Shape 4 @(0.50,2.23) 5.40x0.58: <empty>
+  [TEXT_BOX] Text 5 @(0.66,2.27) 5.08x0.50: 2  疑似事件：冻结需求
+  [AUTO_SHAPE] Shape 6 @(3.06,2.82) 0.28x0.18: <empty>
+  [AUTO_SHAPE] Shape 7 @(0.50,3.01) 5.40x0.58: <empty>
+  [TEXT_BOX] Text 8 @(0.66,3.05) 5.08x0.50: 3  20 个假设回溯重放评分
+  [AUTO_SHAPE] Shape 9 @(3.06,3.60) 0.28x0.18: <empty>
+  [AUTO_SHAPE] Shape 10 @(0.50,3.79) 5.40x0.58: <empty>
+  [TEXT_BOX] Text 11 @(0.66,3.83) 5.08x0.50: 4  采纳 / 误报 / 故障 / 降级
+  [AUTO_SHAPE] Shape 12 @(3.06,4.38) 0.28x0.18: <empty>
+  [AUTO_SHAPE] Shape 13 @(0.50,4.57) 5.40x0.58: <empty>
+  [TEXT_BOX] Text 14 @(0.66,4.61) 5.08x0.50: 5  事件同化
+  [AUTO_SHAPE] Shape 15 @(3.06,5.16) 0.28x0.18: <empty>
+  [AUTO_SHAPE] Shape 16 @(0.50,5.35) 5.40x0.58: <empty>
+  [TEXT_BOX] Text 17 @(0.66,5.39) 5.08x0.50: 6  解除
+  [AUTO_SHAPE] Shape 18 @(3.06,5.94) 0.28x0.18: <empty>
+  [AUTO_SHAPE] Shape 19 @(0.50,6.13) 5.40x0.58: <empty>
+  [TEXT_BOX] Text 20 @(0.66,6.17) 5.08x0.50: 7  恢复
+  [TEXT_BOX] Text 21 @(6.20,1.45) 6.63x0.50: 假设库：20 个候选
+  [TABLE] Table 0 @(6.20,2.05) 6.63x1.00
+      table rows=4 cols=3 rowH=[0.62, 0.62, 0.62, 0.62]
+      row0: 假设族 || 数量 || 先验
+      row1: 事故 || 10 || 1/3
+      row2: 需求 || 4 || 1/3
+      row3: 检测器故障 || 6 || 1/3
+  [TEXT_BOX] Text 22 @(6.20,4.60) 6.63x0.40: 三类假设族，先验均为 1/3
+  [AUTO_SHAPE] Shape 23 @(6.20,5.05) 6.63x1.50: <empty>
+  [TEXT_BOX] Text 24 @(6.34,5.15) 6.35x0.82: 20
+  [TEXT_BOX] Text 25 @(6.34,5.89) 6.35x0.57: 候选假设，逐一回溯重放评分
+  [PLACEHOLDER] Slide Number Placeholder 0 @(11.83,6.95) 1.00x0.34: 5
+  <notes: 181 chars> '建议时长: 40秒\n让我们看一看事件引擎怎样工作。在常规状态下系统只做需求同化；当上下游检测器出现异常背离时，引擎会触发'
+
+=== slide 6 (layout: CONTENT) ===
+  [PLACEHOLDER] Text 0 @(0.50,0.38) 12.33x0.85: 事件引擎：如实报告
+  [AUTO_SHAPE] Shape 1 @(0.50,1.50) 3.91x1.60: <empty>
+  [TEXT_BOX] Text 2 @(0.64,1.60) 3.63x0.88: 13
+  [TEXT_BOX] Text 3 @(0.64,2.40) 3.63x0.61: 次疑似事件
+  [AUTO_SHAPE] Shape 4 @(4.71,1.50) 3.91x1.60: <empty>
+  [TEXT_BOX] Text 5 @(4.85,1.60) 3.63x0.88: 25
+  [TEXT_BOX] Text 6 @(4.85,2.40) 3.63x0.61: 次假设评估
+  [AUTO_SHAPE] Shape 7 @(8.92,1.50) 3.91x1.60: <empty>
+  [TEXT_BOX] Text 8 @(9.06,1.60) 3.63x0.88: 0/6
+  [TEXT_BOX] Text 9 @(9.06,2.40) 3.63x0.61: 6 个事故运行中 0 个自然采纳
+  [TEXT_BOX] Text 10 @(0.60,3.45) 12.13x3.00: 强制采纳时，替换、解除、恢复流程完整运行；解除 3/3 过早，恢复 1/4 正常完成 | 需求冲击（实际流量只增加 5–8%）与传感器卡死在正常读数都未触发报警；EVT 与 CONV 的排队预测相同 | 离线回放诊断：改用点封堵并给出真实起始时刻后，会采纳的评估从 0/13 升到 6/13
+  [PLACEHOLDER] Slide Number Placeholder 0 @(11.83,6.95) 1.00x0.34: 6
+  <notes: 266 chars> '建议时长: 45秒\n我们如实报告引擎的检验结果。在包含事故的 6 个运行中，引擎触发了 13 次疑似事件，完成了 25 '
+
+=== slide 7 (layout: CONTENT) ===
+  [PLACEHOLDER] Text 0 @(0.50,0.38) 12.33x0.85: 决策环：五个动作的反事实推演
+  [TABLE] Table 0 @(0.50,1.50) 12.33x1.00
+      table rows=6 cols=4 rowH=[0.52, 0.52, 0.52, 0.52, 0.52, 0.52]
+      row0: 动作 || 含义 || 孪生预测收益（车·时） || 代理世界实现收益（车·时）
+      row1: A0 || 无动作 || 0.00 || 0.00
+      row2: A1 || 事故信号预案 || −0.09 || 0.11
+      row3: A2 || VMS 诱导绕行 || 4.74 || 3.62
+      row4: A3 || 信号预案 + VMS || 7.53 || 4.45
+      row5: A4 || 加强 VMS || 4.34 || 4.64
+  [TEXT_BOX] Text 1 @(0.50,4.66) 12.33x0.62: 种子 4501：孪生在 R₁ 选 A3，代理世界在 M₁ 选 A3 作为审计参照；表中收益在 R₂/M₂ 评估。M₂ 中 A4 的实现收益（4.64）略高于 A3（4.45），遗憾为 0 仅因两边选中的动作相同；A3 预测收益 7.53，代理世界实现收益 4.45（车·时）
+  [AUTO_SHAPE] Shape 2 @(0.50,5.35) 6.00x1.00: <empty>
+  [TEXT_BOX] Text 3 @(0.64,5.45) 5.72x0.55: R₁ 选 A3 · M₁ 参照 A3
+  [TEXT_BOX] Text 4 @(0.64,5.91) 5.72x0.38: 种子 4501：选择组与审计参照
+  [AUTO_SHAPE] Shape 5 @(6.83,5.35) 6.00x1.00: <empty>
+  [TEXT_BOX] Text 6 @(6.97,5.45) 5.72x0.55: 7.53 / 4.45
+  [TEXT_BOX] Text 7 @(6.97,5.91) 5.72x0.38: 孪生预测收益 / 代理世界实现收益（车·时）
+  [TEXT_BOX] Text 8 @(0.50,6.40) 12.33x0.40: 注：决策时刻 5,100 秒，评估时域 15 分钟，指标为总通行时间
+  [PLACEHOLDER] Slide Number Placeholder 0 @(11.83,6.95) 1.00x0.34: 7
+  <notes: 281 chars> '建议时长: 45秒\n进入决策环，我们对 5 个基础设施动作进行推演：A0 代表无动作；A1 事故预案；A2 诱导绕行；A'
+
+=== slide 8 (layout: CONTENT) ===
+  [PLACEHOLDER] Text 0 @(0.50,0.38) 12.33x0.85: 审计协议：怎样检验孪生的建议
+  [AUTO_SHAPE] Shape 1 @(0.50,1.60) 3.70x2.00: <empty>
+  [AUTO_SHAPE] Shape 2 @(0.68,1.76) 0.50x0.50: <empty>
+  [TEXT_BOX] Text 3 @(0.68,1.76) 0.50x0.50: 1
+  [TEXT_BOX] Text 4 @(0.70,2.35) 3.30x1.10: 两个世界在同一决策时刻保存状态
+  [AUTO_SHAPE] Shape 5 @(4.23,2.42) 0.54x0.36: <empty>
+  [AUTO_SHAPE] Shape 6 @(4.80,1.60) 3.70x2.00: <empty>
+  [AUTO_SHAPE] Shape 7 @(4.98,1.76) 0.50x0.50: <empty>
+  [TEXT_BOX] Text 8 @(4.98,1.76) 0.50x0.50: 2
+  [TEXT_BOX] Text 9 @(5.00,2.35) 3.30x1.10: 各自执行 5 个动作，使用公共随机数，选择用重复与评估用重复分开
+  [AUTO_SHAPE] Shape 10 @(8.53,2.42) 0.54x0.36: <empty>
+  [AUTO_SHAPE] Shape 11 @(9.10,1.60) 3.70x2.00: <empty>
+  [AUTO_SHAPE] Shape 12 @(9.28,1.76) 0.50x0.50: <empty>
+  [TEXT_BOX] Text 13 @(9.28,1.76) 0.50x0.50: 3
+  [TEXT_BOX] Text 14 @(9.30,2.35) 3.30x1.10: 计算收益估计误差、决策遗憾、排序一致性、校准差异
+  [AUTO_SHAPE] Shape 15 @(0.50,3.95) 12.33x1.00: <empty>
+  [TEXT_BOX] Text 16 @(0.70,4.00) 11.93x0.90: 公共随机数：选择用重复（R1）与评估用重复（R2）分开
+  [TEXT_BOX] Text 17 @(0.50,5.15) 12.33x0.35: 流程保证
+  [AUTO_SHAPE] Shape 18 @(0.50,5.60) 2.90x0.80: <empty>
+  [TEXT_BOX] Text 19 @(0.60,5.64) 2.70x0.72: 预注册
+  [AUTO_SHAPE] Shape 20 @(3.64,5.60) 2.90x0.80: <empty>
+  [TEXT_BOX] Text 21 @(3.74,5.64) 2.70x0.72: 设计冻结（2026-10-06）
+  [AUTO_SHAPE] Shape 22 @(6.78,5.60) 2.90x0.80: <empty>
+  [TEXT_BOX] Text 23 @(6.88,5.64) 2.70x0.72: 测试种子从未使用过
+  [AUTO_SHAPE] Shape 24 @(9.92,5.60) 2.90x0.80: <empty>
+  [TEXT_BOX] Text 25 @(10.02,5.64) 2.70x0.72: 只运行一次
+  [PLACEHOLDER] Slide Number Placeholder 0 @(11.83,6.95) 1.00x0.34: 8
+  <notes: 171 chars> '建议时长: 35秒\n为了严谨检验孪生建议，我们实施了审计协议：首先，两个世界在同一时刻保存状态；然后，各自独立执行动作，'
+
+=== slide 9 (layout: CONTENT) ===
+  [PLACEHOLDER] Text 0 @(0.50,0.38) 12.33x0.85: 冻结测试结果（核心页）
+  [AUTO_SHAPE] Shape 1 @(0.50,1.50) 5.50x0.84: <empty>
+  [TEXT_BOX] Text 2 @(0.66,1.56) 2.20x0.72: 8/8
+  [TEXT_BOX] Text 3 @(2.92,1.56) 2.97x0.72: A3 选择
+  [AUTO_SHAPE] Shape 4 @(0.50,2.48) 5.50x0.84: <empty>
+  [TEXT_BOX] Text 5 @(0.66,2.54) 2.20x0.72: 7/8
+  [TEXT_BOX] Text 6 @(2.92,2.54) 2.97x0.72: 与事后最优一致
+  [AUTO_SHAPE] Shape 7 @(0.50,3.46) 5.50x0.84: <empty>
+  [TEXT_BOX] Text 8 @(0.66,3.52) 2.20x0.72: +2.16
+  [TEXT_BOX] Text 9 @(2.92,3.52) 2.97x0.72: 收益估计误差 车·时 · 95% CI [1.74, 2.59]
+  [AUTO_SHAPE] Shape 10 @(0.50,4.44) 5.50x0.84: <empty>
+  [TEXT_BOX] Text 11 @(0.66,4.50) 2.20x0.72: −0.03
+  [TEXT_BOX] Text 12 @(2.92,4.50) 2.97x0.72: 遗憾
+  [AUTO_SHAPE] Shape 13 @(0.50,5.42) 5.50x0.84: <empty>
+  [TEXT_BOX] Text 14 @(0.66,5.48) 2.20x0.72: 0.825
+  [TEXT_BOX] Text 15 @(2.92,5.48) 2.97x0.72: Spearman 排序一致性
+  [PICTURE] Image 0 @(6.30,1.50) 6.53x4.55
+  [TEXT_BOX] Text 16 @(6.30,6.10) 6.53x0.30: 图 1　开发审计与冻结测试的收益估计误差（BEE，车·时）
+  [TEXT_BOX] Text 17 @(0.50,6.45) 12.33x0.40: 960/960 个分支成功；随机数隔离检验通过；三套独立实现复核，均值一致
+  [PLACEHOLDER] Slide Number Placeholder 0 @(11.83,6.95) 1.00x0.34: 9
+  <notes: 250 chars> '建议时长: 50秒\n这是核心的冻结测试结果，来自 8 个未见过的测试种子。测试中，960/960 个分支全部顺利执行；随'
+
+=== slide 10 (layout: CONTENT) ===
+  [PLACEHOLDER] Text 0 @(0.50,0.38) 12.33x0.85: 动作排序一致，但收益被高估
+  [PICTURE] Image 0 @(0.50,1.50) 6.20x4.21
+  [TEXT_BOX] Text 1 @(0.50,5.76) 6.20x0.30: 图 2　各动作收益：孪生预测与代理世界实现（车·时）
+  [TEXT_BOX] Text 2 @(7.00,1.55) 5.83x2.10: 冻结集的平均动作收益在两个世界均以 A3 最高；逐种子选择一致 7/8 | A3 收益孪生预测 7.07，代理世界实现 4.90（车·时） | 校准差异 0.32 车·时，作为工具自身的噪声水平并列报告，不从误差中扣除
+  [AUTO_SHAPE] Shape 3 @(7.00,3.75) 5.83x1.25: <empty>
+  [TEXT_BOX] Text 4 @(7.16,3.81) 2.33x1.13: 7.07 → 4.90
+  [TEXT_BOX] Text 5 @(9.57,3.81) 3.15x1.13: A3 收益（车·时）：孪生预测 / 代理世界实现
+  [AUTO_SHAPE] Shape 6 @(7.00,5.15) 5.83x1.25: <empty>
+  [TEXT_BOX] Text 7 @(7.16,5.21) 2.33x1.13: 0.32 车·时
+  [TEXT_BOX] Text 8 @(9.57,5.21) 3.15x1.13: 校准差异：工具自身噪声水平，不从误差中扣除
+  [PLACEHOLDER] Slide Number Placeholder 0 @(11.83,6.95) 1.00x0.34: 10
+  <notes: 191 chars> '建议时长: 40秒\n这张图详细对比了收益预测与实际情况。按冻结集的平均动作收益，两个世界都把 A3 排在第一位；逐种子看'
+
+=== slide 11 (layout: CONTENT) ===
+  [PLACEHOLDER] Text 0 @(0.50,0.38) 12.33x0.85: 为什么：缺失的排队历史
+  [PICTURE] Image 0 @(1.67,1.45) 5.18x2.70
+  [TEXT_BOX] Text 1 @(1.67,4.20) 5.18x0.30: 图 3　决策时刻状态（Proxy 有排队，Twin 为空）
+  [PICTURE] Image 1 @(7.45,1.45) 4.21x2.70
+  [TEXT_BOX] Text 2 @(7.45,4.20) 4.21x0.30: 图 4　缺失排队诊断：回放事故历史后的 A3 收益误差
+  [TEXT_BOX] Text 3 @(0.60,4.55) 12.13x1.35: 决策时刻，代理世界走廊上有 7–24 辆停驶车辆，孪生为 0 | 缺失排队诊断（4 个种子，真值辅助解除）：回放事故历史后，固定 A3 的绝对收益误差由 4.16 降至 0.90；完整动作排序未改善 | 冻结 D300 对照：固定 A3 的孪生预测/代理收益为 0.21/4.90（不是 D300 所选动作的平均收益）
+  [AUTO_SHAPE] Shape 4 @(0.50,5.95) 12.33x0.85: <empty>
+  [TEXT_BOX] Text 5 @(0.70,6.00) 11.93x0.75: 解释：结果与“误差相互抵消”一致——孪生假设封堵持续，这部分抵消了它缺失的事故历史；尚未证明因果机制
+  [PLACEHOLDER] Slide Number Placeholder 0 @(11.83,6.95) 1.00x0.34: 11
+  <notes: 404 chars> '建议时长: 55秒\n为什么动作一致而收益偏高？我们进行了缺失排队诊断。在决策时刻，代理世界走廊上已积累 7 到 24 辆'
+
+=== slide 12 (layout: CONTENT) ===
+  [PLACEHOLDER] Text 0 @(0.50,0.38) 12.33x0.85: 冻结测试与开发审计对照
+  [TABLE] Table 0 @(0.50,1.50) 12.33x1.00
+      table rows=7 cols=3 rowH=[0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55]
+      row0: 指标 || 开发审计（种子 4201–4208） || 冻结测试（种子 4501–4508）
+      row1: A3 选择 || 8/8 || 8/8
+      row2: 一致性 || 7/8 || 7/8
+      row3: 收益估计误差（车·时） || +1.63 [1.04, 2.22] || +2.16 [1.74, 2.59]
+      row4: 遗憾 || 0.03 [−0.04, 0.10] || −0.03 [−0.11, 0.05]
+      row5: Spearman || 0.850 || 0.825
+      row6: 校准差异 || 0.18 [0.08, 0.28] || 0.32 [0.13, 0.50]
+  [AUTO_SHAPE] Shape 1 @(0.50,5.55) 12.33x1.20: <empty>
+  [TEXT_BOX] Text 2 @(0.70,5.60) 11.93x1.10: 冻结测试复现了本场景中的规律；+2.16 对 +1.63 等差别不能确定两组不同，两组不合并
+  [PLACEHOLDER] Slide Number Placeholder 0 @(11.83,6.95) 1.00x0.34: 12
+  <notes: 182 chars> '建议时长: 35秒\n我们将本次严谨的冻结测试与前期的开发阶段相对比，两者反映出的规律一致。冻结测试复现了本场景的核心特征'
+
+=== slide 13 (layout: CONTENT) ===
+  [PLACEHOLDER] Text 0 @(0.50,0.38) 12.33x0.85: 局限与边界
+  [AUTO_SHAPE] Shape 1 @(0.50,1.50) 12.33x0.95: <empty>
+  [AUTO_SHAPE] Shape 2 @(0.75,1.70) 0.55x0.55: <empty>
+  [TEXT_BOX] Text 3 @(0.75,1.70) 0.55x0.55: !
+  [TEXT_BOX] Text 4 @(1.55,1.58) 11.03x0.79: 单一合成走廊与事故类型，8 个测试种子
+  [AUTO_SHAPE] Shape 5 @(0.50,2.60) 12.33x0.95: <empty>
+  [AUTO_SHAPE] Shape 6 @(0.75,2.80) 0.55x0.55: <empty>
+  [TEXT_BOX] Text 7 @(0.75,2.80) 0.55x0.55: !
+  [TEXT_BOX] Text 8 @(1.55,2.68) 11.03x0.79: 审计中的事故信念是给定的，不是在线推断得到的
+  [AUTO_SHAPE] Shape 9 @(0.50,3.70) 12.33x0.95: <empty>
+  [AUTO_SHAPE] Shape 10 @(0.75,3.90) 0.55x0.55: <empty>
+  [TEXT_BOX] Text 11 @(0.75,3.90) 0.55x0.55: !
+  [TEXT_BOX] Text 12 @(1.55,3.78) 11.03x0.79: 引擎未自然采纳事故；新开发运行无自然解除、恢复或降级覆盖（强制试验另列）
+  [AUTO_SHAPE] Shape 13 @(0.50,4.80) 12.33x0.95: <empty>
+  [AUTO_SHAPE] Shape 14 @(0.75,5.00) 0.55x0.55: <empty>
+  [TEXT_BOX] Text 15 @(0.75,5.00) 0.55x0.55: !
+  [TEXT_BOX] Text 16 @(1.55,4.88) 11.03x0.79: 常规同化未通过资格检验，温度系数与阈值未标定
+  [AUTO_SHAPE] Shape 17 @(0.50,5.95) 12.33x0.85: <empty>
+  [TEXT_BOX] Text 18 @(0.70,6.00) 11.93x0.75: 我们不声称：可靠的事故推断、可部署、真实道路有效、事件同化更优、收益预测普遍准确
+  [PLACEHOLDER] Slide Number Placeholder 0 @(11.83,6.95) 1.00x0.34: 13
+  <notes: 264 chars> '建议时长: 50秒\n本着诚实透明的精神，我们明确声明作品的局限。\n第一，测试仅覆盖了单一的合成走廊与事故类型，使用了 8'
+
+=== slide 14 (layout: SECTION) ===
+  [PLACEHOLDER] Text 0 @(0.50,0.38) 12.33x0.85: 应用前景与总结
+  [AUTO_SHAPE] Shape 1 @(0.50,2.25) 3.70x1.25: <empty>
+  [TEXT_BOX] Text 2 @(0.65,2.30) 3.40x1.15: 离线决策保真度审计
+  [AUTO_SHAPE] Shape 3 @(4.23,2.69) 0.54x0.36: <empty>
+  [AUTO_SHAPE] Shape 4 @(4.80,2.25) 3.70x1.25: <empty>
+  [TEXT_BOX] Text 5 @(4.95,2.30) 3.40x1.15: 真实数据验证与可靠事件推断
+  [AUTO_SHAPE] Shape 6 @(8.53,2.69) 0.54x0.36: <empty>
+  [AUTO_SHAPE] Shape 7 @(9.10,2.25) 3.70x1.25: <empty>
+  [TEXT_BOX] Text 8 @(9.25,2.30) 3.40x1.15: 人在回路的辅助提示
+  [TEXT_BOX] Text 9 @(0.90,3.75) 11.53x1.00: 以下是待验证的应用设想：先开展离线决策保真度审计；真实数据验证与可靠事件推断达成后，再研究人在回路的辅助提示。当前不作安全保证或部署承诺。
+  [TEXT_BOX] Text 10 @(0.90,4.95) 11.53x1.00: 在模型失配与事故未知时，先检验孪生的建议是否可信，再谈使用
+  [PLACEHOLDER] Slide Number Placeholder 0 @(11.83,6.95) 1.00x0.34: 14
+  <notes: 183 chars> '建议时长: 45秒\n最后是这套系统的应用前景。在现实中，模型失配是常态。面对这种情况，盲目听从数字孪生的管控建议是充满风'

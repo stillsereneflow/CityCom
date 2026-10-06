@@ -1,0 +1,14 @@
+# Structural numbers that may appear in any submission file and are not claims.
+# One entry per line; "#" starts a comment; "a-b" is an inclusive range.
+# Formats are normalised exactly as in check_numbers.py (+2.16 == 2.16, 2.16 matches 2.162).
+#
+# section, list and slide numbers
+1-30
+# competition year and the project's freeze dates
+2026
+2026-10-06
+2026-10-16
+# competition edition
+12
+# protocol durations and clock times (seconds) used by the frozen design
+15 30 60 90 120 180 300 600 900 1500 3600 4500 5100 5400 7200

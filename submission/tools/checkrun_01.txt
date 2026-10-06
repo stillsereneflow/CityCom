@@ -1,0 +1,31 @@
+
+=== submission\01_项目简表.md : 27 numbers, 0 not whitelisted ===
+             L10                 1   ok   <- literal `1` in final/CLAIMS.md:9
+             L11                 2   ok   <- literal `2` in final/FINAL_REPORT.md:16
+             L12                 3   ok   <- literal `3` in final/CLAIMS.md:9
+             L21                 1   ok   <- identifier `ktb_n1` in final/CLAIMS.md:15
+             L21                15   ok   <- literal `15` in final/CLAIMS.md:3
+             L22                21   ok   <- literal `21` in final/METHOD.md:13
+             L22                14   ok   <- literal `14` in final/FINAL_REPORT.md:52
+             L22                30   ok   <- literal `30` in final/CLAIMS.md:57
+             L22                 5   ok   <- literal `5` in final/CLAIMS.md:27
+             L26                10   ok   <- literal `10` in final/CLAIMS.md:7
+             L26                 4   ok   <- literal `4` in final/CLAIMS.md:9
+             L26                 6   ok   <- literal `6` in final/CLAIMS.md:27
+             L26                20   ok   <- literal `20` in final/CLAIMS.md:23
+             L29                 5   ok   <- literal `5` in final/CLAIMS.md:27
+             L29                15   ok   <- literal `15` in final/CLAIMS.md:3
+             L53                 8   ok   <- literal `8` in final/CLAIMS.md:27
+             L57               8/8   ok   <- literal `8/8` in final/CLAIMS.md:9
+             L57                 3   ok   <- identifier `A3` in final/CLAIMS.md:9
+             L58               7/8   ok   <- literal `7/8` in final/CLAIMS.md:9
+             L59             +2.16   ok   <- literal `+2.16` in final/CLAIMS.md:19
+             L59                95   ok   <- literal `95` in final/CLAIMS.md:3
+             L59              1.74   ok   <- literal `1.74` in final/CLAIMS.md:64
+             L59              2.59   ok   <- literal `2.59` in final/CLAIMS.md:64
+             L60             -0.03   ok   <- literal `-0.03` in final/CLAIMS.md:64
+             L60             -0.11   ok   <- literal `-0.11` in final/CLAIMS.md:64
+             L60              0.05   ok   <- literal `0.05` in final/CLAIMS.md:64
+             L61             0.825   ok   <- literal `0.825` in final/CLAIMS.md:11
+
+TOTAL: 27 numbers in 1 file(s); 0 not whitelisted
