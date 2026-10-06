@@ -1,8 +1,8 @@
 # Anonymity scan - `submission/source/citypulse_source.zip`
 
-- Built from the committed tree at `HEAD` = `4fe70e01f66955ef087e25986da78f99aa23ca49` with `git archive` (never from the working directory).
-- Package: `citypulse_source.zip`, 1249.1 KiB, 140 files, `zipfile.testzip()` clean.
-- Scan time: 2026-10-06 18:12:45.
+- Built from the committed tree at `HEAD` = `c031a1951f0e3d3559c89dc902940240863fa031` with `git archive` (never from the working directory).
+- Package: `citypulse_source.zip`, 1049.2 KiB, 141 files, `zipfile.testzip()` clean.
+- Scan time: 2026-10-06 18:36:00.
 
 ## Patterns searched
 
@@ -12,7 +12,7 @@ Contextual (tier B, machine-specific but carrying no personal identifier): `home
 
 Every file in the archive was scanned - text files line by line, binary files (the two parquet tables) as UTF-8-decoded byte streams.
 
-The scan is exhaustive over the archive: all 140 entries were read back from the finished zip. The git author identity recorded by `git log` (`%an` / `%ae`) was searched for verbatim, as were user names (any suffix of the recorded name), e-mail addresses, Windows and Unix user-profile paths, the profile environment variable, Chinese and English school names, comment author lines (`Author:`, `Co-authored-by:`, `Signed-off-by:`, the at-sign author trailer) and git author lines. Every pattern is assembled from fragments at run time, so neither this report nor the packaging script contains any of the strings they search for.
+The scan is exhaustive over the archive: all 141 entries were read back from the finished zip. The git author identity recorded by `git log` (`%an` / `%ae`) was searched for verbatim, as were user names (any suffix of the recorded name), e-mail addresses, Windows and Unix user-profile paths, the profile environment variable, Chinese and English school names, comment author lines (`Author:`, `Co-authored-by:`, `Signed-off-by:`, the at-sign author trailer) and git author lines. Every pattern is assembled from fragments at run time, so neither this report nor the packaging script contains any of the strings they search for.
 
 The anonymity reports use these placeholders for the identifying strings they describe: 〈用户名样例〉 〈邮箱样例〉 〈姓名样例〉 〈院校样例〉 〈本地用户路径样例〉 (user name, e-mail, personal name, institution, local user path).
 
@@ -138,13 +138,14 @@ Every match was found by the exhaustive scan of the finished archive; the table 
 | `final/demo/README.md` | 3986 |
 | `final/demo/decision_card.py` | 5153 |
 | `final/demo/decision_cards.txt` | 12413 |
-| `final/figures/fig1_bee_dev_vs_frozen.png` | 82269 |
-| `final/figures/fig2_gain_predicted_vs_realised.png` | 75640 |
-| `final/figures/fig3_action_gains.png` | 64865 |
-| `final/figures/fig4_missing_queue.png` | 73443 |
-| `final/figures/fig5_queue_at_decision_time.png` | 96831 |
+| `final/figures/FIG1_RELABEL_DONE` | 0 |
+| `final/figures/fig1_bee_dev_vs_frozen.png` | 34284 |
+| `final/figures/fig2_gain_predicted_vs_realised.png` | 30816 |
+| `final/figures/fig3_action_gains.png` | 25905 |
+| `final/figures/fig4_missing_queue.png` | 31023 |
+| `final/figures/fig5_queue_at_decision_time.png` | 43199 |
 | `final/figures/figure_data.csv` | 6218 |
-| `final/figures/generate_figures.py` | 28572 |
+| `final/figures/generate_figures.py` | 28614 |
 | `final/tables/README.md` | 4878 |
 | `final/tables/build_tables.py` | 42925 |
 | `final/tables/t1_frozen_per_seed.csv` | 2744 |
