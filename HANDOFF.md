@@ -1,13 +1,13 @@
 # CityCom handoff: where the work stands and what comes next
 
-Last updated: 2026-10-06 06:40 (session 2 end: replay diagnosis, missing-queue test (Support), dev runs + checks, frozen audit preregistered and implemented; awaiting go for the frozen audit).
+Last updated: 2026-10-06 (PROJECT COMPLETE: design frozen 2026-10-06, frozen test audit run once, final evidence package in `D:/CityCom-astra/final/`).
 
 **When the user says "resume" (or anything like "continue", "pick up where we left off"), read this file, then do "On resume" below, then carry on with the queue.**
 
 ## Project in one paragraph
 
 This is the 12th China Postgraduate Smart City competition entry 《城脉·涟控》. It is an event-aware traffic digital twin on a synthetic corridor shaped like Kwun Tong Road / Kwun Tong Bypass.
-- **Deadlines:** submission 2026-10-25 12:00; design freeze 2026-10-16; results freeze 2026-10-18.
+- **Deadlines:** submission 2026-10-25 12:00. The design freeze was moved forward to **2026-10-06** on the user's instruction; results are final.
 - **Plan of record:** `D:/CityCom/deep-research-report2.md`.
 - **Two worlds:**
   - **Proxy** (hidden "real world"): IDM `pdist` drivers, with incidents injected;
@@ -23,7 +23,20 @@ This is the 12th China Postgraduate Smart City competition entry 《城脉·涟�
 - Python: `D:/CityCom/.venv/Scripts/python.exe` (SUMO 1.27.1).
 - Env: `PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 CITYPULSE_NET=blite CITYPULSE_BLITE_REV=5 CITYPULSE_REROUTE=0`.
 - Frozen baseline: net5 / synth5 (`results/blite/synth5/READY`).
-- Tests: `python -m pytest -q tests` gave 112 passed / 3 skipped at a61e2bc.
+- Tests: `python -m pytest -q tests` gives 222 passed / 3 skipped at 4fe70e0.
+
+## FINAL STATE (read this first)
+
+- **Evidence package:** `D:/CityCom-astra/final/` (`README.md`, `FINAL_REPORT.md`, `CLAIMS.md` en+zh, `METHOD.md`, `figures/`, `tables/`, `demo/`); commit 4fe70e0.
+- **Freeze:** `docs/freeze-2026-10-06.md` (+ Amendment A) and manifest `results/freeze/freeze_manifest.json`. Frozen code ed03254; collection at dcec083 after a Codex GO (4 rounds of pre-collection tooling fixes, none to the method).
+- **Frozen test audit** (`results/frozen_audit/`, aa7de30; seeds 4501–4508, now consumed):
+  - 960/960 branches ok;
+  - belief B: a\* A3 8/8, oracle 7/8, BEE +2.162 [1.738, 2.586], regret −0.034, Spearman 0.825, calibration discrepancy 0.316;
+  - D300 control: BEE −2.870.
+  - It replicates the development audit's scenario-specific pattern.
+  - Verified by three independent implementations (analyzer, Claude, agy-pro); Codex final ruling: no defect, no core work missing.
+- **Allowed claims:** `final/CLAIMS.md` only. No post-freeze defects.
+- **Remaining (non-core):** turning the evidence package into the competition submission documents (Chinese write-up, slides, demo video) by 2026-10-25. No experiment is pending.
 
 ## Decision documents, in order (all in `D:/CityCom-astra/docs/`)
 
@@ -62,9 +75,9 @@ Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/s
 
 ## On resume (do these first, in order)
 
-1. **List the run directory** `C:/Users/chenq/.claude/runs/D--CityCom/` and handle every dispatch *directory* without a `merged` marker (loose files there are old prompts, not dispatches). At handoff (2026-10-06 ~06:40), every dispatch was merged.
-2. **State:** development runs done and checked (`docs/decision-2026-10-06-dev-runs.md`, 53e4730). Frozen-audit code is implemented and smoke-tested on dev seed 4201 (ed03254): `citypulse/experiments/frozen_audit.py` (prepare / twoworld / rngcheck / branches / statehistory) and `frozen_audit_analyze.py` (analyze). **Seeds 4501–4508 are untouched.**
-3. **Open decision for the user:** run the frozen audit now (declaring the design freeze early, since Codex ruled "freeze unchanged") or wait for Oct 16. Once the user says go: `frozen_audit.py prepare` (clean tree) → `twoworld` → `rngcheck --seed 4501` → `branches` (detached, ~1–2 h) → `statehistory` → `frozen_audit_analyze.py analyze --dir results/frozen_audit`. Then verify from raw, Codex review, and start the write-up with the coverage-and-claims table.
+1. **List the run directory** `C:/Users/chenq/.claude/runs/D--CityCom/` and handle every dispatch *directory* without a `merged` marker (loose files there are old prompts, not dispatches). At the final handoff every dispatch was merged.
+2. **The method is frozen and the test seeds are consumed.** Do not change the method, do not rerun the frozen audit, and do not pool development and test results. Any new experiment would need fresh seeds, a new preregistration and the user's go.
+3. Remaining work, if asked, is submission writing from `final/`: every number and claim must come from `final/CLAIMS.md`.
 
 ## Queue (from `decision-2026-10-05-roadmap.md`)
 
@@ -75,10 +88,11 @@ Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/s
 | Oct 10–12 | Matched-observation replay diagnosis | done (3b5e575, 302152e) |
 | Oct 5–6 | Missing-queue test (`oct11-missing-queue-plan.md`) | done: **Support** (816829c); ruling and claim wording in `docs/decision-2026-10-06-missing-queue.md` (2e333b0) |
 | Oct 6 | Fresh INC/NOI/SHK/DET development runs (`oct13-dev-runs-plan.md`, rev 2, 382db30; seeds 4401–4406) | done (b06513a), checks 3d60548, decision 53e4730 |
-| Oct 6 | Frozen-audit preregistration + implementation (`oct16-frozen-audit-plan.md`, seeds 4501–4508) | prereg d7d5935 (Codex ACCEPT); code ed03254, smoke-tested; collection awaits go |
-| Oct 16 | **Design freeze** | |
-| Oct 16–18 | Frozen audit on fresh test seeds | |
-| Oct 18 | **Results freeze**, then writing the submission | |
+| Oct 6 | Frozen-audit preregistration + implementation (`oct16-frozen-audit-plan.md`, seeds 4501–4508) | prereg d7d5935 (Codex ACCEPT); code ed03254 |
+| Oct 6 | **Design freeze** (moved forward) | 7a6a5ed + Amendment A; collection commit dcec083 |
+| Oct 6 | Frozen audit on fresh test seeds | done, aa7de30 |
+| Oct 6 | **Results final**; evidence package | done, 4fe70e0 |
+| by Oct 25 | Submission documents from `final/` | not started (non-core) |
 
 Seeds already used:
 - 1001–1003, 3001–3004: development / evaluation;
@@ -87,7 +101,7 @@ Seeds already used:
 - 5001–5008: NA-300;
 - 4301–4304: missing-queue test;
 - 4401–4406: development runs;
-- 4501–4508: frozen audit (preregistered, untouched).
+- 4501–4508: frozen test audit (consumed 2026-10-06).
 
 **6001–6008 are reserved for E\* and untouched.** Pick fresh ranges for anything new, and check that no result uses them.
 
