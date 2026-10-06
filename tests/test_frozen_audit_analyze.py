@@ -159,15 +159,23 @@ def test_analyze_production_gate_positive_and_selftest_header(tmp_path):
     assert "descriptive" not in report.split("## 7. RNG isolation check")[1]
     assert "SELF-TEST" not in report
 
-    # self-test path: no gate, header states it, metrics still written
+    # production seeds can never bypass the gate, even with --selftest and a seed override
     (tmp_path / "rng_check.json").unlink()
     (tmp_path / "metrics.json").unlink()
-    bundle_st = analyze(tmp_path, seeds=(4501,), selftest=True)
-    assert bundle_st["rng_binding_enforced"] is False
-    assert (tmp_path / "metrics.json").exists()
-    report_st = (tmp_path / "report.md").read_text(encoding="utf-8")
-    assert "SELF-TEST: RNG binding not enforced" in report_st
-    assert "## 7. RNG isolation check (self-test: binding not enforced)" in report_st
+    (tmp_path / "report.md").unlink()
+    with pytest.raises(Exception):
+        analyze(tmp_path, seeds=(4501,), selftest=True)
+    assert not (tmp_path / "metrics.json").exists() and not (tmp_path / "report.md").exists()
+
+
+def test_analyze_selftest_bypass_only_for_development_seeds(tmp_path):
+    """Development-only inputs may bypass the gate under --selftest; the header states it."""
+    make_dataset(seeds=(4201,)).to_parquet(tmp_path / "raw.parquet")
+    bundle = analyze(tmp_path, seeds=(4201,), selftest=True)
+    assert bundle["rng_binding_enforced"] is False
+    report = (tmp_path / "report.md").read_text(encoding="utf-8")
+    assert "SELF-TEST: RNG binding not enforced" in report
+    assert "## 7. RNG isolation check (self-test: binding not enforced)" in report
 
 
 def test_analyze_main_refuses_production_without_binding(tmp_path, capsys):
@@ -176,8 +184,9 @@ def test_analyze_main_refuses_production_without_binding(tmp_path, capsys):
     assert main(["analyze", "--dir", str(tmp_path)]) == 2
     assert "Refusing to write production metrics" in capsys.readouterr().err
     assert not (tmp_path / "metrics.json").exists()
-    # the self-test flag is accepted and stated
-    assert main(["analyze", "--dir", str(tmp_path), "--selftest", "--seeds", "4501"]) == 0
+    # the self-test flag does not open the gate for a production seed
+    assert main(["analyze", "--dir", str(tmp_path), "--selftest", "--seeds", "4501"]) == 2
+    assert not (tmp_path / "metrics.json").exists()
 
 
 def test_claim_boundary_is_verbatim_from_the_plan():
@@ -243,6 +252,7 @@ def test_seed_set_is_the_manifest_and_absent_seeds_are_excluded_as_no_rows():
 
 
 def test_analyze_default_seeds_come_from_the_manifest_not_surviving_rows(tmp_path):
+    write_bound_audit_dir(tmp_path)          # production seeds always need a valid binding
     df = make_dataset(seeds=(4501, 4502))
     df.to_parquet(tmp_path / "raw.parquet")
     bundle = analyze(tmp_path, selftest=True)
@@ -440,11 +450,11 @@ def test_state_history_pending_unknown_never_zero():
 
 
 def test_analyze_writes_outputs_and_never_subtracts_the_floor(tmp_path):
+    write_bound_audit_dir(tmp_path)          # production seeds always need a valid binding
     df = make_dataset()
     df.to_parquet(tmp_path / "raw.parquet")
     pd.DataFrame([{"world": "proxy", "seed": 4501, "t": 5100.0, "pending_total": None, "Q": None}]
                  ).to_parquet(tmp_path / "state_history.parquet")
-    (tmp_path / "rng_check.json").write_text('{"passed": true}', encoding="utf-8")
 
     bundle = analyze(tmp_path, seeds=(4501, 4502))
     assert bundle["n_seeds"] == 2 and bundle["primary"]["n_complete_seeds"] == 2

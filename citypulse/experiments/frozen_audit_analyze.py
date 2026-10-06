@@ -506,10 +506,14 @@ def analyze(directory: Path, seeds: Optional[Sequence[int]] = None, selftest: bo
     header as "SELF-TEST: RNG binding not enforced".
     """
     directory = Path(directory)
-    enforced = seeds is None and not selftest
+    raw, state, rng = load_inputs(directory)
+    # the bypass is only for development seeds: any frozen production seed, requested or present in
+    # the raw rows, enforces the binding before any metric is computed or written
+    touches_frozen = (bool(set(FROZEN_SEEDS) & set(int(s) for s in raw["seed"].unique()))
+                      or seeds is None or bool(set(FROZEN_SEEDS) & set(int(s) for s in seeds)))
+    enforced = touches_frozen or not selftest
     if enforced:
         frozen_audit.verify_rng_binding(directory, FROZEN_SEEDS[0])
-    raw, state, rng = load_inputs(directory)
     seed_list = sorted(int(s) for s in (FROZEN_SEEDS if seeds is None else seeds))
     unexpected = sorted(set(int(s) for s in raw["seed"].unique()) - set(seed_list))
     primary = compute_belief(raw, PRIMARY_BELIEF, seed_list)
