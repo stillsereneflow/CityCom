@@ -1,7 +1,7 @@
 """Frozen offline decision audit collection driver (docs/oct16-frozen-audit-plan.md)."""
 from __future__ import annotations
 
-import argparse, gzip, hashlib, json, os, subprocess, sys, time
+import argparse, gzip, hashlib, json, os, platform, subprocess, sys, time
 import multiprocessing as mp
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Set
@@ -30,6 +30,14 @@ from citypulse.experiments.mq_replay import aggregate_q_counts, parse_proxy_pend
 
 DEFAULT_SEEDS = [4501, 4502, 4503, 4504, 4505, 4506, 4507, 4508]
 FROZEN_SEEDS, DEFAULT_OUT = set(DEFAULT_SEEDS), REPO_ROOT / "results" / "frozen_audit"
+PRODUCTION_SEED = DEFAULT_SEEDS[0]
+FREEZE_MANIFEST_PATH = REPO_ROOT / "results" / "freeze" / "freeze_manifest.json"
+RUNTIME_ENV_KEYS = ("CITYPULSE_NET", "CITYPULSE_BLITE_REV", "CITYPULSE_REROUTE",
+                    "OPENBLAS_NUM_THREADS", "PYTHONDONTWRITEBYTECODE")
+
+
+class RngBindingError(RuntimeError):
+    """The RNG isolation record is missing, failed, or no longer binds to this collection."""
 
 
 def check_seeds(results_dir: Path, target_seeds: List[int], exclude_dirs: Optional[List[Path]] = None) -> Dict[str, Any]:
@@ -101,6 +109,67 @@ def check_seeds(results_dir: Path, target_seeds: List[int], exclude_dirs: Option
         "files_scanned": files_scanned,
         "scan_failures": scan_failures,
         "matches": used,
+    }
+
+
+def runtime_environment() -> Dict[str, Any]:
+    """The runtime that actually produced a collection, not the freeze record.
+
+    Records the five environment variables that select the scenario/network, the interpreter and
+    platform, every installed distribution version (which includes eclipse-sumo/libsumo/sumolib,
+    numpy, pandas, pyarrow and pyzmq) and ``libsumo.getVersion()``.
+    """
+    import libsumo
+    from importlib import metadata as importlib_metadata
+
+    packages: Dict[str, str] = {}
+    for dist in importlib_metadata.distributions():
+        name = dist.metadata["Name"] if dist.metadata else None
+        if name:
+            packages[str(name)] = str(dist.version)
+    return {
+        "env": {key: os.environ.get(key) for key in RUNTIME_ENV_KEYS},
+        "python_version": sys.version,
+        "python_executable": sys.executable,
+        "platform": platform.platform(),
+        "packages": dict(sorted(packages.items())),
+        "libsumo_version": list(libsumo.getVersion()),
+    }
+
+
+def _sha256_json(obj: Any) -> str:
+    return hashlib.sha256(json.dumps(obj, sort_keys=True, default=str).encode("utf-8")).hexdigest()
+
+
+def collection_fingerprint(out_dir: Path) -> Dict[str, Any]:
+    """Fingerprint of the code, frozen assets and runtime environment of a collection.
+
+    ``code`` is the sorted path -> sha256 map of every ``citypulse/**/*.py`` file (with its own
+    combined hash), ``assets`` the current hashes of the paths listed in the freeze manifest's
+    ``sha256_assets``, and ``runtime_environment()`` the actual environment. ``sha256`` is the
+    combined hash over all three and is what the RNG binding records and compares. ``out_dir`` is
+    recorded for provenance but is deliberately not part of any hash.
+    """
+    out_resolved = Path(out_dir).resolve()
+    code_hashes = {p.relative_to(REPO_ROOT).as_posix(): file_sha256(p)
+                   for p in sorted((REPO_ROOT / "citypulse").rglob("*.py"))
+                   if out_resolved not in p.resolve().parents}
+    manifest = (json.loads(FREEZE_MANIFEST_PATH.read_text(encoding="utf-8"))
+                if FREEZE_MANIFEST_PATH.exists() else {})
+    asset_hashes = {}
+    for rel in sorted(manifest.get("sha256_assets", {})):
+        asset_path = REPO_ROOT / rel
+        asset_hashes[rel] = file_sha256(asset_path) if asset_path.exists() else None
+    env = runtime_environment()
+    payload = {"code": code_hashes, "assets": asset_hashes, "runtime_environment": env}
+    return {
+        "out_dir": str(out_dir),
+        "code": code_hashes,
+        "code_sha256": _sha256_json(code_hashes),
+        "assets": asset_hashes,
+        "assets_sha256": _sha256_json(asset_hashes),
+        "runtime_environment": env,
+        "sha256": _sha256_json(payload),
     }
 
 
@@ -179,8 +248,11 @@ def cmd_prepare(seeds: List[int], out_dir: Path, allow_dirty: bool = False, smok
         else:
             raise SystemExit(f"Seed check FAILED: matches={res['matches']}, scan_failures={res['scan_failures']}")
     prov = build_provenance(Path(__file__), allow_dirty=allow_dirty, seeds=seeds)
+    prov["runtime_environment"] = runtime_environment()
+    prov["collection_fingerprint"] = collection_fingerprint(out_dir)
     (out_dir / "provenance.json").write_text(json.dumps(prov, indent=2), encoding="utf-8")
-    print(f"Prepare finished: seed_check.json and provenance.json written to {out_dir}")
+    print(f"Prepare finished: seed_check.json and provenance.json (runtime environment + collection "
+          f"fingerprint {prov['collection_fingerprint']['sha256']}) written to {out_dir}")
 
 
 def cmd_twoworld(seeds: List[int], out_dir: Path, smoke: bool = False) -> None:
@@ -224,6 +296,9 @@ def cmd_twoworld(seeds: List[int], out_dir: Path, smoke: bool = False) -> None:
 def cmd_rngcheck(seed: int, out_dir: Path, smoke: bool = False) -> None:
     if smoke and seed in FROZEN_SEEDS:
         raise SystemExit("Error: --smoke flag refused when seeds include 4501-4508.")
+    prov_path = out_dir / "provenance.json"
+    if not prov_path.exists():
+        raise SystemExit(f"Refusing rngcheck: {prov_path} does not exist; run prepare first.")
     s_dir = find_seed_run_dir(seed, out_dir)
     info_file = s_dir / "two_world_info.json"
     if info_file.exists():
@@ -239,50 +314,89 @@ def cmd_rngcheck(seed: int, out_dir: Path, smoke: bool = False) -> None:
         "twin_meta": file_sha256(Path(info["twin_meta"])),
         "proxy_state": file_sha256(Path(info["proxy_state"])),
     }
-    rep["snapshot_hashes"] = snap_hashes
+    rep["binding"] = {
+        "provenance_sha256": file_sha256(prov_path),
+        "fingerprint": collection_fingerprint(out_dir),
+        "snapshot_hashes": snap_hashes,
+    }
     (out_dir / "rng_check.json").write_text(json.dumps(rep, indent=2), encoding="utf-8")
     if not rep["passed"]:
         raise SystemExit("STOPPING: RNG check failed per preregistered protocol.")
-    print(f"RNG check passed for seed {seed}")
+    print(f"RNG check passed for seed {seed}; bound to provenance {rep['binding']['provenance_sha256']} "
+          f"and fingerprint {rep['binding']['fingerprint']['sha256']}")
 
 
-def verify_rng_check(out_dir: Path, seeds: List[int], smoke: bool = False) -> None:
+def verify_rng_binding(out_dir: Path, seed: int) -> Dict[str, Any]:
+    """The single RNG gate used by branches and by the production analyzer.
+
+    Refuses (``RngBindingError`` with the precise reason) when ``rng_check.json`` is missing,
+    unreadable, not passed, names the wrong seed, or is stale: its bound provenance hash, its
+    recorded code/assets/environment fingerprint, the fingerprint in ``provenance.json``, or its
+    snapshot hashes no longer match the current collection. The expected seed is 4501 for the
+    production seeds and the smoke seed itself under ``--smoke``.
+    """
+    expected = PRODUCTION_SEED if int(seed) in FROZEN_SEEDS else int(seed)
     rng_path = out_dir / "rng_check.json"
     if not rng_path.exists():
-        raise SystemExit(f"Refusing branches: RNG check file {rng_path} does not exist.")
+        raise RngBindingError(f"rng_check.json is missing: {rng_path}")
     try:
         rng_data = json.loads(rng_path.read_text(encoding="utf-8"))
     except Exception as e:
-        raise SystemExit(f"Refusing branches: failed to parse {rng_path}: {e}")
+        raise RngBindingError(f"rng_check.json is unreadable: {rng_path}: {type(e).__name__}: {e}")
 
-    if not rng_data.get("passed"):
-        raise SystemExit("Refusing branches: RNG check 'passed' is not true.")
+    if rng_data.get("passed") is not True:
+        raise RngBindingError(f"rng_check.json 'passed' is not true (passed={rng_data.get('passed')!r})")
+    if rng_data.get("seed") != expected:
+        raise RngBindingError(f"rng_check.json names seed {rng_data.get('seed')!r}, expected {expected}")
 
-    req_seed = seeds[0] if (smoke and seeds) else 4501
-    if rng_data.get("seed") != req_seed:
-        raise SystemExit(f"Refusing branches: RNG check names seed {rng_data.get('seed')}, expected {req_seed}.")
+    binding = rng_data.get("binding")
+    if not isinstance(binding, dict):
+        raise RngBindingError("rng_check.json has no binding record "
+                              "(provenance_sha256 / fingerprint / snapshot_hashes)")
 
-    snap_hashes = rng_data.get("snapshot_hashes")
+    prov_path = out_dir / "provenance.json"
+    if not prov_path.exists():
+        raise RngBindingError(f"provenance.json is missing: {prov_path}")
+    prov_sha = file_sha256(prov_path)
+    if binding.get("provenance_sha256") != prov_sha:
+        raise RngBindingError(f"stale provenance: rng_check.json binds provenance.json "
+                              f"{binding.get('provenance_sha256')!r}, current file is {prov_sha}")
+
+    recorded_fp = binding.get("fingerprint")
+    if not isinstance(recorded_fp, dict):
+        raise RngBindingError("rng_check.json binding has no fingerprint record")
+    current_fp = collection_fingerprint(out_dir)
+    if recorded_fp.get("sha256") != current_fp["sha256"]:
+        raise RngBindingError(f"stale fingerprint: rng_check.json records {recorded_fp.get('sha256')!r}, "
+                              f"current collection fingerprint is {current_fp['sha256']}")
+    try:
+        prov = json.loads(prov_path.read_text(encoding="utf-8"))
+    except Exception as e:
+        raise RngBindingError(f"provenance.json is unreadable: {prov_path}: {type(e).__name__}: {e}")
+    prov_fp = prov.get("collection_fingerprint")
+    if not isinstance(prov_fp, dict) or prov_fp.get("sha256") != current_fp["sha256"]:
+        raise RngBindingError(f"stale fingerprint: provenance.json records "
+                              f"{(prov_fp or {}).get('sha256')!r}, current collection fingerprint is "
+                              f"{current_fp['sha256']}")
+
+    snap_hashes = binding.get("snapshot_hashes")
     if not isinstance(snap_hashes, dict):
-        raise SystemExit("Refusing branches: RNG check missing snapshot_hashes.")
-
-    s_dir = find_seed_run_dir(req_seed, out_dir)
-    tw_state = s_dir / "twin" / f"twin_state_{int(T_D)}.xml.gz"
-    tw_meta = s_dir / "twin" / f"twin_state_{int(T_D)}.json"
-    px_state = s_dir / "proxy" / f"proxy_state_{int(T_D)}.xml.gz"
+        raise RngBindingError("rng_check.json binding has no snapshot_hashes")
+    try:
+        s_dir = find_seed_run_dir(expected, out_dir)
+    except FileNotFoundError as e:
+        raise RngBindingError(f"snapshot files for seed {expected} are missing: {e}")
 
     expected_hashes = {
-        "twin_state": file_sha256(tw_state),
-        "twin_meta": file_sha256(tw_meta),
-        "proxy_state": file_sha256(px_state),
+        "twin_state": file_sha256(s_dir / "twin" / f"twin_state_{int(T_D)}.xml.gz"),
+        "twin_meta": file_sha256(s_dir / "twin" / f"twin_state_{int(T_D)}.json"),
+        "proxy_state": file_sha256(s_dir / "proxy" / f"proxy_state_{int(T_D)}.xml.gz"),
     }
-
     for key, exp_hash in expected_hashes.items():
         if snap_hashes.get(key) != exp_hash:
-            raise SystemExit(
-                f"Refusing branches: snapshot hash mismatch for {key}: "
-                f"recorded {snap_hashes.get(key)} != current {exp_hash}."
-            )
+            raise RngBindingError(f"stale snapshot hash for {key}: recorded {snap_hashes.get(key)!r} "
+                                  f"!= current {exp_hash}")
+    return rng_data
 
 
 def cmd_branches(seeds: List[int], out_dir: Path, workers: int = 8, smoke: bool = False) -> None:
@@ -292,7 +406,8 @@ def cmd_branches(seeds: List[int], out_dir: Path, workers: int = 8, smoke: bool 
     py_files = sorted((REPO_ROOT / "citypulse").rglob("*.py"))
     code_hashes_before = {p.relative_to(REPO_ROOT).as_posix(): file_sha256(p) for p in py_files}
 
-    verify_rng_check(out_dir, seeds, smoke=smoke)
+    # The gate runs before any branch: a missing, failed, wrong-seed or stale RNG record stops here.
+    verify_rng_binding(out_dir, int(seeds[0]) if (smoke and seeds) else PRODUCTION_SEED)
 
     out_dir.mkdir(parents=True, exist_ok=True)
     routes_dir = out_dir / "routes"
@@ -521,13 +636,16 @@ def main() -> None:
     p_rng.add_argument("--smoke", action="store_true")
 
     args = ap.parse_args()
-    if args.subcommand == "prepare": cmd_prepare(args.seeds, args.out, allow_dirty=args.allow_dirty, smoke=args.smoke)
-    elif args.subcommand == "twoworld": cmd_twoworld(args.seeds, args.out, smoke=args.smoke)
-    elif args.subcommand == "rngcheck":
-        target = args.seed if args.seeds is None or len(args.seeds) == 0 else args.seeds[0]
-        cmd_rngcheck(target, args.out, smoke=args.smoke)
-    elif args.subcommand == "branches": cmd_branches(args.seeds, args.out, workers=args.workers, smoke=args.smoke)
-    elif args.subcommand == "statehistory": cmd_statehistory(args.seeds, args.out, workers=args.workers, smoke=args.smoke)
+    try:
+        if args.subcommand == "prepare": cmd_prepare(args.seeds, args.out, allow_dirty=args.allow_dirty, smoke=args.smoke)
+        elif args.subcommand == "twoworld": cmd_twoworld(args.seeds, args.out, smoke=args.smoke)
+        elif args.subcommand == "rngcheck":
+            target = args.seed if args.seeds is None or len(args.seeds) == 0 else args.seeds[0]
+            cmd_rngcheck(target, args.out, smoke=args.smoke)
+        elif args.subcommand == "branches": cmd_branches(args.seeds, args.out, workers=args.workers, smoke=args.smoke)
+        elif args.subcommand == "statehistory": cmd_statehistory(args.seeds, args.out, workers=args.workers, smoke=args.smoke)
+    except RngBindingError as e:
+        raise SystemExit(f"STOPPING: RNG binding refused: {e}")
 
 
 if __name__ == "__main__":

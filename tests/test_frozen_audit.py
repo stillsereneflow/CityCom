@@ -1,13 +1,53 @@
 """Unit tests for the frozen decision audit collection driver (docs/oct16-frozen-audit-plan.md)."""
 import json
+import sys
 from pathlib import Path
 import pandas as pd
 import pytest
 
+from citypulse.experiments.dev_runs import file_sha256
 from citypulse.experiments.frozen_audit import (
-    DEFAULT_SEEDS, FROZEN_SEEDS, REPO_ROOT,
-    check_seeds, build_provenance, is_infra_error,
+    DEFAULT_SEEDS, FREEZE_MANIFEST_PATH, FROZEN_SEEDS, REPO_ROOT, RUNTIME_ENV_KEYS,
+    RngBindingError, check_seeds, build_provenance, is_infra_error,
+    collection_fingerprint, runtime_environment, verify_rng_binding,
 )
+
+
+def write_bound_record(out_dir: Path, seed: int) -> dict:
+    """Build a valid collection: snapshots, provenance.json and a bound rng_check.json."""
+    s_dir = out_dir / "runs" / f"seed_{seed}"
+    (s_dir / "twin").mkdir(parents=True, exist_ok=True)
+    (s_dir / "proxy").mkdir(parents=True, exist_ok=True)
+    tw_state = s_dir / "twin" / "twin_state_5100.xml.gz"
+    tw_meta = s_dir / "twin" / "twin_state_5100.json"
+    px_state = s_dir / "proxy" / "proxy_state_5100.xml.gz"
+    tw_state.write_bytes(b"twin_state_bytes")
+    tw_meta.write_text("{}", encoding="utf-8")
+    px_state.write_bytes(b"proxy_state_bytes")
+
+    fingerprint = collection_fingerprint(out_dir)
+    prov_path = out_dir / "provenance.json"
+    prov_path.write_text(json.dumps({
+        "git_head": "0" * 40, "allow_dirty": True,
+        "runtime_environment": runtime_environment(),
+        "collection_fingerprint": fingerprint,
+    }, indent=2), encoding="utf-8")
+    rng = {
+        "passed": True, "seed": seed,
+        "binding": {
+            "provenance_sha256": file_sha256(prov_path),
+            "fingerprint": fingerprint,
+            "snapshot_hashes": {"twin_state": file_sha256(tw_state),
+                                "twin_meta": file_sha256(tw_meta),
+                                "proxy_state": file_sha256(px_state)},
+        },
+    }
+    write_rng(out_dir, rng)
+    return rng
+
+
+def write_rng(out_dir: Path, rng: dict) -> None:
+    (out_dir / "rng_check.json").write_text(json.dumps(rng, indent=2), encoding="utf-8")
 
 
 def test_seed_check_frozen_seeds_clean():
@@ -113,7 +153,7 @@ def test_statehistory_unknown_pending_handling():
 
 
 def test_production_seeds_allowed_without_smoke(tmp_path, monkeypatch):
-    """Verify that production seeds 4501-4508 are allowed when smoke is False."""
+    """Verify that production seeds 4501-4508 are allowed when smoke is False, through the gate."""
     from citypulse.experiments.frozen_audit import cmd_twoworld, cmd_rngcheck, cmd_branches
 
     # 1. cmd_twoworld runs on 4501 when smoke=False
@@ -124,15 +164,10 @@ def test_production_seeds_allowed_without_smoke(tmp_path, monkeypatch):
     cmd_data = json.loads(cmd_file.read_text(encoding="utf-8"))
     assert "twin" in cmd_data and "proxy" in cmd_data
 
-    # Setup dummy snapshots for seed 4501
-    s_dir = tmp_path / "runs" / "seed_4501"
-    (s_dir / "twin").mkdir(parents=True, exist_ok=True)
-    (s_dir / "proxy").mkdir(parents=True, exist_ok=True)
-    (s_dir / "twin" / "twin_state_5100.xml.gz").write_bytes(b"dummy_twin_xml")
-    (s_dir / "twin" / "twin_state_5100.json").write_text("{}", encoding="utf-8")
-    (s_dir / "proxy" / "proxy_state_5100.xml.gz").write_bytes(b"dummy_proxy_xml")
+    # 2. prepare-style provenance (runtime environment + collection fingerprint) and snapshots
+    write_bound_record(tmp_path, 4501)
 
-    # 2. cmd_rngcheck runs on 4501 when smoke=False
+    # 3. cmd_rngcheck runs on 4501 when smoke=False and writes the binding
     monkeypatch.setattr("citypulse.experiments.frozen_audit.run_rng_isolation_check",
                         lambda info, out_p, scratch_dir: {"passed": True, "seed": 4501})
     cmd_rngcheck(4501, tmp_path, smoke=False)
@@ -141,9 +176,12 @@ def test_production_seeds_allowed_without_smoke(tmp_path, monkeypatch):
     rng_data = json.loads(rng_path.read_text(encoding="utf-8"))
     assert rng_data["passed"] is True
     assert rng_data["seed"] == 4501
-    assert "snapshot_hashes" in rng_data
+    binding = rng_data["binding"]
+    assert binding["provenance_sha256"] == file_sha256(tmp_path / "provenance.json")
+    assert binding["fingerprint"]["sha256"] == collection_fingerprint(tmp_path)["sha256"]
+    assert "twin_state" in binding["snapshot_hashes"]
 
-    # 3. cmd_branches runs on 4501 when smoke=False
+    # 4. cmd_branches runs on 4501 when smoke=False, past the gate, and records before/after hashes
     monkeypatch.setattr("citypulse.experiments.frozen_audit.run_twin_branch_jobs", lambda jobs, workers: [])
     monkeypatch.setattr("citypulse.experiments.frozen_audit.run_proxy_branch_jobs", lambda jobs, workers: [])
     monkeypatch.setattr("citypulse.experiments.frozen_audit.build_proxy_resampled_routes",
@@ -151,6 +189,13 @@ def test_production_seeds_allowed_without_smoke(tmp_path, monkeypatch):
     cmd_branches([4501], tmp_path, smoke=False)
     assert (tmp_path / "branch_inputs.json").exists()
     assert (tmp_path / "code_hashes_before_after.json").exists()
+
+    # 5. a record bound to the smoke seed never passes the production gate
+    smoke_dir = tmp_path / "smoke"
+    smoke_dir.mkdir()
+    write_bound_record(smoke_dir, 4201)
+    with pytest.raises(RngBindingError, match="expected 4501"):
+        verify_rng_binding(smoke_dir, 4501)
 
 
 def test_seed_check_list_values_and_unreadable_file_failure(tmp_path, monkeypatch):
@@ -182,59 +227,120 @@ def test_seed_check_list_values_and_unreadable_file_failure(tmp_path, monkeypatc
         cmd_prepare([4201], tmp_path / "out", allow_dirty=True, smoke=True)
 
 
-def test_branches_refusal_without_valid_matching_rng_record(tmp_path):
-    """Verify branches refuses to run without a valid matching RNG record."""
-    from citypulse.experiments.frozen_audit import verify_rng_check
-    from citypulse.experiments.dev_runs import file_sha256
+def test_runtime_environment_records_actual_collection_runtime():
+    """The provenance runtime is the actual environment, not the freeze record (Codex item 2)."""
+    env = runtime_environment()
+    assert set(env["env"]) == set(RUNTIME_ENV_KEYS)
+    assert env["env"]["CITYPULSE_NET"] == "blite"
+    assert env["env"]["CITYPULSE_BLITE_REV"] == "5"
+    assert env["env"]["CITYPULSE_REROUTE"] == "0"
+    assert env["python_version"].startswith("3.")
+    assert env["python_executable"] == sys.executable
+    assert env["platform"]
+    assert env["libsumo_version"]
+    for name in ("eclipse-sumo", "libsumo", "sumolib", "numpy", "pandas", "pyarrow", "pyzmq"):
+        assert env["packages"].get(name), f"missing installed version for {name}"
 
-    # 1. Missing rng_check.json
-    with pytest.raises(SystemExit):
-        verify_rng_check(tmp_path, [4201], smoke=True)
 
-    # 2. passed is False
-    rng_path = tmp_path / "rng_check.json"
-    rng_path.write_text(json.dumps({"passed": False, "seed": 4201}), encoding="utf-8")
-    with pytest.raises(SystemExit):
-        verify_rng_check(tmp_path, [4201], smoke=True)
+def test_collection_fingerprint_covers_code_assets_and_environment(tmp_path):
+    """Code map + combined hash, the freeze manifest's assets, and the runtime environment."""
+    fp = collection_fingerprint(tmp_path)
+    assert len(fp["code"]) >= 61
+    assert all(rel.endswith(".py") and rel.startswith("citypulse/") for rel in fp["code"])
+    assert list(fp["code"]) == sorted(fp["code"])
+    assert fp["code_sha256"] and fp["assets_sha256"] and fp["sha256"]
+    assert fp["runtime_environment"] == runtime_environment()
 
-    # 3. Wrong seed
-    rng_path.write_text(json.dumps({"passed": True, "seed": 9999}), encoding="utf-8")
-    with pytest.raises(SystemExit):
-        verify_rng_check(tmp_path, [4201], smoke=True)
+    manifest_assets = json.loads(FREEZE_MANIFEST_PATH.read_text(encoding="utf-8"))["sha256_assets"]
+    assert set(fp["assets"]) == set(manifest_assets)
+    assert all(fp["assets"][rel] is not None for rel in manifest_assets)
+    # deterministic: the same collection state fingerprints identically
+    assert collection_fingerprint(tmp_path)["sha256"] == fp["sha256"]
 
-    # 4. Mismatched snapshot hashes
-    s_dir = tmp_path / "runs" / "seed_4201"
-    (s_dir / "twin").mkdir(parents=True, exist_ok=True)
-    (s_dir / "proxy").mkdir(parents=True, exist_ok=True)
-    tw_state = s_dir / "twin" / "twin_state_5100.xml.gz"
-    tw_meta = s_dir / "twin" / "twin_state_5100.json"
-    px_state = s_dir / "proxy" / "proxy_state_5100.xml.gz"
-    tw_state.write_bytes(b"twin_state_bytes")
-    tw_meta.write_text("{}", encoding="utf-8")
-    px_state.write_bytes(b"proxy_state_bytes")
 
-    rng_path.write_text(json.dumps({
-        "passed": True,
-        "seed": 4201,
-        "snapshot_hashes": {
-            "twin_state": "mismatched_hash",
-            "twin_meta": "mismatched_hash",
-            "proxy_state": "mismatched_hash",
-        }
-    }), encoding="utf-8")
-    with pytest.raises(SystemExit):
-        verify_rng_check(tmp_path, [4201], smoke=True)
+def test_rng_binding_positive_and_refusals(tmp_path):
+    """The single gate: missing / failed / wrong-seed / stale provenance / fingerprint / snapshot."""
+    # 1. missing rng_check.json
+    with pytest.raises(RngBindingError, match="rng_check.json is missing"):
+        verify_rng_binding(tmp_path, 4201)
 
-    # 5. Valid matching RNG record succeeds
-    valid_hashes = {
-        "twin_state": file_sha256(tw_state),
-        "twin_meta": file_sha256(tw_meta),
-        "proxy_state": file_sha256(px_state),
-    }
-    rng_path.write_text(json.dumps({
-        "passed": True,
-        "seed": 4201,
-        "snapshot_hashes": valid_hashes,
-    }), encoding="utf-8")
-    verify_rng_check(tmp_path, [4201], smoke=True)
+    rng = write_bound_record(tmp_path, 4201)
+    assert verify_rng_binding(tmp_path, 4201)["seed"] == 4201          # positive
+
+    # 2. passed is not true
+    failed = json.loads(json.dumps(rng)); failed["passed"] = False
+    write_rng(tmp_path, failed)
+    with pytest.raises(RngBindingError, match="'passed' is not true"):
+        verify_rng_binding(tmp_path, 4201)
+
+    # 3. wrong seed: smoke expects the smoke seed, production always expects 4501
+    wrong = json.loads(json.dumps(rng)); wrong["seed"] = 9999
+    write_rng(tmp_path, wrong)
+    with pytest.raises(RngBindingError, match="names seed 9999, expected 4201"):
+        verify_rng_binding(tmp_path, 4201)
+    with pytest.raises(RngBindingError, match="expected 4501"):
+        verify_rng_binding(tmp_path, 4501)
+
+    # 4. stale provenance: provenance.json changed after rngcheck
+    write_bound_record(tmp_path, 4201)
+    prov_path = tmp_path / "provenance.json"
+    prov_path.write_text(prov_path.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+    with pytest.raises(RngBindingError, match="stale provenance"):
+        verify_rng_binding(tmp_path, 4201)
+
+    # 5. stale fingerprint recorded in rng_check.json (current code/assets/env differ)
+    stale_fp = write_bound_record(tmp_path, 4201)
+    stale_fp["binding"]["fingerprint"]["sha256"] = "0" * 64
+    write_rng(tmp_path, stale_fp)
+    with pytest.raises(RngBindingError, match="stale fingerprint: rng_check.json records"):
+        verify_rng_binding(tmp_path, 4201)
+
+    # 6. fingerprint in provenance.json differs from the current collection
+    stale_prov = write_bound_record(tmp_path, 4201)
+    prov = json.loads(prov_path.read_text(encoding="utf-8"))
+    prov["collection_fingerprint"]["sha256"] = "1" * 64
+    prov_path.write_text(json.dumps(prov, indent=2), encoding="utf-8")
+    stale_prov["binding"]["provenance_sha256"] = file_sha256(prov_path)
+    write_rng(tmp_path, stale_prov)
+    with pytest.raises(RngBindingError, match="stale fingerprint: provenance.json records"):
+        verify_rng_binding(tmp_path, 4201)
+
+    # 7. stale snapshot: a snapshot file changed after rngcheck
+    write_bound_record(tmp_path, 4201)
+    (tmp_path / "runs" / "seed_4201" / "proxy" / "proxy_state_5100.xml.gz").write_bytes(b"changed")
+    with pytest.raises(RngBindingError, match="stale snapshot hash for proxy_state"):
+        verify_rng_binding(tmp_path, 4201)
+
+    # 8. no binding record at all
+    write_bound_record(tmp_path, 4201)
+    unbound = json.loads((tmp_path / "rng_check.json").read_text(encoding="utf-8"))
+    del unbound["binding"]
+    write_rng(tmp_path, unbound)
+    with pytest.raises(RngBindingError, match="no binding record"):
+        verify_rng_binding(tmp_path, 4201)
+
+
+def test_branches_refuses_before_any_branch_without_a_bound_record(tmp_path, monkeypatch):
+    """branches calls verify_rng_binding before doing any branch work."""
+    from citypulse.experiments.frozen_audit import cmd_branches
+
+    started = []
+    monkeypatch.setattr("citypulse.experiments.frozen_audit.run_twin_branch_jobs",
+                        lambda jobs, workers: started.append("twin") or [])
+    monkeypatch.setattr("citypulse.experiments.frozen_audit.run_proxy_branch_jobs",
+                        lambda jobs, workers: started.append("proxy") or [])
+
+    with pytest.raises(RngBindingError):
+        cmd_branches([4201], tmp_path, smoke=True)
+    assert started == []
+    assert not (tmp_path / "branch_inputs.json").exists()
+    assert not (tmp_path / "routes").exists()
+
+    # a stale record is refused just the same, before any branch
+    write_bound_record(tmp_path, 4201)
+    (tmp_path / "runs" / "seed_4201" / "twin" / "twin_state_5100.xml.gz").write_bytes(b"changed")
+    with pytest.raises(RngBindingError, match="stale snapshot hash for twin_state"):
+        cmd_branches([4201], tmp_path, smoke=True)
+    assert started == []
+    assert not (tmp_path / "branch_inputs.json").exists()
 

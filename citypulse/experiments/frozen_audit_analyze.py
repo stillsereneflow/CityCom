@@ -1,25 +1,30 @@
 """Frozen offline decision audit analyzer (docs/oct16-frozen-audit-plan.md).
 
-Reads a collected frozen-audit directory (``raw.parquet``, ``state_history.parquet``, ``rng_check.json``)
-and computes exactly the preregistered estimands, per seed and over seeds, with the audit v2 CRN
-correction (``results/audit/v2/report.md``); no simulation.
+Reads a collected frozen-audit directory (``raw.parquet``, ``state_history.parquet``,
+``rng_check.json``, ``provenance.json``) and computes exactly the preregistered estimands, per seed
+and over seeds, with the audit v2 CRN correction (``results/audit/v2/report.md``); no simulation.
 
 Usage: python -m citypulse.experiments.frozen_audit_analyze analyze --dir results/frozen_audit
 
-The seed set is the frozen manifest's 4,501-4,508 and never the surviving raw rows; the
-``--seeds`` override exists only for self-tests on development seeds.
+Production metrics are gated on ``frozen_audit.verify_rng_binding``: the RNG record must be passed,
+current and bound to the prepared provenance, the code/assets/environment fingerprint and the
+snapshot hashes. The seed set is the frozen manifest's 4,501-4,508 and never the surviving raw rows;
+``--seeds`` and ``--selftest`` exist only for self-tests on development seeds, are stated in the
+report header as "SELF-TEST: RNG binding not enforced", and never apply to production metrics.
 """
 from __future__ import annotations
 
 import argparse
 import json
 import math
+import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 import pandas as pd
 
+from citypulse.experiments import frozen_audit
 from citypulse.experiments.decision_audit import (
     compute_crn_statistics, kendall_tau, spearman_rho, t_critical_95)
 
@@ -64,7 +69,7 @@ def _finite(v: Any) -> bool:
 
 
 def load_inputs(directory: Path) -> Tuple[pd.DataFrame, Optional[pd.DataFrame], Dict[str, Any]]:
-    """Load raw.parquet (required); state_history.parquet and rng_check.json are descriptive."""
+    """Load raw.parquet (required); state_history.parquet is descriptive, rng_check.json the binding."""
     d = Path(directory)
     return (normalize_raw(pd.read_parquet(d / "raw.parquet")),
             pd.read_parquet(d / "state_history.parquet") if (d / "state_history.parquet").exists() else None,
@@ -396,6 +401,11 @@ def write_report(path: Path, bundle: Dict[str, Any]) -> None:
     lines = ["# Frozen offline decision audit: analysis", "", f"Input: `{bundle['dir']}`", "",
              f"Seeds: {bundle['seeds']} (N = {bundle['n_seeds']}; seed source: {bundle['seed_source']}). "
              "Decision time t_d = 5,100 s; horizon 900 s; J = total time spent (veh.h).", ""]
+    if not bundle.get("rng_binding_enforced", True):
+        lines += ["**SELF-TEST: RNG binding not enforced**", ""]
+    else:
+        lines += ["RNG binding: enforced on the prepared provenance, code/assets/environment "
+                  "fingerprint and snapshot hashes before any metric was computed.", ""]
     if bundle.get("unexpected_seeds_in_raw"):
         lines += [f"- Rows for seeds outside the denominator set are ignored: "
                   f"{bundle['unexpected_seeds_in_raw']}.", ""]
@@ -462,7 +472,8 @@ def write_report(path: Path, bundle: Dict[str, Any]) -> None:
         cols = list(sh["columns"])
         if cols:
             _table(lines, cols, list(dict.fromkeys(tuple(_fmt(r.get(c)) for c in cols) for r in sh["rows"])))
-    lines += ["## 7. RNG isolation check (descriptive)", "",
+    lines += ["## 7. RNG isolation check (binding enforced before metrics)" if bundle.get("rng_binding_enforced", True)
+              else "## 7. RNG isolation check (self-test: binding not enforced)", "",
               f"- passed: {bundle['rng_check'].get('passed')}" if bundle["rng_check"] else "- rng_check.json missing",
               "", "No interval is reported for N < 2; no acceptance threshold applies.", ""]
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -485,11 +496,19 @@ def parse_seeds(spec: str) -> List[int]:
     return sorted(dict.fromkeys(out))
 
 
-def analyze(directory: Path, seeds: Optional[Sequence[int]] = None) -> Dict[str, Any]:
+def analyze(directory: Path, seeds: Optional[Sequence[int]] = None, selftest: bool = False) -> Dict[str, Any]:
     """Analyze a collected directory; the denominator seeds are the frozen manifest's.
 
-    ``seeds`` is the self-test override only; it never changes the production seed set.
+    Production runs (no ``seeds`` override, no ``selftest``) first call
+    ``frozen_audit.verify_rng_binding`` on the directory: a missing, failed, wrong-seed or stale
+    RNG record raises before any metric is computed or written. ``seeds``/``selftest`` are the
+    self-test paths only; they never change the production seed set and are stated in the report
+    header as "SELF-TEST: RNG binding not enforced".
     """
+    directory = Path(directory)
+    enforced = seeds is None and not selftest
+    if enforced:
+        frozen_audit.verify_rng_binding(directory, FROZEN_SEEDS[0])
     raw, state, rng = load_inputs(directory)
     seed_list = sorted(int(s) for s in (FROZEN_SEEDS if seeds is None else seeds))
     unexpected = sorted(set(int(s) for s in raw["seed"].unique()) - set(seed_list))
@@ -499,6 +518,7 @@ def analyze(directory: Path, seeds: Optional[Sequence[int]] = None) -> Dict[str,
               "n_seeds": len(seed_list),
               "seed_source": ("frozen manifest 4501-4508" if seeds is None
                               else "override (self-test only)"),
+              "rng_binding_enforced": enforced,
               "unexpected_seeds_in_raw": unexpected,
               "primary_belief": PRIMARY_BELIEF, "secondary_belief": SECONDARY_BELIEF,
               "primary": primary, "secondary": secondary,
@@ -518,11 +538,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     a.add_argument("--seeds", default=None,
                    help="self-test only: seed override such as 4201..4208; production uses the frozen "
                         "manifest seeds 4501-4508")
+    a.add_argument("--selftest", action="store_true",
+                   help="self-test only: do not enforce the RNG binding (stated in the report header)")
     args = ap.parse_args(argv)
     seeds = parse_seeds(args.seeds) if args.seeds else None
     if seeds is not None:
         print(f"WARNING: --seeds {args.seeds} overrides the frozen manifest seed set (self-test only)")
-    bundle = analyze(Path(args.dir), seeds=seeds)
+    if seeds is not None or args.selftest:
+        print("WARNING: SELF-TEST: RNG binding not enforced")
+    try:
+        bundle = analyze(Path(args.dir), seeds=seeds, selftest=args.selftest)
+    except frozen_audit.RngBindingError as e:
+        print(f"Refusing to write production metrics: {e}", file=sys.stderr)
+        return 2
     p = bundle["primary"]["pooled"]["BEE_signed"]
     print(f"analyze: {bundle['n_seeds']} seeds ({bundle['seed_source']}); primary complete "
           f"{bundle['primary']['n_complete_seeds']}, secondary complete "

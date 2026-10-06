@@ -1,0 +1,104 @@
+{
+  "smoke3_rows": 6,
+  "reference_rows": 6,
+  "source": {
+    "B": "results/audit/raw.parquet",
+    "D300": "results/audit/sens/raw_sens.parquet",
+    "proxy": "results/audit/raw.parquet"
+  },
+  "seed": 4201,
+  "replication": 1,
+  "actions": [
+    "A0",
+    "A3"
+  ],
+  "rows": [
+    {
+      "world": "proxy",
+      "belief": "proxy",
+      "seed": 4201,
+      "replication": 1,
+      "action": "A0",
+      "smoke3_J": 108.86861111111111,
+      "audit_J": 108.86861111111111,
+      "smoke3_digest": "56dfb081cd4c41ae161c7728a3c2929ede81f6c8d7081c5419f4ab45c821dcd6",
+      "audit_digest": "56dfb081cd4c41ae161c7728a3c2929ede81f6c8d7081c5419f4ab45c821dcd6",
+      "J_match": true,
+      "digest_match": true,
+      "status": "ok"
+    },
+    {
+      "world": "proxy",
+      "belief": "proxy",
+      "seed": 4201,
+      "replication": 1,
+      "action": "A3",
+      "smoke3_J": 103.91722222222222,
+      "audit_J": 103.91722222222222,
+      "smoke3_digest": "818b37d309bfaf11dd2ecdc6bcd2ac688a572624eaf35bed52a543eab342127d",
+      "audit_digest": "818b37d309bfaf11dd2ecdc6bcd2ac688a572624eaf35bed52a543eab342127d",
+      "J_match": true,
+      "digest_match": true,
+      "status": "ok"
+    },
+    {
+      "world": "twin",
+      "belief": "B",
+      "seed": 4201,
+      "replication": 1,
+      "action": "A0",
+      "smoke3_J": 97.93722222222222,
+      "audit_J": 97.93722222222222,
+      "smoke3_digest": "c0eeacf585979c4ecb8322627f429c0f72bf0063f137a5a9c9cfcad891c0042b",
+      "audit_digest": "c0eeacf585979c4ecb8322627f429c0f72bf0063f137a5a9c9cfcad891c0042b",
+      "J_match": true,
+      "digest_match": true,
+      "status": "ok"
+    },
+    {
+      "world": "twin",
+      "belief": "B",
+      "seed": 4201,
+      "replication": 1,
+      "action": "A3",
+      "smoke3_J": 91.57055555555556,
+      "audit_J": 91.57055555555556,
+      "smoke3_digest": "034b792f9028f02a503647f5401c8c1f3484f974697be6fc8133b981dcacc6ec",
+      "audit_digest": "034b792f9028f02a503647f5401c8c1f3484f974697be6fc8133b981dcacc6ec",
+      "J_match": true,
+      "digest_match": true,
+      "status": "ok"
+    },
+    {
+      "world": "twin",
+      "belief": "D300",
+      "seed": 4201,
+      "replication": 1,
+      "action": "A0",
+      "smoke3_J": 85.65972222222223,
+      "audit_J": 85.65972222222223,
+      "smoke3_digest": "5d37e8362da8056c5e984b1043dec3a5d505ab419ba6061b1895a1eaf6df44d8",
+      "audit_digest": "5d37e8362da8056c5e984b1043dec3a5d505ab419ba6061b1895a1eaf6df44d8",
+      "J_match": true,
+      "digest_match": true,
+      "status": "ok"
+    },
+    {
+      "world": "twin",
+      "belief": "D300",
+      "seed": 4201,
+      "replication": 1,
+      "action": "A3",
+      "smoke3_J": 85.55055555555556,
+      "audit_J": 85.55055555555556,
+      "smoke3_digest": "2fd8836b03a9796e8d610aff89354e8f6a0af99aa9bebd7836145df6b95d8d21",
+      "audit_digest": "2fd8836b03a9796e8d610aff89354e8f6a0af99aa9bebd7836145df6b95d8d21",
+      "J_match": true,
+      "digest_match": true,
+      "status": "ok"
+    }
+  ],
+  "n_rows": 6,
+  "n_matched": 6,
+  "passed": true
+}

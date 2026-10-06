@@ -6,6 +6,9 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from citypulse.experiments.dev_runs import file_sha256
+from citypulse.experiments.frozen_audit import (
+    RngBindingError, collection_fingerprint, runtime_environment)
 from citypulse.experiments.frozen_audit_analyze import (
     CLAIM_BOUNDARY,
     FROZEN_SEEDS,
@@ -57,6 +60,124 @@ def make_pivot(j_map, reps=(1, 2, 3, 4, 5, 6)):
     n = len(reps)
     return pd.DataFrame({a: ([v] * n if not isinstance(v, list) else v) for a, v in j_map.items()},
                         index=list(reps))
+
+
+def write_bound_audit_dir(out_dir: Path, seed: int = 4501, **extra) -> dict:
+    """A production-shaped directory: raw.parquet plus a valid RNG binding and provenance."""
+    make_dataset(seeds=(seed,), **extra).to_parquet(out_dir / "raw.parquet")
+    s_dir = out_dir / "runs" / f"seed_{seed}"
+    (s_dir / "twin").mkdir(parents=True, exist_ok=True)
+    (s_dir / "proxy").mkdir(parents=True, exist_ok=True)
+    tw_state = s_dir / "twin" / "twin_state_5100.xml.gz"
+    tw_meta = s_dir / "twin" / "twin_state_5100.json"
+    px_state = s_dir / "proxy" / "proxy_state_5100.xml.gz"
+    tw_state.write_bytes(b"twin_state_bytes")
+    tw_meta.write_text("{}", encoding="utf-8")
+    px_state.write_bytes(b"proxy_state_bytes")
+
+    fingerprint = collection_fingerprint(out_dir)
+    prov_path = out_dir / "provenance.json"
+    prov_path.write_text(json.dumps({
+        "git_head": "0" * 40, "allow_dirty": True,
+        "runtime_environment": runtime_environment(),
+        "collection_fingerprint": fingerprint,
+    }, indent=2), encoding="utf-8")
+    rng = {"passed": True, "seed": seed,
+           "binding": {"provenance_sha256": file_sha256(prov_path), "fingerprint": fingerprint,
+                       "snapshot_hashes": {"twin_state": file_sha256(tw_state),
+                                           "twin_meta": file_sha256(tw_meta),
+                                           "proxy_state": file_sha256(px_state)}}}
+    (out_dir / "rng_check.json").write_text(json.dumps(rng, indent=2), encoding="utf-8")
+    return rng
+
+
+def patch_rng(out_dir: Path, mutate) -> None:
+    rng = json.loads((out_dir / "rng_check.json").read_text(encoding="utf-8"))
+    mutate(rng)
+    (out_dir / "rng_check.json").write_text(json.dumps(rng, indent=2), encoding="utf-8")
+
+
+def mutate_missing(out_dir: Path) -> None:
+    (out_dir / "rng_check.json").unlink()
+
+
+def mutate_failed(out_dir: Path) -> None:
+    patch_rng(out_dir, lambda r: r.update({"passed": False}))
+
+
+def mutate_wrong_seed(out_dir: Path) -> None:
+    patch_rng(out_dir, lambda r: r.update({"seed": 9999}))
+
+
+def mutate_stale_provenance(out_dir: Path) -> None:
+    prov = out_dir / "provenance.json"
+    prov.write_text(prov.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+
+
+def mutate_stale_fingerprint_record(out_dir: Path) -> None:
+    patch_rng(out_dir, lambda r: r["binding"]["fingerprint"].update({"sha256": "0" * 64}))
+
+
+def mutate_stale_fingerprint_provenance(out_dir: Path) -> None:
+    prov_path = out_dir / "provenance.json"
+    prov = json.loads(prov_path.read_text(encoding="utf-8"))
+    prov["collection_fingerprint"]["sha256"] = "1" * 64
+    prov_path.write_text(json.dumps(prov, indent=2), encoding="utf-8")
+    patch_rng(out_dir, lambda r: r["binding"].update({"provenance_sha256": file_sha256(prov_path)}))
+
+
+def mutate_stale_snapshot(out_dir: Path) -> None:
+    (out_dir / "runs" / "seed_4501" / "proxy" / "proxy_state_5100.xml.gz").write_bytes(b"changed")
+
+
+@pytest.mark.parametrize("mutate,needle", [
+    (mutate_missing, "rng_check.json is missing"),
+    (mutate_failed, "'passed' is not true"),
+    (mutate_wrong_seed, "names seed 9999, expected 4501"),
+    (mutate_stale_provenance, "stale provenance"),
+    (mutate_stale_fingerprint_record, "stale fingerprint: rng_check.json records"),
+    (mutate_stale_fingerprint_provenance, "stale fingerprint: provenance.json records"),
+    (mutate_stale_snapshot, "stale snapshot hash for proxy_state"),
+])
+def test_analyze_production_gate_refuses_and_writes_no_metrics(tmp_path, mutate, needle):
+    """Production analyze is gated on the RNG binding; a refusal writes no metrics or report."""
+    write_bound_audit_dir(tmp_path)
+    mutate(tmp_path)
+    with pytest.raises(RngBindingError, match=needle):
+        analyze(tmp_path)
+    assert not (tmp_path / "metrics.json").exists()
+    assert not (tmp_path / "report.md").exists()
+
+
+def test_analyze_production_gate_positive_and_selftest_header(tmp_path):
+    """A bound record passes; the self-test path skips the gate and says so in the header."""
+    write_bound_audit_dir(tmp_path)
+    bundle = analyze(tmp_path)
+    assert bundle["rng_binding_enforced"] is True
+    report = (tmp_path / "report.md").read_text(encoding="utf-8")
+    assert "## 7. RNG isolation check (binding enforced before metrics)" in report
+    assert "descriptive" not in report.split("## 7. RNG isolation check")[1]
+    assert "SELF-TEST" not in report
+
+    # self-test path: no gate, header states it, metrics still written
+    (tmp_path / "rng_check.json").unlink()
+    (tmp_path / "metrics.json").unlink()
+    bundle_st = analyze(tmp_path, seeds=(4501,), selftest=True)
+    assert bundle_st["rng_binding_enforced"] is False
+    assert (tmp_path / "metrics.json").exists()
+    report_st = (tmp_path / "report.md").read_text(encoding="utf-8")
+    assert "SELF-TEST: RNG binding not enforced" in report_st
+    assert "## 7. RNG isolation check (self-test: binding not enforced)" in report_st
+
+
+def test_analyze_main_refuses_production_without_binding(tmp_path, capsys):
+    """The CLI refuses production metrics with a precise reason and a non-zero exit code."""
+    make_dataset(seeds=(4501,)).to_parquet(tmp_path / "raw.parquet")
+    assert main(["analyze", "--dir", str(tmp_path)]) == 2
+    assert "Refusing to write production metrics" in capsys.readouterr().err
+    assert not (tmp_path / "metrics.json").exists()
+    # the self-test flag is accepted and stated
+    assert main(["analyze", "--dir", str(tmp_path), "--selftest", "--seeds", "4501"]) == 0
 
 
 def test_claim_boundary_is_verbatim_from_the_plan():
@@ -124,7 +245,7 @@ def test_seed_set_is_the_manifest_and_absent_seeds_are_excluded_as_no_rows():
 def test_analyze_default_seeds_come_from_the_manifest_not_surviving_rows(tmp_path):
     df = make_dataset(seeds=(4501, 4502))
     df.to_parquet(tmp_path / "raw.parquet")
-    bundle = analyze(tmp_path)
+    bundle = analyze(tmp_path, selftest=True)
     assert bundle["seeds"] == list(FROZEN_SEEDS) and bundle["n_seeds"] == 8
     assert bundle["seed_source"] == "frozen manifest 4501-4508"
     assert bundle["primary"]["complete_seeds"] == [4501, 4502]
@@ -133,7 +254,7 @@ def test_analyze_default_seeds_come_from_the_manifest_not_surviving_rows(tmp_pat
 
     extra = pd.concat([df, normalize_raw(pd.DataFrame(make_rows("twin", 6001)))], ignore_index=True)
     extra.to_parquet(tmp_path / "raw.parquet")
-    bundle2 = analyze(tmp_path)
+    bundle2 = analyze(tmp_path, selftest=True)
     assert bundle2["unexpected_seeds_in_raw"] == [6001]
     assert bundle2["n_seeds"] == 8 and bundle2["primary"]["complete_seeds"] == [4501, 4502]
 
