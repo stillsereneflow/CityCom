@@ -1,4 +1,5 @@
 """Unit tests for the frozen audit analyzer (docs/oct16-frozen-audit-plan.md)."""
+import json
 from pathlib import Path
 
 import numpy as np
@@ -7,15 +8,19 @@ import pytest
 
 from citypulse.experiments.frozen_audit_analyze import (
     CLAIM_BOUNDARY,
+    FROZEN_SEEDS,
     PRIMARY_BELIEF,
     SECONDARY_BELIEF,
     analyze,
     clearance_ok,
     compute_belief,
+    crn_block,
     main,
     normalize_raw,
+    parse_seeds,
     seed_metrics,
     state_history_summary,
+    status_ok,
     summarize,
     validate_world,
 )
@@ -93,30 +98,147 @@ def test_validate_world_duplicate_keys():
     assert complete == [] and "conflicting J" in records[4501]["reason"]
 
 
+def d300_extra(**over):
+    """Measured placement + release records of a valid D300 branch, with overrides."""
+    release = {"present": True, "stopped_at_clear": True, "resumed": True, "resumed_at": 5400.0,
+               "stopped_after": False, "checked_at": 5401.0, "released": True}
+    extra = {"actual_clear_time": 5400.0, "hyp_pos": 755.3, "blocker_edge": "ktb_n1",
+             "blocker_lane_0": 0, "blocker_pos_0": 755.282, "blocker_t_stop_0": 5104.0,
+             "blocker_lane_1": 1, "blocker_pos_1": 755.29, "blocker_t_stop_1": 5104.0,
+             "blocker_release_0": json.dumps(release), "blocker_release_1": json.dumps(release)}
+    extra.update(over)
+    return extra
+
+
+def test_seed_set_is_the_manifest_and_absent_seeds_are_excluded_as_no_rows():
+    df = make_dataset(seeds=(4501, 4502))
+    records, complete = validate_world(df, PRIMARY_BELIEF, "twin", list(FROZEN_SEEDS))
+    assert complete == [4501, 4502]
+    assert records[4503]["reason"] == "no rows" and records[4508]["reason"] == "no rows"
+    block = compute_belief(df, PRIMARY_BELIEF, list(FROZEN_SEEDS))
+    assert block["n_complete_seeds"] == 2 and block["complete_seeds"] == [4501, 4502]
+    excl = block["pooled"]["BEE_signed"]["exclusions"]
+    assert any("no rows" in k and "4503" in str(v) for k, v in excl.items())
+
+
+def test_analyze_default_seeds_come_from_the_manifest_not_surviving_rows(tmp_path):
+    df = make_dataset(seeds=(4501, 4502))
+    df.to_parquet(tmp_path / "raw.parquet")
+    bundle = analyze(tmp_path)
+    assert bundle["seeds"] == list(FROZEN_SEEDS) and bundle["n_seeds"] == 8
+    assert bundle["seed_source"] == "frozen manifest 4501-4508"
+    assert bundle["primary"]["complete_seeds"] == [4501, 4502]
+    assert bundle["primary"]["pooled"]["BEE_signed"]["n"] == 2
+    assert bundle["primary"]["pooled"]["BEE_signed"]["exclusions"]
+
+    extra = pd.concat([df, normalize_raw(pd.DataFrame(make_rows("twin", 6001)))], ignore_index=True)
+    extra.to_parquet(tmp_path / "raw.parquet")
+    bundle2 = analyze(tmp_path)
+    assert bundle2["unexpected_seeds_in_raw"] == [6001]
+    assert bundle2["n_seeds"] == 8 and bundle2["primary"]["complete_seeds"] == [4501, 4502]
+
+
+def test_missing_or_null_status_is_a_validation_failure_never_invented():
+    df = make_dataset(seeds=(4501,))
+    nulled = df.copy()
+    nulled.loc[nulled["world"] == "twin", "status"] = None
+    records, complete = validate_world(normalize_raw(nulled), PRIMARY_BELIEF, "twin", [4501])
+    assert complete == [] and "no status evidence" in records[4501]["reason"]
+
+    no_col = normalize_raw(df.drop(columns=["status"]))
+    assert "status" not in no_col.columns and not status_ok(no_col).any()
+    records, complete = validate_world(no_col, PRIMARY_BELIEF, "twin", [4501])
+    assert complete == [] and records[4501]["reason"] == "no status evidence: status column absent"
+    assert compute_belief(no_col, PRIMARY_BELIEF, [4501])["n_complete_seeds"] == 0
+
+
+def test_crn_uses_only_each_worlds_validated_complete_grids():
+    base = make_dataset(seeds=(4501, 4502))
+    broken = normalize_raw(base.drop(base[(base["world"] == "calibration") & (base["seed"] == 4502)
+                                          & (base["replication"] == 12) & (base["action"] == "A0")].index))
+    block = compute_belief(broken, PRIMARY_BELIEF, [4501, 4502])
+    assert block["complete_seeds"] == [4501, 4502]          # twin/proxy grids stay complete
+    crn = crn_block(broken, PRIMARY_BELIEF, block["validation"])
+    assert crn["per_world"]["twin"]["n_seeds"] == 2 and crn["per_world"]["twin"]["n_rows"] == 60
+    assert crn["per_world"]["proxy"]["n_seeds"] == 2
+    assert crn["per_world"]["calibration"]["n_seeds"] == 1
+    assert crn["per_world"]["calibration"]["seeds"] == [4501]
+    assert "incomplete calibration grid" in crn["per_world"]["calibration"]["exclusions"][4502]
+    assert "calibration" not in crn["per_seed"]["4502"]
+
+    dup = normalize_raw(pd.concat([base, base[(base["world"] == "calibration")
+                                               & (base["seed"] == 4502)].head(1)], ignore_index=True))
+    block_dup = compute_belief(dup, PRIMARY_BELIEF, [4501, 4502])
+    crn_dup = crn_block(dup, PRIMARY_BELIEF, block_dup["validation"])
+    assert crn_dup["per_world"]["calibration"]["n_seeds"] == 1
+    assert "duplicate" in crn_dup["per_world"]["calibration"]["exclusions"][4502]
+    assert "calibration" not in crn_dup["per_seed"]["4502"]
+
+
+def test_worker_blocker_placement_gate():
+    """Item 5 worker half: measured placement of both blockers is required for a successful row."""
+    from citypulse.branching.audit_engine import blocker_placement_error
+
+    def stop(edge="ktb_n1", lane=0, pos=755.282):
+        return {"edge": edge, "lane": lane, "pos": pos, "time_stopped": 5104.0}
+
+    good = {"hyp_blocker_0": stop(lane=0, pos=755.282), "hyp_blocker_1": stop(lane=1, pos=755.29)}
+    assert blocker_placement_error(good, 755.3) is None
+    assert "never stopped" in blocker_placement_error({"hyp_blocker_1": stop(lane=1)}, 755.3)
+    assert "not ktb_n1" in blocker_placement_error({**good, "hyp_blocker_0": stop(edge="ktb_w1")}, 755.3)
+    assert "not 1" in blocker_placement_error({**good, "hyp_blocker_1": stop(lane=0)}, 755.3)
+    assert "not within 1 m" in blocker_placement_error({**good, "hyp_blocker_0": stop(pos=750.0)}, 755.3)
+    assert "no measured position" in blocker_placement_error(
+        {**good, "hyp_blocker_1": stop(lane=1, pos=None)}, 755.3)
+
+
+def test_parse_seeds_range_and_list():
+    assert parse_seeds("4201..4203") == [4201, 4202, 4203]
+    assert parse_seeds("4201,4202,4202") == [4201, 4202]
+    with pytest.raises(ValueError):
+        parse_seeds("")
+
+
 def test_d300_clearance_evidence_is_a_technical_failure_when_missing():
-    ok_extra = {"actual_clear_time": 5400.0, "blocker_pos_0": 755.3, "blocker_pos_1": 755.3,
-                "blocker_edge": "ktb_n1"}
-    df = make_dataset(seeds=(4501,), belief=SECONDARY_BELIEF, extra=ok_extra)
-    _, complete = validate_world(df, SECONDARY_BELIEF, "twin", [4501], require_clearance=True)
-    assert complete == [4501]
-
-    for bad in ({"actual_clear_time": None}, {"actual_clear_time": 5300.0},
-                {"blocker_pos_0": None},
-                {"blocker_release_0": '{"released": false}', "blocker_release_1": '{"released": true}'}):
-        extra = dict(ok_extra)
-        extra.update(bad)
-        bad_df = make_dataset(seeds=(4501,), belief=SECONDARY_BELIEF, extra=extra)
-        records, complete = validate_world(bad_df, SECONDARY_BELIEF, "twin", [4501], require_clearance=True)
-        assert complete == [], bad
-        assert "technical failure: clearance evidence" in records[4501]["reason"]
-
-    released = {"actual_clear_time": 5400.0, "blocker_pos_0": 755.3, "blocker_pos_1": 755.3,
-                "blocker_release_0": '{"released": true, "checked_at": 5401.0}',
-                "blocker_release_1": '{"released": true, "checked_at": 5401.0}'}
-    good = make_dataset(seeds=(4501,), belief=SECONDARY_BELIEF, extra=released)
+    good = make_dataset(seeds=(4501,), belief=SECONDARY_BELIEF, extra=d300_extra())
     assert validate_world(good, SECONDARY_BELIEF, "twin", [4501], require_clearance=True)[1] == [4501]
-    assert clearance_ok(pd.Series(released))[0] is True
-    assert clearance_ok(pd.Series({"actual_clear_time": 5400.0}))[0] is True
+    assert clearance_ok(pd.Series(d300_extra()))[0] is True
+    # release records may also arrive as dicts (parquet round-trip), not only JSON strings
+    as_dict = d300_extra(blocker_release_0=json.loads(d300_extra()["blocker_release_0"]),
+                         blocker_release_1=json.loads(d300_extra()["blocker_release_1"]))
+    assert clearance_ok(pd.Series(as_dict))[0] is True
+
+    release = json.loads(d300_extra()["blocker_release_0"])
+    failures = [
+        ("missing release records", {"blocker_release_0": None, "blocker_release_1": None}),
+        ("clearance timestamp without release records",
+         {"blocker_release_0": None, "blocker_release_1": None, "actual_clear_time": 5400.0}),
+        ("one release record missing", {"blocker_release_1": None}),
+        ("resume not recorded", {"blocker_release_0": json.dumps({**release, "resumed": False})}),
+        ("resumed_at != 5400", {"blocker_release_0": json.dumps({**release, "resumed_at": 5401.0})}),
+        ("resumed_at later clearance", {"blocker_release_1": json.dumps({**release, "resumed_at": 5700.0})}),
+        ("released false", {"blocker_release_0": json.dumps({**release, "released": False})}),
+        ("checked_at != 5401", {"blocker_release_0": json.dumps({**release, "checked_at": 5402.0})}),
+        ("checked_at missing", {"blocker_release_1": json.dumps({**release, "checked_at": None})}),
+        ("clearance missing", {"actual_clear_time": None}),
+        ("clearance earlier", {"actual_clear_time": 5300.0}),
+        ("clearance later", {"actual_clear_time": 5700.0}),
+        ("edge wrong", {"blocker_edge": "ktb_w1"}),
+        ("lane wrong", {"blocker_lane_0": 1}),
+        ("position out of tolerance", {"blocker_pos_1": 750.0}),
+        ("position missing", {"blocker_pos_0": None}),
+        ("stop time missing", {"blocker_t_stop_1": None}),
+        ("blocker never stopped", {"blocker_pos_0": None, "blocker_t_stop_0": None}),
+    ]
+    for label, bad in failures:
+        bad_df = make_dataset(seeds=(4501,), belief=SECONDARY_BELIEF, extra=d300_extra(**bad))
+        records, complete = validate_world(bad_df, SECONDARY_BELIEF, "twin", [4501], require_clearance=True)
+        assert complete == [], label
+        assert "technical failure: clearance evidence" in records[4501]["reason"], label
+
+    # B (primary) rows are not gated on release records: the rule is D300-specific.
+    primary = make_dataset(seeds=(4501,), belief=PRIMARY_BELIEF)
+    assert validate_world(primary, PRIMARY_BELIEF, "twin", [4501], require_clearance=False)[1] == [4501]
 
 
 def test_regret_rel_denominator_rule():
@@ -203,12 +325,13 @@ def test_analyze_writes_outputs_and_never_subtracts_the_floor(tmp_path):
                  ).to_parquet(tmp_path / "state_history.parquet")
     (tmp_path / "rng_check.json").write_text('{"passed": true}', encoding="utf-8")
 
-    bundle = analyze(tmp_path)
+    bundle = analyze(tmp_path, seeds=(4501, 4502))
     assert bundle["n_seeds"] == 2 and bundle["primary"]["n_complete_seeds"] == 2
+    assert bundle["seed_source"] == "override (self-test only)"
     assert (tmp_path / "metrics.json").exists() and (tmp_path / "report.md").exists()
     report = (tmp_path / "report.md").read_text(encoding="utf-8")
     assert CLAIM_BOUNDARY in report
     assert "never subtracted from BEE" in report
     assert not any("gap" in k for k in bundle["primary"]["pooled"])
     assert "BEE_floor_abs" in bundle["primary"]["pooled"]
-    assert main(["analyze", "--dir", str(tmp_path)]) == 0
+    assert main(["analyze", "--dir", str(tmp_path), "--seeds", "4501..4502"]) == 0

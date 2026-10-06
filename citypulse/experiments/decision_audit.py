@@ -651,8 +651,8 @@ def run_rng_isolation_check(
     }
 
     ctx = mp.get_context("spawn")
-    with ctx.Pool(4) as pool:
-        res_t = pool.map(_isolated_twin_worker, [job_t1_a, job_t1_b, job_t2_seed, job_t2_dem])
+    with ctx.Pool(4, maxtasksperchild=1) as pool:
+        res_t = pool.map(_isolated_twin_worker, [job_t1_a, job_t1_b, job_t2_seed, job_t2_dem], chunksize=1)
     rt1_a, rt1_b, rt2_seed, rt2_dem = res_t[0], res_t[1], res_t[2], res_t[3]
 
     twin_sumo_diff = (rt2_seed["veh_digest"] != rt1_a["veh_digest"] or rt2_seed["J"] != rt1_a["J"])
@@ -710,8 +710,8 @@ def run_rng_isolation_check(
         "world": "proxy",
     }
 
-    with ctx.Pool(4) as pool:
-        res_p = pool.map(_isolated_proxy_worker, [job_p1_a, job_p1_b, job_p2_seed, job_p2_dem])
+    with ctx.Pool(4, maxtasksperchild=1) as pool:
+        res_p = pool.map(_isolated_proxy_worker, [job_p1_a, job_p1_b, job_p2_seed, job_p2_dem], chunksize=1)
     rp1_a, rp1_b, rp2_seed, rp2_dem = res_p[0], res_p[1], res_p[2], res_p[3]
 
     proxy_sumo_diff = (rp2_seed["veh_digest"] != rp1_a["veh_digest"] or rp2_seed["J"] != rp1_a["J"])

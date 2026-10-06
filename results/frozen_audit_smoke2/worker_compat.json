@@ -1,0 +1,389 @@
+{
+  "source": {
+    "B": "results/audit/raw.parquet",
+    "D300": "results/audit/sens/raw_sens.parquet"
+  },
+  "worker": "citypulse/branching/audit_engine.py _twin_audit_worker (modified)",
+  "fresh_process_per_branch": true,
+  "n_cases": 4,
+  "n_passed": 4,
+  "all_ok": true,
+  "cases": [
+    {
+      "case": {
+        "seed": 4203,
+        "replication": 5,
+        "action": "A2",
+        "variant": "B"
+      },
+      "worker_pid": 15364,
+      "status": "ok",
+      "fields": {
+        "world": {
+          "got": "twin",
+          "expected": "twin",
+          "ok": true
+        },
+        "seed": {
+          "got": 4203,
+          "expected": 4203,
+          "ok": true
+        },
+        "replication": {
+          "got": 5,
+          "expected": 5,
+          "ok": true
+        },
+        "action": {
+          "got": "A2",
+          "expected": "A2",
+          "ok": true
+        },
+        "J": {
+          "got": 96.54,
+          "expected": 96.54,
+          "ok": true
+        },
+        "veh_digest": {
+          "got": "47567914e162b9848c26ed6b53c2b21b1cd314f336790058e15d373b18e4fd89",
+          "expected": "47567914e162b9848c26ed6b53c2b21b1cd314f336790058e15d373b18e4fd89",
+          "ok": true
+        },
+        "n_vehicles": {
+          "got": 423,
+          "expected": 423,
+          "ok": true
+        },
+        "status": {
+          "got": "ok",
+          "expected": "ok",
+          "ok": true
+        }
+      },
+      "ok": true,
+      "placement_error": null
+    },
+    {
+      "case": {
+        "seed": 4207,
+        "replication": 2,
+        "action": "A4",
+        "variant": "B"
+      },
+      "worker_pid": 25536,
+      "status": "ok",
+      "fields": {
+        "world": {
+          "got": "twin",
+          "expected": "twin",
+          "ok": true
+        },
+        "seed": {
+          "got": 4207,
+          "expected": 4207,
+          "ok": true
+        },
+        "replication": {
+          "got": 2,
+          "expected": 2,
+          "ok": true
+        },
+        "action": {
+          "got": "A4",
+          "expected": "A4",
+          "ok": true
+        },
+        "J": {
+          "got": 89.85888888888888,
+          "expected": 89.85888888888888,
+          "ok": true
+        },
+        "veh_digest": {
+          "got": "22e10aa7e1b9a3befa797dd353bbb921f2e0eed972800a7ea2faeb65cb5d6b9d",
+          "expected": "22e10aa7e1b9a3befa797dd353bbb921f2e0eed972800a7ea2faeb65cb5d6b9d",
+          "ok": true
+        },
+        "n_vehicles": {
+          "got": 390,
+          "expected": 390,
+          "ok": true
+        },
+        "status": {
+          "got": "ok",
+          "expected": "ok",
+          "ok": true
+        }
+      },
+      "ok": true,
+      "placement_error": null
+    },
+    {
+      "case": {
+        "seed": 4201,
+        "replication": 1,
+        "action": "A0",
+        "variant": "D300"
+      },
+      "worker_pid": 24944,
+      "status": "ok",
+      "fields": {
+        "world": {
+          "got": "twin",
+          "expected": "twin",
+          "ok": true
+        },
+        "seed": {
+          "got": 4201,
+          "expected": 4201,
+          "ok": true
+        },
+        "replication": {
+          "got": 1,
+          "expected": 1,
+          "ok": true
+        },
+        "action": {
+          "got": "A0",
+          "expected": "A0",
+          "ok": true
+        },
+        "J": {
+          "got": 85.65972222222223,
+          "expected": 85.65972222222223,
+          "ok": true
+        },
+        "veh_digest": {
+          "got": "5d37e8362da8056c5e984b1043dec3a5d505ab419ba6061b1895a1eaf6df44d8",
+          "expected": "5d37e8362da8056c5e984b1043dec3a5d505ab419ba6061b1895a1eaf6df44d8",
+          "ok": true
+        },
+        "n_vehicles": {
+          "got": 311,
+          "expected": 311,
+          "ok": true
+        },
+        "status": {
+          "got": "ok",
+          "expected": "ok",
+          "ok": true
+        },
+        "variant": {
+          "got": "D300",
+          "expected": "D300",
+          "ok": true
+        },
+        "hyp_pos": {
+          "got": 755.3,
+          "expected": 755.3,
+          "ok": true
+        },
+        "hyp_clear_time": {
+          "got": 5400.0,
+          "expected": 5400.0,
+          "ok": true
+        },
+        "branch_factor": {
+          "got": 0.85,
+          "expected": 0.85,
+          "ok": true
+        },
+        "blocker_edge": {
+          "got": "ktb_n1",
+          "expected": "ktb_n1",
+          "ok": true
+        },
+        "blocker_lane_0": {
+          "got": 0,
+          "expected": 0,
+          "ok": true
+        },
+        "blocker_pos_0": {
+          "got": 755.282,
+          "expected": 755.282,
+          "ok": true
+        },
+        "blocker_t_stop_0": {
+          "got": 5104.0,
+          "expected": 5104.0,
+          "ok": true
+        },
+        "blocker_lane_1": {
+          "got": 1,
+          "expected": 1,
+          "ok": true
+        },
+        "blocker_pos_1": {
+          "got": 755.29,
+          "expected": 755.29,
+          "ok": true
+        },
+        "blocker_t_stop_1": {
+          "got": 5104.0,
+          "expected": 5104.0,
+          "ok": true
+        },
+        "actual_clear_time": {
+          "got": 5400.0,
+          "expected": 5400.0,
+          "ok": true
+        }
+      },
+      "ok": true,
+      "placement_error": null,
+      "release_records": [
+        {
+          "present": true,
+          "stopped_at_clear": true,
+          "resumed": true,
+          "resumed_at": 5400.0,
+          "stopped_after": false,
+          "checked_at": 5401.0,
+          "released": true
+        },
+        {
+          "present": true,
+          "stopped_at_clear": true,
+          "resumed": true,
+          "resumed_at": 5400.0,
+          "stopped_after": false,
+          "checked_at": 5401.0,
+          "released": true
+        }
+      ]
+    },
+    {
+      "case": {
+        "seed": 4201,
+        "replication": 1,
+        "action": "A3",
+        "variant": "D300"
+      },
+      "worker_pid": 23292,
+      "status": "ok",
+      "fields": {
+        "world": {
+          "got": "twin",
+          "expected": "twin",
+          "ok": true
+        },
+        "seed": {
+          "got": 4201,
+          "expected": 4201,
+          "ok": true
+        },
+        "replication": {
+          "got": 1,
+          "expected": 1,
+          "ok": true
+        },
+        "action": {
+          "got": "A3",
+          "expected": "A3",
+          "ok": true
+        },
+        "J": {
+          "got": 85.55055555555556,
+          "expected": 85.55055555555556,
+          "ok": true
+        },
+        "veh_digest": {
+          "got": "2fd8836b03a9796e8d610aff89354e8f6a0af99aa9bebd7836145df6b95d8d21",
+          "expected": "2fd8836b03a9796e8d610aff89354e8f6a0af99aa9bebd7836145df6b95d8d21",
+          "ok": true
+        },
+        "n_vehicles": {
+          "got": 331,
+          "expected": 331,
+          "ok": true
+        },
+        "status": {
+          "got": "ok",
+          "expected": "ok",
+          "ok": true
+        },
+        "variant": {
+          "got": "D300",
+          "expected": "D300",
+          "ok": true
+        },
+        "hyp_pos": {
+          "got": 755.3,
+          "expected": 755.3,
+          "ok": true
+        },
+        "hyp_clear_time": {
+          "got": 5400.0,
+          "expected": 5400.0,
+          "ok": true
+        },
+        "branch_factor": {
+          "got": 0.85,
+          "expected": 0.85,
+          "ok": true
+        },
+        "blocker_edge": {
+          "got": "ktb_n1",
+          "expected": "ktb_n1",
+          "ok": true
+        },
+        "blocker_lane_0": {
+          "got": 0,
+          "expected": 0,
+          "ok": true
+        },
+        "blocker_pos_0": {
+          "got": 755.282,
+          "expected": 755.282,
+          "ok": true
+        },
+        "blocker_t_stop_0": {
+          "got": 5104.0,
+          "expected": 5104.0,
+          "ok": true
+        },
+        "blocker_lane_1": {
+          "got": 1,
+          "expected": 1,
+          "ok": true
+        },
+        "blocker_pos_1": {
+          "got": 755.29,
+          "expected": 755.29,
+          "ok": true
+        },
+        "blocker_t_stop_1": {
+          "got": 5104.0,
+          "expected": 5104.0,
+          "ok": true
+        },
+        "actual_clear_time": {
+          "got": 5400.0,
+          "expected": 5400.0,
+          "ok": true
+        }
+      },
+      "ok": true,
+      "placement_error": null,
+      "release_records": [
+        {
+          "present": true,
+          "stopped_at_clear": true,
+          "resumed": true,
+          "resumed_at": 5400.0,
+          "stopped_after": false,
+          "checked_at": 5401.0,
+          "released": true
+        },
+        {
+          "present": true,
+          "stopped_at_clear": true,
+          "resumed": true,
+          "resumed_at": 5400.0,
+          "stopped_after": false,
+          "checked_at": 5401.0,
+          "released": true
+        }
+      ]
+    }
+  ]
+}

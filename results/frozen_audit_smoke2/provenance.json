@@ -1,0 +1,67 @@
+{
+  "git_head": "7a6a5edae6f80b6db060e0573b404609f6325e5f",
+  "clean": false,
+  "git_clean": false,
+  "git_status_citypulse": "M citypulse/branching/audit_engine.py\n M citypulse/experiments/decision_audit.py\n M citypulse/experiments/frozen_audit.py\n M citypulse/experiments/frozen_audit_analyze.py",
+  "git_status_driver": "M citypulse/experiments/frozen_audit.py",
+  "allow_dirty": true,
+  "file_hashes": {
+    "citypulse/branching/audit_engine.py": "0d17ac70ce3185906a956a5e77ffc5e0a27122338d79be3766cd5170e5330db0",
+    "citypulse/experiments/decision_audit.py": "dcd3900e636c8d0f14711f792009e07bcc35311297875ecee4af938b23becf28",
+    "citypulse/twin/service.py": "da76cbbda2960047e6a961a0ba2faeb6a5d3540ab35b4eb49576fe19abc90427",
+    "citypulse/twin/demand_stream.py": "84ec65294fe28f202a04aa268b406134924ee5197705abfca4d15f39ab5b8802",
+    "citypulse/proxy/service.py": "31a1c74c57dac57863e6d1281724dc5ee455686d1dcf45393f19838d06e4c161",
+    "citypulse/experiments/frozen_audit.py": "ade7f9392bc1f9d7e7963c68b9cc20ba93786fc69a831aa3f82ae15d83923007",
+    "results/assim/na300/sigma300_dev.json": "c88de9c2c6235f0b460dd255b2c28796951b353f634db91d1482660aab1b9bef",
+    "results/event_pilot/impl/sigma_event.json": "64c8d1e70044da6346a6b058e3af6e3c0bd417438c531faf6f414a29cc3251f0",
+    "scenarios/kwuntong/blite/net5.net.xml": "8ab6c9e8ef0cc4d03b690d8f8210aad8c7a88c384d782df673079830a6c012d8",
+    "scenarios/kwuntong/blite/detectors5.add.xml": "2a45506ca311feb1be076afb774914e1c65ca1b66d46a465bcfdfaa3a65d78cf",
+    "scenarios/kwuntong/blite/detector_map.json": "9c712fdaacc304437d27f3689d273b23bba469a5a6555eb6b20fad6470a16590",
+    "scenarios/kwuntong/blite/synth5/proxy.rou.xml": "86a19d8f7a2a72fff1c864eee17f249e77b952525bcfa487588d1d5efc8bfa93",
+    "scenarios/kwuntong/blite/synth5/twin_cand.rou.xml": "a449427a0cb47e6efe31d16a98365aa115d1f146fd2ad5af40355ed52dd4e212",
+    "scenarios/kwuntong/vtypes_proxy.add.xml": "39fff37f25ec8482253f89fd28dd7993edde2953189f93f34f8e106f6c9f9230",
+    "scenarios/kwuntong/vtypes_twin.add.xml": "d0183ca8397c3c4343b8350da85c481465730bc83877b219b180abf5f60c2b16",
+    "scenarios/kwuntong/blite/synth5/tls_webster_synth.add.xml": "e92e4d52fd72dd6657dcb715f89713967e7835544b96070c30c8e142bc2b6bac",
+    "scenarios/kwuntong/blite/synth5/tls_incident_synth.add.xml": "e7219af2140e3f63a863894d51bb75301ba19826c7efcf83052dc384527547e5"
+  },
+  "effective_command_lines": {
+    "seed_4201": {
+      "twin": [
+        "D:\\CityCom\\.venv\\Scripts\\python.exe",
+        "-m",
+        "citypulse.twin.service",
+        "--seed",
+        "2",
+        "--demand-seed",
+        "202",
+        "--demand-path",
+        "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\twin_cand.rou.xml",
+        "--assim",
+        "normal300",
+        "--boundary-detector",
+        "AID07106",
+        "--sigma-json",
+        "D:\\CityCom-astra\\results\\assim\\na300\\sigma300_dev.json",
+        "--twin-base-factor",
+        "0.85",
+        "--snapshot-times",
+        "5100"
+      ],
+      "proxy": [
+        "D:\\CityCom\\.venv\\Scripts\\python.exe",
+        "-m",
+        "citypulse.proxy.service",
+        "--seed",
+        "4201",
+        "--sensor-seed",
+        "77",
+        "--t-end",
+        "7200",
+        "--routes",
+        "D:\\CityCom-astra\\scenarios\\kwuntong\\blite\\synth5\\proxy.rou.xml",
+        "--proxy-snapshot-times",
+        "5100"
+      ]
+    }
+  }
+}

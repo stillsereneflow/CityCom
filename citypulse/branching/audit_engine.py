@@ -352,6 +352,36 @@ def reused_blocker_error(tc, hyp_pos: float) -> Optional[str]:
     return None
 
 
+def blocker_placement_error(stops: Dict[str, Dict[str, Any]], hyp_pos: float) -> Optional[str]:
+    """Measured-placement check for the two H_G5 blockers (Codex item 5); None if both were placed.
+
+    Each blocker must have been observed stopped on ``ktb_n1`` at its requested lane and within
+    1 m of ``hyp_pos``; otherwise the branch is a technical failure (``blockers_not_placed``).
+    """
+    for ln in (0, 1):
+        vid = f"hyp_blocker_{ln}"
+        rec = stops.get(vid)
+        if rec is None:
+            return f"{vid} never stopped"
+        if rec.get("edge") != "ktb_n1":
+            return f"{vid} stopped on {rec.get('edge')!r}, not ktb_n1"
+        lane = rec.get("lane")
+        try:
+            lane_ok = lane is not None and int(lane) == ln
+        except (TypeError, ValueError):
+            lane_ok = False
+        if not lane_ok:
+            return f"{vid} stopped on lane {lane}, not {ln}"
+        pos = rec.get("pos")
+        try:
+            pos_f = float(pos)
+        except (TypeError, ValueError):
+            return f"{vid} has no measured position"
+        if not np.isfinite(pos_f) or abs(pos_f - float(hyp_pos)) > 1.0:
+            return f"{vid} stopped at {pos} m, not within 1 m of {hyp_pos}"
+    return None
+
+
 def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
     """Execute one Twin audit branch in a new process."""
     import libsumo as tc
@@ -549,6 +579,39 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
             n_pend = len(tc.simulation.getPendingVehicles())
             total_veh_steps += (n_run + n_pend)
 
+        # Both blockers must have been measured stopped on ktb_n1 at their requested lane
+        # within 1 m of hyp_pos; anything else is a technical failure (Codex item 5).
+        placement_error = blocker_placement_error(blocker_stops, hyp_pos)
+        if placement_error is not None:
+            return {
+                "world": "twin",
+                "seed": seed,
+                "replication": r,
+                "action": action,
+                "J": None,
+                "veh_digest": None,
+                "error": placement_error,
+                "reason": "blockers_not_placed",
+                "status": "blockers_not_placed",
+                "wall_s": time.time() - t_wall0,
+                "variant": variant,
+                "hyp_pos": hyp_pos,
+                "hyp_clear_time": hyp_clear_time,
+                "branch_factor": base_factor,
+                "reuse_blockers": reuse_blockers,
+                "blocker_edge": (blocker_stops.get("hyp_blocker_0") or {}).get("edge"),
+                "blocker_lane_0": (blocker_stops.get("hyp_blocker_0") or {}).get("lane"),
+                "blocker_pos_0": (blocker_stops.get("hyp_blocker_0") or {}).get("pos"),
+                "blocker_t_stop_0": (blocker_stops.get("hyp_blocker_0") or {}).get("time_stopped"),
+                "blocker_lane_1": (blocker_stops.get("hyp_blocker_1") or {}).get("lane"),
+                "blocker_pos_1": (blocker_stops.get("hyp_blocker_1") or {}).get("pos"),
+                "blocker_t_stop_1": (blocker_stops.get("hyp_blocker_1") or {}).get("time_stopped"),
+                "actual_clear_time": actual_clear_time,
+                "blocker_release_0": release_evidence.get("hyp_blocker_0"),
+                "blocker_release_1": release_evidence.get("hyp_blocker_1"),
+                "queue_trace": trace if queue_trace else None,
+            }
+
         digest, n_veh = veh_digest(tc)
         J = total_veh_steps / 3600.0
 
@@ -570,11 +633,11 @@ def _twin_audit_worker(job: Dict[str, Any]) -> Dict[str, Any]:
             "hyp_clear_time": hyp_clear_time,
             "branch_factor": base_factor,
             "reuse_blockers": reuse_blockers,
-            "blocker_edge": "ktb_n1",
-            "blocker_lane_0": 0,
+            "blocker_edge": b0.get("edge"),
+            "blocker_lane_0": b0.get("lane"),
             "blocker_pos_0": b0.get("pos"),
             "blocker_t_stop_0": b0.get("time_stopped"),
-            "blocker_lane_1": 1,
+            "blocker_lane_1": b1.get("lane"),
             "blocker_pos_1": b1.get("pos"),
             "blocker_t_stop_1": b1.get("time_stopped"),
             "actual_clear_time": actual_clear_time,

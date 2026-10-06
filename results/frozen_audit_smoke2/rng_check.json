@@ -1,0 +1,115 @@
+{
+  "passed": true,
+  "seed": 4201,
+  "twin": {
+    "sumo_seed_only": {
+      "seed_1": {
+        "sumo_seed": 1,
+        "demand_r": 1,
+        "J": 97.93722222222222,
+        "digest": "c0eeacf585979c4ecb8322627f429c0f72bf0063f137a5a9c9cfcad891c0042b",
+        "n_vehicles": 471
+      },
+      "seed_2": {
+        "sumo_seed": 2,
+        "demand_r": 1,
+        "J": 98.57138888888889,
+        "digest": "c18326e3acfeda6a0de3b9dabd89854924518adb9edd199116edbffa8413f76e",
+        "n_vehicles": 476
+      },
+      "delta_J": 0.6341666666666725,
+      "differs": true
+    },
+    "demand_only": {
+      "demand_1": {
+        "sumo_seed": 1,
+        "demand_r": 1,
+        "J": 97.93722222222222,
+        "digest": "c0eeacf585979c4ecb8322627f429c0f72bf0063f137a5a9c9cfcad891c0042b",
+        "n_vehicles": 471
+      },
+      "demand_2": {
+        "sumo_seed": 1,
+        "demand_r": 2,
+        "J": 97.205,
+        "digest": "6fa3ce24845327a876d88c0caf12f2864ef53ad67a50d43c4eb0ac82d6a0d462",
+        "n_vehicles": 486
+      },
+      "delta_J": -0.7322222222222194,
+      "differs": true
+    },
+    "identical_inputs": {
+      "run_1": {
+        "sumo_seed": 1,
+        "demand_r": 1,
+        "J": 97.93722222222222,
+        "digest": "c0eeacf585979c4ecb8322627f429c0f72bf0063f137a5a9c9cfcad891c0042b"
+      },
+      "run_2": {
+        "sumo_seed": 1,
+        "demand_r": 1,
+        "J": 97.93722222222222,
+        "digest": "c0eeacf585979c4ecb8322627f429c0f72bf0063f137a5a9c9cfcad891c0042b"
+      },
+      "identical": true
+    }
+  },
+  "proxy": {
+    "sumo_seed_only": {
+      "seed_1": {
+        "sumo_seed": 1,
+        "demand_m": 1,
+        "J": 108.86861111111111,
+        "digest": "56dfb081cd4c41ae161c7728a3c2929ede81f6c8d7081c5419f4ab45c821dcd6",
+        "n_vehicles": 419
+      },
+      "seed_2": {
+        "sumo_seed": 2,
+        "demand_m": 1,
+        "J": 108.89027777777778,
+        "digest": "86972dfb402bf79070b023df20eaa400cb3ece666d2761722316f95c4ef1a28e",
+        "n_vehicles": 412
+      },
+      "delta_J": 0.021666666666675383,
+      "differs": true
+    },
+    "demand_only": {
+      "demand_1": {
+        "sumo_seed": 1,
+        "demand_m": 1,
+        "J": 108.86861111111111,
+        "digest": "56dfb081cd4c41ae161c7728a3c2929ede81f6c8d7081c5419f4ab45c821dcd6",
+        "n_vehicles": 419
+      },
+      "demand_2": {
+        "sumo_seed": 1,
+        "demand_m": 2,
+        "J": 107.57916666666667,
+        "digest": "865fed0b69a5e78c0fe0ae4486e8ffe5dd3281c82bfbd4e76bd5aac2a03863d7",
+        "n_vehicles": 408
+      },
+      "delta_J": -1.2894444444444417,
+      "differs": true
+    },
+    "identical_inputs": {
+      "run_1": {
+        "sumo_seed": 1,
+        "demand_m": 1,
+        "J": 108.86861111111111,
+        "digest": "56dfb081cd4c41ae161c7728a3c2929ede81f6c8d7081c5419f4ab45c821dcd6"
+      },
+      "run_2": {
+        "sumo_seed": 1,
+        "demand_m": 1,
+        "J": 108.86861111111111,
+        "digest": "56dfb081cd4c41ae161c7728a3c2929ede81f6c8d7081c5419f4ab45c821dcd6"
+      },
+      "identical": true
+    }
+  },
+  "snapshot_hashes": {
+    "twin_state": "7c38e7db11975b4a641a681b9035da6b2f3d764027df3673e35b86c80db7c83b",
+    "twin_meta": "557026f4738b1648c120eddb231ee13a165459c9ed219539f7ad35b157d78aa7",
+    "proxy_state": "d5495ac607a4ff93b03c69dc1bc3afdfa0f44d97984fbf40d85915242ea0f939"
+  }
+}

@@ -34,37 +34,74 @@ FROZEN_SEEDS, DEFAULT_OUT = set(DEFAULT_SEEDS), REPO_ROOT / "results" / "frozen_
 
 def check_seeds(results_dir: Path, target_seeds: List[int], exclude_dirs: Optional[List[Path]] = None) -> Dict[str, Any]:
     used: Dict[str, List[str]] = {}
+    scan_failures: Dict[str, str] = {}
+    files_scanned: List[str] = []
     tset, s_strs = set(target_seeds), {str(s) for s in target_seeds}
     ex_paths = [p.resolve() for p in (exclude_dirs or [])]
+
+    def scan_json(obj: Any, file_path: str) -> None:
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                if k.lower() in ("seed", "seeds"):
+                    if isinstance(v, (list, tuple, set)):
+                        for item in v:
+                            if item in tset or str(item) in s_strs:
+                                used.setdefault(file_path, []).append(f"json_seed_{item}")
+                    elif isinstance(v, dict):
+                        for sub_k in v.keys():
+                            if sub_k in tset or str(sub_k) in s_strs:
+                                used.setdefault(file_path, []).append(f"json_seed_{sub_k}")
+                    elif isinstance(v, (int, str)):
+                        if v in tset or str(v) in s_strs:
+                            used.setdefault(file_path, []).append(f"json_seed_{v}")
+                scan_json(v, file_path)
+        elif isinstance(obj, (list, tuple)):
+            for it in obj:
+                scan_json(it, file_path)
+
     if results_dir.exists():
-        for p in results_dir.rglob("*"):
+        for p in sorted(results_dir.rglob("*")):
             resolved = p.resolve()
             if any(resolved == ex or ex in resolved.parents for ex in ex_paths):
                 continue
+            if not p.is_file():
+                continue
+
+            files_scanned.append(str(p))
+
             for s in tset:
                 if str(s) in p.name:
                     used.setdefault(str(p), []).append(f"name_{s}")
-            if p.is_file() and p.suffix == ".json" and p.name != "seed_check.json":
+
+            if p.suffix == ".json":
                 try:
-                    def scan(obj: Any) -> None:
-                        if isinstance(obj, dict):
-                            for k, v in obj.items():
-                                if k.lower() in ("seed", "seeds") and (v in tset or str(v) in s_strs):
-                                    used.setdefault(str(p), []).append(f"json_seed_{v}")
-                                scan(v)
-                        elif isinstance(obj, list):
-                            for it in obj: scan(it)
-                    scan(json.loads(p.read_text(encoding="utf-8")))
-                except Exception: pass
-            elif p.is_file() and p.suffix == ".parquet":
+                    data = json.loads(p.read_text(encoding="utf-8"))
+                    scan_json(data, str(p))
+                except Exception as e:
+                    scan_failures[str(p)] = f"{type(e).__name__}: {e}"
+
+            elif p.suffix == ".parquet":
                 try:
-                    if "seed" in pq.read_schema(p).names:
-                        col = pd.read_parquet(p, columns=["seed"])["seed"]
-                        found = set(col.unique()) & tset
+                    schema = pq.read_schema(p)
+                    for sc in [c for c in schema.names if c.lower() == "seed"]:
+                        col = pd.read_parquet(p, columns=[sc])[sc]
+                        unique_vals = col.dropna().unique()
+                        found = (set(unique_vals) & tset) | {int(x) for x in unique_vals if str(x).isdigit() and int(x) in tset}
                         if found:
                             used.setdefault(str(p), []).append(f"parquet_seed_{sorted(found)}")
-                except Exception: pass
-    return {"passed": len(used) == 0, "clean": len(used) == 0, "seeds_checked": target_seeds, "matches": used}
+                except Exception as e:
+                    scan_failures[str(p)] = f"{type(e).__name__}: {e}"
+
+    passed = (len(used) == 0) and (len(scan_failures) == 0)
+    clean = (len(used) == 0)
+    return {
+        "passed": passed,
+        "clean": clean,
+        "seeds_checked": target_seeds,
+        "files_scanned": files_scanned,
+        "scan_failures": scan_failures,
+        "matches": used,
+    }
 
 
 def build_provenance(driver_path: Path, allow_dirty: bool = False, seeds: Optional[List[int]] = None) -> Dict[str, Any]:
@@ -73,6 +110,7 @@ def build_provenance(driver_path: Path, allow_dirty: bool = False, seeds: Option
     driver_rel = driver_path.relative_to(REPO_ROOT).as_posix() if driver_path.is_relative_to(REPO_ROOT) else str(driver_path)
     status_driver = subprocess.run(["git", "status", "--porcelain", driver_rel], cwd=str(REPO_ROOT), capture_output=True, text=True).stdout.strip()
     dirty_text = "\n".join(filter(None, [status_out, status_driver]))
+    clean_status = (len(dirty_text) == 0)
     if dirty_text and not allow_dirty:
         raise RuntimeError(f"Uncommitted changes in citypulse/ or driver:\n{dirty_text}\nUse --allow-dirty for smoke test.")
 
@@ -96,7 +134,8 @@ def build_provenance(driver_path: Path, allow_dirty: bool = False, seeds: Option
                       "--routes", str(PROXY_ROU), "--proxy-snapshot-times", str(int(T_D))],
         } for s in (seeds or DEFAULT_SEEDS)
     }
-    return {"git_head": head, "git_status_citypulse": status_out, "git_status_driver": status_driver,
+    return {"git_head": head, "clean": clean_status, "git_clean": clean_status,
+            "git_status_citypulse": status_out, "git_status_driver": status_driver,
             "allow_dirty": allow_dirty, "file_hashes": hashes, "effective_command_lines": commands}
 
 
@@ -111,34 +150,80 @@ def find_seed_run_dir(seed: int, out_dir: Path) -> Path:
     raise FileNotFoundError(f"Snapshots for seed {seed} not found under {out_dir}/runs or results/audit/runs")
 
 
+def _has_run_data(out_dir: Path) -> bool:
+    if not out_dir.exists():
+        return False
+    if (out_dir / "runs").exists() or (out_dir / "routes").exists():
+        return True
+    run_file_names = {
+        "raw.parquet", "queue_trace.parquet", "state_history.parquet",
+        "branch_inputs.json", "reruns.json", "two_world_info.json",
+    }
+    for name in run_file_names:
+        if (out_dir / name).exists():
+            return True
+    return False
+
+
 def cmd_prepare(seeds: List[int], out_dir: Path, allow_dirty: bool = False, smoke: bool = False) -> None:
     if smoke and any(s in FROZEN_SEEDS for s in seeds):
         raise SystemExit("Error: --smoke flag refused when seeds include 4501-4508.")
+    if out_dir.exists() and _has_run_data(out_dir):
+        raise SystemExit(f"Refusing prepare: output directory {out_dir} already exists and contains run data.")
+    res = check_seeds(REPO_ROOT / "results", seeds)
     out_dir.mkdir(parents=True, exist_ok=True)
-    res = check_seeds(REPO_ROOT / "results", seeds, exclude_dirs=[out_dir])
     (out_dir / "seed_check.json").write_text(json.dumps(res, indent=2), encoding="utf-8")
     if not res["passed"]:
-        if smoke:
+        if smoke and len(res["scan_failures"]) == 0:
             print(f"[smoke] Seed check reported matches as expected for smoke: {len(res['matches'])} files")
         else:
-            raise SystemExit(f"Seed check FAILED: {res['matches']}")
+            raise SystemExit(f"Seed check FAILED: matches={res['matches']}, scan_failures={res['scan_failures']}")
     prov = build_provenance(Path(__file__), allow_dirty=allow_dirty, seeds=seeds)
     (out_dir / "provenance.json").write_text(json.dumps(prov, indent=2), encoding="utf-8")
     print(f"Prepare finished: seed_check.json and provenance.json written to {out_dir}")
 
 
 def cmd_twoworld(seeds: List[int], out_dir: Path, smoke: bool = False) -> None:
-    if any(s in FROZEN_SEEDS for s in seeds):
-        raise SystemExit("Error: twoworld cannot be run on frozen seeds 4501-4508 in this session.")
+    if smoke and any(s in FROZEN_SEEDS for s in seeds):
+        raise SystemExit("Error: --smoke flag refused when seeds include 4501-4508.")
     runs_dir = out_dir / "runs"
     runs_dir.mkdir(parents=True, exist_ok=True)
+
+    base_port = 5600
+    for i, s in enumerate(seeds):
+        s_dir = runs_dir / f"seed_{s}"
+        twin_dir = s_dir / "twin"
+        proxy_dir = s_dir / "proxy"
+        s_dir.mkdir(parents=True, exist_ok=True)
+        port = base_port + i * 2
+        ep = f"tcp://127.0.0.1:{port}"
+        targs = [
+            sys.executable, "-m", "citypulse.twin.service",
+            "--endpoint", ep, "--out", str(twin_dir),
+            "--seed", str(TWIN_SEED), "--demand-seed", str(DEMAND_SEED),
+            "--demand-path", str(TWIN_CAND_ROU), "--assim", "normal300",
+            "--boundary-detector", BOUNDARY_DETECTOR,
+            "--sigma-json", str(SIGMA_DEV),
+            "--twin-base-factor", str(TWIN_BASE_FACTOR),
+            "--snapshot-times", str(int(T_D)),
+        ]
+        pargs = [
+            sys.executable, "-m", "citypulse.proxy.service",
+            "--endpoint", ep, "--out", str(proxy_dir),
+            "--seed", str(s), "--sensor-seed", "77", "--t-end", "7200",
+            "--routes", str(PROXY_ROU),
+            "--proxy-snapshot-times", str(int(T_D)),
+        ]
+        cmd_file = s_dir / "commands.json"
+        cmd_file.write_text(json.dumps({"twin": targs, "proxy": pargs}, indent=2), encoding="utf-8")
+
     run_twoworld_batch(seeds, runs_dir)
     print(f"Twoworld complete for seeds {seeds} in {runs_dir}")
 
 
 def cmd_rngcheck(seed: int, out_dir: Path, smoke: bool = False) -> None:
-    if seed in FROZEN_SEEDS:
-        raise SystemExit("Error: rngcheck cannot be run on frozen seeds 4501-4508 in this session.")
+    if smoke and seed in FROZEN_SEEDS:
+        raise SystemExit("Error: --smoke flag refused when seeds include 4501-4508.")
     s_dir = find_seed_run_dir(seed, out_dir)
     info_file = s_dir / "two_world_info.json"
     if info_file.exists():
@@ -149,16 +234,65 @@ def cmd_rngcheck(seed: int, out_dir: Path, smoke: bool = False) -> None:
                 "proxy_state": str(s_dir / "proxy" / f"proxy_state_{int(T_D)}.xml.gz")}
     out_dir.mkdir(parents=True, exist_ok=True)
     rep = run_rng_isolation_check(info, out_dir / "rng_check.json", scratch_dir=out_dir / "scratch_rng")
+    snap_hashes = {
+        "twin_state": file_sha256(Path(info["twin_state"])),
+        "twin_meta": file_sha256(Path(info["twin_meta"])),
+        "proxy_state": file_sha256(Path(info["proxy_state"])),
+    }
+    rep["snapshot_hashes"] = snap_hashes
+    (out_dir / "rng_check.json").write_text(json.dumps(rep, indent=2), encoding="utf-8")
     if not rep["passed"]:
         raise SystemExit("STOPPING: RNG check failed per preregistered protocol.")
     print(f"RNG check passed for seed {seed}")
 
 
+def verify_rng_check(out_dir: Path, seeds: List[int], smoke: bool = False) -> None:
+    rng_path = out_dir / "rng_check.json"
+    if not rng_path.exists():
+        raise SystemExit(f"Refusing branches: RNG check file {rng_path} does not exist.")
+    try:
+        rng_data = json.loads(rng_path.read_text(encoding="utf-8"))
+    except Exception as e:
+        raise SystemExit(f"Refusing branches: failed to parse {rng_path}: {e}")
+
+    if not rng_data.get("passed"):
+        raise SystemExit("Refusing branches: RNG check 'passed' is not true.")
+
+    req_seed = seeds[0] if (smoke and seeds) else 4501
+    if rng_data.get("seed") != req_seed:
+        raise SystemExit(f"Refusing branches: RNG check names seed {rng_data.get('seed')}, expected {req_seed}.")
+
+    snap_hashes = rng_data.get("snapshot_hashes")
+    if not isinstance(snap_hashes, dict):
+        raise SystemExit("Refusing branches: RNG check missing snapshot_hashes.")
+
+    s_dir = find_seed_run_dir(req_seed, out_dir)
+    tw_state = s_dir / "twin" / f"twin_state_{int(T_D)}.xml.gz"
+    tw_meta = s_dir / "twin" / f"twin_state_{int(T_D)}.json"
+    px_state = s_dir / "proxy" / f"proxy_state_{int(T_D)}.xml.gz"
+
+    expected_hashes = {
+        "twin_state": file_sha256(tw_state),
+        "twin_meta": file_sha256(tw_meta),
+        "proxy_state": file_sha256(px_state),
+    }
+
+    for key, exp_hash in expected_hashes.items():
+        if snap_hashes.get(key) != exp_hash:
+            raise SystemExit(
+                f"Refusing branches: snapshot hash mismatch for {key}: "
+                f"recorded {snap_hashes.get(key)} != current {exp_hash}."
+            )
+
+
 def cmd_branches(seeds: List[int], out_dir: Path, workers: int = 8, smoke: bool = False) -> None:
-    if any(s in FROZEN_SEEDS for s in seeds):
-        raise SystemExit("Error: branches cannot be run on frozen seeds 4501-4508 in this session.")
     if smoke and any(s in FROZEN_SEEDS for s in seeds):
         raise SystemExit("Error: --smoke flag refused when seeds include 4501-4508.")
+
+    py_files = sorted((REPO_ROOT / "citypulse").rglob("*.py"))
+    code_hashes_before = {p.relative_to(REPO_ROOT).as_posix(): file_sha256(p) for p in py_files}
+
+    verify_rng_check(out_dir, seeds, smoke=smoke)
 
     out_dir.mkdir(parents=True, exist_ok=True)
     routes_dir = out_dir / "routes"
@@ -175,29 +309,69 @@ def cmd_branches(seeds: List[int], out_dir: Path, workers: int = 8, smoke: bool 
         calib_reps, calib_actions = list(range(7, 13)), list(ACTIONS)
 
     twin_jobs, proxy_jobs = [], []
+    branch_inputs = []
+
     for s in seeds:
         s_dir = find_seed_run_dir(s, out_dir)
         tw_state = str(s_dir / "twin" / f"twin_state_{int(T_D)}.xml.gz")
         tw_meta = str(s_dir / "twin" / f"twin_state_{int(T_D)}.json")
         px_state = str(s_dir / "proxy" / f"proxy_state_{int(T_D)}.xml.gz")
+        tw_state_hash = file_sha256(Path(tw_state))
+        tw_meta_hash = file_sha256(Path(tw_meta))
+        px_state_hash = file_sha256(Path(px_state))
 
         for b in beliefs:
             h_clear = 5400.0 if b == "D300" else None
             for r in twin_reps:
                 for a in twin_actions:
-                    twin_jobs.append({"state": tw_state, "meta": tw_meta, "seed": s, "r": r, "action": a,
-                                      "horizon": HORIZON_STEPS, "variant": b, "hyp_pos": 755.3,
-                                      "hyp_clear_time": h_clear, "queue_trace": True})
+                    job = {"state": tw_state, "meta": tw_meta, "seed": s, "r": r, "action": a,
+                           "horizon": HORIZON_STEPS, "variant": b, "hyp_pos": 755.3,
+                           "hyp_clear_time": h_clear, "queue_trace": True}
+                    twin_jobs.append(job)
+                    branch_inputs.append({
+                        "world": "twin",
+                        "seed": s,
+                        "state_path": tw_state,
+                        "state_sha256": tw_state_hash,
+                        "meta_sha256": tw_meta_hash,
+                        "route_file": None,
+                        "route_sha256": None,
+                        "r/m": r,
+                        "r": r,
+                        "m": None,
+                        "action": a,
+                        "belief": b,
+                        "hyp_clear_time": h_clear,
+                    })
 
         for m in proxy_reps + calib_reps:
             w_name = "calibration" if m in calib_reps else "proxy"
             act_list = calib_actions if m in calib_reps else proxy_actions
             rt_path = routes_dir / f"proxy_s{s}_m{m}.rou.xml"
             orig_ids, _ = build_proxy_resampled_routes(PROXY_ROU, rt_path, seed=s, m=m, t_d=T_D, horizon=HORIZON_STEPS)
+            rt_hash = file_sha256(rt_path)
             for a in act_list:
-                proxy_jobs.append({"state": px_state, "routes": str(rt_path), "orig_future_ids": list(orig_ids),
-                                   "seed": s, "m": m, "action": a, "horizon": HORIZON_STEPS, "world": w_name,
-                                   "queue_trace": True})
+                job = {"state": px_state, "routes": str(rt_path), "orig_future_ids": list(orig_ids),
+                       "seed": s, "m": m, "action": a, "horizon": HORIZON_STEPS, "world": w_name,
+                       "queue_trace": True}
+                proxy_jobs.append(job)
+                branch_inputs.append({
+                    "world": w_name,
+                    "seed": s,
+                    "state_path": px_state,
+                    "state_sha256": px_state_hash,
+                    "meta_sha256": None,
+                    "route_file": str(rt_path),
+                    "route_sha256": rt_hash,
+                    "r/m": m,
+                    "r": None,
+                    "m": m,
+                    "action": a,
+                    "belief": None,
+                    "hyp_clear_time": None,
+                })
+
+    (out_dir / "branch_inputs.json").write_text(json.dumps(branch_inputs, indent=2), encoding="utf-8")
 
     n_workers = max(1, min(int(workers), 8))
     twin_results = run_twin_branch_jobs(twin_jobs, workers=n_workers)
@@ -241,6 +415,17 @@ def cmd_branches(seeds: List[int], out_dir: Path, workers: int = 8, smoke: bool 
 
     pd.DataFrame(raw_records).to_parquet(out_dir / "raw.parquet", index=False)
     pd.DataFrame(trace_records).to_parquet(out_dir / "queue_trace.parquet", index=False)
+
+    code_hashes_after = {p.relative_to(REPO_ROOT).as_posix(): file_sha256(p) for p in py_files}
+    (out_dir / "code_hashes_before_after.json").write_text(
+        json.dumps({
+            "before": code_hashes_before,
+            "after": code_hashes_after,
+            "match": code_hashes_before == code_hashes_after,
+        }, indent=2),
+        encoding="utf-8"
+    )
+
     print(f"Branches complete: raw.parquet ({len(raw_records)} rows), queue_trace.parquet ({len(trace_records)} rows)")
 
 

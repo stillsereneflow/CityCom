@@ -1,0 +1,142 @@
+{
+  "source": {
+    "B": "results/audit/raw.parquet (belief B) + results/audit/v2/report.md",
+    "D300": "results/audit/sens/raw_sens.parquet variant D300 + results/audit/sens/report.md"
+  },
+  "input": "results\\frozen_audit_smoke2\\analyzer_selftest",
+  "seeds": [
+    4201,
+    4202,
+    4203,
+    4204,
+    4205,
+    4206,
+    4207,
+    4208
+  ],
+  "seed_source": "override (self-test only)",
+  "n_seeds": 8,
+  "primary_complete_seeds": 8,
+  "secondary_complete_seeds": 0,
+  "d300": {
+    "secondary_complete_seeds": 0,
+    "twin_world_reasons": [
+      "technical failure: clearance evidence (30 rows: blocker_release_0 missing)"
+    ],
+    "statement": "The self-test D300 rows come from results/audit/sens/raw_sens.parquet, which has no blocker release records. The D300 rule (both blockers resumed at 5,400 s and verified released at 5,401 s) is applied as written: no release evidence is invented, so D300 fails validation for all 8 seeds and no D300 estimand is computed on this input. The positive D300 path is covered by the unit tests and by results/frozen_audit_smoke2/worker_compat.json, whose fresh D300 branches carry the required release records."
+  },
+  "n_checks": 14,
+  "n_passed": 14,
+  "passed": true,
+  "checks": [
+    {
+      "check": "BEE_signed (B)",
+      "ok": true,
+      "got": 1.6315393518518597,
+      "expected": 1.6315393518518597,
+      "tol": 0.005
+    },
+    {
+      "check": "BEE_signed t-CI low (B)",
+      "ok": true,
+      "got": 1.0412214256936843,
+      "expected": 1.0412214256936843,
+      "tol": 0.005
+    },
+    {
+      "check": "BEE_signed t-CI high (B)",
+      "ok": true,
+      "got": 2.2218572780100354,
+      "expected": 2.2218572780100354,
+      "tol": 0.005
+    },
+    {
+      "check": "BEE_abs (B)",
+      "ok": true,
+      "got": 1.6315393518518597,
+      "expected": 1.6315393518518597,
+      "tol": 0.005
+    },
+    {
+      "check": "floor abs (B)",
+      "ok": true,
+      "got": 0.1807986111111166,
+      "expected": 0.1807986111111166,
+      "tol": 0.005
+    },
+    {
+      "check": "Regret (B)",
+      "ok": true,
+      "got": 0.0289930555555582,
+      "expected": 0.0289930555555582,
+      "tol": 0.005
+    },
+    {
+      "check": "Spearman (B)",
+      "ok": true,
+      "got": 0.8499999999999999,
+      "expected": 0.8499999999999999,
+      "tol": 0.0005
+    },
+    {
+      "check": "Kendall (B)",
+      "ok": true,
+      "got": 0.75,
+      "expected": 0.75,
+      "tol": 0.0005
+    },
+    {
+      "check": "CRN proxy median corr (B)",
+      "ok": true,
+      "got": 0.9927414097913742,
+      "expected": 0.9927414097913742,
+      "tol": 0.0005
+    },
+    {
+      "check": "CRN twin median corr (B)",
+      "ok": true,
+      "got": 0.902741385807958,
+      "expected": 0.902741385807958,
+      "tol": 0.0005
+    },
+    {
+      "check": "primary complete seeds = 8 (B)",
+      "ok": true,
+      "got": 8,
+      "expected": 8,
+      "tol": 0
+    },
+    {
+      "check": "a* = A3 on all 8 seeds (B)",
+      "ok": true,
+      "got": [
+        "A3",
+        "A3",
+        "A3",
+        "A3",
+        "A3",
+        "A3",
+        "A3",
+        "A3"
+      ],
+      "expected": "A3 x8",
+      "tol": 0
+    },
+    {
+      "check": "oracle agreement 7/8 (B)",
+      "ok": true,
+      "got": 7.0,
+      "expected": 7,
+      "tol": 0
+    },
+    {
+      "check": "D300 fails validation: no release records in the sensitivity input",
+      "ok": true,
+      "got": [
+        "technical failure: clearance evidence (30 rows: blocker_release_0 missing)"
+      ],
+      "expected": "technical failure: clearance evidence (release records missing)",
+      "tol": 0
+    }
+  ]
+}

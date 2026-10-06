@@ -1,0 +1,54 @@
+{
+  "helper_cases": [
+    {
+      "case": "valid pair",
+      "error": null,
+      "ok": true
+    },
+    {
+      "case": "blocker 0 never stopped",
+      "error": "hyp_blocker_0 never stopped",
+      "ok": true
+    },
+    {
+      "case": "blocker 1 never stopped",
+      "error": "hyp_blocker_1 never stopped",
+      "ok": true
+    },
+    {
+      "case": "blocker 0 wrong edge",
+      "error": "hyp_blocker_0 stopped on 'ktb_w1', not ktb_n1",
+      "ok": true
+    },
+    {
+      "case": "blocker 1 wrong lane",
+      "error": "hyp_blocker_1 stopped on lane 0, not 1",
+      "ok": true
+    },
+    {
+      "case": "blocker 0 out of tolerance",
+      "error": "hyp_blocker_0 stopped at 750.0 m, not within 1 m of 755.3",
+      "ok": true
+    },
+    {
+      "case": "blocker 1 no position",
+      "error": "hyp_blocker_1 has no measured position",
+      "ok": true
+    }
+  ],
+  "helper_all_ok": true,
+  "short_horizon_branch": {
+    "job": {
+      "seed": 4203,
+      "replication": 5,
+      "action": "A2",
+      "horizon": 1
+    },
+    "status": "blockers_not_placed",
+    "J": null,
+    "veh_digest": null,
+    "error": "hyp_blocker_0 never stopped",
+    "ok": true
+  },
+  "all_ok": true
+}

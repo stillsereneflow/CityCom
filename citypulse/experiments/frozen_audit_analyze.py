@@ -5,6 +5,9 @@ and computes exactly the preregistered estimands, per seed and over seeds, with 
 correction (``results/audit/v2/report.md``); no simulation.
 
 Usage: python -m citypulse.experiments.frozen_audit_analyze analyze --dir results/frozen_audit
+
+The seed set is the frozen manifest's 4,501-4,508 and never the surviving raw rows; the
+``--seeds`` override exists only for self-tests on development seeds.
 """
 from __future__ import annotations
 
@@ -28,6 +31,11 @@ SEL_REPS, EVAL_REPS = (1, 2, 3), (4, 5, 6)
 CAL_SEL_REPS, CAL_EVAL_REPS = (7, 8, 9), (10, 11, 12)
 PRIMARY_BELIEF, SECONDARY_BELIEF = "B", "D300"
 CLEAR_TARGET, REGRET_DENOM_MIN = 5400.0, 0.5
+CHECK_TARGET = CLEAR_TARGET + 1.0
+DEFAULT_HYP_POS = 755.3
+# Frozen test seeds of docs/oct16-frozen-audit-plan.md ("Seeds"): the analysis denominator is
+# this manifest set, never the seeds that happen to survive in raw.parquet.
+FROZEN_SEEDS: Tuple[int, ...] = (4501, 4502, 4503, 4504, 4505, 4506, 4507, 4508)
 
 # Claim boundary of docs/oct16-frozen-audit-plan.md ("Purpose and claim boundary"), verbatim.
 CLAIM_BOUNDARY = (
@@ -63,14 +71,25 @@ def load_inputs(directory: Path) -> Tuple[pd.DataFrame, Optional[pd.DataFrame], 
             json.loads((d / "rng_check.json").read_text(encoding="utf-8")) if (d / "rng_check.json").exists() else {})
 
 
+def status_ok(df: pd.DataFrame) -> pd.Series:
+    """True only where a status was recorded and is exactly ``ok``.
+
+    A missing status column or a null/empty status is never ``ok``: the analyzer must not
+    invent success (Codex item 4), and ``validate_world`` reports it as a validation failure.
+    """
+    if "status" not in df.columns:
+        return pd.Series(False, index=df.index, dtype=bool)
+    return df["status"].eq("ok").fillna(False).astype(bool)
+
+
 def normalize_raw(df: pd.DataFrame) -> pd.DataFrame:
+    """Normalize dtypes without inventing evidence: an absent status column stays absent."""
     df = df.copy()
     if "belief" not in df.columns:
         df["belief"] = PRIMARY_BELIEF
     df["belief"] = df["belief"].fillna(PRIMARY_BELIEF).astype(str)
-    if "status" not in df.columns:
-        df["status"] = "ok"
-    df["status"] = df["status"].fillna("").astype(str)
+    if "status" in df.columns:
+        df["status"] = df["status"].astype("object").where(df["status"].notna(), None)
     df[["world", "action"]] = df[["world", "action"]].astype(str)
     df[["seed", "replication"]] = df[["seed", "replication"]].astype(int)
     df["J"] = pd.to_numeric(df["J"], errors="coerce")
@@ -83,42 +102,73 @@ def rows_for(df: pd.DataFrame, world: str, belief: Optional[str] = None) -> pd.D
     return sub[sub["belief"] == belief] if (belief is not None and world == "twin") else sub
 
 
+def _release_record(row: pd.Series, col: str) -> Tuple[Optional[Dict[str, Any]], Optional[str]]:
+    if col not in row.index:
+        return None, f"{col} missing"
+    val = row[col]
+    if val is None or (not isinstance(val, (dict, list, str)) and pd.isna(val)):
+        return None, f"{col} missing"
+    ev = val
+    if isinstance(ev, str):
+        try:
+            ev = json.loads(ev)
+        except json.JSONDecodeError:
+            return None, f"{col} unreadable"
+    if not isinstance(ev, dict):
+        return None, f"{col} unreadable"
+    return ev, None
+
+
 def clearance_ok(row: pd.Series) -> Tuple[bool, str]:
-    """D300 technical-failure check: both blockers placed and released, clearance at 5,400 s."""
-    release_times: List[float] = []
-    saw_release = False
+    """D300 technical-failure check (Codex item 5).
+
+    Both blockers need measured placement evidence (stopped on ``ktb_n1``, lanes 0 and 1,
+    within 1 m of ``hyp_pos``) and a release record with ``resumed: true``,
+    ``resumed_at == 5,400.0``, ``released: true`` and ``checked_at == 5,401.0``. The clearance
+    timestamp must be the recorded 5,400.0 s: a clearance time without release records, or a
+    later clearance, is a technical failure.
+    """
     for col in ("blocker_release_0", "blocker_release_1"):
-        if col not in row.index or pd.isna(row[col]):
-            continue
-        ev = row[col]
-        if isinstance(ev, str):
-            try:
-                ev = json.loads(ev)
-            except json.JSONDecodeError:
-                return False, f"{col} unreadable"
-        if not isinstance(ev, dict) or ev.get("released") is not True:
+        ev, err = _release_record(row, col)
+        if err is not None:
+            return False, err
+        if ev.get("resumed") is not True:
+            return False, f"{col} not resumed"
+        if not _finite(ev.get("resumed_at")) or abs(float(ev["resumed_at"]) - CLEAR_TARGET) > 1e-6:
+            return False, f"{col} resumed_at {ev.get('resumed_at')} != {CLEAR_TARGET}"
+        if ev.get("released") is not True:
             return False, f"{col} not released"
-        saw_release = True
-        release_times += [float(ev[k]) for k in ("resumed_at", "checked_at") if _finite(ev.get(k))]
-    if "blocker_release_0" in row.index and "blocker_release_1" in row.index and not saw_release:
-        return False, "no release evidence"
+        if not _finite(ev.get("checked_at")) or abs(float(ev["checked_at"]) - CHECK_TARGET) > 1e-6:
+            return False, f"{col} checked_at {ev.get('checked_at')} != {CHECK_TARGET}"
     clear = row.get("actual_clear_time")
-    clear = float(clear) if _finite(clear) else (max(release_times) if release_times else None)
-    if clear is None:
+    if not _finite(clear):
         return False, "no clearance time evidence"
-    if clear < CLEAR_TARGET - 1e-6:
-        return False, f"clearance at {clear} < {CLEAR_TARGET}"
-    for col in ("blocker_pos_0", "blocker_pos_1"):
-        if col in row.index and not _finite(row[col]):
-            return False, f"{col} missing"
-    if "blocker_edge" in row.index and not pd.isna(row["blocker_edge"]) and str(row["blocker_edge"]) != "ktb_n1":
-        return False, f"blocker_edge {row['blocker_edge']} != ktb_n1"
+    if abs(float(clear) - CLEAR_TARGET) > 1e-6:
+        return False, f"clearance at {float(clear)} != {CLEAR_TARGET}"
+    if "blocker_edge" not in row.index or pd.isna(row["blocker_edge"]) or str(row["blocker_edge"]) != "ktb_n1":
+        return False, f"blocker_edge {row.get('blocker_edge')} != ktb_n1"
+    hyp_pos = row.get("hyp_pos")
+    hyp_pos = float(hyp_pos) if _finite(hyp_pos) else DEFAULT_HYP_POS
+    for ln, lane_col, pos_col, stop_col in ((0, "blocker_lane_0", "blocker_pos_0", "blocker_t_stop_0"),
+                                            (1, "blocker_lane_1", "blocker_pos_1", "blocker_t_stop_1")):
+        if lane_col not in row.index or not _finite(row[lane_col]) or int(float(row[lane_col])) != ln:
+            return False, f"{lane_col} {row.get(lane_col)} != {ln}"
+        if pos_col not in row.index or not _finite(row[pos_col]) or abs(float(row[pos_col]) - hyp_pos) > 1.0:
+            return False, f"{pos_col} {row.get(pos_col)} not within 1 m of {hyp_pos}"
+        if stop_col not in row.index or not _finite(row[stop_col]):
+            return False, f"{stop_col} missing"
     return True, "ok"
 
 
 def validate_world(df: pd.DataFrame, belief: str, world: str, seeds: Sequence[int],
                    require_clearance: bool = False) -> Tuple[Dict[int, Dict[str, Any]], List[int]]:
-    """Unique (action, replication) keys, finite J, status ok, complete 5 x N grid per seed."""
+    """Unique (action, replication) keys, finite J, recorded status ok, complete 5 x N grid.
+
+    ``seeds`` is the frozen manifest seed set (or the self-test override); a seed with no rows is
+    excluded explicitly with reason ``no rows``. A missing status column or a null status is a
+    validation failure, never an assumed success. Duplicate (action, replication) keys exclude
+    the seed instead of being silently deduplicated.
+    """
     sub = rows_for(df, world, belief)
     want = {(a, r) for a in ACTIONS for r in REPS_BY_WORLD[world]}
     records: Dict[int, Dict[str, Any]] = {}
@@ -129,6 +179,13 @@ def validate_world(df: pd.DataFrame, belief: str, world: str, seeds: Sequence[in
         if s_rows.empty:
             rec["reason"] = "no rows"
             continue
+        if "status" not in s_rows.columns:
+            rec["reason"] = "no status evidence: status column absent"
+            continue
+        blank = s_rows["status"].isna() | (s_rows["status"].astype(str).str.strip() == "")
+        if blank.any():
+            rec["reason"] = f"no status evidence: {int(blank.sum())} row(s) with null/empty status"
+            continue
         dup = s_rows[s_rows.duplicated(["action", "replication"], keep=False)]
         if not dup.empty:
             # the plan requires unique (action, replication) keys: any duplicate excludes the seed
@@ -136,7 +193,7 @@ def validate_world(df: pd.DataFrame, belief: str, world: str, seeds: Sequence[in
             rec["reason"] = ("duplicate (action, replication) keys with conflicting J" if conflicting
                              else "duplicate (action, replication) keys")
             continue
-        ok = s_rows[(s_rows["status"] == "ok") & np.isfinite(s_rows["J"])]
+        ok = s_rows[status_ok(s_rows) & np.isfinite(s_rows["J"])]
         if require_clearance:
             failed = [i for i, r in ok.iterrows() if not clearance_ok(r)[0]]
             if failed:
@@ -146,7 +203,12 @@ def validate_world(df: pd.DataFrame, belief: str, world: str, seeds: Sequence[in
         rec["n_ok"] = int(len(ok))
         missing = want - set(zip(ok["action"], ok["replication"]))
         if missing:
-            rec["reason"] = f"incomplete {world} grid: {len(ok)}/{len(want)} ok rows ({len(missing)} cells missing)"
+            failed = s_rows[~status_ok(s_rows)]
+            by_status = ("" if failed.empty
+                         else "; failed statuses: " + ", ".join(
+                             f"{k} x{v}" for k, v in sorted(failed["status"].astype(str).value_counts().items())))
+            rec["reason"] = (f"incomplete {world} grid: {len(ok)}/{len(want)} ok rows "
+                             f"({len(missing)} cells missing){by_status}")
             continue
         rec["complete"] = True
         complete.append(int(s))
@@ -154,9 +216,13 @@ def validate_world(df: pd.DataFrame, belief: str, world: str, seeds: Sequence[in
 
 
 def pivot_ok(df: pd.DataFrame, belief: str, world: str, seed: int) -> pd.DataFrame:
+    """One validated seed's 5 x N J grid; no deduplication (duplicates exclude the seed earlier)."""
     sub = rows_for(df, world, belief)
-    sub = sub[(sub["seed"] == seed) & (sub["status"] == "ok") & np.isfinite(sub["J"])]
-    return sub.drop_duplicates(["action", "replication"], keep="first").pivot(
+    sub = sub[(sub["seed"] == seed) & status_ok(sub) & np.isfinite(sub["J"])]
+    if sub.duplicated(["action", "replication"]).any():
+        raise ValueError(f"duplicate (action, replication) keys for {world} seed {seed}: "
+                         "validate_world must have excluded this seed")
+    return sub.pivot(
         index="replication", columns="action", values="J").reindex(
         index=list(REPS_BY_WORLD[world]), columns=list(ACTIONS))
 
@@ -255,14 +321,30 @@ def compute_belief(df: pd.DataFrame, belief: str, seeds: Sequence[int]) -> Dict[
             "n_complete_seeds": len(per_seed), "complete_seeds": sorted(have)}
 
 
-def crn_block(df: pd.DataFrame, belief: str, complete: Sequence[int]) -> Dict[str, Any]:
-    """v2 paired CRN corr(a) and VR(a) per world, on complete seeds only."""
-    keep = df[df["status"] == "ok"]
-    keep = pd.concat([rows_for(keep, "twin", belief), keep[keep["world"] != "twin"]], ignore_index=True)
-    keep = keep[keep["seed"].isin(list(complete))].drop_duplicates(
-        ["world", "seed", "replication", "action"], keep="first")
-    stats = compute_crn_statistics(keep)
-    return {"per_seed": {str(k): v for k, v in stats["per_seed"].items()},
+def crn_block(df: pd.DataFrame, belief: str, validation: Dict[str, Any]) -> Dict[str, Any]:
+    """v2 paired CRN corr(a) and VR(a) per world, on that world's validated complete grids only.
+
+    Each world contributes only the seeds whose own 5 x N grid validated as complete, with N and
+    the exclusions reported; there is no silent deduplication (duplicate keys exclude the seed in
+    ``validate_world`` and can never reach this block).
+    """
+    frames: List[pd.DataFrame] = []
+    per_world: Dict[str, Any] = {}
+    for world in WORLDS:
+        recs, complete = validation[world]
+        complete = [int(s) for s in complete]
+        sub = rows_for(df, world, belief)
+        sub = sub[status_ok(sub) & np.isfinite(sub["J"]) & sub["seed"].isin(complete)]
+        if sub.duplicated(["seed", "replication", "action"]).any():
+            raise ValueError(f"duplicate (seed, replication, action) keys in validated {world} rows")
+        per_world[world] = {
+            "n_seeds": len(complete), "seeds": complete, "n_rows": int(len(sub)),
+            "exclusions": {int(s): r["reason"] for s, r in recs.items() if not r["complete"]}}
+        if not sub.empty:
+            frames.append(sub)
+    keep = pd.concat(frames, ignore_index=True) if frames else df.iloc[0:0]
+    stats = compute_crn_statistics(keep) if not keep.empty else {"per_seed": {}, "pooled_medians": {}}
+    return {"per_world": per_world, "per_seed": {str(k): v for k, v in stats["per_seed"].items()},
             "pooled_medians": stats["pooled_medians"]}
 
 
@@ -312,8 +394,12 @@ def _pooled_table(lines: List[str], pooled: Dict[str, Any], keys: Sequence[str])
 def write_report(path: Path, bundle: Dict[str, Any]) -> None:
     primary, secondary = bundle["primary"], bundle["secondary"]
     lines = ["# Frozen offline decision audit: analysis", "", f"Input: `{bundle['dir']}`", "",
-             f"Seeds: {bundle['seeds']} (N = {bundle['n_seeds']}). Decision time t_d = 5,100 s; horizon 900 s; "
-             "J = total time spent (veh.h).", "", "## Claim boundary", "", "> " + CLAIM_BOUNDARY, "",
+             f"Seeds: {bundle['seeds']} (N = {bundle['n_seeds']}; seed source: {bundle['seed_source']}). "
+             "Decision time t_d = 5,100 s; horizon 900 s; J = total time spent (veh.h).", ""]
+    if bundle.get("unexpected_seeds_in_raw"):
+        lines += [f"- Rows for seeds outside the denominator set are ignored: "
+                  f"{bundle['unexpected_seeds_in_raw']}.", ""]
+    lines += ["## Claim boundary", "", "> " + CLAIM_BOUNDARY, "",
              "- The development audit's numbers (seeds 4201-4208) stay reported unchanged beside these, never pooled.",
              "- The calibration floor is reported beside BEE; it is never subtracted from BEE and no causal-gap "
              "interpretation is made.", "", "## 1. Validation", ""]
@@ -330,6 +416,9 @@ def write_report(path: Path, bundle: Dict[str, Any]) -> None:
                   "## 3. Secondary, belief D300 (truth-assisted offline positive control)", "",
                   f"Complete seeds: {block['n_complete_seeds']} {block['complete_seeds']} "
                   "(common complete seeds for paired comparisons).", ""]
+        if block["n_complete_seeds"] == 0:
+            lines += ["No seed passed validation for this belief; the per-world technical failures are "
+                      "reported in section 1 and no estimand is computed.", ""]
         _table(lines, ["Seed", "a* (R1)", "Oracle (M1)", "Top-1", "G_T(a*)", "G_P(a*)", "BEE signed", "BEE abs",
                        "BEE rel", "Regret", "Regret denom", "Regret rel", "Spearman", "Kendall", "Floor (abs)"],
                [[r["seed"], r["a_star"], r["oracle"], int(r["top1_agree"]), _fmt(r["G_T_hat"], 3), _fmt(r["G_P"], 3),
@@ -345,11 +434,24 @@ def write_report(path: Path, bundle: Dict[str, Any]) -> None:
         p = block["pooled"]
         lines.append(f"- **{belief}**: " + "; ".join(
             f"{k} = {_fmt(p[k]['mean'], 3)} {_fmt(p[k]['ci95_t'], 3)}" for k in ("G_T_A3", "G_P_A3", "BEE_A3")))
-    lines += ["", "## 5. v2 paired CRN (corr(a), VR(a))", ""]
-    meds = {b: bundle["crn"][b]["pooled_medians"] for b in (PRIMARY_BELIEF, SECONDARY_BELIEF)}
-    _table(lines, ["Belief", "World", "Median corr", "Median VR", "Pooled median corr", "Pooled median VR"],
-           [[b, w] + [_fmt((meds[b].get(w) or {}).get(k), 4) for k in ("median_corr", "median_vr",
-                      "pooled_median_corr", "pooled_median_vr")] for b in meds for w in WORLDS if meds[b].get(w)])
+    lines += ["", "## 5. v2 paired CRN (corr(a), VR(a))", "",
+              "Each world contributes only the seeds whose own grid validated as complete; N and the "
+              "exclusions are reported per world, and no row is silently deduplicated.", ""]
+    for b in (PRIMARY_BELIEF, SECONDARY_BELIEF):
+        block = bundle["crn"][b]
+        meds = block["pooled_medians"]
+        rows = []
+        for w in WORLDS:
+            info = block["per_world"].get(w, {})
+            m = meds.get(w) or {}
+            excl = info.get("exclusions") or {}
+            rows.append([w, info.get("n_seeds"), info.get("n_rows"),
+                         _fmt(m.get("median_corr"), 4), _fmt(m.get("median_vr"), 4),
+                         _fmt(m.get("pooled_median_corr"), 4), _fmt(m.get("pooled_median_vr"), 4),
+                         "; ".join(f"{s}: {r}" for s, r in sorted(excl.items())) or "none"])
+        lines += [f"### Belief {b}", ""]
+        _table(lines, ["World", "N seeds", "Rows", "Median corr", "Median VR", "Pooled median corr",
+                       "Pooled median VR", "Exclusions"], rows)
     sh = bundle["state_history"]
     lines += ["## 6. State history (descriptive only, no gating)", ""]
     if not sh["available"]:
@@ -366,15 +468,42 @@ def write_report(path: Path, bundle: Dict[str, Any]) -> None:
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def analyze(directory: Path) -> Dict[str, Any]:
+def parse_seeds(spec: str) -> List[int]:
+    """Parse a self-test seed override: ``4201..4208`` or ``4201,4202`` (comma-separated items)."""
+    out: List[int] = []
+    for part in str(spec).split(","):
+        part = part.strip()
+        if not part:
+            continue
+        if ".." in part:
+            lo, hi = part.split("..", 1)
+            out += list(range(int(lo), int(hi) + 1))
+        else:
+            out.append(int(part))
+    if not out:
+        raise ValueError(f"empty --seeds spec: {spec!r}")
+    return sorted(dict.fromkeys(out))
+
+
+def analyze(directory: Path, seeds: Optional[Sequence[int]] = None) -> Dict[str, Any]:
+    """Analyze a collected directory; the denominator seeds are the frozen manifest's.
+
+    ``seeds`` is the self-test override only; it never changes the production seed set.
+    """
     raw, state, rng = load_inputs(directory)
-    seeds = sorted(int(s) for s in raw["seed"].unique())
-    primary, secondary = compute_belief(raw, PRIMARY_BELIEF, seeds), compute_belief(raw, SECONDARY_BELIEF, seeds)
-    bundle = {"dir": str(directory), "claim_boundary": CLAIM_BOUNDARY, "seeds": seeds, "n_seeds": len(seeds),
+    seed_list = sorted(int(s) for s in (FROZEN_SEEDS if seeds is None else seeds))
+    unexpected = sorted(set(int(s) for s in raw["seed"].unique()) - set(seed_list))
+    primary = compute_belief(raw, PRIMARY_BELIEF, seed_list)
+    secondary = compute_belief(raw, SECONDARY_BELIEF, seed_list)
+    bundle = {"dir": str(directory), "claim_boundary": CLAIM_BOUNDARY, "seeds": seed_list,
+              "n_seeds": len(seed_list),
+              "seed_source": ("frozen manifest 4501-4508" if seeds is None
+                              else "override (self-test only)"),
+              "unexpected_seeds_in_raw": unexpected,
               "primary_belief": PRIMARY_BELIEF, "secondary_belief": SECONDARY_BELIEF,
               "primary": primary, "secondary": secondary,
-              "crn": {PRIMARY_BELIEF: crn_block(raw, PRIMARY_BELIEF, primary["complete_seeds"]),
-                      SECONDARY_BELIEF: crn_block(raw, SECONDARY_BELIEF, secondary["complete_seeds"])},
+              "crn": {PRIMARY_BELIEF: crn_block(raw, PRIMARY_BELIEF, primary["validation"]),
+                      SECONDARY_BELIEF: crn_block(raw, SECONDARY_BELIEF, secondary["validation"])},
               "state_history": state_history_summary(state), "rng_check": rng}
     (Path(directory) / "metrics.json").write_text(json.dumps(bundle, indent=2, default=str), encoding="utf-8")
     write_report(Path(directory) / "report.md", bundle)
@@ -386,11 +515,18 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     a = ap.add_subparsers(dest="cmd", required=True).add_parser(
         "analyze", help="compute the preregistered estimands for a collected directory")
     a.add_argument("--dir", required=True, help="directory with raw.parquet/state_history.parquet/rng_check.json")
-    bundle = analyze(Path(ap.parse_args(argv).dir))
+    a.add_argument("--seeds", default=None,
+                   help="self-test only: seed override such as 4201..4208; production uses the frozen "
+                        "manifest seeds 4501-4508")
+    args = ap.parse_args(argv)
+    seeds = parse_seeds(args.seeds) if args.seeds else None
+    if seeds is not None:
+        print(f"WARNING: --seeds {args.seeds} overrides the frozen manifest seed set (self-test only)")
+    bundle = analyze(Path(args.dir), seeds=seeds)
     p = bundle["primary"]["pooled"]["BEE_signed"]
-    print(f"analyze: {bundle['n_seeds']} seeds; primary complete {bundle['primary']['n_complete_seeds']}, "
-          f"secondary complete {bundle['secondary']['n_complete_seeds']}; "
-          f"BEE(B) = {_fmt(p['mean'], 3)} {_fmt(p['ci95_t'], 3)}")
+    print(f"analyze: {bundle['n_seeds']} seeds ({bundle['seed_source']}); primary complete "
+          f"{bundle['primary']['n_complete_seeds']}, secondary complete "
+          f"{bundle['secondary']['n_complete_seeds']}; BEE(B) = {_fmt(p['mean'], 3)} {_fmt(p['ci95_t'], 3)}")
     return 0
 
 
