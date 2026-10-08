@@ -1,6 +1,6 @@
 # CityCom handoff: where the work stands and what comes next
 
-Last updated: 2026-10-08 (RELEASED: tag `competition-submission-v1.0` in D:/CityCom-astra at 36d039b; Codex final review READY).
+Last updated: 2026-10-08, second session (v1.0 RELEASED and untouched: tag `competition-submission-v1.0` at 36d039b. **New: redesigned v2 package in `D:/CityCom-astra/competition_v2/`**, see "Competition v2" below).
 
 **When the user says "resume" (or anything like "continue", "pick up where we left off"), read this file, then do "On resume" below, then carry on with the queue.**
 
@@ -63,7 +63,20 @@ This is the 12th China Postgraduate Smart City competition entry 《城脉·涟�
 
 Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/step1-notes/notes.md`. (`step1-notes/` is this log, not a dispatch; it has no `merged` marker on purpose.)
 
-**Session handoff 2026-10-08:** every dispatch directory is merged, the worktree is clean, and nothing is running. The next session's first message can simply be "resume". Then confirm the release state (`git -C D:/CityCom-astra describe --tags` → `competition-submission-v1.0`) and wait for the user's next instruction (upload or rehearsal help). Do not reopen experiments.
+**Competition v2 (2026-10-08, second session, on the user's redesign request):** `D:/CityCom-astra/competition_v2/` holds a repositioned, competition-oriented package. It is **untracked and not committed** (the user did not ask for a commit).
+- **Positioning:** a decision-fidelity audit system supported by counterfactual simulation; the event engine is an experimental component.
+- **Files:**
+  - `01_项目简表_v2` (filled on the official 附件1 template), `02_作品说明书_v2`, `03_答辩PPT_v2` (15 main + 6 backup slides, built by `_build/build_deck_v2.py`), `04_商业计划书_v2`;
+  - `competition_compliance_checklist.md`, `claim_evidence_matrix.md` (the single source of truth), `cross_document_consistency_report.md`, `jury_questions_and_answers.md` (17 questions), `demo_storyboard.md`, `prototype_evidence/`, `revision_report.md`;
+  - official templates in `official_templates/` (do not upload them).
+- **Review:** codex ran 3 rounds; the last found no factual error left. agy-pro, agy-flash and dsh also reviewed. All of those dispatches are merged.
+- **To rebuild after an edit:** run the scripts in `competition_v2/_build/` (`fill_jianbiao.py`, `build_docx_v2.py`, `build_deck_v2.py`, `to_pdf.ps1`, `figs_v2.py`, `fig_network.py`). Then rerun `submission/tools/check_numbers.py` and `scan_anonymity.py`.
+- **Open for the user:**
+  - identity fields in the 简表;
+  - the school's internal deadline;
+  - whether to tag v2 as a release, and whether to cut the 90-s v2 video (the v1 video's title card still shows the v1 subtitle).
+
+**Session handoff 2026-10-08 (first session):** every dispatch directory is merged, the worktree is clean, and nothing is running. The next session's first message can simply be "resume". Then confirm the release state (`git -C D:/CityCom-astra describe --tags` → `competition-submission-v1.0`) and wait for the user's next instruction (upload or rehearsal help). Do not reopen experiments.
 
 ## Results so far (all verified by recomputation unless marked otherwise)
 
