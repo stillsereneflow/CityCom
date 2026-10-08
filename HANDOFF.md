@@ -1,6 +1,6 @@
 # CityCom handoff: where the work stands and what comes next
 
-Last updated: 2026-10-06 (RELEASED: tag `competition-submission-v1.0` in D:/CityCom-astra at 36d039b; Codex final review READY).
+Last updated: 2026-10-08 (RELEASED: tag `competition-submission-v1.0` in D:/CityCom-astra at 36d039b; Codex final review READY).
 
 **When the user says "resume" (or anything like "continue", "pick up where we left off"), read this file, then do "On resume" below, then carry on with the queue.**
 
@@ -61,7 +61,9 @@ This is the 12th China Postgraduate Smart City competition entry 《城脉·涟�
 5. `oct8-audit-sensitivity-plan.md` (done) and `oct10-replay-diagnosis-plan.md` (done, verified, 3b5e575; corrections in `results/replay_diag/corrections.md`).
 6. **`oct11-missing-queue-plan.md`** (rev 2, Codex accepted, 302152e): 2 × 2 test, Twin state (C = restart without blockers, H = restart with R_P blockers from 4,500 s) × future duration (persistent, clears 5,400), fresh seeds 4301–4304. Classification order is fixed in the plan. Roadmap revision appended to `decision-2026-10-05-roadmap.md` (9c8cf08).
 
-Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/step1-notes/notes.md`.
+Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/step1-notes/notes.md`. (`step1-notes/` is this log, not a dispatch; it has no `merged` marker on purpose.)
+
+**Session handoff 2026-10-08:** every dispatch directory is merged, the worktree is clean, and nothing is running. The next session's first message can simply be "resume". Then confirm the release state (`git -C D:/CityCom-astra describe --tags` → `competition-submission-v1.0`) and wait for the user's next instruction (upload or rehearsal help). Do not reopen experiments.
 
 ## Results so far (all verified by recomputation unless marked otherwise)
 
