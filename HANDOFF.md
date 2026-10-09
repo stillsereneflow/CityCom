@@ -63,6 +63,20 @@ This is the 12th China Postgraduate Smart City competition entry 《城脉·涟�
 
 Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/step1-notes/notes.md`. (`step1-notes/` is this log, not a dispatch; it has no `merged` marker on purpose.)
 
+**Competition FINAL (2026-10-09, current; supersedes v2 below):** `D:/CityCom-astra/competition_final/` (untracked, not committed).
+- **Upload set:** `upload/` holds 01 简表, 02 说明书 and 03 商业计划书 (each .docx + .pdf, filled into the official 2026 templates) and `04_城脉涟控_补充材料.zip` (PPT, re-rendered video, prototype evidence, source code). `archive/` holds one all-in-one zip.
+- **Team identity:** 川序 / 陈齐 / phone, given by the user 2026-10-09. It appears **only** in the 简表 identity cells. 团队成员 was not provided and is highlighted 待填写.
+- **Constant-A3 baseline:** always-A3 also scores 7/8. This is disclosed everywhere 7/8 appears.
+- **Deck:** 14 main + 8 backup slides.
+- **Checks:** `validation_report.md` is 9 PASS / 1 WARN (团队成员) / 0 FAIL. codex's final verification says submission-ready apart from the open items.
+- **Open items for the user:**
+  - names for 团队成员;
+  - Chang'an University internal deadline/process (no 2026 notice online; 2022 contact pyk@chd.edu.cn);
+  - organizer confirmation of whether the 简表 identity fields go to reviewers;
+  - re-export PDFs on a machine with 方正小标宋简体.
+- **Rebuild:** run the scripts in `competition_final/_build/`: `fill_jianbiao.py`, `fill_doc_template.py <md> <template> <out>`, `build_deck_final.py`, `to_pdf.ps1`, `make_upload.py`, `validate_package.py upload`.
+- **Report:** `final_revision_report.md`.
+
 **Competition v2 (2026-10-08, second session, on the user's redesign request):** `D:/CityCom-astra/competition_v2/` holds a repositioned, competition-oriented package. It is **untracked and not committed** (the user did not ask for a commit).
 - **Positioning:** a decision-fidelity audit system supported by counterfactual simulation; the event engine is an experimental component.
 - **Files:**
