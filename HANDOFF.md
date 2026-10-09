@@ -63,6 +63,17 @@ This is the 12th China Postgraduate Smart City competition entry 《城脉·涟�
 
 Findings log, chronological and terse: `C:/Users/chenq/.claude/runs/D--CityCom/step1-notes/notes.md`. (`step1-notes/` is this log, not a dispatch; it has no `merged` marker on purpose.)
 
+**Final cleanup (2026-10-09, later the same day; current state):** see `competition_final/FINAL_COMPLIANCE_REPORT.md`.
+- **One student:** the entry has exactly one student, 陈齐. 简表 团队成员 = "陈齐（队长；本队参赛学生共 1 人）". The bizplan team section is rewritten for one student.
+- **Template instructions removed:** "附件N：", "（不超过N字）" and the guidance notes are gone; the official labels are kept.
+- **Upload state:** `upload/` is current. Validator 10/10, instruction scan 0, anonymity tier A 0.
+- **Do NOT run `citypulse.experiments.frozen_audit_analyze` on `results/frozen_audit`.** It rewrites `metrics.json`. For demos use the read-only `results/frozen_audit/crosscheck_claude/indep_audit.py`.
+- **Open:**
+  - advisor (the invitation requires 1–2 instructors at registration; none provided);
+  - Chang'an University internal procedure;
+  - organizer confirmation on the identity fields;
+  - PDF re-export with 方正小标宋简体.
+
 **Competition FINAL (2026-10-09, current; supersedes v2 below):** `D:/CityCom-astra/competition_final/` (untracked, not committed).
 - **Upload set:** `upload/` holds 01 简表, 02 说明书 and 03 商业计划书 (each .docx + .pdf, filled into the official 2026 templates) and `04_城脉涟控_补充材料.zip` (PPT, re-rendered video, prototype evidence, source code). `archive/` holds one all-in-one zip.
 - **Team identity:** 川序 / 陈齐 / phone, given by the user 2026-10-09. It appears **only** in the 简表 identity cells. 团队成员 was not provided and is highlighted 待填写.
