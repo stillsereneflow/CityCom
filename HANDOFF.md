@@ -23,7 +23,7 @@ This is the 12th China Postgraduate Smart City competition entry 《城脉·涟�
 - Python: `D:/CityCom/.venv/Scripts/python.exe` (SUMO 1.27.1).
 - Env: `PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 CITYPULSE_NET=blite CITYPULSE_BLITE_REV=5 CITYPULSE_REROUTE=0`.
 - Frozen baseline: net5 / synth5 (`results/blite/synth5/READY`).
-- GitHub (2026-11-14): repo `stillsereneflow/CityCom` (remote `origin`), made **public** the same day on the user's instruction, holding `master`, `astra/step1` and tag `competition-submission-v1.0`. Only committed history is there. Uncommitted worktree content (`competition_final/`, `competition_v2/`, which holds the phone number) and `D:/CityCom/submission-internal/` were not pushed. Being public, it shows the entrant and school named in `HANDOFF.md` and the author email on every commit; never commit `competition_final/` (phone number) to it.
+- GitHub (2026-11-14): repo `stillsereneflow/CityPulse` (remote `origin`; first created as `CityCom`, renamed to the project's name on the user's instruction), made **public** the same day on the user's instruction, holding `master`, `astra/step1` and tag `competition-submission-v1.0`. Only committed history is there. Uncommitted worktree content (`competition_final/`, `competition_v2/`, which holds the phone number) and `D:/CityCom/submission-internal/` were not pushed. Being public, it shows the entrant and school named in `HANDOFF.md` and the author email on every commit; never commit `competition_final/` (phone number) to it.
 - Tests: `python -m pytest -q tests` gives 222 passed / 3 skipped at 4fe70e0.
 
 ## FINAL STATE (read this first)
